@@ -13,5 +13,5 @@ Computer Science Student. I enjoy making open-source browser extensions, now lea
 **🌱 Learning**
 
 <code><picture><img height="20" src="https://github.com/tandpfun/skill-icons/blob/main/icons/Swift.svg"></picture></code>&emsp;
-<code><picture><img height="20" src="https://github.com/tandpfun/skill-icons/blob/main/icons/Godot-Light.svg"></picture></code>&emsp;
-<code><picture><img height="20" src="https://github.com/tandpfun/skill-icons/blob/main/icons/Supabase-Light.svg"></picture></code>
+<!-- <code><picture><img height="20" src="https://github.com/tandpfun/skill-icons/blob/main/icons/Godot-Light.svg"></picture></code>&emsp;
+<code><picture><img height="20" src="https://github.com/tandpfun/skill-icons/blob/main/icons/Supabase-Light.svg"></picture></code> -->
