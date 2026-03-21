@@ -1,5 +1,5 @@
-When I rename a folder, the notes shouldn't be moved to all notes
-I still cannot right click in custom folders to show the context menu
-Finish add locales to context menu languages
-Move notes to .md files
-Photos app on the righht side of the footer
+Remove the bubbles with the symbols (collision needs to work around the icons) and remove the instructions
+
+The suika game is an overlay on top of the existing interface. It spans the entire screen, the line is the banner and the footer also acts as a collision and can be moved up and down so the suika move
+
+Footer button should remove the game from view, game is not saved if page is reloaded
