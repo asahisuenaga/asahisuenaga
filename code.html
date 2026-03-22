@@ -62,6 +62,7 @@
             width: 100%;
             height: 100vh;
             padding: var(--gap);
+            padding-bottom: max(5.5rem, calc(var(--gap) + env(safe-area-inset-bottom, 0px)));
             position: fixed;
             top: 0;
             left: 0;
@@ -69,10 +70,13 @@
             transition: clip-path 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             box-sizing: border-box;
             clip-path: inset(0 0 0% 0 round 0);
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
         }
 
         .main-content.reveal-corners {
-            clip-path: inset(0 0 55px 0 round 0 0 3rem 3rem);
+            clip-path: inset(0 0 60px 0 round 0 0 3rem 3rem);
         }
 
         .footer {
@@ -83,25 +87,75 @@
             z-index: 1;
             background: var(--heading);
             color: var(--bg);
-            padding: 1rem 1.5rem;
+            padding: 1.5rem;
             box-sizing: border-box;
             display: flex;
-            justify-content: flex-start;
+            justify-content: space-between;
             align-items: center;
+            gap: 1rem;
             transform: translateY(100%);
             transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         .footer.drawer-open {
-            transform: translateY(0);
+            transform: translateY(0.25rem);
         }
 
         .footer-links {
             display: flex;
             gap: 2rem;
             align-items: center;
-            justify-content: flex-start;
-            width: 100%;
+            justify-content: flex-end;
+            min-width: 0;
+        }
+
+        /* Footer: music player */
+        .footer-music {
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .music-card {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            align-self: center;
+            user-select: none;
+            -webkit-user-select: none;
+            flex: 1;
+            min-width: 0;
+            border: none;
+            background: transparent;
+        }
+
+        .music-card:hover {
+            opacity: 0.8;
+        }
+
+        .music-title-wrap {
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .music-title {
+            font-size: 0.9375rem;
+            color: var(--bg);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-decoration: none;
+            display: inline-block;
+            max-width: 100%;
+            cursor: pointer;
+        }
+
+        #panel-note-view.note-view-readonly .notes-title,
+        #panel-note-view.note-view-readonly #active-note-content {
+            cursor: default;
+            user-select: text;
         }
 
         .footer-link {
@@ -137,20 +191,12 @@
 
             .footer-links {
                 gap: 1.5rem;
-                margin-top: 1rem;
-            }
-
-            .footer {
-                padding: 1.5rem;
-                padding-top: 2rem;
-                padding-bottom: 1rem;
             }
         }
 
         .banner {
             color: var(--bg);
             background: var(--heading);
-            border-bottom: 1px solid #0000000f;
             justify-content: center;
             align-items: center;
             gap: var(--gap);
@@ -170,12 +216,6 @@
 
         .banner:hover {
             opacity: 0.8;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .banner {
-                border-bottom: 1px solid #ffffff0f;
-            }
         }
 
         code a::after {
@@ -288,6 +328,7 @@
             color: var(--heading);
             margin: 0;
             line-height: 1.2;
+            max-width: 7.5rem
         }
 
         #location {
@@ -460,14 +501,23 @@
             width: 1.5rem;
             height: 1.5rem;
             flex-shrink: 0;
+            fill: var(--heading);
         }
 
         #tooltip-twitter .tooltip-icon {
-            color: #1DA1F2;
+            fill: #1DA1F2;
+        }
+
+        #tooltip-music .tooltip-icon {
+            fill: #FF0000;
+        }
+
+        .music-note-icon {
+            margin-bottom: 2px;
         }
 
         #tooltip-bmc .tooltip-icon {
-            color: #FFDD00;
+            fill: #FFDD00;
         }
 
         .tooltip-text {
@@ -566,7 +616,7 @@
 
         @media (prefers-color-scheme: dark) {
             .notes-modal {
-                background: #000000;
+                background: #212121;
                 box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
             }
         }
@@ -586,7 +636,7 @@
 
         @media (prefers-color-scheme: dark) {
             .notes-panel {
-                background: #000000;
+                background: #212121;
             }
         }
 
@@ -643,7 +693,6 @@
         @media (prefers-color-scheme: dark) {
             .notes-header {
                 background: rgba(0, 0, 0, 0.85);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             }
         }
 
@@ -765,20 +814,25 @@
             cursor: pointer;
             width: 100%;
             user-select: none;
-            transition: background 0.15s;
         }
 
         .note-context-item:hover {
-            background: rgba(0, 0, 0, 0.05);
+            background: rgba(234, 179, 8, 0.2);
         }
 
         @media (prefers-color-scheme: dark) {
-            .note-context-item:hover {
-                background: rgba(255, 255, 255, 0.1);
+            .note-context-item {
+                color: #ffffff;
             }
-        }
 
-        @media (prefers-color-scheme: dark) {
+            .note-context-item:hover {
+                background: rgba(234, 179, 8, 0.3);
+            }
+
+            .context-separator {
+                background: rgba(255, 255, 255, 0.15) !important;
+            }
+
             .notes-glass-btn {
                 background: rgba(0, 0, 0, 0.3);
                 border: 1px solid rgba(255, 255, 255, 0.2);
@@ -807,6 +861,12 @@
             }
         }
 
+        .notes-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
         .notes-content-padded {
             padding: 1rem;
         }
@@ -827,7 +887,7 @@
 
         .notes-list-group {
             background: transparent;
-            overflow: hidden;
+            overflow: visible;
             margin-bottom: 24px;
             margin-top: 24px;
         }
@@ -836,40 +896,29 @@
             display: flex;
             align-items: center;
             padding: 12px 16px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             cursor: pointer;
             justify-content: space-between;
-            transition: background 0.1s;
+            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        .folder-list-item:hover {
+        .folder-list-item:hover,
+        .note-preview:hover {
             background: rgba(0, 0, 0, 0.05);
             border-radius: 10px;
         }
 
         @media (prefers-color-scheme: dark) {
-            .notes-list-item {
-                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            }
 
-            .folder-list-item:hover {
+            .folder-list-item:hover,
+            .notes-preview:hover {
                 background: rgba(255, 255, 255, 0.12);
             }
-        }
-
-        .notes-list-item:last-child {
-            border-bottom: none;
         }
 
         .notes-list-item.selected {
             background: rgba(234, 179, 8, 0.2);
             color: inherit !important;
             border-radius: 0.625rem;
-            border-bottom-color: transparent !important;
-        }
-
-        .before-selected {
-            border-bottom-color: transparent !important;
         }
 
         .notes-list-item.selected * {
@@ -980,13 +1029,11 @@
 
         #panel-note-view .notes-header {
             background: rgba(255, 255, 255, 0.85);
-            border-bottom: none;
         }
 
         @media (prefers-color-scheme: dark) {
             #panel-note-view .notes-header {
                 background: rgba(30, 30, 30, 0.85);
-                border-bottom: none;
             }
         }
 
@@ -1251,7 +1298,7 @@
         }
 
         #panel-note-view {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgb(255, 255, 255);
             backdrop-filter: blur(40px);
             border-left: 1px solid rgba(0, 0, 0, 0.1);
             display: flex;
@@ -1260,7 +1307,7 @@
 
         @media (prefers-color-scheme: dark) {
             #panel-note-view {
-                background: rgba(28, 28, 30, 0.4);
+                background: rgb(28, 28, 30);
                 border-left: 1px solid rgba(255, 255, 255, 0.1);
             }
         }
@@ -1270,10 +1317,6 @@
             align-items: flex-start;
             gap: 8px;
             margin: 4px 0;
-        }
-
-        #panel-folders .notes-list-item {
-            border-bottom: none;
         }
 
         .checklist-checkbox {
@@ -1337,6 +1380,10 @@
                 transform: none !important;
             }
 
+            #panel-note-view .notes-header-left {
+                display: none;
+            }
+
             .notes-back {
                 display: none;
             }
@@ -1345,7 +1392,11 @@
                 height: 2rem;
                 background: transparent !important;
                 backdrop-filter: none !important;
-                border-bottom: none !important;
+                justify-content: center;
+            }
+
+            .notes-header-right {
+                max-width: 80%;
             }
 
             /* Dark mode specific borders */
@@ -1486,7 +1537,9 @@
                 display: none !important;
             }
 
-            .new-note-action, .notes-header-left, .notes-header-right  {
+            .new-note-action,
+            .notes-header-left,
+            .notes-header-right {
                 margin-top: 0px;
             }
 
@@ -1503,7 +1556,7 @@
             .notes-header-right {
                 position: absolute !important;
                 left: 50% !important;
-                transform: translateX(-50%) scale(0.85) !important;
+                transform: translateX(-50%) !important;
                 margin: 0 !important;
                 flex-shrink: 0 !important;
                 max-width: 75% !important;
@@ -1514,16 +1567,6 @@
                 gap: 2px !important;
             }
 
-            .note-preview:hover {
-                background: rgba(0, 0, 0, 0.07);
-            }
-
-            @media (prefers-color-scheme: dark) {
-                .note-preview:hover {
-                    background: rgba(255, 255, 255, 0.08);
-                }
-            }
-
             .notes-delete-notice {
                 text-align: center;
                 font-size: 0.875rem;
@@ -1532,25 +1575,25 @@
             }
 
             /* Responsive button hiding to prevent overlap */
-            @media (max-width: 480px) {
+            @media (max-width: 500px) {
                 #notes-dash-btn {
                     display: none !important;
                 }
             }
 
-            @media (max-width: 450px) {
+            @media (max-width: 478px) {
                 #notes-checklist-btn {
                     display: none !important;
                 }
             }
 
-            @media (max-width: 420px) {
+            @media (max-width: 440px) {
                 .notes-toolbar-btn[data-command="insertOrderedList"] {
                     display: none !important;
                 }
             }
 
-            @media (max-width: 380px) {
+            @media (max-width: 400px) {
                 .notes-toolbar-btn[data-command="insertUnorderedList"] {
                     display: none !important;
                 }
@@ -1560,7 +1603,7 @@
                 }
             }
 
-            @media (max-width: 340px) {
+            @media (max-width: 360px) {
 
                 .notes-toolbar-btn[data-command="indent"],
                 .notes-toolbar-btn[data-command="outdent"] {
@@ -1621,7 +1664,7 @@
 
             @media (prefers-color-scheme: dark) {
                 .notes-panel.active {
-                    background: #000;
+                    background: #212121;
                 }
             }
         }
@@ -1730,16 +1773,22 @@
             content: '+';
             transform: translateY(-1px);
         }
+
         .themed-icon,
         .notes-folder-info img,
         #sidebar-toggle img,
         .notes-folder-info img,
         .back-hero-icon,
-        #new-note-btn-header img, #new-folder-btn-top img {
+        #new-note-btn-header img,
+        #new-folder-btn-top img {
             filter: invert(1);
             -webkit-user-drag: none;
             user-select: none;
             pointer-events: none;
+        }
+
+        .tooltip-icon {
+            filter: invert(0);
         }
 
         @media (prefers-color-scheme: dark) {
@@ -1748,13 +1797,19 @@
             .notes-folder-info img,
             #sidebar-toggle img,
             .back-hero-icon,
-            #new-note-btn-header img, #new-folder-btn-top img{
+            #new-note-btn-header img,
+            #new-folder-btn-top img {
                 filter: invert(0);
+            }
+
+            .tooltip-icon {
+                filter: invert(1) !important;
             }
         }
 
         .notes-footer {
-            display: none; /* hide old bottom action button, new top icon replaces it */
+            display: none;
+            /* hide old bottom action button, new top icon replaces it */
             position: relative;
             margin-left: 0;
             margin-top: 0;
@@ -1786,9 +1841,11 @@
             <div id="shrine" class="shrine-container" role="button">
                 <img src="image.webp" class="icon" alt="Shrine Icon" draggable="false">
             </div>
+
             <div class="header">
-                <h1 class="name" id="name">Asahi Suenaga</h1>
-                <a href="https://maps.google.com/?q=East+Lansing,+MI" class="footer-link location-link" id="location" target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;">
+                <h1 class="name name-link" id="name" style="cursor: pointer;">Asahi Suenaga</h1>
+                <a href="https://maps.google.com/?q=East+Lansing,+MI" class="footer-link location-link" id="location"
+                    target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;">
                     <span>East Lansing, MI</span>
                 </a>
             </div>
@@ -1796,21 +1853,19 @@
                 <p id="bio1">When I was a kid, I drew perfect circles. I had no idea that my love for being precise and
                     my
                     natural
-                    curiosity about how things work would lead me to <code><a href="https://en.wikipedia.org/wiki/Software" target="_blank" style="color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
-        <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/command-square-fill.svg" alt="Command Icon" class="themed-icon" style="height: 0.875em; width: auto; margin-right: 0.125rem;">
-        software
-    </a>
-    </code>.
+                    curiosity about how things work would lead me to software.
                 </p>
                 <p id="bio2">I’m currently studying Computer Science at
-                    <code><a href="https://msu.edu" target="_blank"
+                    <code><a href="https://engineering.msu.edu/academics/majors-degrees/computer-science-bs" target="_blank"
                         style="color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
         <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/graduationcap-fill.svg" alt="Graduation Cap Icon" class="themed-icon" style="height: 0.875em; width: auto; margin-right: 0.125rem;">Michigan State</a></code>
-                    and learning Swift whenever I have the opportunity. Before this, I made a
+                    and learning Swift whenever I have the opportunity. You can see how I applied this mindset to my
                     <code><a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc"
                         target="_blank" style="color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
-        <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/globe-fill.svg" alt="Globe Icon" class="themed-icon" style="height: 0.875em; width: auto; margin-right: 0.125rem;">browser
-                        extension</a></code>.
+        <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/puzzlepiece-fill.svg" alt="Puzzle Piece Icon" class="themed-icon" style="height: 0.875em; width: auto; margin-right: 0.125rem;">browser
+                        extension</a></code> and other projects in my
+                    <code><a href="https://github.com/asahisuenaga" target="_blank" style="color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+        <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/text-page-fill.svg" alt="Resume Icon" class="themed-icon" style="height: 0.875em; width: auto; margin-right: 0.125rem;">experience</a></code>.
                 </p>
             </div>
         </div>
@@ -1818,16 +1873,26 @@
     </main>
 
     <footer class="footer">
+        <div class="footer-music">
+            <div class="music-card" id="music-card" role="button" tabindex="0">
+                <svg class="music-note-icon" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                    <path
+                        d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+                </svg>
+                <span class="music-title-wrap"><span class="music-title music-link" id="music-title">play
+                        something</span></span>
+            </div>
+        </div>
         <div class="footer-links">
             <a href="https://twitter.com/asahisuenaga" class="footer-link twitter-link" target="_blank">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                     <path
                         d="M24 4.557a9.83 9.83 0 01-2.828.775 4.932 4.932 0 002.165-2.724 9.864 9.864 0 01-3.127 1.195 4.916 4.916 0 00-8.38 4.482A13.94 13.94 0 011.671 3.149a4.93 4.93 0 001.523 6.574 4.903 4.903 0 01-2.229-.616v.061a4.924 4.924 0 003.946 4.827 4.896 4.896 0 01-2.224.084 4.928 4.928 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.945 13.945 0 007.548 2.212c9.057 0 14.002-7.496 14.002-13.986 0-.21 0-.42-.015-.63A10.012 10.012 0 0024 4.557z" />
                 </svg>
                 <span class="footer-text" id="footer-twitter">Twitter</span>
             </a>
             <a href="https://buymeacoffee.com/asahisuenaga" class="footer-link bmc-link" target="_blank">
-                <svg role="img" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"
+                <svg role="img" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M20.216 6.415l-.132-.666c-.119-.598-.388-1.163-1.001-1.379-.197-.069-.42-.098-.57-.241-.152-.143-.196-.366-.231-.572-.065-.378-.125-.756-.192-1.133-.057-.325-.102-.69-.25-.987-.195-.4-.597-.634-.996-.788a5.723 5.723 0 00-.626-.194c-1-.263-2.05-.36-3.077-.416a25.834 25.834 0 00-3.7.062c-.915.083-1.88.184-2.75.5-.318.116-.646.256-.888.501-.297.302-.393.77-.177 1.146.154.267.415.456.692.58.36.162.737.284 1.123.366 1.075.238 2.189.331 3.287.37 1.218.05 2.437.01 3.65-.118.299-.033.598-.073.896-.119.352-.054.578-.513.474-.834-.124-.383-.457-.531-.834-.473-.466.074-.96.108-1.382.146-1.177.08-2.358.082-3.536.006a22.228 22.228 0 01-1.157-.107c-.086-.01-.18-.025-.258-.036-.243-.036-.484-.08-.724-.13-.111-.027-.111-.185 0-.212h.005c.277-.06.557-.108.838-.147h.002c.131-.009.263-.032.394-.048a25.076 25.076 0 013.426-.12c.674.019 1.347.067 2.017.144l.228.031c.267.04.533.088.798.145.392.085.895.113 1.07.542.055.137.08.288.111.431l.319 1.484a.237.237 0 01-.199.284h-.003c-.037.006-.075.01-.112.015a36.704 36.704 0 01-4.743.295 37.059 37.059 0 01-4.699-.304c-.14-.017-.293-.042-.417-.06-.326-.048-.649-.108-.973-.161-.393-.065-.768-.032-1.123.161-.29.16-.527.404-.675.701-.154.316-.199.66-.267 1-.069.34-.176.707-.135 1.056.087.753.613 1.365 1.37 1.502a39.69 39.69 0 0011.343.376.483.483 0 01.535.53l-.071.697-1.018 9.907c-.041.41-.047.832-.125 1.237-.122.637-.553 1.028-1.182 1.171-.577.131-1.165.2-1.756.205-.656.004-1.31-.025-1.966-.022-.699.004-1.556-.06-2.095-.58-.475-.458-.54-1.174-.605-1.793l-.731-7.013-.322-3.094c-.037-.351-.286-.695-.678-.678-.336.015-.718.3-.678.679l.228 2.185.949 9.112c.147 1.344 1.174 2.068 2.446 2.272.742.12 1.503.144 2.257.156.966.016 1.942.053 2.892-.122 1.408-.258 2.465-1.198 2.616-2.657.34-3.332.683-6.663 1.024-9.995l.215-2.087a.484.484 0 01.39-.426c.402-.078.787-.212 1.074-.518.455-.488.546-1.124.385-1.766zm-1.478.772c-.145.137-.363.201-.578.233-2.416.359-4.866.54-7.308.46-1.748-.06-3.477-.254-5.207-.498-.17-.024-.353-.055-.47-.18-.22-.236-.111-.71-.054-.995.052-.26.152-.609.463-.646.484-.057 1.046.148 1.526.22.577.088 1.156.159 1.737.212 2.48.226 5.002.19 7.472-.14.45-.06.899-.13 1.345-.21.399-.072.84-.206 1.08.206.166.281.188.657.162.974a.544.544 0 01-.169.364zm-6.159 3.9c-.862.37-1.84.788-3.109.788a5.884 5.884 0 01-1.569-.217l.877 9.004c.065.78.717 1.38 1.5 1.38 0 0 1.243.065 1.658.065.447 0 1.786-.065 1.786-.065.783 0 1.434-.6 1.499-1.38l.94-9.95a3.996 3.996 0 00-1.322-.238c-.826 0-1.491.284-2.26.613z" />
@@ -1835,7 +1900,7 @@
                 <span class="footer-text" id="footer-bmc">Buy Me a Coffee</span>
             </a>
             <a href="https://github.com/asahisuenaga" class="footer-link github-link" target="_blank">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                     <path
                         d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
                 </svg>
@@ -1849,7 +1914,7 @@
         <div class="notes-drawer-handle" id="notes-drawer-handle"></div>
         <!-- SHARED WINDOW CONTROLS -->
         <div class="mac-stoplights" id="shared-stoplights"
-            style="position: absolute; top: 16px; left: 16px; z-index: 100; transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1); margin-top: 6px; display: flex; gap: 6px; align-items: center;">
+            style="position: absolute; top: 20px; left: 16px; z-index: 100; transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1); margin-top: 6px; display: flex; gap: 6px; align-items: center;">
             <button class="mac-close"></button>
             <button class="mac-min"></button>
             <button class="mac-max"></button>
@@ -1860,14 +1925,17 @@
             <div class="notes-header">
                 <div class="notes-header-left">
                 </div>
-                <button id="new-folder-btn-top" class="notes-glass-btn" title="New Folder" style="margin-left: auto; width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;">
-                    <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/folder-badge-plus.svg" style="width: 24px; height: 24px;" draggable="false" />
+                <button id="new-folder-btn-top" class="notes-glass-btn" title="New Folder"
+                    style="margin-left: auto; width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;">
+                    <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/folder-badge-plus.svg"
+                        style="width: 24px; height: 24px;" draggable="false" />
                 </button>
             </div>
             <div class="notes-content notes-content-padded" style="display:flex; flex-direction:column;">
                 <h1 class="notes-large-title">Folders</h1>
                 <div class="notes-list-group">
-                    <div class="notes-list-item folder-list-item" data-target="panel-notes-all" style="user-select: none;">
+                    <div class="notes-list-item folder-list-item" data-target="panel-notes-all"
+                        style="user-select: none;">
                         <div class="notes-folder-info"><img
                                 src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/folder.svg"
                                 style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
@@ -1875,7 +1943,8 @@
                             All Notes</div>
                         <div><span class="notes-count" id="count-all">0</span></div>
                     </div>
-                    <div class="notes-list-item folder-list-item" data-target="panel-notes-films" style="user-select: none;">
+                    <div class="notes-list-item folder-list-item" data-target="panel-notes-films"
+                        style="user-select: none;">
                         <div class="notes-folder-info"><img
                                 src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/folder.svg"
                                 style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
@@ -1883,7 +1952,8 @@
                             Films</div>
                         <div><span class="notes-count" id="count-films">0</span></div>
                     </div>
-                    <div class="notes-list-item folder-list-item" data-target="panel-notes-writing" style="user-select: none;">
+                    <div class="notes-list-item folder-list-item" data-target="panel-notes-writing"
+                        style="user-select: none;">
                         <div class="notes-folder-info"><img
                                 src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/folder.svg"
                                 style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
@@ -1892,7 +1962,8 @@
                         <div><span class="notes-count" id="count-writing">0</span></div>
                     </div>
                     <div style="height: 1px; background: rgba(0,0,0,0.1); margin: 8px 0;"></div>
-                    <div class="notes-list-item folder-list-item" data-target="panel-notes-deleted" style="user-select: none;">
+                    <div class="notes-list-item folder-list-item" data-target="panel-notes-deleted"
+                        style="user-select: none;">
                         <div class="notes-folder-info">
                             <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/trash.svg"
                                 style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
@@ -1905,7 +1976,8 @@
             </div>
             <div class="notes-footer">
                 <button class="notes-glass-btn" id="new-folder-btn" title="New Folder">
-                    <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/folder-badge-plus.svg" style="width:20px; height:20px;">
+                    <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/folder-badge-plus.svg"
+                        style="width:20px; height:20px;">
                 </button>
             </div>
         </div>
@@ -1996,11 +2068,13 @@
                         <img
                             src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/list-number.svg">
                     </button>
-                    <button class="notes-toolbar-btn" id="notes-dash-btn" title="Dashed List" data-command="insertDashList">
+                    <button class="notes-toolbar-btn" id="notes-dash-btn" title="Dashed List"
+                        data-command="insertDashList">
                         <img
                             src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/list-dash.svg">
                     </button>
-                    <button class="notes-toolbar-btn" id="notes-checklist-btn" title="Checklist" data-command="insertChecklist">
+                    <button class="notes-toolbar-btn" id="notes-checklist-btn" title="Checklist"
+                        data-command="insertChecklist">
                         <img
                             src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/checklist.svg">
                     </button>
@@ -2017,6 +2091,24 @@
     </div>
 
     <div class="cursor-tooltip" id="cursor-tooltip">
+        <div class="tooltip-content" id="tooltip-name">
+            <img class="tooltip-icon themed-icon"
+                src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/translate.svg"
+                draggable="false">
+            <div class="tooltip-text">
+                <div class="tooltip-title" id="tooltip-name-title">日本語</div>
+                <div class="tooltip-subtitle" id="tooltip-name-subtitle">Click to switch language</div>
+            </div>
+        </div>
+        <div class="tooltip-content" id="tooltip-music">
+            <svg class="tooltip-icon" viewBox="0 0 24 24">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+            </svg>
+            <div class="tooltip-text">
+                <div class="tooltip-title">YouTube Music</div>
+                <div class="tooltip-subtitle">Open in YouTube Music</div>
+            </div>
+        </div>
         <div class="tooltip-content" id="tooltip-twitter">
             <svg class="tooltip-icon" viewBox="0 0 24 24" fill="currentColor">
                 <path
@@ -2038,7 +2130,10 @@
             </div>
         </div>
         <div class="tooltip-content" id="tooltip-location">
-            <svg class="tooltip-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <svg class="tooltip-icon" viewBox="0 0 24 24">
+                <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+            </svg>
             <div class="tooltip-text">
                 <div class="tooltip-title">East Lansing, MI</div>
                 <div class="tooltip-subtitle">Show on Google Maps</div>
@@ -2056,11 +2151,71 @@
             const footer = document.querySelector('.footer');
             const main = document.querySelector('.main-content');
 
-            // Play boot sound on load
-            new Audio('boot.wav').play().catch(() => { });
-
             if (history.scrollRestoration) history.scrollRestoration = 'manual';
             window.scrollTo(0, 0);
+
+            const PLAYLIST_ID = 'PL719vpxc7Ema-newSbcwwHzm04qXTHv1r';
+            let tracks = [];
+            let currentTrackIdx = -1;
+            let footerWasOpen = false;
+
+            const titleEl = document.getElementById('music-title');
+            const musicBtn = document.getElementById('music-card');
+
+            function pickRandomTrack() {
+                if (!tracks.length) return null;
+                let idx;
+                do { idx = Math.floor(Math.random() * tracks.length); } while (idx === currentTrackIdx && tracks.length > 1);
+                currentTrackIdx = idx;
+                if (titleEl) {
+                    titleEl.textContent = tracks[idx].title;
+                }
+                return tracks[idx];
+            }
+
+            function openRandomTrack() {
+                if (!tracks.length) return;
+                const track = pickRandomTrack();
+                if (track) window.open('https://music.youtube.com/watch?v=' + track.id, '_blank');
+            }
+
+            musicBtn?.addEventListener('click', openRandomTrack);
+
+            musicBtn?.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openRandomTrack();
+                }
+            });
+
+            async function fetchPlaylist() {
+                try {
+                    const res = await fetch('https://www.youtube.com/youtubei/v1/browse', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain' },
+                        body: JSON.stringify({
+                            context: { client: { clientName: 'WEB', clientVersion: '2.20240101.00.00' } },
+                            browseId: 'VL' + PLAYLIST_ID
+                        })
+                    });
+                    const data = await res.json();
+                    const tabs = data.contents?.twoColumnBrowseResultsRenderer?.tabs || [];
+                    if (!tabs.length) throw new Error('no tabs');
+                    const slr = tabs[0].tabRenderer?.content?.sectionListRenderer?.contents || [];
+                    const pvlr = slr[0]?.itemSectionRenderer?.contents?.[0]?.playlistVideoListRenderer?.contents || [];
+                    const items = [];
+                    for (const item of pvlr) {
+                        const r = item.playlistVideoRenderer;
+                        if (r?.videoId && r?.title?.runs?.[0]?.text) {
+                            items.push({ id: r.videoId, title: r.title.runs[0].text });
+                        }
+                    }
+                    if (!items.length) throw new Error('no items');
+                    tracks = items; return true;
+                } catch (e) { return false; }
+            }
+
+            fetchPlaylist().then(ok => { if (ok) pickRandomTrack(); });
 
             const updateDrawer = () => {
                 if (!footer || !main) return;
@@ -2069,10 +2224,15 @@
                     footer.classList.add('drawer-open');
                     main.classList.add('reveal-corners');
                     if (globalNotesModal && globalNotesModal.classList.contains('minimized')) globalNotesModal.classList.add('minimized-shifted');
+                    if (!footerWasOpen) {
+                        footerWasOpen = true;
+                        pickRandomTrack();
+                    }
                 } else {
                     footer.classList.remove('drawer-open');
                     main.classList.remove('reveal-corners');
                     if (globalNotesModal) globalNotesModal.classList.remove('minimized-shifted');
+                    footerWasOpen = false;
                 }
             };
 
@@ -2129,6 +2289,7 @@
                 const footerGithub = document.getElementById('footer-github');
                 if (footerGithub) footerGithub.innerText = 'ギットハブ';
 
+
                 // Notes app UI localization
                 // Folders panel
                 const foldersTitle = document.querySelector('#panel-folders .notes-large-title');
@@ -2179,7 +2340,92 @@
                 if (twitterTooltipSub) twitterTooltipSub.innerText = '@asahisuenaga';
                 if (bmcTooltipTitle) bmcTooltipTitle.innerText = 'コーヒーをおごる';
                 if (bmcTooltipSub) bmcTooltipSub.innerText = 'サポートする';
+                if (nameTooltipTitle) nameTooltipTitle.innerText = 'English';
             }
+
+            // Language toggle for name click
+            let currentLang = isJa ? 'ja' : 'en';
+            const nameEl = document.getElementById('name');
+            const nameTooltipTitle = document.getElementById('tooltip-name-title');
+
+            const enDefaults = {
+                title: 'Asahi Suenaga',
+                pageTitle: 'Asahi Suenaga',
+                banner: 'Try Rainbow Cursor \u2014 A Browser Extension to Change Your Cursor in Google Docs \u2192',
+                locationText: 'East Lansing, MI',
+                locationTooltipTitle: 'East Lansing, MI',
+                locationTooltipSub: 'Show on Google Maps',
+                bio1: document.getElementById('bio1')?.innerHTML,
+                bio2: document.getElementById('bio2')?.innerHTML,
+                footerTwitter: 'Twitter',
+                footerBmc: 'Buy Me a Coffee',
+                footerGithub: 'GitHub',
+                twitterTooltipTitle: 'Twitter',
+                twitterTooltipSub: '@asahisuenaga',
+                bmcTooltipTitle: 'Buy Me a Coffee',
+                bmcTooltipSub: 'Support my work'
+            };
+
+            const jaDefaults = {
+                title: '\u672B\u6C38\u671D\u98DB',
+                pageTitle: '\u672B\u6C38\u671D\u98DB',
+                banner: '\u300C\u8679\u8272\u30AD\u30E3\u30EC\u30C3\u30C8\u300D\u2014 GoogleDocs\u3067\u30AD\u30E3\u30EC\u30C3\u30C8\u306B\u8272\u3092\u3064\u3051\u3088\u3046 \u2192',
+                locationText: '\u30DF\u30B7\u30AC\u30F3\u5DDE \u30A4\u30FC\u30B9\u30C8\u30E9\u30F3\u30B7\u30F3\u30B0',
+                locationTooltipTitle: '\u30DF\u30B7\u30AC\u30F3\u5DDE \u30A4\u30FC\u30B9\u30C8\u30E9\u30F3\u30B7\u30F3\u30B0',
+                locationTooltipSub: 'Google\u30DE\u30C3\u30D7\u3067\u8868\u793A',
+                bio1: '\u5B50\u4F9B\u306E\u9803\u3001\u5B8C\u74A7\u306A\u4E38\u3092\u63CF\u3044\u3066\u3044\u307E\u3057\u305F\u3002\u6B63\u78BA\u3055\u3078\u306E\u62D8\u308A\u3068\u3001\u7269\u4E8B\u306E\u4ED5\u7D44\u307F\u306B\u5BFE\u3059\u308B\u81EA\u7136\u306A\u597D\u5947\u5FC3\u304C\u3001\u81EA\u5206\u3092<code><a href="https://ja.wikipedia.org/wiki/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2" target="_blank" style="color: var(--heading); text-decoration: none;">\u30BD\u30D5\u30C8\u30A6\u30A7\u30A2</a></code>\u3078\u3068\u5C0E\u304F\u3068\u306F\u601D\u3044\u3082\u3057\u307E\u305B\u3093\u3067\u3057\u305F\u3002',
+                bio2: '\u73FE\u5728\u306F<code><a href="https://msu.edu" target="_blank" style="color: var(--heading); text-decoration: none;">\u30DF\u30B7\u30AC\u30F3\u5DDE\u7ACB\u5927\u5B66</a></code>\u3067\u30B3\u30F3\u30D4\u30E5\u30FC\u30BF\u30B5\u30A4\u30A8\u30F3\u30B9\u3092\u5C02\u653B\u3057\u3001\u6A5F\u4F1A\u3092\u898B\u3064\u3051\u3066\u306FSwift\u3092\u5B66\u3093\u3067\u3044\u307E\u3059\u3002\u305D\u306E\u524D\u306F<code><a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc" target="_blank" style="color: var(--heading); text-decoration: none;">\u30D6\u30E9\u30A6\u30B6\u62E1\u5F35\u6A5F\u80FD</a></code>\u3092\u4F5C\u308A\u307E\u3057\u305F\u3002',
+                footerTwitter: '\u30C4\u30A4\u30C3\u30BF\u30FC',
+                footerBmc: '\u30B3\u30FC\u30D2\u30FC\u3092\u304A\u3054\u308B',
+                footerGithub: '\u30AE\u30C3\u30C8\u30CF\u30D6',
+                twitterTooltipTitle: '\u30C4\u30A4\u30C3\u30BF\u30FC',
+                twitterTooltipSub: '@asahisuenaga',
+                bmcTooltipTitle: '\u30B3\u30FC\u30D2\u30FC\u3092\u304A\u3054\u308B',
+                bmcTooltipSub: '\u30B5\u30DD\u30FC\u30C8\u3059\u308B'
+            };
+
+            function applyLang(lang) {
+                const d = lang === 'ja' ? jaDefaults : enDefaults;
+                document.documentElement.lang = lang;
+                document.title = d.pageTitle;
+                if (nameEl) nameEl.innerText = d.title;
+                const banner = document.getElementById('banner');
+                if (banner) banner.innerText = d.banner;
+                const locNode = document.getElementById('location');
+                if (locNode) { const s = locNode.querySelector('span'); if (s) s.innerText = d.locationText; }
+                const tooltipLoc = document.getElementById('tooltip-location');
+                if (tooltipLoc) {
+                    const t = tooltipLoc.querySelector('.tooltip-title');
+                    const s = tooltipLoc.querySelector('.tooltip-subtitle');
+                    if (t) t.innerText = d.locationTooltipTitle;
+                    if (s) s.innerText = d.locationTooltipSub;
+                }
+                const b1 = document.getElementById('bio1');
+                if (b1) b1.innerHTML = d.bio1;
+                const b2 = document.getElementById('bio2');
+                if (b2) b2.innerHTML = d.bio2;
+                const ft = document.getElementById('footer-twitter');
+                if (ft) ft.innerText = d.footerTwitter;
+                const fb = document.getElementById('footer-bmc');
+                if (fb) fb.innerText = d.footerBmc;
+                const fg = document.getElementById('footer-github');
+                if (fg) fg.innerText = d.footerGithub;
+                const ttT = document.querySelector('#tooltip-twitter .tooltip-title');
+                if (ttT) ttT.innerText = d.twitterTooltipTitle;
+                const ttS = document.querySelector('#tooltip-twitter .tooltip-subtitle');
+                if (ttS) ttS.innerText = d.twitterTooltipSub;
+                const btT = document.querySelector('#tooltip-bmc .tooltip-title');
+                if (btT) btT.innerText = d.bmcTooltipTitle;
+                const btS = document.querySelector('#tooltip-bmc .tooltip-subtitle');
+                if (btS) btS.innerText = d.bmcTooltipSub;
+                if (nameTooltipTitle) nameTooltipTitle.innerText = lang === 'ja' ? 'English' : '日本語';
+                currentLang = lang;
+            }
+
+            nameEl?.addEventListener('click', () => {
+                applyLang(currentLang === 'ja' ? 'en' : 'ja');
+            });
+
         });
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -2344,6 +2590,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             const cursorTooltip = document.getElementById('cursor-tooltip');
             const tooltips = {
+                'name-link': document.getElementById('tooltip-name'),
+                'music-link': document.getElementById('tooltip-music'),
                 'twitter-link': document.getElementById('tooltip-twitter'),
                 'bmc-link': document.getElementById('tooltip-bmc'),
                 'github-link': document.getElementById('tooltip-github'),
@@ -2364,7 +2612,7 @@
                 cursorTooltip.style.top = `${y}px`;
             };
 
-            const links = document.querySelectorAll('.footer-link, .location-link');
+            const links = document.querySelectorAll('.footer-link, .location-link, .name-link, .music-link');
 
             links.forEach(link => {
                 link.addEventListener('mouseenter', (e) => {
@@ -2373,6 +2621,8 @@
                     else if (link.classList.contains('bmc-link')) type = 'bmc-link';
                     else if (link.classList.contains('github-link')) type = 'github-link';
                     else if (link.classList.contains('location-link')) type = 'location-link';
+                    else if (link.classList.contains('name-link')) type = 'name-link';
+                    else if (link.classList.contains('music-link')) type = 'music-link';
 
                     if (type && tooltips[type]) {
                         Object.values(tooltips).forEach(t => t.classList.remove('active'));
@@ -2396,7 +2646,7 @@
             initGithubTooltip();
         });
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             const bookmark = document.querySelector('.bookmark');
             const notesModal = document.getElementById('notes-modal');
             const notesBackdrop = document.getElementById('notes-backdrop');
@@ -2417,10 +2667,123 @@
                 'panel-notes-deleted': 'recently_deleted'
             };
 
+            let currentFolder = 'all';
+
             const folderGroup = document.querySelector('.notes-list-group');
             let lastSelectedIndex = null;
 
+            const BUILT_IN_NOTE_IDS = new Set(['note-1', 'note-2', 'note-3', 'note-writing']);
+            const isBuiltInNoteId = (id) => BUILT_IN_NOTE_IDS.has(id);
+
+            const notesLocale = document.documentElement.lang === 'ja' ? 'ja' : 'en';
+            const folderDisplayName = (name) => {
+                if (notesLocale !== 'ja') return name;
+                const map = { Films: '映画', Writing: '執筆', all: 'すべてのノート', recently_deleted: '削除済み' };
+                return map[name] || name;
+            };
+
+            const CM = {
+                en: {
+                    recoverNote: 'Recover Note',
+                    deletePermanently: 'Delete Permanently',
+                    pinNote: 'Pin Note',
+                    unpinNote: 'Unpin Note',
+                    moveTo: (f) => `Move to ${folderDisplayName(f)}`,
+                    deleteNote: 'Delete Note',
+                    renameFolder: 'Rename Folder',
+                    deleteFolder: 'Delete Folder',
+                    folderReadonly: 'This folder cannot be modified',
+                    deleteN: (n) => `Delete ${n} Notes`,
+                    pinN: (n) => `Pin ${n} Notes`,
+                    unpinN: (n) => `Unpin ${n} Notes`,
+                    moveNTo: (n, f) => `Move ${n} Notes to ${folderDisplayName(f)}`,
+                    promptRenameFolder: 'Rename folder',
+                    promptNewFolderName: 'New folder name',
+                    confirmDeleteFolder: (name) => `Delete folder "${name}"? Notes will be moved to All Notes.`,
+                    reservedFolder: 'Folder name reserved. Use another name.',
+                    folderExists: 'Folder already exists.',
+                    folderExistsRename: 'Folder already exists'
+                },
+                ja: {
+                    recoverNote: 'ノートを復元',
+                    deletePermanently: '完全に削除',
+                    pinNote: 'ピン留め',
+                    unpinNote: 'ピンを外す',
+                    moveTo: (f) => `${folderDisplayName(f)}に移動`,
+                    deleteNote: 'ノートを削除',
+                    renameFolder: 'フォルダ名を変更',
+                    deleteFolder: 'フォルダを削除',
+                    folderReadonly: 'このフォルダは変更できません',
+                    deleteN: (n) => `${n}件のノートを削除`,
+                    pinN: (n) => `${n}件をピン留め`,
+                    unpinN: (n) => `${n}件のピンを外す`,
+                    moveNTo: (n, f) => `${n}件を${folderDisplayName(f)}に移動`,
+                    promptRenameFolder: 'フォルダ名を変更',
+                    promptNewFolderName: '新しいフォルダ名',
+                    confirmDeleteFolder: (name) => `フォルダ「${name}」を削除しますか？ノートは「すべてのノート」に移動します。`,
+                    reservedFolder: 'この名前は使えません。別の名前にしてください。',
+                    folderExists: '同じ名前のフォルダがあります。',
+                    folderExistsRename: '同じ名前のフォルダがあります。'
+                }
+            };
+
+            const tcm = (key, ...args) => {
+                const entry = CM[notesLocale][key] ?? CM.en[key];
+                return typeof entry === 'function' ? entry(...args) : entry;
+            };
+
+            let openFolderContextMenu = () => { };
+            let bindFolderClicks = () => { };
+
+            const setNoteViewReadOnly = (readonly) => {
+                const titleEd = document.getElementById('active-note-title');
+                const contentEd = document.getElementById('active-note-content');
+                const toolbar = document.querySelector('#panel-note-view .notes-header-right');
+                const panel = document.getElementById('panel-note-view');
+                if (!titleEd || !contentEd) return;
+                titleEd.contentEditable = readonly ? 'false' : 'true';
+                contentEd.contentEditable = readonly ? 'false' : 'true';
+                panel?.classList.toggle('note-view-readonly', readonly);
+                if (toolbar) {
+                    toolbar.style.opacity = readonly ? '0.35' : '';
+                    toolbar.style.pointerEvents = readonly ? 'none' : '';
+                }
+            };
+
             const slugify = (name) => name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+
+            const constrainMenuToViewport = (menu, x, y) => {
+                // Position menu
+                menu.style.left = x + 'px';
+                menu.style.top = y + 'px';
+
+                // Get menu dimensions after positioning
+                setTimeout(() => {
+                    const rect = menu.getBoundingClientRect();
+                    const padding = 10;
+                    let newX = x;
+                    let newY = y;
+
+                    // Adjust horizontal position if menu goes off-screen
+                    if (rect.right > window.innerWidth - padding) {
+                        newX = window.innerWidth - rect.width - padding;
+                    }
+                    if (rect.left < padding) {
+                        newX = padding;
+                    }
+
+                    // Adjust vertical position if menu goes off-screen
+                    if (rect.bottom > window.innerHeight - padding) {
+                        newY = window.innerHeight - rect.height - padding;
+                    }
+                    if (rect.top < padding) {
+                        newY = padding;
+                    }
+
+                    menu.style.left = Math.max(padding, newX) + 'px';
+                    menu.style.top = Math.max(padding, newY) + 'px';
+                }, 0);
+            };
 
             const getMoveTargets = () => {
                 return Array.from(new Set(Object.values(folderMap))).filter(f => f && f !== 'recently_deleted' && f !== 'all');
@@ -2441,6 +2804,7 @@
                     const item = document.createElement('div');
                     item.className = 'notes-list-item folder-list-item custom';
                     item.setAttribute('data-target', folderKey);
+                    item.dataset.customFolder = 'true';
                     item.style.userSelect = 'none';
 
                     const info = document.createElement('div');
@@ -2453,61 +2817,23 @@
                     item.appendChild(info);
                     item.appendChild(count);
 
-                    item.addEventListener('click', () => {
-                        document.querySelectorAll('.notes-list-item').forEach(el => el.classList.remove('active-folder'));
-                        item.classList.add('active-folder');
-                        currentFolder = folderName;
-                        renderNotesList(folderName);
-                        navigateTo('notes');
-                        playNotesClickSound();
-                    });
-
-                    let folderPressTimer;
-                    const clearFolderPressTimer = () => {
-                        if (folderPressTimer) {
-                            clearTimeout(folderPressTimer);
-                            folderPressTimer = null;
-                        }
-                    };
-
-                    item.addEventListener('pointerdown', (e) => {
-                        if (e.pointerType === 'mouse') return;
-                        folderPressTimer = setTimeout(() => {
-                            if (typeof openFolderContextMenu === 'function') {
-                                openFolderContextMenu(e, folderName, folderKey);
-                            }
-                        }, 500);
-                    });
-
-                    item.addEventListener('pointerup', clearFolderPressTimer);
-                    item.addEventListener('pointerleave', clearFolderPressTimer);
-                    item.addEventListener('pointercancel', clearFolderPressTimer);
-
-                    item.addEventListener('contextmenu', (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        if (typeof openFolderContextMenu === 'function') {
-                            openFolderContextMenu(e, folderName, folderKey);
-                        }
-                    });
-
                     if (divider) folderGroup.insertBefore(item, divider);
                     else folderGroup.appendChild(item);
                 });
 
                 updateCounts();
-                if (typeof bindFolderClicks === 'function') bindFolderClicks();
+                bindFolderClicks();
             };
 
             const createFolder = () => {
-                const folderName = prompt('New folder name');
+                const folderName = prompt(tcm('promptNewFolderName'));
                 if (!folderName) return;
                 if (['All Notes', 'Films', 'Writing', 'Recently Deleted'].includes(folderName)) {
-                    alert('Folder name reserved. Use another name.');
+                    alert(tcm('reservedFolder'));
                     return;
                 }
                 if (customFolders.includes(folderName)) {
-                    alert('Folder already exists.');
+                    alert(tcm('folderExists'));
                     return;
                 }
                 customFolders.push(folderName);
@@ -2516,7 +2842,7 @@
                 playNotesClickSound();
             };
 
-            const navigateTo = (targetId) => {
+            const navigateTo = (targetId, opts = {}) => {
                 Object.values(panels).forEach(p => {
                     p.classList.remove('active', 'prev');
                 });
@@ -2526,7 +2852,9 @@
                 } else if (targetId === 'notes' || folderMap[targetId]) {
                     const filter = folderMap[targetId] || currentFolder || 'all';
                     currentFolder = filter;
-                    renderNotesList(filter);
+                    if (!opts.skipListRender) {
+                        renderNotesList(filter);
+                    }
                     panels.folders.classList.add('prev');
                     panels.notes.classList.add('active');
                 } else if (targetId === 'view') {
@@ -2537,7 +2865,7 @@
                 }
             };
 
-            const notesData = {
+            const NOTES_SEED_FALLBACK = {
                 'note-1': {
                     title: 'Favorite Movies',
                     folder: 'Films',
@@ -2568,7 +2896,48 @@
                 }
             };
 
-            // Persistence Logic
+            const parseNoteMd = (raw) => {
+                const match = raw.trim().match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+                if (!match) return null;
+                const meta = {};
+                match[1].split(/\r?\n/).forEach((line) => {
+                    const idx = line.indexOf(':');
+                    if (idx === -1) return;
+                    const k = line.slice(0, idx).trim();
+                    let v = line.slice(idx + 1).trim();
+                    if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
+                        v = v.slice(1, -1);
+                    }
+                    meta[k] = v;
+                });
+                return { meta, content: match[2].trim() };
+            };
+
+            const hydrateNotesFromMarkdown = async () => {
+                const seedIds = ['note-1', 'note-2', 'note-3', 'note-writing'];
+                const out = {};
+                try {
+                    await Promise.all(seedIds.map(async (id) => {
+                        const res = await fetch(`notes/${id}.md`);
+                        if (!res.ok) throw new Error('md');
+                        const parsed = parseNoteMd(await res.text());
+                        if (!parsed) throw new Error('parse');
+                        const m = parsed.meta;
+                        out[id] = {
+                            title: m.title || '',
+                            folder: m.folder || 'all',
+                            datelist: m.datelist || '',
+                            date: m.date || '',
+                            content: parsed.content || ''
+                        };
+                    }));
+                    return out;
+                } catch {
+                    return { ...NOTES_SEED_FALLBACK };
+                }
+            };
+
+            let notesData = await hydrateNotesFromMarkdown();
             const savedNotes = localStorage.getItem('apple_notes_data');
             if (savedNotes) {
                 Object.assign(notesData, JSON.parse(savedNotes));
@@ -2638,8 +3007,8 @@
                 const listContainer = document.getElementById('notes-list-container');
                 if (!listContainer) return;
 
-                const currentSelection = document.querySelector('.note-preview.selected')?.getAttribute('data-note-id');
-
+                const prevSelection = document.querySelector('.note-preview.selected')?.getAttribute('data-note-id');
+                let selectionTarget = null;
                 listContainer.innerHTML = '';
 
                 // Recently Deleted Notice
@@ -2662,12 +3031,28 @@
                     return notesData[b].lastEdited - notesData[a].lastEdited;
                 });
 
+                if (prevSelection && filteredNotes.includes(prevSelection)) {
+                    selectionTarget = prevSelection;
+                } else if (autoSelect && filteredNotes.length) {
+                    selectionTarget = filteredNotes[0];
+                }
+
                 let hasPinnedHeader = false;
                 let hasNotesHeader = false;
 
                 const titleNode = document.getElementById('notes-header-title');
                 if (titleNode) {
-                    titleNode.innerText = folderFilter === 'Writing' ? 'Writing' : folderFilter === 'Films' ? 'Films' : folderFilter === 'recently_deleted' ? 'Recently Deleted' : 'All Notes';
+                    if (folderFilter === 'recently_deleted') {
+                        titleNode.innerText = notesLocale === 'ja' ? '削除済み' : 'Recently Deleted';
+                    } else if (folderFilter === 'all') {
+                        titleNode.innerText = notesLocale === 'ja' ? 'すべてのノート' : 'All Notes';
+                    } else if (folderFilter === 'Films') {
+                        titleNode.innerText = notesLocale === 'ja' ? '映画' : 'Films';
+                    } else if (folderFilter === 'Writing') {
+                        titleNode.innerText = notesLocale === 'ja' ? '執筆' : 'Writing';
+                    } else {
+                        titleNode.innerText = folderFilter;
+                    }
                 }
 
                 filteredNotes.forEach(noteId => {
@@ -2689,7 +3074,8 @@
 
                     const tempDiv = document.createElement('div');
                     tempDiv.innerHTML = data.content;
-                    const previewText = tempDiv.textContent || tempDiv.innerText || '';
+                    const firstChild = tempDiv.querySelector('li, p, div, blockquote, h1, h2, h3, h4, h5, h6');
+                    const previewText = (firstChild || tempDiv).textContent || (firstChild || tempDiv).innerText || '';
 
                     const el = document.createElement('div');
                     el.className = 'notes-list-item note-preview';
@@ -2700,7 +3086,7 @@
                         <div class="note-preview-title">${data.title}</div>
                         <div class="note-preview-date-row">
                             <span class="notes-date-inline">${listDateDisplay}</span>
-                            <span class="note-preview-desc">${previewText.substring(0, 60)}</span>
+                            <span class="note-preview-desc">${previewText.substring(0, 120)}</span>
                         </div>
                     `;
 
@@ -2735,18 +3121,15 @@
                         }
 
                         document.querySelectorAll('.note-preview').forEach(n => {
-                            n.classList.remove('selected', 'before-selected');
+                            n.classList.remove('selected');
                         });
                         el.classList.add('selected');
-
-                        if (el.previousElementSibling && el.previousElementSibling.classList.contains('note-preview')) {
-                            el.previousElementSibling.classList.add('before-selected');
-                        }
 
                         document.getElementById('active-note-content').setAttribute('data-current-note', noteId);
                         document.getElementById('active-note-content').innerHTML = data.content;
                         document.getElementById('active-note-title').innerText = data.title;
                         document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? 'Deleted: ' + formatNoteDate(data.deletedAt) : data.date;
+                        setNoteViewReadOnly(isBuiltInNoteId(noteId));
                         navigateTo('view');
                         playNotesClickSound();
 
@@ -2780,15 +3163,15 @@
                         const x = (e.clientX || (e.touches ? e.touches[0].clientX : 0)) - 10;
                         const y = (e.clientY || (e.touches ? e.touches[0].clientY : 0)) - 10;
 
-                        menu.style.left = x + 'px';
-                        menu.style.top = y + 'px';
+                        document.body.appendChild(menu);
+                        constrainMenuToViewport(menu, x, y);
 
                         const isDeleted = data.folder === 'recently_deleted';
 
                         if (isDeleted) {
                             const restoreBtn = document.createElement('div');
                             restoreBtn.className = 'note-context-item';
-                            restoreBtn.innerText = 'Recover Note';
+                            restoreBtn.innerText = tcm('recoverNote');
                             restoreBtn.onclick = () => {
                                 data.folder = data.originalFolder || 'Notes';
                                 delete data.deletedAt;
@@ -2803,7 +3186,7 @@
                             const delBtn = document.createElement('div');
                             delBtn.className = 'note-context-item';
                             delBtn.style.color = '#FF453A';
-                            delBtn.innerText = 'Delete Permanently';
+                            delBtn.innerText = tcm('deletePermanently');
                             delBtn.onclick = () => {
                                 delete notesData[noteId];
                                 saveNotes();
@@ -2816,7 +3199,7 @@
                             // Pin / Unpin Note
                             const pinBtn = document.createElement('div');
                             pinBtn.className = 'note-context-item';
-                            pinBtn.innerText = data.pinned ? 'Unpin Note' : 'Pin Note';
+                            pinBtn.innerText = data.pinned ? tcm('unpinNote') : tcm('pinNote');
                             pinBtn.onclick = () => {
                                 data.pinned = !data.pinned;
                                 saveNotes();
@@ -2826,51 +3209,53 @@
                             };
                             menu.appendChild(pinBtn);
 
-                            const separator1 = document.createElement('div');
-                            separator1.style.height = '1px';
-                            separator1.style.background = 'rgba(0,0,0,0.1)';
-                            separator1.style.margin = '4px 0';
-                            menu.appendChild(separator1);
+                            if (!isBuiltInNoteId(noteId)) {
+                                const separator1 = document.createElement('div');
+                                separator1.style.height = '1px';
+                                separator1.style.background = 'rgba(0,0,0,0.1)';
+                                separator1.style.margin = '4px 0';
+                                separator1.className = 'context-separator';
+                                menu.appendChild(separator1);
 
-                            // Move to Folder (all available, includes custom)
-                            getMoveTargets().forEach(f => {
-                                if (data.folder === f) return;
-                                const moveBtn = document.createElement('div');
-                                moveBtn.className = 'note-context-item';
-                                moveBtn.innerHTML = `Move to ${f}`;
-                                moveBtn.onclick = () => {
-                                    data.folder = f === 'all' ? 'all' : f;
+                                // Move to Folder (all available, includes custom)
+                                getMoveTargets().forEach(f => {
+                                    if (data.folder === f) return;
+                                    const moveBtn = document.createElement('div');
+                                    moveBtn.className = 'note-context-item';
+                                    moveBtn.innerText = tcm('moveTo', f);
+                                    moveBtn.onclick = () => {
+                                        data.folder = f === 'all' ? 'all' : f;
+                                        saveNotes();
+                                        renderNotesList(folderFilter);
+                                        menu.remove();
+                                        playMoveSound();
+                                    };
+                                    menu.appendChild(moveBtn);
+                                });
+
+                                const separator = document.createElement('div');
+                                separator.style.height = '1px';
+                                separator.style.background = 'rgba(0,0,0,0.1)';
+                                separator.style.margin = '4px 0';
+                                separator.className = 'context-separator';
+                                menu.appendChild(separator);
+
+                                const actionBtn = document.createElement('div');
+                                actionBtn.className = 'note-context-item';
+                                actionBtn.style.color = '#FF453A';
+                                actionBtn.innerText = tcm('deleteNote');
+                                actionBtn.onclick = () => {
+                                    data.originalFolder = data.folder;
+                                    data.folder = 'recently_deleted';
+                                    data.deletedAt = Date.now();
                                     saveNotes();
                                     renderNotesList(folderFilter);
                                     menu.remove();
-                                    playMoveSound();
+                                    playNotesDeleteSound(); // Now plays delete sound even for non-permanent deletion
                                 };
-                                menu.appendChild(moveBtn);
-                            });
-
-                            const separator = document.createElement('div');
-                            separator.style.height = '1px';
-                            separator.style.background = 'rgba(0,0,0,0.1)';
-                            separator.style.margin = '4px 0';
-                            menu.appendChild(separator);
-
-                            const actionBtn = document.createElement('div');
-                            actionBtn.className = 'note-context-item';
-                            actionBtn.style.color = '#FF453A';
-                            actionBtn.innerText = 'Delete Note';
-                            actionBtn.onclick = () => {
-                                data.originalFolder = data.folder;
-                                data.folder = 'recently_deleted';
-                                data.deletedAt = Date.now();
-                                saveNotes();
-                                renderNotesList(folderFilter);
-                                menu.remove();
-                                playNotesDeleteSound(); // Now plays delete sound even for non-permanent deletion
-                            };
-                            menu.appendChild(actionBtn);
+                                menu.appendChild(actionBtn);
+                            }
                         }
-
-                        document.body.appendChild(menu);
 
                         const closeMenu = (ev) => {
                             if (!menu.contains(ev.target)) {
@@ -2884,7 +3269,7 @@
                     const handleMultiNoteAction = (e) => {
                         const selectedEls = document.querySelectorAll('.note-preview.selected');
                         const selectedIds = Array.from(selectedEls).map(el => el.getAttribute('data-note-id'));
-                        
+
                         if (selectedIds.length <= 1) return handleNoteAction(e);
 
                         e.preventDefault();
@@ -2898,29 +3283,31 @@
                         menu.className = 'note-context-menu';
                         const x = (e.clientX || 0) - 10;
                         const y = (e.clientY || 0) - 10;
-                        menu.style.left = x + 'px';
-                        menu.style.top = y + 'px';
 
-                        const delBtn = document.createElement('div');
-                        delBtn.className = 'note-context-item';
-                        delBtn.style.color = '#FF453A';
-                        delBtn.innerText = `Delete ${selectedIds.length} Notes`;
-                        delBtn.onclick = () => {
-                            selectedIds.forEach(id => {
-                                notesData[id].originalFolder = notesData[id].folder;
-                                notesData[id].folder = 'recently_deleted';
-                                notesData[id].deletedAt = Date.now();
-                            });
-                            saveNotes();
-                            renderNotesList(folderFilter);
-                            menu.remove();
-                            playNotesDeleteSound();
-                        };
-                        menu.appendChild(delBtn);
+                        const multiHasBuiltIn = selectedIds.some((id) => isBuiltInNoteId(id));
+
+                        if (!multiHasBuiltIn) {
+                            const delBtn = document.createElement('div');
+                            delBtn.className = 'note-context-item';
+                            delBtn.style.color = '#FF453A';
+                            delBtn.innerText = tcm('deleteN', selectedIds.length);
+                            delBtn.onclick = () => {
+                                selectedIds.forEach(id => {
+                                    notesData[id].originalFolder = notesData[id].folder;
+                                    notesData[id].folder = 'recently_deleted';
+                                    notesData[id].deletedAt = Date.now();
+                                });
+                                saveNotes();
+                                renderNotesList(folderFilter);
+                                menu.remove();
+                                playNotesDeleteSound();
+                            };
+                            menu.appendChild(delBtn);
+                        }
 
                         const pinBtn = document.createElement('div');
                         pinBtn.className = 'note-context-item';
-                        pinBtn.innerText = `Pin ${selectedIds.length} Notes`;
+                        pinBtn.innerText = tcm('pinN', selectedIds.length);
                         pinBtn.onclick = () => {
                             selectedIds.forEach(id => {
                                 notesData[id].pinned = true;
@@ -2934,7 +3321,7 @@
 
                         const unpinBtn = document.createElement('div');
                         unpinBtn.className = 'note-context-item';
-                        unpinBtn.innerText = `Unpin ${selectedIds.length} Notes`;
+                        unpinBtn.innerText = tcm('unpinN', selectedIds.length);
                         unpinBtn.onclick = () => {
                             selectedIds.forEach(id => {
                                 notesData[id].pinned = false;
@@ -2946,29 +3333,31 @@
                         };
                         menu.appendChild(unpinBtn);
 
-                        // Bulk move options
-                        const selectedFolders = Array.from(new Set(selectedIds.map(id => notesData[id].folder)));
-                        getMoveTargets().forEach(f => {
-                            // only show target if at least one selected note is not currently in this folder
-                            if (selectedFolders.length === 1 && selectedFolders[0] === f) return;
-                            if (selectedFolders.every(sf => sf === f)) return;
+                        if (!multiHasBuiltIn) {
+                            const selectedFolders = Array.from(new Set(selectedIds.map(id => notesData[id].folder)));
+                            getMoveTargets().forEach(f => {
+                                if (selectedFolders.length === 1 && selectedFolders[0] === f) return;
+                                if (selectedFolders.every(sf => sf === f)) return;
 
-                            const mbtn = document.createElement('div');
-                            mbtn.className = 'note-context-item';
-                            mbtn.innerText = `Move ${selectedIds.length} Notes to ${f}`;
-                            mbtn.onclick = () => {
-                                selectedIds.forEach(id => {
-                                    notesData[id].folder = f;
-                                });
-                                saveNotes();
-                                renderNotesList(folderFilter);
-                                menu.remove();
-                                playMoveSound();
-                            };
-                            menu.appendChild(mbtn);
-                        });
+                                const mbtn = document.createElement('div');
+                                mbtn.className = 'note-context-item';
+                                mbtn.innerText = tcm('moveNTo', selectedIds.length, f);
+                                mbtn.onclick = () => {
+                                    selectedIds.forEach(id => {
+                                        notesData[id].folder = f;
+                                    });
+                                    saveNotes();
+                                    renderNotesList(folderFilter);
+                                    menu.remove();
+                                    playMoveSound();
+                                };
+                                menu.appendChild(mbtn);
+                            });
+                        }
 
                         document.body.appendChild(menu);
+                        constrainMenuToViewport(menu, x, y);
+
                         const closeMultiMenu = (ev) => {
                             if (ev.button === 2) return; // ignore right-click
                             if (!menu.contains(ev.target)) {
@@ -2984,9 +3373,9 @@
                         e.stopPropagation();
                         const selectedEls = document.querySelectorAll('.note-preview.selected');
                         if (selectedEls.length > 1) {
-                           handleMultiNoteAction(e);
+                            handleMultiNoteAction(e);
                         } else {
-                           handleNoteAction(e);
+                            handleNoteAction(e);
                         }
                     });
                     el.addEventListener('pointerdown', (e) => {
@@ -3001,25 +3390,14 @@
                     el.addEventListener('pointercancel', clearTimer);
                     el.addEventListener('pointerleave', clearTimer);
 
-                    if (autoSelect) {
-                        document.querySelectorAll('.note-preview').forEach(n => {
-                            n.classList.remove('selected', 'before-selected');
-                        });
+                    if (noteId === selectionTarget) {
                         el.classList.add('selected');
-                        if (el.previousElementSibling) {
-                            el.previousElementSibling.classList.add('before-selected');
-                        }
-
-                        document.getElementById('active-note-content').setAttribute('data-current-note', noteId);
-                        document.getElementById('active-note-content').innerHTML = data.content;
-                        document.getElementById('active-note-title').innerText = data.title;
-                        document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? 'Deleted: ' + formatNoteDate(data.deletedAt) : data.date;
-                    }
-
-                    if (noteId === currentSelection) {
-                        el.classList.add('selected');
-                        if (el.previousElementSibling) {
-                            el.previousElementSibling.classList.add('before-selected');
+                        if (autoSelect && selectionTarget) {
+                            document.getElementById('active-note-content').setAttribute('data-current-note', noteId);
+                            document.getElementById('active-note-content').innerHTML = data.content;
+                            document.getElementById('active-note-title').innerText = data.title;
+                            document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? 'Deleted: ' + formatNoteDate(data.deletedAt) : data.date;
+                            setNoteViewReadOnly(isBuiltInNoteId(noteId));
                         }
                     }
 
@@ -3039,6 +3417,7 @@
             if (titleEditor && contentEditor) {
                 const handleEdit = () => {
                     const noteId = contentEditor.getAttribute('data-current-note');
+                    if (noteId && isBuiltInNoteId(noteId)) return;
                     if (noteId && notesData[noteId]) {
                         notesData[noteId].title = titleEditor.innerText;
                         notesData[noteId].content = contentEditor.innerHTML;
@@ -3049,8 +3428,9 @@
                         document.getElementById('active-note-date').innerText = notesData[noteId].date;
                         // Re-render the list to update previews and sorting
                         const currentF = document.querySelector('.active-folder')?.getAttribute('data-target');
-                        const filter = currentF === 'panel-notes-films' ? 'Films' :
-                            currentF === 'panel-notes-writing' ? 'Writing' : 'all';
+                        const filter = (currentF && Object.prototype.hasOwnProperty.call(folderMap, currentF))
+                            ? folderMap[currentF]
+                            : currentFolder;
                         renderNotesList(filter, false); // false to avoid recursive click
                     }
                 };
@@ -3403,6 +3783,7 @@
                     renderNotesList(currentFolder, true);
                     const item = document.querySelector(`.note-preview[data-note-id="${id}"]`);
                     if (item) item.click();
+                    setNoteViewReadOnly(false);
                     setTimeout(() => {
                         const tEd = document.getElementById('active-note-title');
                         if (tEd) {
@@ -3418,42 +3799,52 @@
                 document.getElementById('new-folder-btn-top')?.addEventListener('click', createFolder);
                 document.getElementById('new-folder-btn')?.addEventListener('click', createFolder); // hidden; legacy fallback
 
-                const openFolderContextMenu = (e, folderName, targetKey) => {
+                openFolderContextMenu = (e, folderName, targetKey) => {
                     const existing = document.getElementById('folder-context-menu');
                     if (existing) existing.remove();
 
                     const menu = document.createElement('div');
                     menu.id = 'folder-context-menu';
                     menu.className = 'note-context-menu';
-                    const isCustom = customFolders.includes(folderName);
-                    // Folders that cannot be renamed or deleted
-                    const isSystemLocked = (folderName === 'all' || folderName === 'recently_deleted');
-                    const isEditable = isCustom || !isSystemLocked;
+                    const folderRow = targetKey ? document.querySelector(`[data-target="${targetKey}"]`) : null;
+                    const isCustomRow = !!(folderRow && folderRow.classList.contains('custom'));
+                    const isCustom = isCustomRow || customFolders.includes(folderName);
+                    const isEditable = isCustom;
 
                     if (isEditable) {
                         const renameBtn = document.createElement('div');
                         renameBtn.className = 'note-context-item';
-                        renameBtn.innerText = 'Rename Folder';
+                        renameBtn.innerText = tcm('renameFolder');
                         renameBtn.onclick = () => {
-                            const newName = prompt('Rename folder', folderName);
-                            if (!newName || newName.trim() === '' || newName === folderName) return;
+                            const newName = prompt(tcm('promptRenameFolder'), folderName);
+                            const trimmedNewName = newName ? newName.trim() : '';
+                            if (!trimmedNewName || trimmedNewName === folderName) return;
                             // Check all existing folder names to prevent conflicts
                             const allFolderNames = Object.values(folderMap);
-                            if (allFolderNames.includes(newName)) {
-                                alert('Folder already exists');
+                            if (allFolderNames.includes(trimmedNewName)) {
+                                alert(tcm('folderExistsRename'));
                                 return;
                             }
 
                             const oldKey = `panel-notes-${slugify(folderName)}`;
-                            const newKey = `panel-notes-${slugify(newName)}`;
+                            const newKey = `panel-notes-${slugify(trimmedNewName)}`;
+
+                            // First: Update notes folder property (must happen before any rendering)
+                            let updatedCount = 0;
+                            Object.values(notesData).forEach(note => {
+                                if (note.folder === folderName) {
+                                    note.folder = trimmedNewName;
+                                    updatedCount++;
+                                }
+                            });
 
                             if (isCustom) {
-                                customFolders = customFolders.map(n => n === folderName ? newName : n);
+                                customFolders = customFolders.map(n => n === folderName ? trimmedNewName : n);
                                 localStorage.setItem(CUSTOM_FOLDER_KEY, JSON.stringify(customFolders));
                             }
 
                             if (folderMap[oldKey]) delete folderMap[oldKey];
-                            folderMap[newKey] = newName;
+                            folderMap[newKey] = trimmedNewName;
 
                             // Update the built-in folder element's data-target and label text
                             if (!isCustom && targetKey) {
@@ -3466,21 +3857,20 @@
                                         Array.from(infoDiv.childNodes).forEach(node => {
                                             if (node.nodeType === Node.TEXT_NODE) node.remove();
                                         });
-                                        infoDiv.appendChild(document.createTextNode(newName));
+                                        infoDiv.appendChild(document.createTextNode(trimmedNewName));
                                     }
                                 }
                                 delete folderMap[targetKey];
                             }
 
-                            Object.values(notesData).forEach(note => {
-                                if (note.folder === folderName) note.folder = newName;
-                            });
+                            currentFolder = trimmedNewName;
 
-                            currentFolder = newName;
-
+                            // Save notes with updated folder names
                             saveNotes();
+                            // Re-render folder list from persisted data
                             renderFolderList();
-                            renderNotesList(newName);
+                            // Render notes for the renamed folder
+                            renderNotesList(trimmedNewName);
                             menu.remove();
                             playNotesClickSound();
                         };
@@ -3489,13 +3879,14 @@
                         separator.style.height = '1px';
                         separator.style.background = 'rgba(0,0,0,0.1)';
                         separator.style.margin = '4px 0';
+                        separator.className = 'context-separator';
 
                         const deleteBtn = document.createElement('div');
                         deleteBtn.className = 'note-context-item';
                         deleteBtn.style.color = '#FF453A';
-                        deleteBtn.innerText = 'Delete Folder';
+                        deleteBtn.innerText = tcm('deleteFolder');
                         deleteBtn.onclick = () => {
-                            if (!confirm(`Delete folder "${folderName}"? Notes will be moved to All Notes.`)) return;
+                            if (!confirm(tcm('confirmDeleteFolder', folderName))) return;
                             const folderKey = targetKey || `panel-notes-${slugify(folderName)}`;
 
                             if (isCustom) {
@@ -3522,20 +3913,20 @@
                         menu.appendChild(separator);
                         menu.appendChild(deleteBtn);
                     } else {
-                        // System locked folders (All Notes, Deleted)
+                        // System folders and built-in folders (All Notes, Films, Writing, Deleted)
                         const info = document.createElement('div');
                         info.className = 'note-context-item';
                         info.style.color = '#999';
-                        info.innerText = 'This folder cannot be modified';
+                        info.innerText = tcm('folderReadonly');
                         menu.appendChild(info);
                     }
 
                     const x = (e.clientX || 0) - 10;
                     const y = (e.clientY || 0) - 10;
-                    menu.style.left = `${x}px`;
-                    menu.style.top = `${y}px`;
 
                     document.body.appendChild(menu);
+                    constrainMenuToViewport(menu, x, y);
+
                     const closeFolderMenu = (ev) => {
                         if (ev.button === 2) return; // ignore right-click
                         if (!menu.contains(ev.target)) {
@@ -3546,49 +3937,60 @@
                     setTimeout(() => document.addEventListener('click', closeFolderMenu), 10);
                 };
 
-                const bindFolderClicks = () => {
+                bindFolderClicks = () => {
                     document.querySelectorAll('.folder-list-item').forEach(item => {
                         item.onclick = (e) => {
                             e.stopPropagation();
                             const target = item.getAttribute('data-target');
-                            const folderName = (target && folderMap[target]) ? folderMap[target] : item.textContent.trim();
+                            const folderName = (target && Object.prototype.hasOwnProperty.call(folderMap, target))
+                                ? folderMap[target]
+                                : item.querySelector('.notes-folder-info')?.lastChild?.textContent?.trim() || item.textContent.trim();
                             currentFolder = folderName;
-                            renderNotesList(folderName);
                             document.querySelectorAll('.notes-list-item').forEach(n => n.classList.remove('active-folder'));
                             item.classList.add('active-folder');
                             navigateTo('notes');
+                            // Auto-open the latest note or pinned note
+                            setTimeout(() => {
+                                const firstNote = document.querySelector('.note-preview');
+                                if (firstNote && window.innerWidth >= 800) {
+                                    firstNote.click();
+                                }
+                            }, 50);
                             playNotesClickSound();
                         };
 
                         let folderPressTimer;
-                const clearFolderPressTimer = () => {
-                    if (folderPressTimer) {
-                        clearTimeout(folderPressTimer);
-                        folderPressTimer = null;
-                    }
-                };
+                        const clearFolderPressTimer = () => {
+                            if (folderPressTimer) {
+                                clearTimeout(folderPressTimer);
+                                folderPressTimer = null;
+                            }
+                        };
 
-                item.addEventListener('pointerdown', (e) => {
-                    if (e.pointerType === 'mouse') return;
-                    folderPressTimer = setTimeout(() => {
-                        const target = item.getAttribute('data-target');
-                        const folderName = (target && folderMap[target]) ? folderMap[target] : item.textContent.trim();
-                        openFolderContextMenu(e, folderName, target);
-                    }, 500);
-                });
+                        item.onpointerdown = (e) => {
+                            folderPressTimer = setTimeout(() => {
+                                const target = item.getAttribute('data-target');
+                                const folderName = (target && Object.prototype.hasOwnProperty.call(folderMap, target))
+                                    ? folderMap[target]
+                                    : item.querySelector('.notes-folder-info')?.lastChild?.textContent?.trim() || item.textContent.trim();
+                                openFolderContextMenu(e, folderName, target);
+                            }, 500);
+                        };
 
-                item.addEventListener('pointerup', clearFolderPressTimer);
-                item.addEventListener('pointerleave', clearFolderPressTimer);
-                item.addEventListener('pointercancel', clearFolderPressTimer);
+                        item.onpointerup = clearFolderPressTimer;
+                        item.onpointerleave = clearFolderPressTimer;
+                        item.onpointercancel = clearFolderPressTimer;
 
-                item.oncontextmenu = (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const target = item.getAttribute('data-target');
-                    const folderName = (target && folderMap[target]) ? folderMap[target] : item.textContent.trim();
-                    openFolderContextMenu(e, folderName, target);
-                };
-            });
+                        item.oncontextmenu = (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            const target = item.getAttribute('data-target');
+                            const folderName = (target && Object.prototype.hasOwnProperty.call(folderMap, target))
+                                ? folderMap[target]
+                                : item.querySelector('.notes-folder-info')?.lastChild?.textContent?.trim() || item.textContent.trim();
+                            openFolderContextMenu(e, folderName, target);
+                        };
+                    });
                 };
 
                 bindFolderClicks();
@@ -3602,6 +4004,7 @@
                 let wasFullscreenBeforeMinimize = false;
 
                 const openNotes = () => {
+                    document.body.style.overflow = 'hidden';
                     notesBackdrop.classList.add('visible');
                     notesModal.classList.add('visible');
                     notesModal.classList.remove('minimized');
@@ -3636,15 +4039,8 @@
                         // Select the most recent note
                         const firstNote = document.querySelector('.note-preview');
                         if (firstNote) {
-                            setTimeout(() => firstNote.click(), 50);
-                            if (window.innerWidth < 800) {
-                                // On mobile, if we want to "open" it, we navigate to the view
-                                // but usually we should show the list first unless explicitly asked.
-                                // The requirement says "the most recent note should open automatically"
-                                setTimeout(() => navigateTo('view'), 100);
-                            } else {
-                                navigateTo('notes');
-                            }
+                            if (window.innerWidth >= 800) firstNote.click();
+                            navigateTo('notes', { skipListRender: true });
                         } else {
                             navigateTo('folders');
                         }
@@ -3653,6 +4049,7 @@
                 };
 
                 const closeNotes = (e) => {
+                    document.body.style.overflow = '';
                     if (e && e.stopPropagation) e.stopPropagation();
                     notesBackdrop.classList.remove('visible');
                     notesModal.classList.remove('visible');
@@ -3671,6 +4068,7 @@
                 };
 
                 const minimizeNotes = (e) => {
+                    document.body.style.overflow = '';
                     if (e && e.stopPropagation) e.stopPropagation();
                     wasFullscreenBeforeMinimize = notesModal.classList.contains('fullscreen');
                     notesBackdrop.classList.remove('visible');
@@ -3871,7 +4269,7 @@
                             }
                         }
                         if (!autoSelected) playNotesClickSound();
-                        navigateTo('notes');
+                        navigateTo('notes', { skipListRender: true });
                     });
                 });
 
