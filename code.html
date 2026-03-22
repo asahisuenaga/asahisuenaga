@@ -1142,6 +1142,7 @@
             transform: translateZ(0);
             padding: 0;
             overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.3);
             border: none;
         }
 
@@ -1855,7 +1856,7 @@
             </div>
 
             <div class="header">
-                <h1 class="name name-link" id="name" style="cursor: pointer;">Asahi Suenaga</h1>
+                <h1 class="name name-link" id="name" role="button" style="cursor: pointer;">Asahi Suenaga</h1>
                 <a href="https://maps.google.com/?q=East+Lansing,+MI" class="footer-link location-link" id="location"
                     target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;">
                     <span>East Lansing, MI</span>
@@ -1870,14 +1871,14 @@
                 <p id="bio2">I’m currently studying Computer Science at
                     <code><a href="https://engineering.msu.edu/academics/majors-degrees/computer-science-bs" target="_blank"
                         style="color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
-        <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/graduationcap-fill.svg" alt="Graduation Cap Icon" class="themed-icon" style="height: 0.875em; width: auto; margin-right: 0.125rem;">Michigan State</a></code>
+        <img src="icons/graduationcap.svg" alt="Graduation Cap Icon" class="themed-icon" style="height: 0.875em; width: auto; margin-right: 0.125rem;">Michigan State</a></code>
                     and learning Swift whenever I have the opportunity. You can see how I applied this mindset to my
                     <code><a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc"
                         target="_blank" style="color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
-        <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/puzzlepiece-fill.svg" alt="Puzzle Piece Icon" class="themed-icon" style="height: 0.875em; width: auto; margin-right: 0.125rem;">browser
+        <img src="icons/puzzlepiece.svg" alt="Puzzle Piece Icon" class="themed-icon" style="height: 0.875em; width: auto; margin-right: 0.125rem;">browser
                         extension</a></code> and other projects in my
                     <code><a href="https://github.com/asahisuenaga" target="_blank" style="color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
-        <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/text-page-fill.svg" alt="Resume Icon" class="themed-icon" style="height: 0.875em; width: auto; margin-right: 0.125rem;">experience</a></code>.
+        <img src="icons/text-page.svg" alt="Resume Icon" class="themed-icon" style="height: 0.875em; width: auto; margin-right: 0.125rem;">experience</a></code>.
                 </p>
             </div>
         </div>
@@ -1939,7 +1940,7 @@
                 </div>
                 <button id="new-folder-btn-top" class="notes-glass-btn" title="New Folder"
                     style="margin-left: auto; width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;">
-                    <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/folder-badge-plus.svg"
+                    <img src="icons/folder-badge-plus.svg"
                         style="width: 24px; height: 24px;" draggable="false" />
                 </button>
             </div>
@@ -1949,7 +1950,7 @@
                     <div class="notes-list-item folder-list-item" data-target="panel-notes-all"
                         style="user-select: none;">
                         <div class="notes-folder-info"><img
-                                src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/folder.svg"
+                                src="icons/folder.svg"
                                 style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
                                 draggable="false">
                             All Notes</div>
@@ -1958,7 +1959,7 @@
                     <div class="notes-list-item folder-list-item" data-target="panel-notes-films"
                         style="user-select: none;">
                         <div class="notes-folder-info"><img
-                                src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/folder.svg"
+                                src="icons/folder.svg"
                                 style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
                                 draggable="false">
                             Films</div>
@@ -1967,7 +1968,7 @@
                     <div class="notes-list-item folder-list-item" data-target="panel-notes-writing"
                         style="user-select: none;">
                         <div class="notes-folder-info"><img
-                                src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/folder.svg"
+                                src="icons/folder.svg"
                                 style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
                                 draggable="false">
                             Writing</div>
@@ -1977,7 +1978,7 @@
                     <div class="notes-list-item folder-list-item" data-target="panel-notes-deleted"
                         style="user-select: none;">
                         <div class="notes-folder-info">
-                            <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/trash.svg"
+                            <img src="icons/trash.svg"
                                 style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
                                 draggable="false">
                             Deleted
@@ -1988,7 +1989,7 @@
             </div>
             <div class="notes-footer">
                 <button class="notes-glass-btn" id="new-folder-btn" title="New Folder">
-                    <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/folder-badge-plus.svg"
+                    <img src="icons/folder-badge-plus.svg"
                         style="width:20px; height:20px;">
                 </button>
             </div>
@@ -1999,20 +2000,20 @@
             <div class="notes-header">
                 <div class="notes-header-left">
                     <button class="notes-glass-btn notes-back" data-back="panel-folders" style="display: none;">
-                        <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/chevron-left.svg"
+                        <img src="icons/chevron-left.svg"
                             class="back-hero-icon"
                             style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
                             draggable="false">
                     </button>
                     <button class="notes-glass-btn" id="sidebar-toggle" title="Sidebar" oncontextmenu="return false;"
                         style="margin-left: 0px; transition: margin-left 0.3s cubic-bezier(0.25, 1, 0.5, 1);">
-                        <img src=https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/sidebar-left.svg
+                        <img src="icons/sidebar-left.svg"
                             style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
                             draggable="false">
                     </button>
                 </div>
                 <button id="new-note-btn-header" class="new-note-action" title="New Note">
-                    <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/square-and-pencil.svg"
+                    <img src="icons/square-and-pencil.svg"
                         draggable="false">
                 </button>
             </div>
@@ -2029,33 +2030,33 @@
             <div class="notes-header">
                 <div class="notes-header-left">
                     <button class="notes-glass-btn notes-back" data-back="panel-notes">
-                        <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/chevron-left.svg"
+                        <img src="icons/chevron-left.svg"
                             class="back-hero-icon"
                             style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
                             draggable="false">
                     </button>
                     <button id="new-note-btn-mobile" class="notes-glass-btn" title="New Note"
                         style="position: absolute; right: 12px; display: none;">
-                        <img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/square-and-pencil.svg"
-                            style="width: 20px; height: 20px; opacity: 0.8; filter: brightness(0.2);" draggable="false">
+                        <img src="icons/square-and-pencil.svg"
+                            style="width: 20px; height: 20px; opacity: 0.8;" draggable="false">
                     </button>
                 </div>
                 <div class="notes-header-right">
                     <button class="notes-toolbar-btn" data-command="bold" title="Bold">
                         <img
-                            src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/bold.svg">
+                            src="icons/bold.svg">
                     </button>
                     <button class="notes-toolbar-btn" data-command="italic" title="Italic">
                         <img
-                            src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/italic.svg">
+                            src="icons/italic.svg">
                     </button>
                     <button class="notes-toolbar-btn" data-command="underline" title="Underline">
                         <img
-                            src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/underline.svg">
+                            src="icons/underline.svg">
                     </button>
                     <button class="notes-toolbar-btn" data-command="strikeThrough" title="Strikethrough">
                         <img
-                            src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/strikethrough.svg">
+                            src="icons/strikethrough.svg">
                     </button>
                     <button class="notes-toolbar-btn" id="notes-mono-btn" title="Monostyle">
                         <span id="notes-mono-text">M</span>
@@ -2064,31 +2065,31 @@
                         style="width: 1px; height: 16px; background: rgba(0,0,0,0.1); margin: 0 2px;"></div>
                     <button class="notes-toolbar-btn" data-command="outdent" title="Decrease Indent">
                         <img
-                            src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/decrease-indent.svg">
+                            src="icons/decrease-indent.svg">
                     </button>
                     <button class="notes-toolbar-btn" data-command="indent" title="Increase Indent">
                         <img
-                            src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/increase-indent.svg">
+                            src="icons/increase-indent.svg">
                     </button>
                     <div class="toolbar-divider divider-lists"
                         style="width: 1px; height: 16px; background: rgba(0,0,0,0.1); margin: 0 2px;"></div>
                     <button class="notes-toolbar-btn" data-command="insertUnorderedList" title="Bulleted List">
                         <img
-                            src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/list-bullet.svg">
+                            src="icons/list-bullet.svg">
                     </button>
                     <button class="notes-toolbar-btn" data-command="insertOrderedList" title="Numbered List">
                         <img
-                            src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/list-number.svg">
+                            src="icons/list-number.svg">
                     </button>
                     <button class="notes-toolbar-btn" id="notes-dash-btn" title="Dashed List"
                         data-command="insertDashList">
                         <img
-                            src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/list-dash.svg">
+                            src="icons/list-dash.svg">
                     </button>
                     <button class="notes-toolbar-btn" id="notes-checklist-btn" title="Checklist"
                         data-command="insertChecklist">
                         <img
-                            src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/checklist.svg">
+                            src="icons/checklist.svg">
                     </button>
 
                 </div>
@@ -2105,7 +2106,7 @@
     <div class="cursor-tooltip" id="cursor-tooltip">
         <div class="tooltip-content" id="tooltip-name">
             <img class="tooltip-icon themed-icon tooltranslate"
-                src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/translate.svg"
+                src="icons/translate.svg"
                 draggable="false">
             <div class="tooltip-text">
                 <div class="tooltip-title" id="tooltip-name-title">日本語</div>
@@ -2484,6 +2485,7 @@
 
             nameEl?.addEventListener('click', () => {
                 applyLang(currentLang === 'ja' ? 'en' : 'ja');
+                playClickSound();
             });
 
         });
@@ -2835,7 +2837,7 @@
 
                 // Minimized label
                 const notesModal = document.querySelector('.notes-modal');
-                if (notesModal) notesModal.style.setProperty('--notes-minimized-label', isJp ? '「メモ」' : 'Apple Notes');
+                if (notesModal) notesModal.style.setProperty('--notes-minimized-label', isJp ? '"メモ"' : 'Apple Notes');
 
                 // Toolbar button titles
                 const toolbarTitles = isJp ? {
@@ -2939,7 +2941,7 @@
 
                     const info = document.createElement('div');
                     info.className = 'notes-folder-info';
-                    info.innerHTML = `<img src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/folder.svg" style="width:18px; height:18px; display:inline-block; vertical-align:-3px;" draggable="false">${folderName}`;
+                    info.innerHTML = `<img src="icons/folder.svg" style="width:18px; height:18px; display:inline-block; vertical-align:-3px;" draggable="false">${folderName}`;
 
                     const count = document.createElement('div');
                     count.innerHTML = `<span class="notes-count" id="count-${folderKey}">0</span>`;
@@ -4313,6 +4315,7 @@
                     notesModal.classList.remove('visible');
                     notesModal.classList.remove('minimized');
                     notesModal.classList.remove('fullscreen');
+                    wasFullscreenBeforeMinimize = false;
                     bookmark.classList.remove('active');
 
                     // Clear manual JS transforms
