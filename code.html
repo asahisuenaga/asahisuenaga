@@ -117,10 +117,8 @@
         }
 
         .music-card {
-            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
             align-self: center;
             user-select: none;
             -webkit-user-select: none;
@@ -138,6 +136,7 @@
             flex: 1;
             min-width: 0;
             overflow: hidden;
+            cursor: pointer
         }
 
         .music-title {
@@ -497,7 +496,7 @@
             }
         }
 
-        .tooltip-icon {
+        .tooltip-icon{
             width: 1.5rem;
             height: 1.5rem;
             flex-shrink: 0;
@@ -514,6 +513,8 @@
 
         .music-note-icon {
             margin-bottom: 2px;
+            cursor: pointer;
+            padding-right: 0.5rem;
         }
 
         #tooltip-bmc .tooltip-icon {
@@ -1086,7 +1087,6 @@
 
         .notes-dashed-list {
             list-style-type: "- ";
-            padding-left: 20px !important;
         }
 
         .notes-view-content blockquote {
@@ -1117,13 +1117,13 @@
         .notes-view-content pre,
         .notes-view-content code {
             font-family: 'SF Mono', 'Menlo', monospace;
+            font-size: 1rem;
             background: rgba(0, 0, 0, 0.05);
             padding: 2px 4px;
             border-radius: 4px;
         }
 
         .new-note-action {
-            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(2px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 50% !important;
@@ -1148,7 +1148,7 @@
         .new-note-action:hover {
             filter: brightness(110%);
             transform: scale(1.05);
-            background-color: rgba(255, 255, 255, 0.3);
+            background-color: rgba(109, 109, 109, 0.3);
         }
 
         .new-note-action img {
@@ -1177,7 +1177,7 @@
             .new-note-action,
             div.notes-header-right,
             button.notes-header-right {
-                background: rgba(0, 0, 0, 0.3);
+                background: transparent;
                 border: 1px solid rgba(255, 255, 255, 0.2);
                 box-shadow: none;
             }
@@ -1316,13 +1316,15 @@
             display: flex;
             align-items: flex-start;
             gap: 8px;
-            margin: 4px 0;
         }
 
         .checklist-checkbox {
-            margin-top: 4px;
             accent-color: #eab308;
             cursor: pointer;
+        }
+
+        p {
+            margin: 0;
         }
 
         /* Desktop Layout Override */
@@ -1669,6 +1671,16 @@
             }
         }
 
+        :root {
+            --divider-color: rgba(0, 0, 0, 0.1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --divider-color: rgba(255, 255, 255, 0.15); 
+            }
+        }
+
         .notes-modal.fullscreen {
             width: 100vw !important;
             height: 100vh !important;
@@ -1701,7 +1713,7 @@
         }
 
         .notes-modal.minimized::after {
-            content: 'Apple Notes';
+            content: var(--notes-minimized-label, 'Apple Notes');
             position: absolute;
             inset: 0;
             display: flex;
@@ -1787,7 +1799,7 @@
             pointer-events: none;
         }
 
-        .tooltip-icon {
+        .tooltranslate{
             filter: invert(0);
         }
 
@@ -1802,7 +1814,7 @@
                 filter: invert(0);
             }
 
-            .tooltip-icon {
+            .tooltranslate {
                 filter: invert(1) !important;
             }
         }
@@ -1875,7 +1887,7 @@
     <footer class="footer">
         <div class="footer-music">
             <div class="music-card" id="music-card" role="button" tabindex="0">
-                <svg class="music-note-icon" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                <svg class="music-note-icon" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
                     <path
                         d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
                 </svg>
@@ -1961,7 +1973,7 @@
                             Writing</div>
                         <div><span class="notes-count" id="count-writing">0</span></div>
                     </div>
-                    <div style="height: 1px; background: rgba(0,0,0,0.1); margin: 8px 0;"></div>
+                    <div class="notes-folder-divider" style="height: 1px; background: var(--divider-color); margin: 8px 0;"></div>
                     <div class="notes-list-item folder-list-item" data-target="panel-notes-deleted"
                         style="user-select: none;">
                         <div class="notes-folder-info">
@@ -2092,12 +2104,11 @@
 
     <div class="cursor-tooltip" id="cursor-tooltip">
         <div class="tooltip-content" id="tooltip-name">
-            <img class="tooltip-icon themed-icon"
+            <img class="tooltip-icon themed-icon tooltranslate"
                 src="https://raw.githubusercontent.com/menahishayan/HomeAssistant-Cupertino-Icons/refs/heads/main/custom_components/cupertino/data/ios/translate.svg"
                 draggable="false">
             <div class="tooltip-text">
                 <div class="tooltip-title" id="tooltip-name-title">日本語</div>
-                <div class="tooltip-subtitle" id="tooltip-name-subtitle">Click to switch language</div>
             </div>
         </div>
         <div class="tooltip-content" id="tooltip-music">
@@ -2106,11 +2117,11 @@
             </svg>
             <div class="tooltip-text">
                 <div class="tooltip-title">YouTube Music</div>
-                <div class="tooltip-subtitle">Open in YouTube Music</div>
+                <div class="tooltip-subtitle">Listen to my favorites!</div>
             </div>
         </div>
         <div class="tooltip-content" id="tooltip-twitter">
-            <svg class="tooltip-icon" viewBox="0 0 24 24" fill="currentColor">
+            <svg class="tooltip-icon" viewBox="0 0 24 24">
                 <path
                     d="M24 4.557a9.83 9.83 0 01-2.828.775 4.932 4.932 0 002.165-2.724 9.864 9.864 0 01-3.127 1.195 4.916 4.916 0 00-8.38 4.482A13.94 13.94 0 011.671 3.149a4.93 4.93 0 001.523 6.574 4.903 4.903 0 01-2.229-.616v.061a4.924 4.924 0 003.946 4.827 4.896 4.896 0 01-2.224.084 4.928 4.928 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.945 13.945 0 007.548 2.212c9.057 0 14.002-7.496 14.002-13.986 0-.21 0-.42-.015-.63A10.012 10.012 0 0024 4.557z" />
             </svg>
@@ -2244,6 +2255,9 @@
             const userLang = navigator.language || navigator.userLanguage;
             const isJa = userLang.startsWith('ja');
 
+            const originalBio1 = document.getElementById('bio1')?.innerHTML;
+            const originalBio2 = document.getElementById('bio2')?.innerHTML;
+
             if (isJa) {
                 document.documentElement.lang = 'ja';
                 document.title = '末永朝飛';
@@ -2267,7 +2281,7 @@
                     const title = tooltipLocation.querySelector('.tooltip-title');
                     const subtitle = tooltipLocation.querySelector('.tooltip-subtitle');
                     if (title) title.innerText = 'ミシガン州 イーストランシング';
-                    if (subtitle) subtitle.innerText = 'Googleマップで表示';
+                    if (subtitle) subtitle.innerText = 'GoogleMapsで表示';
                 }
 
                 const bio1Node = document.getElementById('bio1');
@@ -2295,7 +2309,7 @@
                 const foldersTitle = document.querySelector('#panel-folders .notes-large-title');
                 if (foldersTitle) foldersTitle.innerText = 'フォルダ';
                 const allNotes = document.querySelector('#panel-folders .notes-folder-info');
-                if (allNotes && allNotes.innerText.includes('All Notes')) allNotes.innerHTML = allNotes.innerHTML.replace('All Notes', 'すべてのノート');
+                if (allNotes && allNotes.innerText.includes('All Notes')) allNotes.innerHTML = allNotes.innerHTML.replace('All Notes', 'すべて');
                 const films = document.querySelector('#panel-folders [data-target="panel-notes-films"] .notes-folder-info');
                 if (films) films.innerHTML = films.innerHTML.replace('Films', '映画');
                 const writing = document.querySelector('#panel-folders [data-target="panel-notes-writing"] .notes-folder-info');
@@ -2327,6 +2341,47 @@
                 const newNoteBtn = document.getElementById('new-note-btn-header');
                 if (newNoteBtn) newNoteBtn.title = '新規ノート';
 
+                // Sidebar button
+                const sidebarBtn = document.getElementById('sidebar-toggle');
+                if (sidebarBtn) sidebarBtn.title = 'サイドバー';
+
+                // Minimized label (Apple Notes)
+                const notesModal = document.querySelector('.notes-modal');
+                if (notesModal) { 
+                    notesModal.style.setProperty('--notes-minimized-label', '"メモ"');
+                }
+
+                // Toolbar button titles
+                const toolbarTitles = {
+                    bold: '太字',
+                    italic: '斜体',
+                    underline: '下線',
+                    strikeThrough: '取り消し線',
+                    outdent: 'インデントを減らす',
+                    indent: 'インデントを増やす',
+                    insertUnorderedList: '箇条書き',
+                    insertOrderedList: '番号付きリスト'
+                };
+                document.querySelectorAll('.notes-toolbar-btn[data-command]').forEach(btn => {
+                    const cmd = btn.getAttribute('data-command');
+                    if (toolbarTitles[cmd]) btn.title = toolbarTitles[cmd];
+                });
+                const monoBtn = document.getElementById('notes-mono-btn');
+                if (monoBtn) monoBtn.title = '等幅';
+                const dashBtn = document.getElementById('notes-dash-btn');
+                if (dashBtn) dashBtn.title = 'ダッシュリスト';
+                const checklistBtn = document.getElementById('notes-checklist-btn');
+                if (checklistBtn) checklistBtn.title = 'チェックリスト';
+
+                // YouTube Music tooltip
+                const tooltipMusic = document.getElementById('tooltip-music');
+                if (tooltipMusic) {
+                    const ytTitle = tooltipMusic.querySelector('.tooltip-title');
+                    const ytSub = tooltipMusic.querySelector('.tooltip-subtitle');
+                    if (ytTitle) ytTitle.innerText = 'YouTube Music';
+                    if (ytSub) ytSub.innerText = 'いい曲を聞こう';
+                }
+
                 // Context menu and other UI elements would need to be handled in JS logic for dynamic content.
             }
 
@@ -2334,6 +2389,7 @@
             const twitterTooltipSub = document.querySelector('#tooltip-twitter .tooltip-subtitle');
             const bmcTooltipTitle = document.querySelector('#tooltip-bmc .tooltip-title');
             const bmcTooltipSub = document.querySelector('#tooltip-bmc .tooltip-subtitle');
+            const nameTooltipTitle = document.getElementById('tooltip-name-title');
 
             if (isJa) {
                 if (twitterTooltipTitle) twitterTooltipTitle.innerText = 'ツイッター';
@@ -2346,7 +2402,6 @@
             // Language toggle for name click
             let currentLang = isJa ? 'ja' : 'en';
             const nameEl = document.getElementById('name');
-            const nameTooltipTitle = document.getElementById('tooltip-name-title');
 
             const enDefaults = {
                 title: 'Asahi Suenaga',
@@ -2355,8 +2410,8 @@
                 locationText: 'East Lansing, MI',
                 locationTooltipTitle: 'East Lansing, MI',
                 locationTooltipSub: 'Show on Google Maps',
-                bio1: document.getElementById('bio1')?.innerHTML,
-                bio2: document.getElementById('bio2')?.innerHTML,
+                bio1: originalBio1,
+                bio2: originalBio2,
                 footerTwitter: 'Twitter',
                 footerBmc: 'Buy Me a Coffee',
                 footerGithub: 'GitHub',
@@ -2418,8 +2473,13 @@
                 if (btT) btT.innerText = d.bmcTooltipTitle;
                 const btS = document.querySelector('#tooltip-bmc .tooltip-subtitle');
                 if (btS) btS.innerText = d.bmcTooltipSub;
+                const ymT = document.querySelector('#tooltip-music .tooltip-title');
+                if (ymT) ymT.innerText = 'YouTube Music';
+                const ymS = document.querySelector('#tooltip-music .tooltip-subtitle');
+                if (ymS) ymS.innerText = lang === 'ja' ? 'YouTube Musicで開く' : 'Open in YouTube Music';
                 if (nameTooltipTitle) nameTooltipTitle.innerText = lang === 'ja' ? 'English' : '日本語';
                 currentLang = lang;
+                if (window.applyNotesLang) window.applyNotesLang(lang);
             }
 
             nameEl?.addEventListener('click', () => {
@@ -2675,9 +2735,9 @@
             const BUILT_IN_NOTE_IDS = new Set(['note-1', 'note-2', 'note-3', 'note-writing']);
             const isBuiltInNoteId = (id) => BUILT_IN_NOTE_IDS.has(id);
 
-            const notesLocale = document.documentElement.lang === 'ja' ? 'ja' : 'en';
+            const getNotesLocale = () => document.documentElement.lang === 'ja' ? 'ja' : 'en';
             const folderDisplayName = (name) => {
-                if (notesLocale !== 'ja') return name;
+                if (getNotesLocale() !== 'ja') return name;
                 const map = { Films: '映画', Writing: '執筆', all: 'すべてのノート', recently_deleted: '削除済み' };
                 return map[name] || name;
             };
@@ -2696,6 +2756,8 @@
                     deleteN: (n) => `Delete ${n} Notes`,
                     pinN: (n) => `Pin ${n} Notes`,
                     unpinN: (n) => `Unpin ${n} Notes`,
+                    recoverN: (n) => `Recover ${n} Notes`,
+                    deletePermanentlyN: (n) => `Delete ${n} Notes Permanently`,
                     moveNTo: (n, f) => `Move ${n} Notes to ${folderDisplayName(f)}`,
                     promptRenameFolder: 'Rename folder',
                     promptNewFolderName: 'New folder name',
@@ -2717,6 +2779,8 @@
                     deleteN: (n) => `${n}件のノートを削除`,
                     pinN: (n) => `${n}件をピン留め`,
                     unpinN: (n) => `${n}件のピンを外す`,
+                    recoverN: (n) => `${n}件のノートを復元`,
+                    deletePermanentlyN: (n) => `${n}件のノートを完全に削除`,
                     moveNTo: (n, f) => `${n}件を${folderDisplayName(f)}に移動`,
                     promptRenameFolder: 'フォルダ名を変更',
                     promptNewFolderName: '新しいフォルダ名',
@@ -2728,8 +2792,74 @@
             };
 
             const tcm = (key, ...args) => {
-                const entry = CM[notesLocale][key] ?? CM.en[key];
+                const entry = CM[getNotesLocale()][key] ?? CM.en[key];
                 return typeof entry === 'function' ? entry(...args) : entry;
+            };
+
+            window.applyNotesLang = (lang) => {
+                const isJp = lang === 'ja';
+
+                // Folders panel title
+                const foldersTitle = document.querySelector('#panel-folders .notes-large-title');
+                if (foldersTitle) foldersTitle.innerText = isJp ? 'フォルダ' : 'Folders';
+
+                // Folder names (update text node after img)
+                const folderMap = {
+                    'panel-notes-all': isJp ? 'すべて' : 'All Notes',
+                    'panel-notes-films': isJp ? '映画' : 'Films',
+                    'panel-notes-writing': isJp ? '執筆' : 'Writing',
+                    'panel-notes-deleted': isJp ? '削除済み' : 'Deleted'
+                };
+                Object.entries(folderMap).forEach(([target, label]) => {
+                    const el = document.querySelector(`#panel-folders [data-target="${target}"] .notes-folder-info`);
+                    if (!el) return;
+                    const img = el.querySelector('img');
+                    el.innerHTML = '';
+                    if (img) el.appendChild(img);
+                    el.append(label);
+                });
+
+                // New Folder button
+                const newFolderBtn = document.getElementById('new-folder-btn-top');
+                if (newFolderBtn) newFolderBtn.title = isJp ? '新規フォルダ' : 'New Folder';
+
+                // Sidebar button
+                const sidebarBtn = document.getElementById('sidebar-toggle');
+                if (sidebarBtn) sidebarBtn.title = isJp ? 'サイドバー' : 'Sidebar';
+
+                // New Note button
+                const newNoteBtn = document.getElementById('new-note-btn-header');
+                if (newNoteBtn) newNoteBtn.title = isJp ? '新規ノート' : 'New Note';
+                const newNoteBtnMobile = document.getElementById('new-note-btn-mobile');
+                if (newNoteBtnMobile) newNoteBtnMobile.title = isJp ? '新規ノート' : 'New Note';
+
+                // Minimized label
+                const notesModal = document.querySelector('.notes-modal');
+                if (notesModal) notesModal.style.setProperty('--notes-minimized-label', isJp ? '「メモ」' : 'Apple Notes');
+
+                // Toolbar button titles
+                const toolbarTitles = isJp ? {
+                    bold: '太字', italic: '斜体', underline: '下線', strikeThrough: '取り消し線',
+                    outdent: 'インデントを減らす', indent: 'インデントを増やす',
+                    insertUnorderedList: '箇条書き', insertOrderedList: '番号付きリスト'
+                } : {
+                    bold: 'Bold', italic: 'Italic', underline: 'Underline', strikeThrough: 'Strikethrough',
+                    outdent: 'Decrease Indent', indent: 'Increase Indent',
+                    insertUnorderedList: 'Bulleted List', insertOrderedList: 'Numbered List'
+                };
+                document.querySelectorAll('.notes-toolbar-btn[data-command]').forEach(btn => {
+                    const cmd = btn.getAttribute('data-command');
+                    if (toolbarTitles[cmd]) btn.title = toolbarTitles[cmd];
+                });
+                const monoBtn = document.getElementById('notes-mono-btn');
+                if (monoBtn) monoBtn.title = isJp ? '等幅' : 'Monostyle';
+                const dashBtn = document.getElementById('notes-dash-btn');
+                if (dashBtn) dashBtn.title = isJp ? 'ダッシュリスト' : 'Dashed List';
+                const checklistBtn = document.getElementById('notes-checklist-btn');
+                if (checklistBtn) checklistBtn.title = isJp ? 'チェックリスト' : 'Checklist';
+
+                // Re-render the current notes list
+                renderNotesList(currentFolder, false);
             };
 
             let openFolderContextMenu = () => { };
@@ -3015,7 +3145,7 @@
                 if (folderFilter === 'recently_deleted') {
                     const notice = document.createElement('div');
                     notice.className = 'notes-delete-notice';
-                    notice.innerText = 'Deleted notes are permanently removed after 3 hours.';
+                    notice.innerText = getNotesLocale() === 'ja' ? '削除されたノートは三時間後に完全に削除されます。' : 'Deleted notes are permanently removed after 3 hours.';
                     listContainer.appendChild(notice);
                 }
                 let filteredNotes = Object.keys(notesData).filter(key => {
@@ -3043,13 +3173,13 @@
                 const titleNode = document.getElementById('notes-header-title');
                 if (titleNode) {
                     if (folderFilter === 'recently_deleted') {
-                        titleNode.innerText = notesLocale === 'ja' ? '削除済み' : 'Recently Deleted';
+                        titleNode.innerText = getNotesLocale() === 'ja' ? '削除済み' : 'Recently Deleted';
                     } else if (folderFilter === 'all') {
-                        titleNode.innerText = notesLocale === 'ja' ? 'すべてのノート' : 'All Notes';
+                        titleNode.innerText = getNotesLocale() === 'ja' ? 'すべてのノート' : 'All Notes';
                     } else if (folderFilter === 'Films') {
-                        titleNode.innerText = notesLocale === 'ja' ? '映画' : 'Films';
+                        titleNode.innerText = getNotesLocale() === 'ja' ? '映画' : 'Films';
                     } else if (folderFilter === 'Writing') {
-                        titleNode.innerText = notesLocale === 'ja' ? '執筆' : 'Writing';
+                        titleNode.innerText = getNotesLocale() === 'ja' ? '執筆' : 'Writing';
                     } else {
                         titleNode.innerText = folderFilter;
                     }
@@ -3060,13 +3190,13 @@
 
                     if (data.pinned && !hasPinnedHeader) {
                         const h = document.createElement('div');
-                        h.innerText = 'Pinned';
+                        h.innerText = getNotesLocale() === 'ja' ? 'ピン留め済み' : 'Pinned';
                         h.style.cssText = 'font-size: 13px; font-weight: 600; color: #8e8e93; padding: 12px 16px 4px;';
                         listContainer.appendChild(h);
                         hasPinnedHeader = true;
                     } else if (!data.pinned && hasPinnedHeader && !hasNotesHeader && folderFilter !== 'recently_deleted') {
                         const h = document.createElement('div');
-                        h.innerText = 'Notes';
+                        h.innerText = getNotesLocale() === 'ja' ? 'ノート' : 'Notes';
                         h.style.cssText = 'font-size: 13px; font-weight: 600; color: #8e8e93; padding: 12px 16px 4px;';
                         listContainer.appendChild(h);
                         hasNotesHeader = true;
@@ -3128,8 +3258,8 @@
                         document.getElementById('active-note-content').setAttribute('data-current-note', noteId);
                         document.getElementById('active-note-content').innerHTML = data.content;
                         document.getElementById('active-note-title').innerText = data.title;
-                        document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? 'Deleted: ' + formatNoteDate(data.deletedAt) : data.date;
-                        setNoteViewReadOnly(isBuiltInNoteId(noteId));
+                        document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? (getNotesLocale() === 'ja' ? '削除: ' : 'Deleted: ') + formatNoteDate(data.deletedAt) : data.date;
+                        setNoteViewReadOnly(isBuiltInNoteId(noteId) || data.folder === 'recently_deleted');
                         navigateTo('view');
                         playNotesClickSound();
 
@@ -3248,10 +3378,11 @@
                                     data.originalFolder = data.folder;
                                     data.folder = 'recently_deleted';
                                     data.deletedAt = Date.now();
+                                    data.pinned = false;
                                     saveNotes();
                                     renderNotesList(folderFilter);
                                     menu.remove();
-                                    playNotesDeleteSound(); // Now plays delete sound even for non-permanent deletion
+                                    playNotesDeleteSound();
                                 };
                                 menu.appendChild(actionBtn);
                             }
@@ -3285,8 +3416,42 @@
                         const y = (e.clientY || 0) - 10;
 
                         const multiHasBuiltIn = selectedIds.some((id) => isBuiltInNoteId(id));
+                        const isInDeletedFolder = folderFilter === 'recently_deleted';
 
-                        if (!multiHasBuiltIn) {
+                        if (isInDeletedFolder) {
+                            // Recover N Notes
+                            const recoverBtn = document.createElement('div');
+                            recoverBtn.className = 'note-context-item';
+                            recoverBtn.innerText = tcm('recoverN', selectedIds.length);
+                            recoverBtn.onclick = () => {
+                                selectedIds.forEach(id => {
+                                    notesData[id].folder = notesData[id].originalFolder || 'Notes';
+                                    delete notesData[id].deletedAt;
+                                    delete notesData[id].originalFolder;
+                                });
+                                saveNotes();
+                                renderNotesList(folderFilter);
+                                menu.remove();
+                                playNotesClickSound();
+                            };
+                            menu.appendChild(recoverBtn);
+
+                            // Delete N Notes Permanently
+                            const permDelBtn = document.createElement('div');
+                            permDelBtn.className = 'note-context-item';
+                            permDelBtn.style.color = '#FF453A';
+                            permDelBtn.innerText = tcm('deletePermanentlyN', selectedIds.length);
+                            permDelBtn.onclick = () => {
+                                selectedIds.forEach(id => {
+                                    delete notesData[id];
+                                });
+                                saveNotes();
+                                renderNotesList(folderFilter);
+                                menu.remove();
+                                playNotesDeleteSound();
+                            };
+                            menu.appendChild(permDelBtn);
+                        } else if (!multiHasBuiltIn) {
                             const delBtn = document.createElement('div');
                             delBtn.className = 'note-context-item';
                             delBtn.style.color = '#FF453A';
@@ -3296,6 +3461,7 @@
                                     notesData[id].originalFolder = notesData[id].folder;
                                     notesData[id].folder = 'recently_deleted';
                                     notesData[id].deletedAt = Date.now();
+                                    notesData[id].pinned = false;
                                 });
                                 saveNotes();
                                 renderNotesList(folderFilter);
@@ -3305,35 +3471,37 @@
                             menu.appendChild(delBtn);
                         }
 
-                        const pinBtn = document.createElement('div');
-                        pinBtn.className = 'note-context-item';
-                        pinBtn.innerText = tcm('pinN', selectedIds.length);
-                        pinBtn.onclick = () => {
-                            selectedIds.forEach(id => {
-                                notesData[id].pinned = true;
-                            });
-                            saveNotes();
-                            renderNotesList(folderFilter);
-                            menu.remove();
-                            playNotesClickSound();
-                        };
-                        menu.appendChild(pinBtn);
+                        if (!isInDeletedFolder) {
+                            const pinBtn = document.createElement('div');
+                            pinBtn.className = 'note-context-item';
+                            pinBtn.innerText = tcm('pinN', selectedIds.length);
+                            pinBtn.onclick = () => {
+                                selectedIds.forEach(id => {
+                                    notesData[id].pinned = true;
+                                });
+                                saveNotes();
+                                renderNotesList(folderFilter);
+                                menu.remove();
+                                playNotesClickSound();
+                            };
+                            menu.appendChild(pinBtn);
 
-                        const unpinBtn = document.createElement('div');
-                        unpinBtn.className = 'note-context-item';
-                        unpinBtn.innerText = tcm('unpinN', selectedIds.length);
-                        unpinBtn.onclick = () => {
-                            selectedIds.forEach(id => {
-                                notesData[id].pinned = false;
-                            });
-                            saveNotes();
-                            renderNotesList(folderFilter);
-                            menu.remove();
-                            playNotesClickSound();
-                        };
-                        menu.appendChild(unpinBtn);
+                            const unpinBtn = document.createElement('div');
+                            unpinBtn.className = 'note-context-item';
+                            unpinBtn.innerText = tcm('unpinN', selectedIds.length);
+                            unpinBtn.onclick = () => {
+                                selectedIds.forEach(id => {
+                                    notesData[id].pinned = false;
+                                });
+                                saveNotes();
+                                renderNotesList(folderFilter);
+                                menu.remove();
+                                playNotesClickSound();
+                            };
+                            menu.appendChild(unpinBtn);
+                        }
 
-                        if (!multiHasBuiltIn) {
+                        if (!multiHasBuiltIn && !isInDeletedFolder) {
                             const selectedFolders = Array.from(new Set(selectedIds.map(id => notesData[id].folder)));
                             getMoveTargets().forEach(f => {
                                 if (selectedFolders.length === 1 && selectedFolders[0] === f) return;
@@ -3396,8 +3564,8 @@
                             document.getElementById('active-note-content').setAttribute('data-current-note', noteId);
                             document.getElementById('active-note-content').innerHTML = data.content;
                             document.getElementById('active-note-title').innerText = data.title;
-                            document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? 'Deleted: ' + formatNoteDate(data.deletedAt) : data.date;
-                            setNoteViewReadOnly(isBuiltInNoteId(noteId));
+                            document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? (getNotesLocale() === 'ja' ? '削除: ' : 'Deleted: ') + formatNoteDate(data.deletedAt) : data.date;
+                            setNoteViewReadOnly(isBuiltInNoteId(noteId) || data.folder === 'recently_deleted');
                         }
                     }
 
@@ -3508,6 +3676,7 @@
                         return;
                     }
 
+                    // Auto-convert markdown shortcuts: "- ", "* ", "1. "
                     if (e.key === ' ') {
                         const sel = window.getSelection();
                         const range = sel.getRangeAt(0);
@@ -3516,165 +3685,261 @@
                             const textBefore = node.textContent.substring(0, range.startOffset).trim();
                             const isAtStart = range.startOffset <= 3;
                             if (isAtStart) {
-                                if (textBefore === '-') {
+                                const typeMap = { '-': 'dash', '*': 'bullet', '1.': 'number' };
+                                const type = typeMap[textBefore];
+                                if (type) {
                                     e.preventDefault();
                                     node.textContent = node.textContent.substring(range.startOffset);
-                                    document.getElementById('notes-dash-btn').click();
-                                } else if (textBefore === '*') {
-                                    e.preventDefault();
-                                    node.textContent = node.textContent.substring(range.startOffset);
-                                    document.execCommand('insertUnorderedList', false, null);
-                                } else if (textBefore === '1.') {
-                                    e.preventDefault();
-                                    node.textContent = node.textContent.substring(range.startOffset);
-                                    document.execCommand('insertOrderedList', false, null);
+                                    applyListType(type);
                                 }
                             }
                         }
                     }
 
+                    // Enter: exit empty lists, or create new list item
                     if (e.key === 'Enter') {
-                        const sel = window.getSelection();
-                        const range = sel.getRangeAt(0);
-                        const node = range.startContainer.parentElement;
-                        const li = node.closest('li');
+                        const { li, checklist } = getListContext();
 
-                        // Handle exit from empty list
-                        if (li && li.innerText.trim() === '') {
+                        // Exit empty checklist
+                        if (checklist) {
                             e.preventDefault();
-                            document.execCommand('insertUnorderedList', false, null);
+                            const contentDiv = checklist.querySelector('div:not(.checklist-item)');
+                            if (contentDiv && contentDiv.innerText.trim() === '') {
+                                const p = document.createElement('p');
+                                p.innerHTML = '\u00A0';
+                                checklist.replaceWith(p);
+                                setCaretEnd(p);
+                                return;
+                            }
+                            // New checklist item
+                            const checkboxHtml = '<div class="checklist-item"><input type="checkbox" class="checklist-checkbox"><div>\u200B</div></div>';
+                            document.execCommand('insertHTML', false, checkboxHtml);
+                            const sel2 = window.getSelection();
+                            if (sel2.rangeCount > 0) {
+                                const inserted = sel2.getRangeAt(0).startContainer;
+                                const newItem = inserted.closest ? inserted.closest('.checklist-item') : inserted.parentElement?.closest('.checklist-item');
+                                if (newItem) {
+                                    const div = newItem.lastElementChild;
+                                    if (div && div.tagName === 'DIV') setCaretEnd(div);
+                                }
+                            }
                             return;
                         }
 
-                        // Handle enter on checklist to create a new checklist item
-                        const cli = node.closest('.checklist-item');
-                        if (cli) {
+                        // Exit empty list
+                        if (li && li.innerText.trim() === '') {
                             e.preventDefault();
-                            const checkboxHtml = '<div class="checklist-item"><input type="checkbox" class="checklist-checkbox"><div>&nbsp;</div></div>';
-                            document.execCommand('insertHTML', false, checkboxHtml);
+                            clearAllListFormats();
                             return;
                         }
                     }
 
+                    // Backspace: convert checklist/list item to paragraph
                     if (e.key === 'Backspace') {
                         const sel = window.getSelection();
                         const range = sel.getRangeAt(0);
                         const node = range.startContainer;
 
                         if (range.startOffset === 0) {
-                            // Try to outdent instead of deleting if nested or indented
-                            const parentLi = (node.nodeType === 3) ? node.parentElement.closest('li') : node.closest('li');
-                            const parentBlock = (node.nodeType === 3) ? node.parentElement : node;
-                            const blockquote = parentBlock.closest('blockquote');
+                            const el = node.nodeType === 3 ? node.parentElement : node;
+                            const checklist = el.closest('.checklist-item');
+                            const li = el.closest('li');
+                            const blockquote = el.closest('blockquote');
 
-                            if (parentLi || blockquote) {
+                            if (checklist) {
                                 e.preventDefault();
+                                const p = document.createElement('p');
+                                p.innerText = checklist.innerText || '\u00A0';
+                                checklist.replaceWith(p);
+                                setCaretEnd(p);
+                                handleEdit();
+                                return;
+                            }
 
-                                // Specific logic for checklist items
-                                const checklistItem = (node.nodeType === 3) ? node.parentElement.closest('.checklist-item') : node.closest('.checklist-item');
-                                if (checklistItem) {
-                                    const content = checklistItem.innerText;
-                                    const p = document.createElement('p');
-                                    p.innerText = content || '\u00A0';
-                                    checklistItem.replaceWith(p);
-                                    const newRange = document.createRange();
-                                    newRange.setStart(p.firstChild || p, 0);
-                                    newRange.collapse(true);
-                                    sel.removeAllRanges();
-                                    sel.addRange(newRange);
-                                    handleEdit();
-                                    return;
-                                }
-
-                                // General outdent for standard lists and blockquotes
-                                document.execCommand('outdent', false, null);
-                                // Extra check for blockquotes which sometimes persist
-                                if (blockquote && !document.queryCommandState('outdent')) {
+                            if (li || blockquote) {
+                                e.preventDefault();
+                                if (blockquote && !li) {
                                     const p = document.createElement('p');
                                     while (blockquote.firstChild) p.appendChild(blockquote.firstChild);
                                     blockquote.replaceWith(p);
+                                } else {
+                                    document.execCommand('outdent', false, null);
                                 }
-
                                 updateToolbar();
                                 handleEdit();
                                 return;
                             }
                         }
-
-                        const checklistItem = e.target.closest('.checklist-item') || node.parentElement.closest('.checklist-item');
-                        if (checklistItem && range.startOffset === 0) {
-                            e.preventDefault();
-                            const content = checklistItem.innerText;
-                            const p = document.createElement('p');
-                            p.innerText = content || '\u00A0';
-                            checklistItem.replaceWith(p);
-                            const newRange = document.createRange();
-                            newRange.setStart(p.firstChild || p, 0);
-                            newRange.collapse(true);
-                            sel.removeAllRanges();
-                            sel.addRange(newRange);
-                            handleEdit();
-                        }
                     }
                 });
 
-                // Toolbar Actions
-                const clearLists = () => {
-                    // Remove existing list formatting before adding new type
-                    document.execCommand('insertUnorderedList', false, null); // Toggle off
-                    document.execCommand('insertOrderedList', false, null); // Toggle off
-                    // Manually check if inside a checklist and remove
-                    const selection = window.getSelection();
-                    if (selection.rangeCount > 0) {
-                        const node = selection.getRangeAt(0).startContainer.parentElement;
-                        const checklist = node.closest('.checklist-item');
-                        if (checklist) checklist.outerHTML = checklist.innerHTML;
+                // --- List helpers ---
+                const getListContext = () => {
+                    const sel = window.getSelection();
+                    if (!sel.rangeCount) return {};
+                    const raw = sel.getRangeAt(0).startContainer;
+                    const node = raw.nodeType === 3 ? raw.parentElement : raw;
+                    return {
+                        node,
+                        li: node.closest('li'),
+                        list: node.closest('ul, ol'),
+                        checklist: node.closest('.checklist-item'),
+                    };
+                };
+
+                const setCaretEnd = (el) => {
+                    const sel = window.getSelection();
+                    const r = document.createRange();
+                    r.selectNodeContents(el);
+                    r.collapse(false);
+                    sel.removeAllRanges();
+                    sel.addRange(r);
+                };
+
+                // Remove any list context and return a <p> with the content
+                const clearAllListFormats = () => {
+                    const { li, list, checklist } = getListContext();
+                    let text = '';
+
+                    if (checklist) {
+                        text = checklist.querySelector('div')?.innerHTML || '';
+                        const p = document.createElement('p');
+                        p.innerHTML = text || '\u00A0';
+                        checklist.replaceWith(p);
+                        return p;
+                    }
+
+                    if (li && list) {
+                        text = li.innerHTML;
+                        const p = document.createElement('p');
+                        p.innerHTML = text || '\u00A0';
+                        if (list.querySelectorAll('li').length <= 1) {
+                            list.replaceWith(p);
+                        } else {
+                            li.remove();
+                            contentEditor.insertBefore(p, list.nextSibling || null);
+                        }
+                        return p;
+                    }
+
+                    return null;
+                };
+
+                // Convert current block to a list type: 'bullet' | 'number' | 'dash' | 'check'
+                const applyListType = (type) => {
+                    const { node, li, list, checklist } = getListContext();
+
+                    // --- Toggle off checklist ---
+                    if (checklist) {
+                        if (type === 'check') {
+                            // Toggle checklist off
+                            const p = document.createElement('p');
+                            p.innerHTML = checklist.querySelector('div')?.innerHTML || '\u00A0';
+                            checklist.replaceWith(p);
+                            setCaretEnd(p);
+                            return;
+                        }
+                        // Converting checklist to something else
+                        const text = checklist.querySelector('div')?.innerHTML || '';
+                        checklist.remove();
+                        if (type === 'bullet' || type === 'number' || type === 'dash') {
+                            document.execCommand(type === 'number' ? 'insertOrderedList' : 'insertUnorderedList', false, null);
+                            const ctx = getListContext();
+                            if (ctx.li) ctx.li.innerHTML = text;
+                            if (type === 'dash') {
+                                const ul = node.closest('ul') || getListContext().list;
+                                if (ul) ul.style.listStyleType = '"- "';
+                            }
+                            if (ctx.li) setCaretEnd(ctx.li);
+                        } else {
+                            const p = document.createElement('p');
+                            p.innerHTML = text || '\u00A0';
+                            contentEditor.appendChild(p);
+                            setCaretEnd(p);
+                        }
+                        return;
+                    }
+
+                    // --- Toggle off same list type ---
+                    if (list && li) {
+                        const isDashed = list.style.listStyleType === '"- "';
+                        const isOrdered = list.tagName === 'OL';
+                        const currentType = isDashed ? 'dash' : isOrdered ? 'number' : 'bullet';
+
+                        if (type === currentType) {
+                            // Toggle off — convert to paragraph
+                            const p = document.createElement('p');
+                            p.innerHTML = li.innerHTML || '\u00A0';
+                            if (list.querySelectorAll('li').length <= 1) {
+                                list.replaceWith(p);
+                            } else {
+                                li.remove();
+                                contentEditor.insertBefore(p, list.nextSibling || null);
+                            }
+                            setCaretEnd(p);
+                            return;
+                        }
+
+                        // --- Switch list type ---
+                        const text = li.innerHTML;
+                        if (list.querySelectorAll('li').length <= 1) {
+                            // Only one item — replace whole list
+                            list.remove();
+                        } else {
+                            li.remove();
+                        }
+
+                        if (type === 'check') {
+                            const checkItem = document.createElement('div');
+                            checkItem.className = 'checklist-item';
+                            checkItem.innerHTML = `<input type="checkbox" class="checklist-checkbox"><div>${text || '\u200B'}</div>`;
+                            contentEditor.appendChild(checkItem);
+                            setCaretEnd(checkItem.querySelector('div'));
+                        } else {
+                            document.execCommand(type === 'number' ? 'insertOrderedList' : 'insertUnorderedList', false, null);
+                            const ctx = getListContext();
+                            if (ctx.li) {
+                                ctx.li.innerHTML = text;
+                                if (type === 'dash') {
+                                    ctx.list.style.listStyleType = '"- "';
+                                }
+                                setCaretEnd(ctx.li);
+                            }
+                        }
+                        return;
+                    }
+
+                    // --- Not in any list — create new ---
+                    if (type === 'check') {
+                        const checkItem = document.createElement('div');
+                        checkItem.className = 'checklist-item';
+                        const existingP = node.closest('p');
+                        const text = existingP?.innerHTML || node.textContent || '';
+                        checkItem.innerHTML = `<input type="checkbox" class="checklist-checkbox"><div>${text || '\u200B'}</div>`;
+                        if (existingP) existingP.replaceWith(checkItem);
+                        else contentEditor.appendChild(checkItem);
+                        setCaretEnd(checkItem.querySelector('div'));
+                    } else {
+                        document.execCommand(type === 'number' ? 'insertOrderedList' : 'insertUnorderedList', false, null);
+                        if (type === 'dash') {
+                            const ctx = getListContext();
+                            if (ctx.list) ctx.list.style.listStyleType = '"- "';
+                        }
                     }
                 };
 
+                // Toolbar click handlers
                 document.querySelectorAll('.notes-toolbar-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
+                    btn.addEventListener('click', () => {
                         const cmd = btn.getAttribute('data-command');
-                        const val = btn.getAttribute('data-val') || null;
-
-                        // Focus content FIRST to ensure command applies there
                         contentEditor.focus();
 
-                        if (cmd === 'insertUnorderedList' || cmd === 'insertOrderedList') {
-                            // Clear checklist if present
-                            const selection = window.getSelection();
-                            const target = (selection.rangeCount > 0) ? selection.getRangeAt(0).startContainer : null;
-                            const node = (target && target.nodeType === 3) ? target.parentElement : target;
-                            if (node && node.closest('.checklist-item')) {
-                                const cli = node.closest('.checklist-item');
-                                cli.outerHTML = cli.innerHTML;
-                            }
-                        }
+                        if (cmd === 'insertUnorderedList') return applyListType('bullet');
+                        if (cmd === 'insertOrderedList') return applyListType('number');
+                        if (cmd === 'insertChecklist') return applyListType('check');
 
-                        if (cmd === 'insertChecklist') {
-                            const selection = window.getSelection();
-                            if (selection.rangeCount > 0) {
-                                let node = (selection.getRangeAt(0).startContainer.nodeType === 3) ? selection.getRangeAt(0).startContainer.parentElement : selection.getRangeAt(0).startContainer;
-                                const existingCheck = node.closest('.checklist-item');
-                                if (existingCheck) {
-                                    const p = document.createElement('p');
-                                    p.innerHTML = existingCheck.innerHTML;
-                                    existingCheck.replaceWith(p);
-                                } else {
-                                    document.execCommand('formatBlock', false, 'p');
-                                    let nodeP = selection.getRangeAt(0).startContainer;
-                                    if (nodeP.nodeType === 3) nodeP = nodeP.parentElement;
-                                    const targetP = nodeP.closest('p');
-                                    if (targetP) {
-                                        const checkItem = document.createElement('div');
-                                        checkItem.className = 'checklist-item';
-                                        checkItem.innerHTML = `<input type="checkbox" class="checklist-checkbox"><div>${targetP.innerHTML}</div>`;
-                                        targetP.replaceWith(checkItem);
-                                    }
-                                }
-                            }
-                        } else if (cmd) {
-                            document.execCommand(cmd, false, val);
+                        if (cmd) {
+                            document.execCommand(cmd, false, null);
                             setTimeout(updateToolbar, 10);
                         }
                         updateToolbar();
@@ -3700,17 +3965,10 @@
                 const dashBtn = document.getElementById('notes-dash-btn');
                 if (dashBtn) {
                     dashBtn.addEventListener('click', () => {
-                        document.execCommand('insertUnorderedList', false, null);
-                        const selection = window.getSelection();
-                        if (selection.rangeCount > 0) {
-                            const list = selection.getRangeAt(0).startContainer.parentElement.closest('ul');
-                            if (list) {
-                                list.classList.add('notes-dashed-list');
-                            }
-                        }
+                        applyListType('dash');
                         contentEditor.focus();
                         updateToolbar();
-                        playNotesClickSound(); // Dash button plays notes click sound
+                        playNotesClickSound();
                     });
                 }
 
@@ -3734,7 +3992,7 @@
                     const anchorNode = (selection.rangeCount > 0) ? selection.anchorNode : null;
                     const parentNode = anchorNode ? (anchorNode.nodeType === 3 ? anchorNode.parentElement : anchorNode) : null;
                     const currentList = parentNode ? parentNode.closest('ul') : null;
-                    const isDashed = currentList && currentList.classList.contains('notes-dashed-list');
+                    const isDashed = currentList && currentList.style.listStyleType === '"- "';
 
                     document.querySelectorAll('.notes-header-right .notes-toolbar-btn').forEach(btn => {
                         const cmd = btn.getAttribute('data-command');
@@ -3774,7 +4032,7 @@
                     const id = 'note-' + Date.now();
                     const now = new Date();
                     notesData[id] = {
-                        title: 'New Note',
+                        title: getNotesLocale() === 'ja' ? '新規ノート' : 'New Note',
                         folder: (currentFolder === 'all' || currentFolder === 'recently_deleted') ? 'all' : currentFolder,
                         lastEdited: now.getTime(),
                         content: '<p></p>'
