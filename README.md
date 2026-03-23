@@ -1,3 +1,13 @@
+![Github Banner](header.png)
+<div align="left">
+
+<h2 align="left">
+Where to find me: </h2>
+
+<code>[![Website Badge](https://img.shields.io/badge/Website-3b5998?style=for-the-badge&logo=google-chrome&logoColor=white&scale=2)](https://asahisuenaga.com)</code>
+
+[![X Badge](https://img.shields.io/badge/-000000?style=for-the-badge&logo=x&logoColor=white&scale=2)](https://twitter.com/asahisuenaga)
+
 # What's up? I'm Asahi Suenaga 👋
 
 ### Computer Science Student. I enjoy making open-source browser extensions, now learning mobile app development.
