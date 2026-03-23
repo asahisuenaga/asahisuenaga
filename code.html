@@ -2566,7 +2566,7 @@
             const folderGroup = document.querySelector('.notes-list-group');
             let lastSelectedIndex = null;
 
-            const BUILT_IN_NOTE_IDS = new Set(['note-1', 'note-2', 'note-3', 'note-writing']);
+            const BUILT_IN_NOTE_IDS = new Set(['note-1', 'note-2', 'note-3', 'note-4']);
             const isBuiltInNoteId = (id) => BUILT_IN_NOTE_IDS.has(id);
 
             const getNotesLocale = () => document.documentElement.lang === 'ja' ? 'ja' : 'en';
@@ -2813,7 +2813,7 @@
             const hydrateNotesFromGitHub = async () => {
                 try {
                     const dirRes = await fetch(
-                        'https://api.github.com/repos/asahisuenaga/personal/tree/test/notes'
+                        'https://api.github.com/repos/asahisuenaga/personal/contents/notes?ref=test'
                     );
                     if (!dirRes.ok) throw new Error('dir');
                     const files = (await dirRes.json()).filter(f => f.name.endsWith('.md'));
