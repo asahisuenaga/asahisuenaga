@@ -12,4 +12,5 @@ Computer Science Student. I enjoy making open-source browser extensions, now lea
 <img height="180em" src="https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&theme=algolia&include_all_commits=true&count_private=true"/>
 <img height="180em" src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=compact&langs_count=8&theme=algolia"/>
 </p>
+
 ![](https://komarev.com/ghpvc/?username=asahisuenaga&style=for-the-badge)
