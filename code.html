@@ -297,12 +297,19 @@
 
         .firefly {
             position: absolute;
-            width: 3px;
-            height: 3px;
-            background: #FFD700;
+            width: var(--firefly-size, 3px);
+            height: var(--firefly-size, 3px);
+            background: var(--firefly-color, #FFD700);
             pointer-events: none;
             z-index: 10;
-            animation: flyAndSpin 3s forwards ease-out;
+            animation: flyAndSpin 3s forwards ease-out, flicker var(--firefly-flicker, 0.4s) ease-in-out infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { filter: brightness(1); }
+            30% { filter: brightness(0.5); }
+            60% { filter: brightness(1); }
+            100% { filter: brightness(0.7); }
         }
 
         @keyframes flyAndSpin {
@@ -317,6 +324,30 @@
 
             100% {
                 transform: translate(var(--x), var(--y)) rotate(var(--r));
+                opacity: 0;
+            }
+        }
+
+        .firefly.burned {
+            animation: burnOut 0.6s forwards ease-in !important;
+        }
+
+        @keyframes burnOut {
+            0% {
+                background: #FF3B00;
+                box-shadow: 0 0 8px 3px rgba(255, 60, 0, 0.8);
+                transform: scale(1.5);
+                opacity: 1;
+            }
+            50% {
+                background: #FF6A00;
+                box-shadow: 0 0 10px 4px rgba(255, 100, 0, 0.6);
+                transform: scale(1);
+            }
+            100% {
+                background: #333;
+                box-shadow: none;
+                transform: scale(0);
                 opacity: 0;
             }
         }
@@ -2379,6 +2410,18 @@
                 shrine.classList.remove('post-press');
             };
 
+            const FIREFLY_BURN_THRESHOLD = 50;
+
+            function burnAllFireflies() {
+                const fireflies = shrine.querySelectorAll('.firefly:not(.burned)');
+                if (fireflies.length === 0) return;
+                fireflies.forEach(f => f.classList.add('burned'));
+                new Audio('audio/firefly-death.wav').play().catch(() => { });
+                setTimeout(() => {
+                    fireflies.forEach(f => { if (f.parentNode) f.remove(); });
+                }, 600);
+            }
+
             function createFirefly(spreadMultiplier = 1) {
                 const p = document.createElement('div');
                 p.className = 'firefly';
@@ -2390,13 +2433,25 @@
                 const driftY = (Math.random() * -30 * spreadMultiplier) - 10 + "px";
 
                 const r = (Math.random() - 0.5) * 360 + "deg";
+                const isBlue = Math.random() < 0.01;
+                const color = isBlue
+                    ? `hsl(${200 + Math.random() * 20}, ${90 + Math.random() * 10}%, ${60 + Math.random() * 15}%)`
+                    : `hsl(${40 + Math.random() * 15}, ${80 + Math.random() * 20}%, ${50 + Math.random() * 15}%)`;
                 p.style.left = `${startX}%`;
                 p.style.top = `${startY}%`;
                 p.style.setProperty('--x', driftX);
                 p.style.setProperty('--y', driftY);
                 p.style.setProperty('--r', r);
+                p.style.setProperty('--firefly-color', color);
+                p.style.setProperty('--firefly-size', (3 + Math.random() * 0.5) + 'px');
+                p.style.setProperty('--firefly-flicker', (0.7 + Math.random() * 0.8) + 's');
+                p.style.animationDelay = `0s, -${(Math.random() * 0.5).toFixed(2)}s`;
 
                 shrine.appendChild(p);
+
+                if (shrine.querySelectorAll('.firefly:not(.burned)').length >= FIREFLY_BURN_THRESHOLD) {
+                    burnAllFireflies();
+                }
 
                 setTimeout(() => {
                     if (p.parentNode) p.remove();
