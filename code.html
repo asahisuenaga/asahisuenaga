@@ -1868,17 +1868,16 @@
                     natural
                     curiosity about how things work would lead me to software.
                 </p>
-                <p id="bio2">I’m currently studying Computer Science at
+                <p id="bio2">Studying CS at
                     <code><a href="https://engineering.msu.edu/academics/majors-degrees/computer-science-bs" target="_blank"
                         style="color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
-        <img src="icons/graduationcap.svg" alt="Graduation Cap Icon" class="themed-icon" style="height: 0.875em; width: auto; margin-right: 0.125rem;">Michigan State</a></code>
-                    and learning Swift whenever I have the opportunity. You can see how I applied this mindset to my
+        <img src="icons/graduationcap.svg" alt="Graduation Cap Icon" class="themed-icon" style="height: 0.875em; width: auto; margin-right: 0.125rem;">MSU</a></code>
+                    and learning Swift whenever I can. My <code><a href="https://github.com/asahisuenaga" target="_blank" style="color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+        <img src="icons/text-page.svg" alt="Resume Icon" class="themed-icon" style="height: 0.875em; width: auto; margin-right: 0.125rem;">experience</a></code> in projects such as a
                     <code><a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc"
                         target="_blank" style="color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
         <img src="icons/puzzlepiece.svg" alt="Puzzle Piece Icon" class="themed-icon" style="height: 0.875em; width: auto; margin-right: 0.125rem;">browser
-                        extension</a></code> and other projects in my
-                    <code><a href="https://github.com/asahisuenaga" target="_blank" style="color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
-        <img src="icons/text-page.svg" alt="Resume Icon" class="themed-icon" style="height: 0.875em; width: auto; margin-right: 0.125rem;">experience</a></code>.
+                        extension</a></code> demonstrates this learning mindset.
                 </p>
             </div>
         </div>
@@ -2255,233 +2254,66 @@
 
             const userLang = navigator.language || navigator.userLanguage;
             const isJa = userLang.startsWith('ja');
-
-            const originalBio1 = document.getElementById('bio1')?.innerHTML;
-            const originalBio2 = document.getElementById('bio2')?.innerHTML;
-
-            if (isJa) {
-                document.documentElement.lang = 'ja';
-                document.title = '末永朝飛';
-
-                const banner = document.getElementById('banner');
-                if (banner) banner.innerText = '「虹色キャレット」— GoogleDocsでキャレットに色をつけよう →';
-
-                const nameNode = document.getElementById('name');
-                if (nameNode) nameNode.innerText = '末永朝飛';
-
-                // Location link localization (text and tooltip)
-                const locationNode = document.getElementById('location');
-                if (locationNode) {
-                    // Change the span text
-                    const span = locationNode.querySelector('span');
-                    if (span) span.innerText = 'ミシガン州 イーストランシング';
-                }
-                // Tooltip for location
-                const tooltipLocation = document.getElementById('tooltip-location');
-                if (tooltipLocation) {
-                    const title = tooltipLocation.querySelector('.tooltip-title');
-                    const subtitle = tooltipLocation.querySelector('.tooltip-subtitle');
-                    if (title) title.innerText = 'ミシガン州 イーストランシング';
-                    if (subtitle) subtitle.innerText = 'GoogleMapsで表示';
-                }
-
-                const bio1Node = document.getElementById('bio1');
-                if (bio1Node) {
-                    bio1Node.innerHTML = '子供の頃、完璧な丸を描いていました。正確さへの拘りと、物事の仕組みに対する自然な好奇心が、自分を<code><a href="https://ja.wikipedia.org/wiki/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2" target="_blank" style="color: var(--heading); text-decoration: none;">ソフトウェア</a></code>へと導くとは思いもしませんでした。';
-                }
-
-                const bio2Node = document.getElementById('bio2');
-                if (bio2Node) {
-                    bio2Node.innerHTML = '現在は<code><a href="https://msu.edu" target="_blank" style="color: var(--heading); text-decoration: none;">ミシガン州立大学</a></code>でコンピュータサイエンスを専攻し、機会を見つけてはSwiftを学んでいます。その前は<code><a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc" target="_blank" style="color: var(--heading); text-decoration: none;">ブラウザ拡張機能</a></code>を作りました。';
-                }
-
-                const footerTwitter = document.getElementById('footer-twitter');
-                if (footerTwitter) footerTwitter.innerText = 'ツイッター';
-
-                const footerBmc = document.getElementById('footer-bmc');
-                if (footerBmc) footerBmc.innerText = 'コーヒーをおごる';
-
-                const footerGithub = document.getElementById('footer-github');
-                if (footerGithub) footerGithub.innerText = 'ギットハブ';
-
-
-                // Notes app UI localization
-                // Folders panel
-                const foldersTitle = document.querySelector('#panel-folders .notes-large-title');
-                if (foldersTitle) foldersTitle.innerText = 'フォルダ';
-                const allNotes = document.querySelector('#panel-folders .notes-folder-info');
-                if (allNotes && allNotes.innerText.includes('All Notes')) allNotes.innerHTML = allNotes.innerHTML.replace('All Notes', 'すべて');
-                const films = document.querySelector('#panel-folders [data-target="panel-notes-films"] .notes-folder-info');
-                if (films) films.innerHTML = films.innerHTML.replace('Films', '映画');
-                const writing = document.querySelector('#panel-folders [data-target="panel-notes-writing"] .notes-folder-info');
-                if (writing) writing.innerHTML = writing.innerHTML.replace('Writing', '執筆');
-                const deleted = document.querySelector('#panel-folders [data-target="panel-notes-deleted"] .notes-folder-info');
-                if (deleted) deleted.innerHTML = deleted.innerHTML.replace('Deleted', '削除済み');
-                // New Folder button
-                const newFolderBtn = document.getElementById('new-folder-btn-top');
-                if (newFolderBtn) newFolderBtn.title = '新規フォルダ';
-
-                // Notes list panel
-                const notesHeaderTitle = document.getElementById('notes-header-title');
-                if (notesHeaderTitle) {
-                    if (notesHeaderTitle.innerText === 'All Notes') notesHeaderTitle.innerText = 'すべてのノート';
-                    else if (notesHeaderTitle.innerText === 'Films') notesHeaderTitle.innerText = '映画';
-                    else if (notesHeaderTitle.innerText === 'Writing') notesHeaderTitle.innerText = '執筆';
-                    else if (notesHeaderTitle.innerText === 'Recently Deleted') notesHeaderTitle.innerText = '削除済み';
-                }
-
-                // Notes modal (note view)
-                const noteTitle = document.getElementById('active-note-title');
-                if (noteTitle) noteTitle.setAttribute('placeholder', 'タイトル');
-                const noteContent = document.getElementById('active-note-content');
-                if (noteContent) noteContent.setAttribute('placeholder', '内容');
-                const noteDate = document.getElementById('active-note-date');
-                if (noteDate && noteDate.innerText.startsWith('Deleted:')) noteDate.innerText = noteDate.innerText.replace('Deleted:', '削除:');
-
-                // New Note button
-                const newNoteBtn = document.getElementById('new-note-btn-header');
-                if (newNoteBtn) newNoteBtn.title = '新規ノート';
-
-                // Sidebar button
-                const sidebarBtn = document.getElementById('sidebar-toggle');
-                if (sidebarBtn) sidebarBtn.title = 'サイドバー';
-
-                // Minimized label (Apple Notes)
-                const notesModal = document.querySelector('.notes-modal');
-                if (notesModal) { 
-                    notesModal.style.setProperty('--notes-minimized-label', '"メモ"');
-                }
-
-                // Toolbar button titles
-                const toolbarTitles = {
-                    bold: '太字',
-                    italic: '斜体',
-                    underline: '下線',
-                    strikeThrough: '取り消し線',
-                    outdent: 'インデントを減らす',
-                    indent: 'インデントを増やす',
-                    insertUnorderedList: '箇条書き',
-                    insertOrderedList: '番号付きリスト'
-                };
-                document.querySelectorAll('.notes-toolbar-btn[data-command]').forEach(btn => {
-                    const cmd = btn.getAttribute('data-command');
-                    if (toolbarTitles[cmd]) btn.title = toolbarTitles[cmd];
-                });
-                const monoBtn = document.getElementById('notes-mono-btn');
-                if (monoBtn) monoBtn.title = '等幅';
-                const dashBtn = document.getElementById('notes-dash-btn');
-                if (dashBtn) dashBtn.title = 'ダッシュリスト';
-                const checklistBtn = document.getElementById('notes-checklist-btn');
-                if (checklistBtn) checklistBtn.title = 'チェックリスト';
-
-                // YouTube Music tooltip
-                const tooltipMusic = document.getElementById('tooltip-music');
-                if (tooltipMusic) {
-                    const ytTitle = tooltipMusic.querySelector('.tooltip-title');
-                    const ytSub = tooltipMusic.querySelector('.tooltip-subtitle');
-                    if (ytTitle) ytTitle.innerText = 'YouTube Music';
-                    if (ytSub) ytSub.innerText = 'いい曲を聞こう';
-                }
-
-                // Context menu and other UI elements would need to be handled in JS logic for dynamic content.
-            }
-
-            const twitterTooltipTitle = document.querySelector('#tooltip-twitter .tooltip-title');
-            const twitterTooltipSub = document.querySelector('#tooltip-twitter .tooltip-subtitle');
-            const bmcTooltipTitle = document.querySelector('#tooltip-bmc .tooltip-title');
-            const bmcTooltipSub = document.querySelector('#tooltip-bmc .tooltip-subtitle');
-            const nameTooltipTitle = document.getElementById('tooltip-name-title');
-
-            if (isJa) {
-                if (twitterTooltipTitle) twitterTooltipTitle.innerText = 'ツイッター';
-                if (twitterTooltipSub) twitterTooltipSub.innerText = '@asahisuenaga';
-                if (bmcTooltipTitle) bmcTooltipTitle.innerText = 'コーヒーをおごる';
-                if (bmcTooltipSub) bmcTooltipSub.innerText = 'サポートする';
-                if (nameTooltipTitle) nameTooltipTitle.innerText = 'English';
-            }
-
-            // Language toggle for name click
             let currentLang = isJa ? 'ja' : 'en';
             const nameEl = document.getElementById('name');
 
-            const enDefaults = {
-                title: 'Asahi Suenaga',
-                pageTitle: 'Asahi Suenaga',
-                banner: 'Try Rainbow Cursor \u2014 A Browser Extension to Change Your Cursor in Google Docs \u2192',
-                locationText: 'East Lansing, MI',
-                locationTooltipTitle: 'East Lansing, MI',
-                locationTooltipSub: 'Show on Google Maps',
-                bio1: originalBio1,
-                bio2: originalBio2,
-                footerTwitter: 'Twitter',
-                footerBmc: 'Buy Me a Coffee',
-                footerGithub: 'GitHub',
-                twitterTooltipTitle: 'Twitter',
-                twitterTooltipSub: '@asahisuenaga',
-                bmcTooltipTitle: 'Buy Me a Coffee',
-                bmcTooltipSub: 'Support my work'
-            };
+            window.translations = {};
 
-            const jaDefaults = {
-                title: '\u672B\u6C38\u671D\u98DB',
-                pageTitle: '\u672B\u6C38\u671D\u98DB',
-                banner: '\u300C\u8679\u8272\u30AD\u30E3\u30EC\u30C3\u30C8\u300D\u2014 GoogleDocs\u3067\u30AD\u30E3\u30EC\u30C3\u30C8\u306B\u8272\u3092\u3064\u3051\u3088\u3046 \u2192',
-                locationText: '\u30DF\u30B7\u30AC\u30F3\u5DDE \u30A4\u30FC\u30B9\u30C8\u30E9\u30F3\u30B7\u30F3\u30B0',
-                locationTooltipTitle: '\u30DF\u30B7\u30AC\u30F3\u5DDE \u30A4\u30FC\u30B9\u30C8\u30E9\u30F3\u30B7\u30F3\u30B0',
-                locationTooltipSub: 'Google\u30DE\u30C3\u30D7\u3067\u8868\u793A',
-                bio1: '\u5B50\u4F9B\u306E\u9803\u3001\u5B8C\u74A7\u306A\u4E38\u3092\u63CF\u3044\u3066\u3044\u307E\u3057\u305F\u3002\u6B63\u78BA\u3055\u3078\u306E\u62D8\u308A\u3068\u3001\u7269\u4E8B\u306E\u4ED5\u7D44\u307F\u306B\u5BFE\u3059\u308B\u81EA\u7136\u306A\u597D\u5947\u5FC3\u304C\u3001\u81EA\u5206\u3092<code><a href="https://ja.wikipedia.org/wiki/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2" target="_blank" style="color: var(--heading); text-decoration: none;">\u30BD\u30D5\u30C8\u30A6\u30A7\u30A2</a></code>\u3078\u3068\u5C0E\u304F\u3068\u306F\u601D\u3044\u3082\u3057\u307E\u305B\u3093\u3067\u3057\u305F\u3002',
-                bio2: '\u73FE\u5728\u306F<code><a href="https://msu.edu" target="_blank" style="color: var(--heading); text-decoration: none;">\u30DF\u30B7\u30AC\u30F3\u5DDE\u7ACB\u5927\u5B66</a></code>\u3067\u30B3\u30F3\u30D4\u30E5\u30FC\u30BF\u30B5\u30A4\u30A8\u30F3\u30B9\u3092\u5C02\u653B\u3057\u3001\u6A5F\u4F1A\u3092\u898B\u3064\u3051\u3066\u306FSwift\u3092\u5B66\u3093\u3067\u3044\u307E\u3059\u3002\u305D\u306E\u524D\u306F<code><a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc" target="_blank" style="color: var(--heading); text-decoration: none;">\u30D6\u30E9\u30A6\u30B6\u62E1\u5F35\u6A5F\u80FD</a></code>\u3092\u4F5C\u308A\u307E\u3057\u305F\u3002',
-                footerTwitter: '\u30C4\u30A4\u30C3\u30BF\u30FC',
-                footerBmc: '\u30B3\u30FC\u30D2\u30FC\u3092\u304A\u3054\u308B',
-                footerGithub: '\u30AE\u30C3\u30C8\u30CF\u30D6',
-                twitterTooltipTitle: '\u30C4\u30A4\u30C3\u30BF\u30FC',
-                twitterTooltipSub: '@asahisuenaga',
-                bmcTooltipTitle: '\u30B3\u30FC\u30D2\u30FC\u3092\u304A\u3054\u308B',
-                bmcTooltipSub: '\u30B5\u30DD\u30FC\u30C8\u3059\u308B'
-            };
+            async function loadTranslations() {
+                const [en, ja] = await Promise.all([
+                    fetch('locales/en.json').then(r => r.json()),
+                    fetch('locales/ja.json').then(r => r.json())
+                ]);
+                window.translations = { en, ja };
+                applyLang(currentLang);
+            }
 
             function applyLang(lang) {
-                const d = lang === 'ja' ? jaDefaults : enDefaults;
+                const d = window.translations[lang];
+                if (!d) return;
                 document.documentElement.lang = lang;
-                document.title = d.pageTitle;
-                if (nameEl) nameEl.innerText = d.title;
+                document.title = d.site.pageTitle;
+                if (nameEl) nameEl.innerText = d.site.title;
                 const banner = document.getElementById('banner');
-                if (banner) banner.innerText = d.banner;
+                if (banner) banner.innerText = d.site.banner;
                 const locNode = document.getElementById('location');
-                if (locNode) { const s = locNode.querySelector('span'); if (s) s.innerText = d.locationText; }
+                if (locNode) { const s = locNode.querySelector('span'); if (s) s.innerText = d.location.text; }
                 const tooltipLoc = document.getElementById('tooltip-location');
                 if (tooltipLoc) {
                     const t = tooltipLoc.querySelector('.tooltip-title');
                     const s = tooltipLoc.querySelector('.tooltip-subtitle');
-                    if (t) t.innerText = d.locationTooltipTitle;
-                    if (s) s.innerText = d.locationTooltipSub;
+                    if (t) t.innerText = d.location.tooltipTitle;
+                    if (s) s.innerText = d.location.tooltipSub;
                 }
                 const b1 = document.getElementById('bio1');
-                if (b1) b1.innerHTML = d.bio1;
+                if (b1) b1.innerHTML = d.bio.bio1;
                 const b2 = document.getElementById('bio2');
-                if (b2) b2.innerHTML = d.bio2;
+                if (b2) b2.innerHTML = d.bio.bio2;
                 const ft = document.getElementById('footer-twitter');
-                if (ft) ft.innerText = d.footerTwitter;
+                if (ft) ft.innerText = d.footer.twitter;
                 const fb = document.getElementById('footer-bmc');
-                if (fb) fb.innerText = d.footerBmc;
+                if (fb) fb.innerText = d.footer.bmc;
                 const fg = document.getElementById('footer-github');
-                if (fg) fg.innerText = d.footerGithub;
+                if (fg) fg.innerText = d.footer.github;
                 const ttT = document.querySelector('#tooltip-twitter .tooltip-title');
-                if (ttT) ttT.innerText = d.twitterTooltipTitle;
+                if (ttT) ttT.innerText = d.tooltips.twitterTitle;
                 const ttS = document.querySelector('#tooltip-twitter .tooltip-subtitle');
-                if (ttS) ttS.innerText = d.twitterTooltipSub;
+                if (ttS) ttS.innerText = d.tooltips.twitterSub;
                 const btT = document.querySelector('#tooltip-bmc .tooltip-title');
-                if (btT) btT.innerText = d.bmcTooltipTitle;
+                if (btT) btT.innerText = d.tooltips.bmcTitle;
                 const btS = document.querySelector('#tooltip-bmc .tooltip-subtitle');
-                if (btS) btS.innerText = d.bmcTooltipSub;
+                if (btS) btS.innerText = d.tooltips.bmcSub;
                 const ymT = document.querySelector('#tooltip-music .tooltip-title');
-                if (ymT) ymT.innerText = 'YouTube Music';
+                if (ymT) ymT.innerText = d.tooltips.musicTitle;
                 const ymS = document.querySelector('#tooltip-music .tooltip-subtitle');
-                if (ymS) ymS.innerText = lang === 'ja' ? 'YouTube Musicで開く' : 'Open in YouTube Music';
-                if (nameTooltipTitle) nameTooltipTitle.innerText = lang === 'ja' ? 'English' : '日本語';
+                if (ymS) ymS.innerText = d.tooltips.musicSub;
+                const nameTooltipTitle = document.getElementById('tooltip-name-title');
+                if (nameTooltipTitle) nameTooltipTitle.innerText = d.tooltips.nameTitle;
                 currentLang = lang;
                 if (window.applyNotesLang) window.applyNotesLang(lang);
             }
+
+            loadTranslations();
 
             nameEl?.addEventListener('click', () => {
                 applyLang(currentLang === 'ja' ? 'en' : 'ja');
@@ -2739,78 +2571,46 @@
 
             const getNotesLocale = () => document.documentElement.lang === 'ja' ? 'ja' : 'en';
             const folderDisplayName = (name) => {
-                if (getNotesLocale() !== 'ja') return name;
-                const map = { Films: '映画', Writing: '執筆', all: 'すべてのノート', recently_deleted: '削除済み' };
-                return map[name] || name;
+                const lang = getNotesLocale();
+                const map = window.translations[lang]?.notes?.folderDisplayNames;
+                if (map && map[name]) return map[name];
+                return name;
             };
 
-            const CM = {
-                en: {
-                    recoverNote: 'Recover Note',
-                    deletePermanently: 'Delete Permanently',
-                    pinNote: 'Pin Note',
-                    unpinNote: 'Unpin Note',
-                    moveTo: (f) => `Move to ${folderDisplayName(f)}`,
-                    deleteNote: 'Delete Note',
-                    renameFolder: 'Rename Folder',
-                    deleteFolder: 'Delete Folder',
-                    folderReadonly: 'This folder cannot be modified',
-                    deleteN: (n) => `Delete ${n} Notes`,
-                    pinN: (n) => `Pin ${n} Notes`,
-                    unpinN: (n) => `Unpin ${n} Notes`,
-                    recoverN: (n) => `Recover ${n} Notes`,
-                    deletePermanentlyN: (n) => `Delete ${n} Notes Permanently`,
-                    moveNTo: (n, f) => `Move ${n} Notes to ${folderDisplayName(f)}`,
-                    promptRenameFolder: 'Rename folder',
-                    promptNewFolderName: 'New folder name',
-                    confirmDeleteFolder: (name) => `Delete folder "${name}"? Notes will be moved to All Notes.`,
-                    reservedFolder: 'Folder name reserved. Use another name.',
-                    folderExists: 'Folder already exists.',
-                    folderExistsRename: 'Folder already exists'
-                },
-                ja: {
-                    recoverNote: 'ノートを復元',
-                    deletePermanently: '完全に削除',
-                    pinNote: 'ピン留め',
-                    unpinNote: 'ピンを外す',
-                    moveTo: (f) => `${folderDisplayName(f)}に移動`,
-                    deleteNote: 'ノートを削除',
-                    renameFolder: 'フォルダ名を変更',
-                    deleteFolder: 'フォルダを削除',
-                    folderReadonly: 'このフォルダは変更できません',
-                    deleteN: (n) => `${n}件のノートを削除`,
-                    pinN: (n) => `${n}件をピン留め`,
-                    unpinN: (n) => `${n}件のピンを外す`,
-                    recoverN: (n) => `${n}件のノートを復元`,
-                    deletePermanentlyN: (n) => `${n}件のノートを完全に削除`,
-                    moveNTo: (n, f) => `${n}件を${folderDisplayName(f)}に移動`,
-                    promptRenameFolder: 'フォルダ名を変更',
-                    promptNewFolderName: '新しいフォルダ名',
-                    confirmDeleteFolder: (name) => `フォルダ「${name}」を削除しますか？ノートは「すべてのノート」に移動します。`,
-                    reservedFolder: 'この名前は使えません。別の名前にしてください。',
-                    folderExists: '同じ名前のフォルダがあります。',
-                    folderExistsRename: '同じ名前のフォルダがあります。'
+            const resolveTemplate = (template, ...args) => {
+                let result = template;
+                if (template.includes('{n}')) result = result.replace('{n}', args[0]);
+                if (template.includes('{folder}')) {
+                    const folderArg = template.includes('{n}') ? args[1] : args[0];
+                    result = result.replace('{folder}', folderDisplayName(folderArg));
                 }
+                if (template.includes('{name}')) result = result.replace('{name}', args[0]);
+                return result;
             };
 
             const tcm = (key, ...args) => {
-                const entry = CM[getNotesLocale()][key] ?? CM.en[key];
-                return typeof entry === 'function' ? entry(...args) : entry;
+                const lang = getNotesLocale();
+                const template = window.translations[lang]?.notes?.contextMenu?.[key]
+                    ?? window.translations.en?.notes?.contextMenu?.[key];
+                if (!template) return key;
+                if (template.includes('{')) return resolveTemplate(template, ...args);
+                return template;
             };
 
             window.applyNotesLang = (lang) => {
-                const isJp = lang === 'ja';
+                const n = window.translations[lang]?.notes;
+                if (!n) return;
 
                 // Folders panel title
                 const foldersTitle = document.querySelector('#panel-folders .notes-large-title');
-                if (foldersTitle) foldersTitle.innerText = isJp ? 'フォルダ' : 'Folders';
+                if (foldersTitle) foldersTitle.innerText = n.folders.title;
 
                 // Folder names (update text node after img)
                 const folderMap = {
-                    'panel-notes-all': isJp ? 'すべて' : 'All Notes',
-                    'panel-notes-films': isJp ? '映画' : 'Films',
-                    'panel-notes-writing': isJp ? '執筆' : 'Writing',
-                    'panel-notes-deleted': isJp ? '削除済み' : 'Deleted'
+                    'panel-notes-all': n.folders.all,
+                    'panel-notes-films': n.folders.films,
+                    'panel-notes-writing': n.folders.writing,
+                    'panel-notes-deleted': n.folders.deleted
                 };
                 Object.entries(folderMap).forEach(([target, label]) => {
                     const el = document.querySelector(`#panel-folders [data-target="${target}"] .notes-folder-info`);
@@ -2823,42 +2623,38 @@
 
                 // New Folder button
                 const newFolderBtn = document.getElementById('new-folder-btn-top');
-                if (newFolderBtn) newFolderBtn.title = isJp ? '新規フォルダ' : 'New Folder';
+                if (newFolderBtn) newFolderBtn.title = n.buttons.newFolder;
 
                 // Sidebar button
                 const sidebarBtn = document.getElementById('sidebar-toggle');
-                if (sidebarBtn) sidebarBtn.title = isJp ? 'サイドバー' : 'Sidebar';
+                if (sidebarBtn) sidebarBtn.title = n.buttons.sidebar;
 
                 // New Note button
                 const newNoteBtn = document.getElementById('new-note-btn-header');
-                if (newNoteBtn) newNoteBtn.title = isJp ? '新規ノート' : 'New Note';
+                if (newNoteBtn) newNoteBtn.title = n.buttons.newNote;
                 const newNoteBtnMobile = document.getElementById('new-note-btn-mobile');
-                if (newNoteBtnMobile) newNoteBtnMobile.title = isJp ? '新規ノート' : 'New Note';
+                if (newNoteBtnMobile) newNoteBtnMobile.title = n.buttons.newNote;
 
                 // Minimized label
                 const notesModal = document.querySelector('.notes-modal');
-                if (notesModal) notesModal.style.setProperty('--notes-minimized-label', isJp ? '"メモ"' : 'Apple Notes');
+                if (notesModal) notesModal.style.setProperty('--notes-minimized-label', n.modal.minimizedLabel);
 
                 // Toolbar button titles
-                const toolbarTitles = isJp ? {
-                    bold: '太字', italic: '斜体', underline: '下線', strikeThrough: '取り消し線',
-                    outdent: 'インデントを減らす', indent: 'インデントを増やす',
-                    insertUnorderedList: '箇条書き', insertOrderedList: '番号付きリスト'
-                } : {
-                    bold: 'Bold', italic: 'Italic', underline: 'Underline', strikeThrough: 'Strikethrough',
-                    outdent: 'Decrease Indent', indent: 'Increase Indent',
-                    insertUnorderedList: 'Bulleted List', insertOrderedList: 'Numbered List'
+                const toolbarTitles = {
+                    bold: n.toolbar.bold, italic: n.toolbar.italic, underline: n.toolbar.underline,
+                    strikeThrough: n.toolbar.strikeThrough, outdent: n.toolbar.outdent, indent: n.toolbar.indent,
+                    insertUnorderedList: n.toolbar.insertUnorderedList, insertOrderedList: n.toolbar.insertOrderedList
                 };
                 document.querySelectorAll('.notes-toolbar-btn[data-command]').forEach(btn => {
                     const cmd = btn.getAttribute('data-command');
                     if (toolbarTitles[cmd]) btn.title = toolbarTitles[cmd];
                 });
                 const monoBtn = document.getElementById('notes-mono-btn');
-                if (monoBtn) monoBtn.title = isJp ? '等幅' : 'Monostyle';
+                if (monoBtn) monoBtn.title = n.toolbar.mono;
                 const dashBtn = document.getElementById('notes-dash-btn');
-                if (dashBtn) dashBtn.title = isJp ? 'ダッシュリスト' : 'Dashed List';
+                if (dashBtn) dashBtn.title = n.toolbar.dash;
                 const checklistBtn = document.getElementById('notes-checklist-btn');
-                if (checklistBtn) checklistBtn.title = isJp ? 'チェックリスト' : 'Checklist';
+                if (checklistBtn) checklistBtn.title = n.toolbar.checklist;
 
                 // Re-render the current notes list
                 renderNotesList(currentFolder, false);
@@ -3001,29 +2797,29 @@
                 'note-1': {
                     title: 'Favorite Movies',
                     folder: 'Films',
-                    datelist: '3/20/2026',
-                    date: 'March 20, 2026 at 12:20',
+                    date: '3/20/2026',
+                    time: '12:20',
                     content: `<ol class="notes-list"><li>Your Name</li><li>Frieren</li><li>Avatar: the Last Airbender</li><li>Avatar</li><li>Black Panther</li><li>Avatar: the Way of the Water</li><li>Korra</li><li>Suzume</li><li>Weathering With You</li><li>A Whisker Away</li></ol>`
                 },
                 'note-2': {
                     title: 'Movies to Watch',
                     folder: 'Films',
-                    datelist: '2/20/2026',
-                    date: 'February 20, 2026 at 16:21',
+                    date: '2/20/2026',
+                    time: '16:21',
                     content: `<ul class="notes-list bullets"><li>Where Does the Sea Begin</li><li>Silent Love</li><li>A New Dawn</li><li>Ride Your Wave</li><li>Garden of Words</li><li>Josee, the Tiger and the Fish</li><li>Our Secret Diary</li><li>Belle</li><li>Ride Your Wave</li><li>The Wind Rises</li><li>Lost in Starlight</li><li>The Tunnel to Summer, The Exit of Goodbyes</li></ul>`
                 },
                 'note-3': {
                     title: 'Waiting for Next Feature',
                     folder: 'Films',
-                    datelist: '1/5/2026',
-                    date: 'January 5, 2026 at 14:45',
+                    date: '1/5/2026',
+                    time: '14:45',
                     content: `<ul class="notes-list bullets"><li>Kingdom</li><li>Frieren</li><li>Dungeon Meshi</li><li>Demon Slayer</li></ul>`
                 },
                 'note-writing': {
                     title: 'Building with Vanilla',
                     folder: 'Writing',
-                    datelist: 'Yesterday',
-                    date: 'March 19, 2026 at 19:20',
+                    date: 'Yesterday',
+                    time: '19:20',
                     content: `<p style="line-height: 1.6;">I decided to build this entire site using only HTML, CSS, and Vanilla Javascript. No React, no Tailwind, just the raw capabilities of the web platform.</p>`
                 }
             };
@@ -3058,8 +2854,8 @@
                         out[id] = {
                             title: m.title || '',
                             folder: m.folder || 'all',
-                            datelist: m.datelist || '',
                             date: m.date || '',
+                            time: m.time || '00:00',
                             content: parsed.content || ''
                         };
                     }));
@@ -3106,32 +2902,44 @@
             };
 
             const formatNoteDate = (timestamp) => {
+                const lang = getNotesLocale();
+                const locale = lang === 'ja' ? 'ja' : 'en-US';
+                const dt = window.translations[lang]?.notes?.dateTime || {};
                 const now = new Date();
                 const d = new Date(timestamp);
                 const isToday = now.toDateString() === d.toDateString();
-                if (isToday) return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+                if (isToday) return d.toLocaleTimeString(locale, { hour: 'numeric', minute: '2-digit', hourCycle: lang === 'ja' ? 'h23' : 'h12' });
 
                 const yesterday = new Date(now);
                 yesterday.setDate(now.getDate() - 1);
-                if (yesterday.toDateString() === d.toDateString()) return "Yesterday";
+                if (yesterday.toDateString() === d.toDateString()) return dt.yesterday || 'Yesterday';
 
                 const diffDays = Math.floor((now - d) / (1000 * 60 * 60 * 24));
-                if (diffDays < 7) return d.toLocaleDateString([], { weekday: 'long' });
+                if (diffDays < 7) return d.toLocaleDateString(locale, { weekday: 'long' });
 
-                return d.toLocaleDateString([], { month: 'numeric', day: 'numeric', year: 'numeric' });
+                return d.toLocaleDateString(locale, { month: 'numeric', day: 'numeric', year: 'numeric' });
             };
 
             const formatFullNoteDate = (timestamp) => {
+                const lang = getNotesLocale();
+                const locale = lang === 'ja' ? 'ja' : 'en-US';
+                const dt = window.translations[lang]?.notes?.dateTime || {};
                 const d = new Date(timestamp);
-                const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-                const timeStr = d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-                return `${monthNames[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} at ${timeStr}`;
+                const dateStr = d.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
+                const timeStr = d.toLocaleTimeString(locale, { hour: 'numeric', minute: '2-digit', hourCycle: lang === 'ja' ? 'h23' : 'h12' });
+                const at = dt.at || 'at';
+                return at ? `${dateStr} ${at} ${timeStr}` : `${dateStr} ${timeStr}`;
             };
 
             // Initialize lastEdited for existing notes
             Object.keys(notesData).forEach(key => {
-                const dateStr = notesData[key].datelist;
-                const baseDate = dateStr === 'Yesterday' ? new Date(Date.now() - 86400000) : new Date(dateStr);
+                const dateStr = notesData[key].date;
+                const timeStr = notesData[key].time || '00:00';
+                const isYesterday = dateStr === 'Yesterday';
+                const datePart = isYesterday
+                    ? new Date(Date.now() - 86400000).toLocaleDateString('en-US')
+                    : dateStr;
+                const baseDate = new Date(`${datePart} ${timeStr}`);
                 notesData[key].lastEdited = notesData[key].lastEdited || baseDate.getTime();
             });
 
@@ -3260,7 +3068,7 @@
                         document.getElementById('active-note-content').setAttribute('data-current-note', noteId);
                         document.getElementById('active-note-content').innerHTML = data.content;
                         document.getElementById('active-note-title').innerText = data.title;
-                        document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? (getNotesLocale() === 'ja' ? '削除: ' : 'Deleted: ') + formatNoteDate(data.deletedAt) : data.date;
+                        document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? (window.translations[getNotesLocale()]?.notes?.modal?.deletedPrefix || 'Deleted: ') + formatNoteDate(data.deletedAt) : formatFullNoteDate(data.lastEdited);
                         setNoteViewReadOnly(isBuiltInNoteId(noteId) || data.folder === 'recently_deleted');
                         navigateTo('view');
                         playNotesClickSound();
@@ -3566,7 +3374,7 @@
                             document.getElementById('active-note-content').setAttribute('data-current-note', noteId);
                             document.getElementById('active-note-content').innerHTML = data.content;
                             document.getElementById('active-note-title').innerText = data.title;
-                            document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? (getNotesLocale() === 'ja' ? '削除: ' : 'Deleted: ') + formatNoteDate(data.deletedAt) : data.date;
+                            document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? (window.translations[getNotesLocale()]?.notes?.modal?.deletedPrefix || 'Deleted: ') + formatNoteDate(data.deletedAt) : formatFullNoteDate(data.lastEdited);
                             setNoteViewReadOnly(isBuiltInNoteId(noteId) || data.folder === 'recently_deleted');
                         }
                     }
@@ -3592,10 +3400,9 @@
                         notesData[noteId].title = titleEditor.innerText;
                         notesData[noteId].content = contentEditor.innerHTML;
                         notesData[noteId].lastEdited = Date.now();
-                        notesData[noteId].date = formatFullNoteDate(notesData[noteId].lastEdited);
                         saveNotes();
                         // Update date display in view
-                        document.getElementById('active-note-date').innerText = notesData[noteId].date;
+                        document.getElementById('active-note-date').innerText = formatFullNoteDate(notesData[noteId].lastEdited);
                         // Re-render the list to update previews and sorting
                         const currentF = document.querySelector('.active-folder')?.getAttribute('data-target');
                         const filter = (currentF && Object.prototype.hasOwnProperty.call(folderMap, currentF))
