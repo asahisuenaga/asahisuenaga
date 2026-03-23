@@ -2566,8 +2566,8 @@
             const folderGroup = document.querySelector('.notes-list-group');
             let lastSelectedIndex = null;
 
-            const BUILT_IN_NOTE_IDS = new Set(['note-1', 'note-2', 'note-3', 'note-4']);
-            const isBuiltInNoteId = (id) => BUILT_IN_NOTE_IDS.has(id);
+            let seedNoteIds = new Set();
+            const isBuiltInNoteId = (id) => seedNoteIds.has(id);
 
             const getNotesLocale = () => document.documentElement.lang === 'ja' ? 'ja' : 'en';
             const folderDisplayName = (name) => {
@@ -2840,9 +2840,13 @@
 
             let notesReady = false;
             let notesData = await hydrateNotesFromGitHub();
+            seedNoteIds = new Set(Object.keys(notesData));
             const savedNotes = localStorage.getItem('apple_notes_data');
             if (savedNotes) {
-                Object.assign(notesData, JSON.parse(savedNotes));
+                const userNotes = JSON.parse(savedNotes);
+                for (const [id, note] of Object.entries(userNotes)) {
+                    if (!seedNoteIds.has(id)) notesData[id] = note;
+                }
             }
             notesReady = true;
 
@@ -2872,7 +2876,11 @@
             };
 
             const saveNotes = () => {
-                localStorage.setItem('apple_notes_data', JSON.stringify(notesData));
+                const userNotes = {};
+                for (const [id, note] of Object.entries(notesData)) {
+                    if (!seedNoteIds.has(id)) userNotes[id] = note;
+                }
+                localStorage.setItem('apple_notes_data', JSON.stringify(userNotes));
                 updateCounts();
             };
 
