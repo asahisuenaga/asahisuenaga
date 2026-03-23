@@ -11,7 +11,7 @@
   },
   "bio": {
     "bio1": "子供の頃、完璧な丸を描いていました。正確さへの拘りと、物事の仕組みに対する自然な好奇心が、自分をソフトウェアへとは導くとは思いもしませんでした。",
-    "bio2": "<code><a href=\"https://msu.edu\" target=\"_blank\" style=\"color: var(--heading); text-decoration: none;\">ミシガン州立大学</a></code>でコンピュータサイエンスを専攻しており、時間があればSwiftを学んでいます。<code><a href=\"https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc\" target=\"_blank\" style=\"color: var(--heading); text-decoration: none;\">ブラウザ拡張機能</a></code>などのプロジェクトにおける僕の<code><a href=\"https://github.com/asahisuenaga\" target=\"_blank\" style=\"color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;\">\n        <img src=\"icons/text-page.svg\" alt=\"Resume Icon\" class=\"themed-icon\" style=\"height: 0.875em; width: auto; margin-right: 0.125rem;\">経験</a></code>は、この学習意欲を証明していた。"
+    "bio2": "<code><a href=\"https://msu.edu\" target=\"_blank\" style=\"color: var(--heading); text-decoration: none;\">ミシガン州立大学</a></code>で計算機科学を専攻し、合間にSwiftを勉強中。<code><a href=\"https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc\" target=\"_blank\" style=\"color: var(--heading); text-decoration: none;\">ブラウザ拡張機能</a></code>などのプロジェクトにおける僕の<code><a href=\"https://github.com/asahisuenaga\" target=\"_blank\" style=\"color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;\">\n        <img src=\"icons/text-page.svg\" alt=\"Resume Icon\" class=\"themed-icon\" style=\"height: 0.875em; width: auto; margin-right: 0.125rem;\">経験</a></code>は、この学習意欲を証明していた。"
   },
   "footer": {
     "twitter": "ツイッター",
