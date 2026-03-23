@@ -2869,7 +2869,7 @@
             const hydrateNotesFromGitHub = async () => {
                 try {
                     const dirRes = await fetch(
-                        'https://api.github.com/repos/asahisuenaga/personal/contents/notes?ref=test'
+                        'https://api.github.com/repos/asahisuenaga/personal/contents/notes'
                     );
                     if (!dirRes.ok) throw new Error('dir');
                     const files = (await dirRes.json()).filter(f => f.name.endsWith('.md'));
