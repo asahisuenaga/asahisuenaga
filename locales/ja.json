@@ -1,0 +1,100 @@
+{
+  "site": {
+    "title": "末永朝飛",
+    "pageTitle": "末永朝飛",
+    "banner": "「虹色キャレット」— GoogleDocsでキャレットに色をつけよう →"
+  },
+  "location": {
+    "text": "ミシガン州 イーストランシング",
+    "tooltipTitle": "ミシガン州 イーストランシング",
+    "tooltipSub": "Googleマップで表示"
+  },
+  "bio": {
+    "bio1": "子供の頃、完璧な丸を描いていました。正確さへの拘りと、物事の仕組みに対する自然な好奇心が、自分をソフトウェアへとは導くとは思いもしませんでした。",
+    "bio2": "<code><a href=\"https://msu.edu\" target=\"_blank\" style=\"color: var(--heading); text-decoration: none;\">ミシガン州立大学</a></code>でコンピュータサイエンスを専攻しており、時間があればSwiftを学んでいます。<code><a href=\"https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc\" target=\"_blank\" style=\"color: var(--heading); text-decoration: none;\">ブラウザ拡張機能</a></code>などのプロジェクトにおける僕の<code><a href=\"https://github.com/asahisuenaga\" target=\"_blank\" style=\"color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;\">\n        <img src=\"icons/text-page.svg\" alt=\"Resume Icon\" class=\"themed-icon\" style=\"height: 0.875em; width: auto; margin-right: 0.125rem;\">経験</a></code>は、この学習意欲を証明していた。"
+  },
+  "footer": {
+    "twitter": "ツイッター",
+    "bmc": "コーヒーをおごる",
+    "github": "ギットハブ"
+  },
+  "tooltips": {
+    "twitterTitle": "ツイッター",
+    "twitterSub": "@asahisuenaga",
+    "bmcTitle": "コーヒーをおごる",
+    "bmcSub": "サポートする",
+    "musicTitle": "YouTube Music",
+    "musicSub": "いい曲を聞こう",
+    "nameTitle": "English"
+  },
+  "notes": {
+    "folders": {
+      "title": "フォルダ",
+      "all": "すべて",
+      "films": "映画",
+      "writing": "執筆",
+      "deleted": "削除済み",
+      "headerAll": "すべてのノート",
+      "headerFilms": "映画",
+      "headerWriting": "執筆",
+      "headerDeleted": "削除済み"
+    },
+    "buttons": {
+      "newFolder": "新規フォルダ",
+      "sidebar": "サイドバー",
+      "newNote": "新規ノート"
+    },
+    "modal": {
+      "titlePlaceholder": "タイトル",
+      "contentPlaceholder": "内容",
+      "deletedPrefix": "削除:",
+      "minimizedLabel": "\"メモ\""
+    },
+    "toolbar": {
+      "bold": "太字",
+      "italic": "斜体",
+      "underline": "下線",
+      "strikeThrough": "取り消し線",
+      "outdent": "インデントを減らす",
+      "indent": "インデントを増やす",
+      "insertUnorderedList": "箇条書き",
+      "insertOrderedList": "番号付きリスト",
+      "mono": "等幅",
+      "dash": "ダッシュリスト",
+      "checklist": "チェックリスト"
+    },
+    "folderDisplayNames": {
+      "Films": "映画",
+      "Writing": "執筆",
+      "all": "すべてのノート",
+      "recently_deleted": "削除済み"
+    },
+    "contextMenu": {
+      "recoverNote": "ノートを復元",
+      "deletePermanently": "完全に削除",
+      "pinNote": "ピン留め",
+      "unpinNote": "ピンを外す",
+      "moveTo": "{folder}に移動",
+      "deleteNote": "ノートを削除",
+      "renameFolder": "フォルダ名を変更",
+      "deleteFolder": "フォルダを削除",
+      "folderReadonly": "このフォルダは変更できません",
+      "deleteN": "{n}件のノートを削除",
+      "pinN": "{n}件をピン留め",
+      "unpinN": "{n}件のピンを外す",
+      "recoverN": "{n}件のノートを復元",
+      "deletePermanentlyN": "{n}件のノートを完全に削除",
+      "moveNTo": "{n}件を{folder}に移動",
+      "promptRenameFolder": "フォルダ名を変更",
+      "promptNewFolderName": "新しいフォルダ名",
+      "confirmDeleteFolder": "フォルダ「{name}」を削除しますか？ノートは「すべてのノート」に移動します。",
+      "reservedFolder": "この名前は使えません。別の名前にしてください。",
+      "folderExists": "同じ名前のフォルダがあります。",
+      "folderExistsRename": "同じ名前のフォルダがあります。"
+    },
+    "dateTime": {
+      "yesterday": "昨日",
+      "at": ""
+    }
+  }
+}
