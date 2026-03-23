@@ -1,0 +1,100 @@
+{
+  "site": {
+    "title": "Asahi Suenaga",
+    "pageTitle": "Asahi Suenaga",
+    "banner": "Try Rainbow Cursor — A Browser Extension to Change Your Cursor in Google Docs →"
+  },
+  "location": {
+    "text": "East Lansing, MI",
+    "tooltipTitle": "East Lansing, MI",
+    "tooltipSub": "Show on Google Maps"
+  },
+  "bio": {
+    "bio1": "When I was a kid, I drew perfect circles. I had no idea that my love for being precise and my natural curiosity about how things work would lead me to software.",
+    "bio2": "Studying CS at <code><a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" style=\"color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;\">\n        <img src=\"icons/graduationcap.svg\" alt=\"Graduation Cap Icon\" class=\"themed-icon\" style=\"height: 0.875em; width: auto; margin-right: 0.125rem;\">MSU</a></code> and learning Swift whenever I can. My <code><a href=\"https://github.com/asahisuenaga\" target=\"_blank\" style=\"color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;\">\n        <img src=\"icons/text-page.svg\" alt=\"Resume Icon\" class=\"themed-icon\" style=\"height: 0.875em; width: auto; margin-right: 0.125rem;\">experience</a></code> in projects such as a <code><a href=\"https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc\" target=\"_blank\" style=\"color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;\">\n        <img src=\"icons/puzzlepiece.svg\" alt=\"Puzzle Piece Icon\" class=\"themed-icon\" style=\"height: 0.875em; width: auto; margin-right: 0.125rem;\">browser extension</a></code> demonstrates this learning mindset."
+  },
+  "footer": {
+    "twitter": "Twitter",
+    "bmc": "Buy Me a Coffee",
+    "github": "GitHub"
+  },
+  "tooltips": {
+    "twitterTitle": "Twitter",
+    "twitterSub": "@asahisuenaga",
+    "bmcTitle": "Buy Me a Coffee",
+    "bmcSub": "Support my work",
+    "musicTitle": "YouTube Music",
+    "musicSub": "Listen to my favorites!",
+    "nameTitle": "日本語"
+  },
+  "notes": {
+    "folders": {
+      "title": "Folders",
+      "all": "All Notes",
+      "films": "Films",
+      "writing": "Writing",
+      "deleted": "Deleted",
+      "headerAll": "All Notes",
+      "headerFilms": "Films",
+      "headerWriting": "Writing",
+      "headerDeleted": "Recently Deleted"
+    },
+    "buttons": {
+      "newFolder": "New Folder",
+      "sidebar": "Sidebar",
+      "newNote": "New Note"
+    },
+    "modal": {
+      "titlePlaceholder": "Title",
+      "contentPlaceholder": "Content",
+      "deletedPrefix": "Deleted:",
+      "minimizedLabel": "Apple Notes"
+    },
+    "toolbar": {
+      "bold": "Bold",
+      "italic": "Italic",
+      "underline": "Underline",
+      "strikeThrough": "Strikethrough",
+      "outdent": "Decrease Indent",
+      "indent": "Increase Indent",
+      "insertUnorderedList": "Bulleted List",
+      "insertOrderedList": "Numbered List",
+      "mono": "Monostyle",
+      "dash": "Dashed List",
+      "checklist": "Checklist"
+    },
+    "folderDisplayNames": {
+      "Films": "Films",
+      "Writing": "Writing",
+      "all": "All Notes",
+      "recently_deleted": "Recently Deleted"
+    },
+    "contextMenu": {
+      "recoverNote": "Recover Note",
+      "deletePermanently": "Delete Permanently",
+      "pinNote": "Pin Note",
+      "unpinNote": "Unpin Note",
+      "moveTo": "Move to {folder}",
+      "deleteNote": "Delete Note",
+      "renameFolder": "Rename Folder",
+      "deleteFolder": "Delete Folder",
+      "folderReadonly": "This folder cannot be modified",
+      "deleteN": "Delete {n} Notes",
+      "pinN": "Pin {n} Notes",
+      "unpinN": "Unpin {n} Notes",
+      "recoverN": "Recover {n} Notes",
+      "deletePermanentlyN": "Delete {n} Notes Permanently",
+      "moveNTo": "Move {n} Notes to {folder}",
+      "promptRenameFolder": "Rename folder",
+      "promptNewFolderName": "New folder name",
+      "confirmDeleteFolder": "Delete folder \"{name}\"? Notes will be moved to All Notes.",
+      "reservedFolder": "Folder name reserved. Use another name.",
+      "folderExists": "Folder already exists.",
+      "folderExistsRename": "Folder already exists"
+    },
+    "dateTime": {
+      "yesterday": "Yesterday",
+      "at": "at"
+    }
+  }
+}
