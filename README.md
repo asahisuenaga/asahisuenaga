@@ -33,8 +33,9 @@
 
 <h2 align="left">Statistics</h2>
 
-[![Stats-Dark](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&hide=contribs,issues&rank_icon=percentile&hide_border=true&include_all_commits=true&theme=dark#gh-dark-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)
-[![Stats-Light](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&hide=contribs,issues&rank_icon=percentile&hide_border=true&include_all_commits=true&theme=default#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)
-[![ProgrammingLanguage-Light](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=compact&langs_count=8&hide_border=true)](https://google.com)
+[![Stats-Dark](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&hide=contribs,issues&hide_border=true&include_all_commits=true&theme=dark#gh-dark-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)
+[![Stats-Light](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&hide=contribs,issues&hide_border=true&include_all_commits=true&theme=default#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)
+[![ProgrammingLanguage-Dark](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=compact&langs_count=8&hide_border=true&theme=dark#gh-dark-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)
+[![ProgrammingLanguage-Light](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=compact&langs_count=8&hide_border=true&theme=light#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-light-only)
 
 ![](https://komarev.com/ghpvc/?username=asahisuenaga&style=for-the-badge&color=orange&abbreviated=true&show_icons=true)
