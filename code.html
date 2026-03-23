@@ -2813,7 +2813,7 @@
             const hydrateNotesFromGitHub = async () => {
                 try {
                     const dirRes = await fetch(
-                        'https://api.github.com/repos/asahisuenaga/personal/contents/notes'
+                        'https://api.github.com/repos/asahisuenaga/personal/tree/test/notes'
                     );
                     if (!dirRes.ok) throw new Error('dir');
                     const files = (await dirRes.json()).filter(f => f.name.endsWith('.md'));
@@ -2838,11 +2838,13 @@
                 }
             };
 
+            let notesReady = false;
             let notesData = await hydrateNotesFromGitHub();
             const savedNotes = localStorage.getItem('apple_notes_data');
             if (savedNotes) {
                 Object.assign(notesData, JSON.parse(savedNotes));
             }
+            notesReady = true;
 
             const updateCounts = () => {
                 const counts = { all: 0, Films: 0, Writing: 0, recently_deleted: 0 };
@@ -2905,6 +2907,7 @@
             };
 
             function renderNotesList(folderFilter, autoSelect = true) {
+                if (!notesReady) return;
                 const listContainer = document.getElementById('notes-list-container');
                 if (!listContainer) return;
 
