@@ -297,12 +297,19 @@
 
         .firefly {
             position: absolute;
-            width: 3px;
-            height: 3px;
-            background: #FFD700;
+            width: var(--firefly-size, 3px);
+            height: var(--firefly-size, 3px);
+            background: var(--firefly-color, #FFD700);
             pointer-events: none;
             z-index: 10;
-            animation: flyAndSpin 3s forwards ease-out;
+            animation: flyAndSpin 3s forwards ease-out, flicker var(--firefly-flicker, 0.4s) ease-in-out infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { filter: brightness(1); }
+            30% { filter: brightness(0.5); }
+            60% { filter: brightness(1); }
+            100% { filter: brightness(0.7); }
         }
 
         @keyframes flyAndSpin {
@@ -317,6 +324,30 @@
 
             100% {
                 transform: translate(var(--x), var(--y)) rotate(var(--r));
+                opacity: 0;
+            }
+        }
+
+        .firefly.burned {
+            animation: burnOut 0.6s forwards ease-in !important;
+        }
+
+        @keyframes burnOut {
+            0% {
+                background: #FF3B00;
+                box-shadow: 0 0 8px 3px rgba(255, 60, 0, 0.8);
+                transform: scale(1.5);
+                opacity: 1;
+            }
+            50% {
+                background: #FF6A00;
+                box-shadow: 0 0 10px 4px rgba(255, 100, 0, 0.6);
+                transform: scale(1);
+            }
+            100% {
+                background: #333;
+                box-shadow: none;
+                transform: scale(0);
                 opacity: 0;
             }
         }
@@ -1171,6 +1202,7 @@
             padding: 4px;
             height: 40px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -1793,7 +1825,7 @@
         .notes-folder-info img,
         .back-hero-icon,
         #new-note-btn-header img,
-        #new-folder-btn-top img {
+        #new-folder-btn-top img, #new-note-btn-mobile img {
             filter: invert(1);
             -webkit-user-drag: none;
             user-select: none;
@@ -1811,7 +1843,7 @@
             #sidebar-toggle img,
             .back-hero-icon,
             #new-note-btn-header img,
-            #new-folder-btn-top img {
+            #new-folder-btn-top img, #new-note-btn-mobile img {
                 filter: invert(0);
             }
 
@@ -2378,6 +2410,18 @@
                 shrine.classList.remove('post-press');
             };
 
+            const FIREFLY_BURN_THRESHOLD = 50;
+
+            function burnAllFireflies() {
+                const fireflies = shrine.querySelectorAll('.firefly:not(.burned)');
+                if (fireflies.length === 0) return;
+                fireflies.forEach(f => f.classList.add('burned'));
+                new Audio('audio/firefly-death.wav').play().catch(() => { });
+                setTimeout(() => {
+                    fireflies.forEach(f => { if (f.parentNode) f.remove(); });
+                }, 600);
+            }
+
             function createFirefly(spreadMultiplier = 1) {
                 const p = document.createElement('div');
                 p.className = 'firefly';
@@ -2389,13 +2433,25 @@
                 const driftY = (Math.random() * -30 * spreadMultiplier) - 10 + "px";
 
                 const r = (Math.random() - 0.5) * 360 + "deg";
+                const isBlue = Math.random() < 0.01;
+                const color = isBlue
+                    ? `hsl(${200 + Math.random() * 20}, ${90 + Math.random() * 10}%, ${60 + Math.random() * 15}%)`
+                    : `hsl(${40 + Math.random() * 15}, ${80 + Math.random() * 20}%, ${50 + Math.random() * 15}%)`;
                 p.style.left = `${startX}%`;
                 p.style.top = `${startY}%`;
                 p.style.setProperty('--x', driftX);
                 p.style.setProperty('--y', driftY);
                 p.style.setProperty('--r', r);
+                p.style.setProperty('--firefly-color', color);
+                p.style.setProperty('--firefly-size', (3 + Math.random() * 0.5) + 'px');
+                p.style.setProperty('--firefly-flicker', (0.7 + Math.random() * 0.8) + 's');
+                p.style.animationDelay = `0s, -${(Math.random() * 0.5).toFixed(2)}s`;
 
                 shrine.appendChild(p);
+
+                if (shrine.querySelectorAll('.firefly:not(.burned)').length >= FIREFLY_BURN_THRESHOLD) {
+                    burnAllFireflies();
+                }
 
                 setTimeout(() => {
                     if (p.parentNode) p.remove();
@@ -2453,20 +2509,20 @@
         }
 
         function playNotesClickSound() {
-            playSound('notes.wav');
+            playSound('audio/notes.wav');
         }
 
         function playNotesDeleteSound() {
-            playSound('delete.wav');
+            playSound('audio/delete.wav');
         }
 
         function playMoveSound() {
             // Use a move-specific sound file; fallback to notes on error is handled by browser
-            playSound('move.wav');
+            playSound('audio/move.wav');
         }
 
         function playClickSound() {
-            playSound('audio.wav');
+            playSound('audio/basic.wav');
         }
 
         document.addEventListener('pointerup', (e) => {
@@ -2566,8 +2622,8 @@
             const folderGroup = document.querySelector('.notes-list-group');
             let lastSelectedIndex = null;
 
-            const BUILT_IN_NOTE_IDS = new Set(['note-1', 'note-2', 'note-3', 'note-writing']);
-            const isBuiltInNoteId = (id) => BUILT_IN_NOTE_IDS.has(id);
+            let seedNoteIds = new Set();
+            const isBuiltInNoteId = (id) => seedNoteIds.has(id);
 
             const getNotesLocale = () => document.documentElement.lang === 'ja' ? 'ja' : 'en';
             const folderDisplayName = (name) => {
@@ -2793,37 +2849,6 @@
                 }
             };
 
-            const NOTES_SEED_FALLBACK = {
-                'note-1': {
-                    title: 'Favorite Movies',
-                    folder: 'Films',
-                    date: '3/20/2026',
-                    time: '12:20',
-                    content: `<ol class="notes-list"><li>Your Name</li><li>Frieren</li><li>Avatar: the Last Airbender</li><li>Avatar</li><li>Black Panther</li><li>Avatar: the Way of the Water</li><li>Korra</li><li>Suzume</li><li>Weathering With You</li><li>A Whisker Away</li></ol>`
-                },
-                'note-2': {
-                    title: 'Movies to Watch',
-                    folder: 'Films',
-                    date: '2/20/2026',
-                    time: '16:21',
-                    content: `<ul class="notes-list bullets"><li>Where Does the Sea Begin</li><li>Silent Love</li><li>A New Dawn</li><li>Ride Your Wave</li><li>Garden of Words</li><li>Josee, the Tiger and the Fish</li><li>Our Secret Diary</li><li>Belle</li><li>Ride Your Wave</li><li>The Wind Rises</li><li>Lost in Starlight</li><li>The Tunnel to Summer, The Exit of Goodbyes</li></ul>`
-                },
-                'note-3': {
-                    title: 'Waiting for Next Feature',
-                    folder: 'Films',
-                    date: '1/5/2026',
-                    time: '14:45',
-                    content: `<ul class="notes-list bullets"><li>Kingdom</li><li>Frieren</li><li>Dungeon Meshi</li><li>Demon Slayer</li></ul>`
-                },
-                'note-writing': {
-                    title: 'Building with Vanilla',
-                    folder: 'Writing',
-                    date: 'Yesterday',
-                    time: '19:20',
-                    content: `<p style="line-height: 1.6;">I decided to build this entire site using only HTML, CSS, and Vanilla Javascript. No React, no Tailwind, just the raw capabilities of the web platform.</p>`
-                }
-            };
-
             const parseNoteMd = (raw) => {
                 const match = raw.trim().match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
                 if (!match) return null;
@@ -2841,35 +2866,45 @@
                 return { meta, content: match[2].trim() };
             };
 
-            const hydrateNotesFromMarkdown = async () => {
-                const seedIds = ['note-1', 'note-2', 'note-3', 'note-writing'];
-                const out = {};
+            const hydrateNotesFromGitHub = async () => {
                 try {
-                    await Promise.all(seedIds.map(async (id) => {
-                        const res = await fetch(`notes/${id}.md`);
-                        if (!res.ok) throw new Error('md');
+                    const dirRes = await fetch(
+                        'https://api.github.com/repos/asahisuenaga/personal/contents/notes'
+                    );
+                    if (!dirRes.ok) throw new Error('dir');
+                    const files = (await dirRes.json()).filter(f => f.name.endsWith('.md'));
+                    const out = {};
+                    await Promise.all(files.map(async (f) => {
+                        const res = await fetch(f.download_url);
+                        if (!res.ok) return;
                         const parsed = parseNoteMd(await res.text());
-                        if (!parsed) throw new Error('parse');
+                        if (!parsed) return;
+                        const id = f.name.replace('.md', '');
                         const m = parsed.meta;
                         out[id] = {
                             title: m.title || '',
                             folder: m.folder || 'all',
-                            date: m.date || '',
-                            time: m.time || '00:00',
+                            lastEdited: m.date ? new Date(m.date).getTime() : Date.now(),
                             content: parsed.content || ''
                         };
                     }));
                     return out;
                 } catch {
-                    return { ...NOTES_SEED_FALLBACK };
+                    return {};
                 }
             };
 
-            let notesData = await hydrateNotesFromMarkdown();
+            let notesReady = false;
+            let notesData = await hydrateNotesFromGitHub();
+            seedNoteIds = new Set(Object.keys(notesData));
             const savedNotes = localStorage.getItem('apple_notes_data');
             if (savedNotes) {
-                Object.assign(notesData, JSON.parse(savedNotes));
+                const userNotes = JSON.parse(savedNotes);
+                for (const [id, note] of Object.entries(userNotes)) {
+                    if (!seedNoteIds.has(id)) notesData[id] = note;
+                }
             }
+            notesReady = true;
 
             const updateCounts = () => {
                 const counts = { all: 0, Films: 0, Writing: 0, recently_deleted: 0 };
@@ -2897,7 +2932,11 @@
             };
 
             const saveNotes = () => {
-                localStorage.setItem('apple_notes_data', JSON.stringify(notesData));
+                const userNotes = {};
+                for (const [id, note] of Object.entries(notesData)) {
+                    if (!seedNoteIds.has(id)) userNotes[id] = note;
+                }
+                localStorage.setItem('apple_notes_data', JSON.stringify(userNotes));
                 updateCounts();
             };
 
@@ -2931,19 +2970,8 @@
                 return at ? `${dateStr} ${at} ${timeStr}` : `${dateStr} ${timeStr}`;
             };
 
-            // Initialize lastEdited for existing notes
-            Object.keys(notesData).forEach(key => {
-                const dateStr = notesData[key].date;
-                const timeStr = notesData[key].time || '00:00';
-                const isYesterday = dateStr === 'Yesterday';
-                const datePart = isYesterday
-                    ? new Date(Date.now() - 86400000).toLocaleDateString('en-US')
-                    : dateStr;
-                const baseDate = new Date(`${datePart} ${timeStr}`);
-                notesData[key].lastEdited = notesData[key].lastEdited || baseDate.getTime();
-            });
-
             function renderNotesList(folderFilter, autoSelect = true) {
+                if (!notesReady) return;
                 const listContainer = document.getElementById('notes-list-container');
                 if (!listContainer) return;
 
