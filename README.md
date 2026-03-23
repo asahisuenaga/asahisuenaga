@@ -33,6 +33,8 @@
 
 <h2 align="left">Statistics</h2>
 
-<img height="120em" src="https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=false&include_all_commits=true&count_private=true&bg_color=00000000&hide=contribs,issues"/><img height="120em" src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=compact&langs_count=8&bg_color=00000000"/>
+[![Stats-Dark](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&hide=contribs,issues&rank_icon=percentile&hide_border=true&include_all_commits=true&theme=dark#gh-dark-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)
+[![Stats-Light](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&hide=contribs,issues&rank_icon=percentile&hide_border=true&include_all_commits=true&theme=default#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)
+[![ProgrammingLanguage-Light](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=compact&langs_count=8&hide_border=true)](https://google.com)
 
 ![](https://komarev.com/ghpvc/?username=asahisuenaga&style=for-the-badge&color=orange&abbreviated=true&show_icons=true)
