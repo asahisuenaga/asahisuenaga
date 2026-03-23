@@ -2453,20 +2453,20 @@
         }
 
         function playNotesClickSound() {
-            playSound('notes.wav');
+            playSound('audio/notes.wav');
         }
 
         function playNotesDeleteSound() {
-            playSound('delete.wav');
+            playSound('audio/delete.wav');
         }
 
         function playMoveSound() {
             // Use a move-specific sound file; fallback to notes on error is handled by browser
-            playSound('move.wav');
+            playSound('audio/move.wav');
         }
 
         function playClickSound() {
-            playSound('audio.wav');
+            playSound('audio/basic.wav');
         }
 
         document.addEventListener('pointerup', (e) => {
@@ -2793,37 +2793,6 @@
                 }
             };
 
-            const NOTES_SEED_FALLBACK = {
-                'note-1': {
-                    title: 'Favorite Movies',
-                    folder: 'Films',
-                    date: '3/20/2026',
-                    time: '12:20',
-                    content: `<ol class="notes-list"><li>Your Name</li><li>Frieren</li><li>Avatar: the Last Airbender</li><li>Avatar</li><li>Black Panther</li><li>Avatar: the Way of the Water</li><li>Korra</li><li>Suzume</li><li>Weathering With You</li><li>A Whisker Away</li></ol>`
-                },
-                'note-2': {
-                    title: 'Movies to Watch',
-                    folder: 'Films',
-                    date: '2/20/2026',
-                    time: '16:21',
-                    content: `<ul class="notes-list bullets"><li>Where Does the Sea Begin</li><li>Silent Love</li><li>A New Dawn</li><li>Ride Your Wave</li><li>Garden of Words</li><li>Josee, the Tiger and the Fish</li><li>Our Secret Diary</li><li>Belle</li><li>Ride Your Wave</li><li>The Wind Rises</li><li>Lost in Starlight</li><li>The Tunnel to Summer, The Exit of Goodbyes</li></ul>`
-                },
-                'note-3': {
-                    title: 'Waiting for Next Feature',
-                    folder: 'Films',
-                    date: '1/5/2026',
-                    time: '14:45',
-                    content: `<ul class="notes-list bullets"><li>Kingdom</li><li>Frieren</li><li>Dungeon Meshi</li><li>Demon Slayer</li></ul>`
-                },
-                'note-writing': {
-                    title: 'Building with Vanilla',
-                    folder: 'Writing',
-                    date: 'Yesterday',
-                    time: '19:20',
-                    content: `<p style="line-height: 1.6;">I decided to build this entire site using only HTML, CSS, and Vanilla Javascript. No React, no Tailwind, just the raw capabilities of the web platform.</p>`
-                }
-            };
-
             const parseNoteMd = (raw) => {
                 const match = raw.trim().match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
                 if (!match) return null;
@@ -2841,31 +2810,35 @@
                 return { meta, content: match[2].trim() };
             };
 
-            const hydrateNotesFromMarkdown = async () => {
-                const seedIds = ['note-1', 'note-2', 'note-3', 'note-writing'];
-                const out = {};
+            const hydrateNotesFromGitHub = async () => {
                 try {
-                    await Promise.all(seedIds.map(async (id) => {
-                        const res = await fetch(`notes/${id}.md`);
-                        if (!res.ok) throw new Error('md');
+                    const dirRes = await fetch(
+                        'https://api.github.com/repos/asahisuenaga/personal/contents/notes'
+                    );
+                    if (!dirRes.ok) throw new Error('dir');
+                    const files = (await dirRes.json()).filter(f => f.name.endsWith('.md'));
+                    const out = {};
+                    await Promise.all(files.map(async (f) => {
+                        const res = await fetch(f.download_url);
+                        if (!res.ok) return;
                         const parsed = parseNoteMd(await res.text());
-                        if (!parsed) throw new Error('parse');
+                        if (!parsed) return;
+                        const id = f.name.replace('.md', '');
                         const m = parsed.meta;
                         out[id] = {
                             title: m.title || '',
                             folder: m.folder || 'all',
-                            date: m.date || '',
-                            time: m.time || '00:00',
+                            lastEdited: m.date ? new Date(m.date).getTime() : Date.now(),
                             content: parsed.content || ''
                         };
                     }));
                     return out;
                 } catch {
-                    return { ...NOTES_SEED_FALLBACK };
+                    return {};
                 }
             };
 
-            let notesData = await hydrateNotesFromMarkdown();
+            let notesData = await hydrateNotesFromGitHub();
             const savedNotes = localStorage.getItem('apple_notes_data');
             if (savedNotes) {
                 Object.assign(notesData, JSON.parse(savedNotes));
@@ -2930,18 +2903,6 @@
                 const at = dt.at || 'at';
                 return at ? `${dateStr} ${at} ${timeStr}` : `${dateStr} ${timeStr}`;
             };
-
-            // Initialize lastEdited for existing notes
-            Object.keys(notesData).forEach(key => {
-                const dateStr = notesData[key].date;
-                const timeStr = notesData[key].time || '00:00';
-                const isYesterday = dateStr === 'Yesterday';
-                const datePart = isYesterday
-                    ? new Date(Date.now() - 86400000).toLocaleDateString('en-US')
-                    : dateStr;
-                const baseDate = new Date(`${datePart} ${timeStr}`);
-                notesData[key].lastEdited = notesData[key].lastEdited || baseDate.getTime();
-            });
 
             function renderNotesList(folderFilter, autoSelect = true) {
                 const listContainer = document.getElementById('notes-list-container');
