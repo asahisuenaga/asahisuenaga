@@ -10,32 +10,32 @@
 
 <h3 align="left">Languages</h3>
 
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS](https://img.shields.io/badge/CSS-663399?style=for-the-badge&logo=css&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white)
-![Markdown](https://img.shields.io/badge/Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white")
-<!-- ![Swift](https://img.shields.io/badge/Swift-FA7343?style=for-the-badge&logo=swift&logoColor=white) -->
+![HTML5](https://img.shields.io/badge/HTML5-000?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS-000?style=for-the-badge&logo=css&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-000?style=for-the-badge&logo=javascript&logoColor=white)
+![Markdown](https://img.shields.io/badge/Markdown-000?style=for-the-badge&logo=markdown&logoColor=white")
+<!-- ![Swift](https://img.shields.io/badge/Swift-000?style=for-the-badge&logo=swift&logoColor=white) -->
 
 <h3 align="left">Technologies</h3>
 
-![GitHub](https://img.shields.io/badge/github-181717.svg?style=for-the-badge&logo=github&logoColor=white)
-![Framer](https://img.shields.io/badge/framer-0055FF.svg?style=for-the-badge&logo=framer&logoColor=white)
-<!-- ![Docker](https://img.shields.io/badge/docker-2496ED.svg?style=for-the-badge&logo=docker&logoColor=white) -->
-<!-- ![Git](https://img.shields.io/badge/gitlab-FC6D26.svg?style=for-the-badge&logo=gitlab&logoColor=white) -->
+![GitHub](https://img.shields.io/badge/github-000.svg?style=for-the-badge&logo=github&logoColor=white)
+![Framer](https://img.shields.io/badge/framer-000.svg?style=for-the-badge&logo=framer&logoColor=white)
+<!-- ![Docker](https://img.shields.io/badge/docker-000.svg?style=for-the-badge&logo=docker&logoColor=white) -->
+<!-- ![Git](https://img.shields.io/badge/gitlab-000.svg?style=for-the-badge&logo=gitlab&logoColor=white) -->
 
 <h3 align="left">IDEs</h3>
 
-![Cursor](https://img.shields.io/badge/cursor-4285F4?style=for-the-badge&logo=cursor&logoColor=white)
-![Antigravity](https://img.shields.io/badge/antigravity-EA4335?style=for-the-badge&logo=antigravity&logoColor=white)
-![Visual Studio Code](https://img.shields.io/badge/visual_studio_code-0078D4?style=for-the-badge&logo=visual-studio_code&logoColor=white")
-<!--- ![Claude](https://img.shields.io/badge/claude-#D97757?style=for-the-badge&logo=claude&logoColor=white) -->
-<!--- ![Xcode](https://img.shields.io/badge/xcode-1575F9?style=for-the-badge&logo=xcode&logoColor=white) -->
+![Cursor](https://img.shields.io/badge/cursor-000?style=for-the-badge&logo=cursor&logoColor=white)
+![Antigravity](https://img.shields.io/badge/antigravity-000?style=for-the-badge&logo=antigravity&logoColor=white)
+![Visual Studio Code](https://img.shields.io/badge/visual_studio_code-000?style=for-the-badge&logo=visual-studio_code&logoColor=white")
+<!--- ![Claude](https://img.shields.io/badge/claude-000?style=for-the-badge&logo=claude&logoColor=white) -->
+<!--- ![Xcode](https://img.shields.io/badge/xcode-000?style=for-the-badge&logo=xcode&logoColor=white) -->
 
 <h2 align="left">Statistics</h2>
 
-[![Stats-Dark](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&hide=contribs,issues&hide_border=true&include_all_commits=true&theme=dark#gh-dark-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)
-[![Stats-Light](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&hide=contribs,issues&hide_border=true&include_all_commits=true&theme=default#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)
-[![ProgrammingLanguage-Dark](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=compact&langs_count=8&hide_border=true&theme=dark#gh-dark-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)
-[![ProgrammingLanguage-Light](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=compact&langs_count=8&hide_border=true&theme=light#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-light-only)
+[![Stats-Dark](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&hide=contribs,issues&hide_border=true&include_all_commits=true&theme=apprentice#gh-dark-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)
+[![Stats-Light](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&hide=contribs,issues&hide_border=true&include_all_commits=true&theme=graywhite#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)
+[![ProgrammingLanguage-Dark](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=compact&langs_count=8&hide_border=true&theme=apprentice#gh-dark-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)
+[![ProgrammingLanguage-Light](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=compact&langs_count=8&hide_border=true&theme=graywhite#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)
 
-![](https://komarev.com/ghpvc/?username=asahisuenaga&style=for-the-badge&color=orange&abbreviated=true&show_icons=true)
+![](https://komarev.com/ghpvc/?username=asahisuenaga&style=for-the-badge&color=lightgray&abbreviated=true&show_icons=true)
