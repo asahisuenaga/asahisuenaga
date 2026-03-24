@@ -37,9 +37,9 @@
 <h2 align="left">Statistics</h2>
 
 [![Stats-Dark](https://github-readme-stats.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&disable_animations=true&hide=contribs,issues&hide_border=true&hide_title=true&hide_rank=true&include_all_commits=true&theme=apprentice&bg_color=00000000#gh-dark-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)
-[![Stats-Light](https://github-readme-stats.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&disable_animations=true&hide=contribs,issues&hide_border=true&hide_title=true&hide_rank=true&include_all_commits=true&theme=graywhite#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)
+[![Stats-Light](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&disable_animations=true&hide=contribs,issues&hide_border=true&hide_title=true&hide_rank=true&include_all_commits=true&theme=graywhite#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)
 
 [![ProgrammingLanguage-Dark](https://github-readme-stats.vercel.app/api/top-langs/?username=asahisuenaga&layout=compact&langs_count=8&disable_animations=true&hide_border=true&hide_title=true&theme=apprentice&bg_color=00000000#gh-apprentice-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)
-[![ProgrammingLanguage-Light](https://github-readme-stats.vercel.app/api/top-langs/?username=asahisuenaga&layout=compact&langs_count=8&disable_animations=true&hide_border=true&&hide_title=true&theme=graywhite#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)
+[![ProgrammingLanguage-Light](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=compact&langs_count=8&disable_animations=true&hide_border=true&&hide_title=true&theme=graywhite#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)
 
 ![](https://komarev.com/ghpvc/?username=asahisuenaga&style=for-the-badge&color=lightgray&abbreviated=true&show_icons=true)
