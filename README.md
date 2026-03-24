@@ -3,7 +3,10 @@
 <h2 align="left">About Me</h2>
 
 <p align="center">
-<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&color=000&size=45&center=true&vCenter=true&width=800&height=80&lines=Hey+there!+👋+I'm+Asahi;Computer+Science+Student;Michigan+State+University">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.herokuapp.com?font=Fira+Code&color=FFFFFF&size=45&center=true&vCenter=true&width=800&height=80&lines=Hey+there!+👋+I'm+Asahi;Computer+Science+Student;Michigan+State+University">
+    <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&color=333&size=45&center=true&vCenter=true&width=800&height=80&lines=Hey+there!+👋+I'm+Asahi;Computer+Science+Student;Michigan+State+University">
+  </picture>
 </p>
 
 <h2 align="left">Technologies & Lanuages</h2>
@@ -33,10 +36,10 @@
 
 <h2 align="left">Statistics</h2>
 
-[![Stats-Dark](https://github-readme-stats.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&disable_animations=true&hide=contribs,issues&hide_border=true&hide_title=ture&hide_rank=true&include_all_commits=true&theme=apprentice#gh-dark-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)
+[![Stats-Dark](https://github-readme-stats.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&disable_animations=true&hide=contribs,issues&hide_border=true&hide_title=true&hide_rank=true&include_all_commits=true&theme=apprentice&bg_color=00000000#gh-dark-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)
 [![Stats-Light](https://github-readme-stats.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&disable_animations=true&hide=contribs,issues&hide_border=true&hide_title=true&hide_rank=true&include_all_commits=true&theme=graywhite#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)
 
-[![ProgrammingLanguage-Dark](https://github-readme-stats.vercel.app/api/top-langs/?username=asahisuenaga&layout=normal&langs_count=8&disable_animations=true&hide_border=true&hide_title=true&theme=apprentice#gh-apprentice-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)
-[![ProgrammingLanguage-Light](https://github-readme-stats.vercel.app/api/top-langs/?username=asahisuenaga&layout=normal&langs_count=8&disable_animations=true&hide_border=true&hide_title=true&theme=graywhite#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)
+[![ProgrammingLanguage-Dark](https://github-readme-stats.vercel.app/api/top-langs/?username=asahisuenaga&layout=compact&langs_count=8&disable_animations=true&hide_border=true&hide_title=true&theme=apprentice&bg_color=00000000#gh-apprentice-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)
+[![ProgrammingLanguage-Light](https://github-readme-stats.vercel.app/api/top-langs/?username=asahisuenaga&layout=compact&langs_count=8&disable_animations=true&hide_border=true&&hide_title=true&theme=graywhite#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)
 
 ![](https://komarev.com/ghpvc/?username=asahisuenaga&style=for-the-badge&color=lightgray&abbreviated=true&show_icons=true)
