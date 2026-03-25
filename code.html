@@ -1252,6 +1252,10 @@
 
         .notes-toolbar-btn:hover,
         .notes-toolbar-btn.active {
+            background: rgba(234, 179, 8, 0.3);
+        }
+
+        .notes-toolbar-btn.active:hover {
             background: rgba(0, 0, 0, 0.05);
         }
 
@@ -1301,6 +1305,10 @@
 
         @media (prefers-color-scheme: dark) {
 
+            .notes-toolbar.btn.active:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+
             .notes-toolbar-btn img {
                 filter: invert(0);
                 opacity: 0.6;
@@ -1314,23 +1322,11 @@
             .notes-toolbar-btn:hover img,
             .notes-toolbar-btn.active img {
                 filter: invert(0);
-                opacity: 1;
             }
 
             .notes-toolbar-btn.active #notes-mono-text,
             .notes-toolbar-btn:hover #notes-mono-text {
                 filter: invert(1);
-                opacity: 1;
-            }
-        }
-
-        .notes-toolbar-btn:hover {
-            background: rgba(0, 0, 0, 0.05);
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .notes-toolbar-btn:hover {
-                background: rgba(255, 255, 255, 0.3);
             }
         }
 
