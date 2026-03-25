@@ -2429,7 +2429,7 @@
                 const fireflies = shrine.querySelectorAll('.firefly:not(.burned)');
                 if (fireflies.length === 0) return;
                 fireflies.forEach(f => f.classList.add('burned'));
-                new Audio('audio/firefly-death.wav').play().catch(() => { });
+                new Audio('sounds/firefly-death.wav').play().catch(() => { });
                 setTimeout(() => {
                     fireflies.forEach(f => { if (f.parentNode) f.remove(); });
                 }, 600);
@@ -2522,20 +2522,20 @@
         }
 
         function playNotesClickSound() {
-            playSound('audio/notes.wav');
+            playSound('sounds/notes.wav');
         }
 
         function playNotesDeleteSound() {
-            playSound('audio/delete.wav');
+            playSound('sounds/delete.wav');
         }
 
         function playMoveSound() {
             // Use a move-specific sound file; fallback to notes on error is handled by browser
-            playSound('audio/move.wav');
+            playSound('sounds/move.wav');
         }
 
         function playClickSound() {
-            playSound('audio/basic.wav');
+            playSound('sounds/basic.wav');
         }
 
         document.addEventListener('pointerup', (e) => {
