@@ -456,7 +456,7 @@
             transition: opacity 0.2s cubic-bezier(0.25, 1, 0.5, 1), transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
             will-change: transform, left, top;
             background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(2px) saturate(180%);
+            backdrop-filter: saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.8);
             border-radius: 1rem;
             box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3);
@@ -782,10 +782,9 @@
 
         .notes-glass-btn {
             background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(2px) saturate(180%);
-            -webkit-backdrop-filter: blur(2px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            border-radius: 100%;
+            backdrop-filter: saturate(180%);
+            -webkit-backdrop-filter: saturate(180%);
+            border-radius: 50%;
             box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3);
             cursor: pointer;
             padding: 0.75rem;
@@ -798,6 +797,7 @@
             position: relative;
             transform: translateZ(0);
             will-change: transform, backdrop-filter;
+            border: none;
         }
 
         .notes-glass-btn::after {
@@ -817,9 +817,9 @@
         .notes-glass-btn:hover {
             filter: brightness(110%);
             transform: scale(1.05);
-            background-color: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(2px) saturate(180%);
-            -webkit-backdrop-filter: blur(2px) saturate(180%);
+            background-color: rgba(109, 109, 109, 0.3);
+            backdrop-filter: saturate(180%);
+            -webkit-backdrop-filter: saturate(180%);
         }
 
         .note-context-menu {
@@ -1166,63 +1166,67 @@
             border-radius: 4px;
         }
 
-        .new-note-action {
-            backdrop-filter: blur(2px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50% !important;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3);
+        #new-note-btn-header {
             width: 40px;
             height: 40px;
             margin-top: 2rem;
-            flex-shrink: 0;
-            aspect-ratio: 1 / 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-            position: relative;
-            transform: translateZ(0);
             padding: 0;
-            overflow: hidden;
-            background-color: rgba(255, 255, 255, 0.3);
             border: none;
         }
 
-        .new-note-action:hover {
+        #new-note-btn-header:hover {
             filter: brightness(110%);
             transform: scale(1.05);
             background-color: rgba(109, 109, 109, 0.3);
+            backdrop-filter: saturate(180%);
+            -webkit-backdrop-filter: saturate(180%);
         }
 
-        .new-note-action img {
+        #new-note-btn-header img {
             width: 20px;
             height: 20px;
-            opacity: 0.8;
             filter: brightness(0.2);
         }
 
         /* Container for multiple buttons (Toolbar) */
         div.notes-header-right {
             display: flex;
-            gap: 2px;
+            gap: 0.125rem;
             align-items: center;
             background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(2px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: saturate(180%);
+            -webkit-backdrop-filter: saturate(180%);
+            border: none;
             border-radius: 1.25rem;
-            padding: 4px;
-            height: 40px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            height: 2.5rem;
+            box-shadow:  0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3);
+            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translateZ(0);
+            will-change: transform, backdrop-filter;
             max-width: 400px;
         }
 
+        div.notes-header-right::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: inherit;
+            backdrop-filter: blur(0px);
+            opacity: 0.6;
+            z-index: -1;
+            }
+
         @media (prefers-color-scheme: dark) {
 
-            .new-note-action,
+            #new-note-btn-header,
             div.notes-header-right,
             button.notes-header-right {
-                background: transparent;
+                background: rgba(0, 0, 0, 0.3);
                 border: 1px solid rgba(255, 255, 255, 0.2);
                 box-shadow: none;
             }
@@ -1297,15 +1301,14 @@
 
         @media (prefers-color-scheme: dark) {
 
-            .notes-toolbar-btn img,
-            .notes-toolbar-btn #notes-mono-text {
+            .notes-toolbar-btn img {
                 filter: invert(0);
                 opacity: 0.6;
             }
 
             .notes-toolbar-btn #notes-mono-text {
                 filter: invert(1);
-                opacity: 0.6;
+                opacity: 0.5;
             }
 
             .notes-toolbar-btn:hover img,
@@ -1327,7 +1330,7 @@
 
         @media (prefers-color-scheme: dark) {
             .notes-toolbar-btn:hover {
-                background: rgba(255, 255, 255, 0.1);
+                background: rgba(255, 255, 255, 0.3);
             }
         }
 
@@ -1584,7 +1587,7 @@
                 display: none !important;
             }
 
-            .new-note-action,
+            #new-note-btn-header,
             .notes-header-left,
             .notes-header-right {
                 margin-top: 0px;
@@ -1607,11 +1610,8 @@
                 margin: 0 !important;
                 flex-shrink: 0 !important;
                 max-width: 75% !important;
-                z-index: 10;
-                padding: 4px !important;
                 width: auto !important;
                 display: flex !important;
-                gap: 2px !important;
             }
 
             .notes-delete-notice {
@@ -1676,6 +1676,10 @@
             .active .notes-back {
                 transform: translateX(0);
                 opacity: 1;
+            }
+
+            .active .notes-back:hover {
+                transform: scale(1.05);
             }
 
             .notes-modal.minimized {
@@ -2055,7 +2059,7 @@
                             draggable="false">
                     </button>
                 </div>
-                <button id="new-note-btn-header" class="new-note-action" title="New Note">
+                <button id="new-note-btn-header" class="notes-glass-btn" title="New Note">
                     <img src="icons/square-and-pencil.svg"
                         draggable="false">
                 </button>
