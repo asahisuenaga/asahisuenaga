@@ -31,12 +31,12 @@
     "folders": {
       "title": "フォルダ",
       "all": "すべて",
-      "films": "映画",
-      "writing": "執筆",
+      "software": "ソフト",
+      "programming": "コーディング",
       "deleted": "削除済み",
       "headerAll": "すべてのノート",
-      "headerFilms": "映画",
-      "headerWriting": "執筆",
+      "headerSoftware": "ソフト",
+      "headerProgramming": "コーディング",
       "headerDeleted": "削除済み"
     },
     "buttons": {
@@ -64,8 +64,8 @@
       "checklist": "チェックリスト"
     },
     "folderDisplayNames": {
-      "Films": "映画",
-      "Writing": "執筆",
+      "Software": "ソフト",
+      "Programming": "コーディング",
       "all": "すべてのノート",
       "recently_deleted": "削除済み"
     },

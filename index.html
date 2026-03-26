@@ -6,18 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Asahi Suenaga — CS student at Michigan State University, Swift developer, and creator of Rainbow Cursor browser extension.">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://asahisuenaga.github.io/personal/">
+    <link rel="canonical" href="https://asahisuenaga.com/">
     <meta property="og:title" content="Asahi Suenaga">
-    <meta property="og:description" content="CS student at Michigan State University, Swift developer, and creator of Rainbow Cursor browser extension.">
-    <meta property="og:image" content="https://asahisuenaga.github.io/personal/image.webp">
-    <meta property="og:url" content="https://pbs.twimg.com/profile_banners/1868344890431537152/1771109169/1500x500">
+    <meta property="og:description" content="Studying CS at MSU and learning Swift whenever I can.">
+    <meta property="og:image" content="images/OGImage.webp">
+    <meta property="og:url" content="https://asahisuenaga.com">
     <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Asahi Suenaga">
-    <meta name="twitter:description" content="CS student at Michigan State University, Swift developer, and creator of Rainbow Cursor browser extension.">
-    <meta name="twitter:image" content="https://asahisuenaga.github.io/personal/image.webp">
+    <meta name="twitter:description" content="Studying CS at MSU and learning Swift whenever I can.">
+    <meta name="twitter:image" content="https://asahisuenaga.com/images/TwitterCard.webp">
     <title>Asahi Suenaga</title>
-    <link rel="icon" type="image/webp" href="image.webp">
+    <link rel="icon" type="image/webp" href="images/image.webp">
     <style>
         :root {
             --bg: #f9f9f9;
@@ -1083,7 +1083,8 @@
 
         #panel-note-view .notes-content {
             padding: 1.5rem 1.5rem;
-            padding-top: 2rem;
+            padding-top: 0rem;
+            margin-top: 2rem;
         }
 
         .notes-date {
@@ -1896,7 +1897,7 @@
 
         <div class="container">
             <div id="shrine" class="shrine-container" role="button">
-                <img src="image.webp" class="icon" alt="Shrine Icon" draggable="false">
+                <img src="images/image.webp" class="icon" alt="Shrine Icon" draggable="false">
             </div>
 
             <div class="header">
@@ -1999,23 +2000,23 @@
                             All Notes</div>
                         <div><span class="notes-count" id="count-all">0</span></div>
                     </div>
-                    <div class="notes-list-item folder-list-item" data-target="panel-notes-films"
+                    <div class="notes-list-item folder-list-item" data-target="panel-notes-software"
                         style="user-select: none;">
                         <div class="notes-folder-info"><img
                                 src="icons/folder.svg"
                                 style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
                                 draggable="false">
-                            Films</div>
-                        <div><span class="notes-count" id="count-films">0</span></div>
+                            Software</div>
+                        <div><span class="notes-count" id="count-software">0</span></div>
                     </div>
-                    <div class="notes-list-item folder-list-item" data-target="panel-notes-writing"
+                    <div class="notes-list-item folder-list-item" data-target="panel-notes-programming"
                         style="user-select: none;">
                         <div class="notes-folder-info"><img
                                 src="icons/folder.svg"
                                 style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
                                 draggable="false">
-                            Writing</div>
-                        <div><span class="notes-count" id="count-writing">0</span></div>
+                            Programming</div>
+                        <div><span class="notes-count" id="count-programming">0</span></div>
                     </div>
                     <div class="notes-folder-divider" style="height: 1px; background: var(--divider-color); margin: 8px 0;"></div>
                     <div class="notes-list-item folder-list-item" data-target="panel-notes-deleted"
@@ -2598,8 +2599,8 @@
 
             const folderMap = {
                 'panel-notes-all': 'all',
-                'panel-notes-films': 'Films',
-                'panel-notes-writing': 'Writing',
+                'panel-notes-software': 'Software',
+                'panel-notes-programming': 'Programming',
                 'panel-notes-deleted': 'recently_deleted'
             };
 
@@ -2650,8 +2651,8 @@
                 // Folder names (update text node after img)
                 const folderMap = {
                     'panel-notes-all': n.folders.all,
-                    'panel-notes-films': n.folders.films,
-                    'panel-notes-writing': n.folders.writing,
+                    'panel-notes-software': n.folders.software,
+                    'panel-notes-programming': n.folders.programming,
                     'panel-notes-deleted': n.folders.deleted
                 };
                 Object.entries(folderMap).forEach(([target, label]) => {
@@ -2798,7 +2799,7 @@
             const createFolder = () => {
                 const folderName = prompt(tcm('promptNewFolderName'));
                 if (!folderName) return;
-                if (['All Notes', 'Films', 'Writing', 'Recently Deleted'].includes(folderName)) {
+                if (['All Notes', 'Software', 'Programming', 'Recently Deleted'].includes(folderName)) {
                     alert(tcm('reservedFolder'));
                     return;
                 }
@@ -2884,7 +2885,7 @@
             notesReady = true;
 
             const updateCounts = () => {
-                const counts = { all: 0, Films: 0, Writing: 0, recently_deleted: 0 };
+                const counts = { all: 0, Software: 0, Programming: 0, recently_deleted: 0 };
                 Object.values(notesData).forEach(note => {
                     if (note.folder === 'recently_deleted') {
                         counts.recently_deleted++;
@@ -2897,8 +2898,8 @@
                     }
                 });
                 if (document.getElementById('count-all')) document.getElementById('count-all').innerText = counts.all;
-                if (document.getElementById('count-films')) document.getElementById('count-films').innerText = counts.Films;
-                if (document.getElementById('count-writing')) document.getElementById('count-writing').innerText = counts.Writing;
+                if (document.getElementById('count-software')) document.getElementById('count-software').innerText = counts.Software;
+                if (document.getElementById('count-programming')) document.getElementById('count-programming').innerText = counts.Programming;
                 if (document.getElementById('count-deleted')) document.getElementById('count-deleted').innerText = counts.recently_deleted;
 
                 customFolders.forEach(folderName => {
@@ -2991,10 +2992,10 @@
                         titleNode.innerText = getNotesLocale() === 'ja' ? '削除済み' : 'Recently Deleted';
                     } else if (folderFilter === 'all') {
                         titleNode.innerText = getNotesLocale() === 'ja' ? 'すべてのノート' : 'All Notes';
-                    } else if (folderFilter === 'Films') {
-                        titleNode.innerText = getNotesLocale() === 'ja' ? '映画' : 'Films';
-                    } else if (folderFilter === 'Writing') {
-                        titleNode.innerText = getNotesLocale() === 'ja' ? '執筆' : 'Writing';
+                    } else if (folderFilter === 'Software') {
+                        titleNode.innerText = getNotesLocale() === 'ja' ? 'ソフト' : 'Software';
+                    } else if (folderFilter === 'Programming') {
+                        titleNode.innerText = getNotesLocale() === 'ja' ? 'コーディング' : 'Programming';
                     } else {
                         titleNode.innerText = folderFilter;
                     }
@@ -3985,7 +3986,7 @@
                         menu.appendChild(separator);
                         menu.appendChild(deleteBtn);
                     } else {
-                        // System folders and built-in folders (All Notes, Films, Writing, Deleted)
+                        // System folders and built-in folders (All Notes, Software, Programming, Deleted)
                         const info = document.createElement('div');
                         info.className = 'note-context-item';
                         info.style.color = '#999';

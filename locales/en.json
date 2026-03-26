@@ -31,12 +31,12 @@
     "folders": {
       "title": "Folders",
       "all": "All Notes",
-      "films": "Films",
-      "writing": "Writing",
+      "software": "Software",
+      "programming": "Dev",
       "deleted": "Deleted",
       "headerAll": "All Notes",
-      "headerFilms": "Films",
-      "headerWriting": "Writing",
+      "headerSoftware": "Software",
+      "headerProgramming": "Dev",
       "headerDeleted": "Recently Deleted"
     },
     "buttons": {
@@ -64,8 +64,8 @@
       "checklist": "Checklist"
     },
     "folderDisplayNames": {
-      "Films": "Films",
-      "Writing": "Writing",
+      "Software": "Software",
+      "Programming": "Dev",
       "all": "All Notes",
       "recently_deleted": "Recently Deleted"
     },
