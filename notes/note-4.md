@@ -2,6 +2,7 @@
 title: Google's Answering Machine
 folder: Software
 date: 2026-03-07T09:21
+permalink: /notes/googles-answering-machine
 ---
 <p style="line-height:1.6;">For over twenty years, the unspoken contract of the internet was simple: you ask a question, and Google gives you a map of the world to go find the answer. But lately, that map has been replaced by a <code>wall of text</code>. Google Search is rapidly transitioning from a tool that helps you explore the web to an <strong>answering machine</strong> that tries to prevent you from ever leaving the page.</p>
 
