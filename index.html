@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Asahi Suenaga — CS student at Michigan State University, Swift developer, and creator of Rainbow Cursor browser extension.">
     <meta name="robots" content="index, follow">
@@ -1591,7 +1592,8 @@
             }
 
             #panel-note-view .notes-header {
-                height: 100px !important;
+                height: 70px !important;
+                margin-top: 20px;
                 display: flex !important;
                 flex-direction: row !important;
                 align-items: center !important;
@@ -1661,7 +1663,8 @@
 
             #panel-note-view .notes-content {
                 padding: 1.5rem !important;
-                padding-top: 1rem !important;
+                margin-top: 0rem !important;
+                padding-top: 0rem !important;
             }
 
             .notes-back {
@@ -2280,15 +2283,15 @@
 
             async function loadTranslations() {
                 const [en, ja] = await Promise.all([
-                    fetch('locales/en.json').then(r => r.json()),
-                    fetch('locales/ja.json').then(r => r.json())
+                    fetch('/locales/en.json').then(r => r.json()),
+                    fetch('/locales/ja.json').then(r => r.json())
                 ]);
                 window.translations = { en, ja };
                 applyLang(currentLang);
             }
 
             function applyLang(lang) {
-                const d = window.translations[lang];
+                const d = (window.translations || {})[lang];
                 if (!d) return;
                 document.documentElement.lang = lang;
                 document.title = d.site.pageTitle;
@@ -2403,7 +2406,7 @@
                 const fireflies = shrine.querySelectorAll('.firefly:not(.burned)');
                 if (fireflies.length === 0) return;
                 fireflies.forEach(f => f.classList.add('burned'));
-                new Audio('sounds/firefly-death.wav').play().catch(() => { });
+                new Audio('/sounds/firefly-death.wav').play().catch(() => { });
                 setTimeout(() => {
                     fireflies.forEach(f => { if (f.parentNode) f.remove(); });
                 }, 600);
@@ -2496,20 +2499,20 @@
         }
 
         function playNotesClickSound() {
-            playSound('sounds/notes.wav');
+            playSound('/sounds/notes.wav');
         }
 
         function playNotesDeleteSound() {
-            playSound('sounds/delete.wav');
+            playSound('/sounds/delete.wav');
         }
 
         function playMoveSound() {
             // Use a move-specific sound file; fallback to notes on error is handled by browser
-            playSound('sounds/move.wav');
+            playSound('/sounds/move.wav');
         }
 
         function playClickSound() {
-            playSound('sounds/basic.wav');
+            playSound('/sounds/basic.wav');
         }
 
         document.addEventListener('pointerup', (e) => {
@@ -2615,7 +2618,7 @@
             const getNotesLocale = () => document.documentElement.lang === 'ja' ? 'ja' : 'en';
             const folderDisplayName = (name) => {
                 const lang = getNotesLocale();
-                const map = window.translations[lang]?.notes?.folderDisplayNames;
+                const map = (window.translations || {})[lang]?.notes?.folderDisplayNames;
                 if (map && map[name]) return map[name];
                 return name;
             };
@@ -2633,15 +2636,16 @@
 
             const tcm = (key, ...args) => {
                 const lang = getNotesLocale();
-                const template = window.translations[lang]?.notes?.contextMenu?.[key]
-                    ?? window.translations.en?.notes?.contextMenu?.[key];
+                const wt = window.translations || {};
+                const template = wt[lang]?.notes?.contextMenu?.[key]
+                    ?? wt.en?.notes?.contextMenu?.[key];
                 if (!template) return key;
                 if (template.includes('{')) return resolveTemplate(template, ...args);
                 return template;
             };
 
             window.applyNotesLang = (lang) => {
-                const n = window.translations[lang]?.notes;
+                const n = (window.translations || {})[lang]?.notes;
                 if (!n) return;
 
                 // Folders panel title
@@ -2866,7 +2870,8 @@
                         title: m.title || '',
                         folder: m.folder || 'all',
                         lastEdited: m.date ? new Date(m.date).getTime() : Date.now(),
-                        content: parsed.content || ''
+                        content: parsed.content || '',
+                        permalink: m.permalink || ''
                     };
                 }));
                 return out;
@@ -2921,7 +2926,7 @@
             const formatNoteDate = (timestamp) => {
                 const lang = getNotesLocale();
                 const locale = lang === 'ja' ? 'ja' : 'en-US';
-                const dt = window.translations[lang]?.notes?.dateTime || {};
+                const dt = (window.translations || {})[lang]?.notes?.dateTime || {};
                 const now = new Date();
                 const d = new Date(timestamp);
                 const isToday = now.toDateString() === d.toDateString();
@@ -2940,7 +2945,7 @@
             const formatFullNoteDate = (timestamp) => {
                 const lang = getNotesLocale();
                 const locale = lang === 'ja' ? 'ja' : 'en-US';
-                const dt = window.translations[lang]?.notes?.dateTime || {};
+                const dt = (window.translations || {})[lang]?.notes?.dateTime || {};
                 const d = new Date(timestamp);
                 const dateStr = d.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
                 const timeStr = d.toLocaleTimeString(locale, { hour: 'numeric', minute: '2-digit', hourCycle: lang === 'ja' ? 'h23' : 'h12' });
@@ -3074,8 +3079,11 @@
                         document.getElementById('active-note-content').setAttribute('data-current-note', noteId);
                         document.getElementById('active-note-content').innerHTML = data.content;
                         document.getElementById('active-note-title').innerText = data.title;
-                        document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? (window.translations[getNotesLocale()]?.notes?.modal?.deletedPrefix || 'Deleted: ') + formatNoteDate(data.deletedAt) : formatFullNoteDate(data.lastEdited);
+                        document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? ((window.translations || {})[getNotesLocale()]?.notes?.modal?.deletedPrefix || 'Deleted: ') + formatNoteDate(data.deletedAt) : formatFullNoteDate(data.lastEdited);
                         setNoteViewReadOnly(isBuiltInNoteId(noteId) || data.folder === 'recently_deleted');
+                        if (data.permalink) {
+                            history.pushState(null, '', data.permalink);
+                        }
                         navigateTo('view');
                         playNotesClickSound();
 
@@ -3380,7 +3388,7 @@
                             document.getElementById('active-note-content').setAttribute('data-current-note', noteId);
                             document.getElementById('active-note-content').innerHTML = data.content;
                             document.getElementById('active-note-title').innerText = data.title;
-                            document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? (window.translations[getNotesLocale()]?.notes?.modal?.deletedPrefix || 'Deleted: ') + formatNoteDate(data.deletedAt) : formatFullNoteDate(data.lastEdited);
+                            document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? ((window.translations || {})[getNotesLocale()]?.notes?.modal?.deletedPrefix || 'Deleted: ') + formatNoteDate(data.deletedAt) : formatFullNoteDate(data.lastEdited);
                             setNoteViewReadOnly(isBuiltInNoteId(noteId) || data.folder === 'recently_deleted');
                         }
                     }
@@ -3406,6 +3414,10 @@
                         notesData[noteId].title = titleEditor.innerText;
                         notesData[noteId].content = contentEditor.innerHTML;
                         notesData[noteId].lastEdited = Date.now();
+                        if (!isBuiltInNoteId(noteId)) {
+                            notesData[noteId].permalink = '/notes/' + slugify(titleEditor.innerText);
+                            history.replaceState(null, '', notesData[noteId].permalink);
+                        }
                         saveNotes();
                         // Update date display in view
                         document.getElementById('active-note-date').innerText = formatFullNoteDate(notesData[noteId].lastEdited);
@@ -3846,11 +3858,13 @@
                 const createNewNote = () => {
                     const id = 'note-' + Date.now();
                     const now = new Date();
+                    const title = getNotesLocale() === 'ja' ? '新規ノート' : 'New Note';
                     notesData[id] = {
-                        title: getNotesLocale() === 'ja' ? '新規ノート' : 'New Note',
+                        title: title,
                         folder: (currentFolder === 'all' || currentFolder === 'recently_deleted') ? 'all' : currentFolder,
                         lastEdited: now.getTime(),
-                        content: '<p></p>'
+                        content: '<p></p>',
+                        permalink: '/notes/' + slugify(title)
                     };
                     saveNotes();
                     renderNotesList(currentFolder, true);
@@ -4094,8 +4108,15 @@
                     isMinimized = false;
 
                     const hash = window.location.hash.replace('#', '');
+                    const path = window.location.pathname;
                     renderFolderList();
-                    if (notesData[hash]) {
+                    const permalinkNoteId = Object.keys(notesData).find(id => notesData[id].permalink === path);
+                    if (permalinkNoteId) {
+                        currentFolder = notesData[permalinkNoteId].folder;
+                        renderNotesList(currentFolder);
+                        const noteEl = document.querySelector(`[data-note-id="${permalinkNoteId}"]`);
+                        if (noteEl) noteEl.click();
+                    } else if (notesData[hash]) {
                         currentFolder = notesData[hash].folder;
                         renderNotesList(currentFolder);
                         const noteEl = document.querySelector(`[data-note-id="${hash}"]`);
@@ -4137,9 +4158,45 @@
                         notesModal.style.removeProperty('transition');
                     }, 400);
 
-                    history.replaceState(null, null, window.location.pathname + window.location.search);
+                    history.replaceState(null, null, '/');
                     playNotesClickSound();
                 };
+
+                const openNoteByPermalink = (permalink) => {
+                    const noteId = Object.keys(notesData).find(id => notesData[id].permalink === permalink);
+                    if (!noteId) return false;
+                    const data = notesData[noteId];
+                    document.getElementById('active-note-content').setAttribute('data-current-note', noteId);
+                    document.getElementById('active-note-content').innerHTML = data.content;
+                    document.getElementById('active-note-title').innerText = data.title;
+                    document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? ((window.translations || {})[getNotesLocale()]?.notes?.modal?.deletedPrefix || 'Deleted: ') + formatNoteDate(data.deletedAt) : formatFullNoteDate(data.lastEdited);
+                    setNoteViewReadOnly(isBuiltInNoteId(noteId) || data.folder === 'recently_deleted');
+                    currentFolder = 'all';
+                    renderNotesList('all');
+                    document.querySelectorAll('[data-target]').forEach(f => f.classList.remove('active-folder'));
+                    const allNotesFolder = document.querySelector('[data-target="panel-notes-all"]');
+                    if (allNotesFolder) allNotesFolder.classList.add('active-folder');
+                    const noteEl = document.querySelector(`[data-note-id="${noteId}"]`);
+                    if (noteEl) {
+                        document.querySelectorAll('.note-preview').forEach(n => n.classList.remove('selected'));
+                        noteEl.classList.add('selected');
+                    }
+                    navigateTo('view');
+                    return true;
+                };
+
+                window.addEventListener('popstate', (e) => {
+                    const path = window.location.pathname;
+                    if (path !== '/' && path !== '/index.html') {
+                        if (openNoteByPermalink(path)) {
+                            notesBackdrop.classList.add('visible');
+                            notesModal.classList.add('visible');
+                            bookmark.classList.add('active');
+                        }
+                    } else {
+                        closeNotes();
+                    }
+                });
 
                 const minimizeNotes = (e) => {
                     document.body.style.overflow = '';
@@ -4365,6 +4422,17 @@
                 };
                 setInterval(purgeDeleted, 60000);
                 purgeDeleted();
+
+                const initialPath = window.location.pathname;
+                if (initialPath !== '/' && initialPath !== '/index.html') {
+                    if (openNoteByPermalink(initialPath)) {
+                        renderFolderList();
+                        document.body.style.overflow = 'hidden';
+                        notesBackdrop.classList.add('visible');
+                        notesModal.classList.add('visible');
+                        bookmark.classList.add('active');
+                    }
+                }
             }
 
             if (bookmark && notesModal && notesBackdrop) {
