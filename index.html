@@ -4108,7 +4108,7 @@
                     isMinimized = false;
 
                     const hash = window.location.hash.replace('#', '');
-                    const path = window.location.pathname;
+                    const path = window.location.pathname.replace(/\/$/, '') || '/';
                     renderFolderList();
                     const permalinkNoteId = Object.keys(notesData).find(id => notesData[id].permalink === path);
                     if (permalinkNoteId) {
@@ -4172,7 +4172,7 @@
                     document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? ((window.translations || {})[getNotesLocale()]?.notes?.modal?.deletedPrefix || 'Deleted: ') + formatNoteDate(data.deletedAt) : formatFullNoteDate(data.lastEdited);
                     setNoteViewReadOnly(isBuiltInNoteId(noteId) || data.folder === 'recently_deleted');
                     currentFolder = 'all';
-                    renderNotesList('all');
+                    renderNotesList('all', false);
                     document.querySelectorAll('[data-target]').forEach(f => f.classList.remove('active-folder'));
                     const allNotesFolder = document.querySelector('[data-target="panel-notes-all"]');
                     if (allNotesFolder) allNotesFolder.classList.add('active-folder');
@@ -4423,7 +4423,7 @@
                 setInterval(purgeDeleted, 60000);
                 purgeDeleted();
 
-                const initialPath = window.location.pathname;
+                const initialPath = window.location.pathname.replace(/\/$/, '') || '/';
                 if (initialPath !== '/' && initialPath !== '/index.html') {
                     if (openNoteByPermalink(initialPath)) {
                         renderFolderList();
