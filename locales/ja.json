@@ -10,8 +10,7 @@
     "tooltipSub": "Googleマップで表示"
   },
   "bio": {
-    "bio1": "子供の頃、完璧な丸を描いていました。正確さへの拘りと、物事の仕組みに対する自然な好奇心が、自分をソフトウェアへとは導くとは思いもしませんでした。",
-    "bio2": "<code><a href=\"https://msu.edu\" target=\"_blank\" style=\"color: var(--heading); text-decoration: none;\">ミシガン州立大学</a></code>で計算機科学を専攻し、合間にSwiftを勉強中。<code><a href=\"https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc\" target=\"_blank\" style=\"color: var(--heading); text-decoration: none;\">ブラウザ拡張機能</a></code>などのプロジェクトを制作した<code><a href=\"https://github.com/asahisuenaga\" target=\"_blank\" style=\"color: var(--heading); text-decoration: none; display: inline-flex; align-items: center; gap: 4px;\">\n        <img src=\"icons/text-page.svg\" alt=\"Resume Icon\" class=\"themed-icon\" style=\"height: 0.875em; width: auto; margin-right: 0.125rem;\">経験</a></code>には、こうした好奇心を形にしたものです。"
+    "bio": "ソフトウェアに興味を持つ大学生で、物事がどのように機能するのかに好奇心を持っています。<a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" style=\"color: var(--subtle); text-decoration: none; transition: color 0.2s;\" onmouseover=\"this.style.color='#2891df'\" onmouseout=\"this.style.color='var(--subtle)'\">ミシガン州立大学</a>でコンピュータサイエンスを専攻しており、時間があるときはSwiftを学んでいます。"
   },
   "footer": {
     "twitter": "ツイッター",
