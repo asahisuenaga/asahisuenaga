@@ -4,7 +4,7 @@ folder: Software
 date: 2026-03-07T09:21
 permalink: /notes/googles-answering-machine
 ---
-<p style="line-height:1.6;">For over twenty years, the unspoken contract of the internet was simple: you ask a question, and Google gives you a map of the world to go find the answer. But lately, that map has been replaced by a <code>wall of text</code>. Google Search is rapidly transitioning from a tool that helps you explore the web to an <strong>answering machine</strong> that tries to prevent you from ever leaving the page.</p>
+<p style="line-height:1.6;">For over twenty years, the unspoken contract of the internet was simple: you ask a question, and Google gives you a map of the world to go find the answer. But lately, that map has been replaced by a wall of text. Google Search is rapidly transitioning from a tool that helps you explore the web to an <strong>answering machine</strong> that tries to prevent you from ever leaving the page.</p>
 
 <h3 style="line-height:1.6;">Rise of the "Closed Loop"</h3>
 
@@ -23,6 +23,6 @@ permalink: /notes/googles-answering-machine
 
 <p style="line-height:1.6;">The good news? You don't have to wait for the Google to give you back the old web. You can take it back yourself. For those ready to jump ship, <a href="https://duckduckgo.com" style="color:rgb(234, 179, 8);">DuckDuckGo</a> offers a streamlined, privacy-first experience.</p>
 
-<p style="line-height:1.6;">However, if you need Google's search engine but hate the "answering machine" interface, there’s a middle ground. I developed a <strong>browser extension</strong> specifically to tear down that digital wall. It’s called <a href="https://chromewebstore.google.com/detail/hide-google-ai-overviews/pkbhdojajlnigelihhbclnikhidgnbeo?hl=en&authuser=0" style="color:rgb(234, 179, 8);">Hide Google AI Overviews and Mode</a>. It’s a lightweight solution that restores the classic 10-blue-link layout, ensuring your screen remains a place for <code>discovery</code> rather than <code>dictation</code>.</p>
+<p style="line-height:1.6;">However, if you need Google's search engine but hate the "answering machine" interface, there’s a middle ground. I developed a <strong>browser extension</strong> specifically to tear down that digital wall. It’s called <a href="https://chromewebstore.google.com/detail/hide-google-ai-overviews/pkbhdojajlnigelihhbclnikhidgnbeo?hl=en&authuser=0" style="color:rgb(234, 179, 8);">Hide Google AI Overviews and Mode</a>. It’s a lightweight solution that restores the classic 10-blue-link layout, ensuring your screen remains a place for discovery rather than dictation.</p>
 
 <p style="line-height:1.6;">We don't need an AI to read the internet for us. We just need a better way to find what’s actually out there.</p>
