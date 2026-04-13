@@ -718,11 +718,11 @@
         }
 
         .notes-glass-btn {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255);
             backdrop-filter: saturate(180%);
             -webkit-backdrop-filter: saturate(180%);
             border-radius: 50%;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3);
+            box-shadow: -0.5px -0.5px rgba(255, 255, 255, 0.2), 0.5px  0.5px rgba(255, 255, 255, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
             cursor: pointer;
             padding: 0.75rem;
             transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
@@ -753,7 +753,6 @@
 
         .notes-glass-btn:hover {
             filter: brightness(110%);
-            transform: scale(1.05);
             background-color: rgba(109, 109, 109, 0.3);
             backdrop-filter: saturate(180%);
             -webkit-backdrop-filter: saturate(180%);
@@ -816,8 +815,6 @@
 
             .notes-glass-btn {
                 background: rgba(0, 0, 0, 0.3);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                box-shadow: none;
             }
 
             .notes-glass-btn:hover {
@@ -1115,7 +1112,6 @@
 
         #new-note-btn-header:hover {
             filter: brightness(110%);
-            transform: scale(1.05);
             background-color: rgba(109, 109, 109, 0.3);
             backdrop-filter: saturate(180%);
             -webkit-backdrop-filter: saturate(180%);
@@ -1139,7 +1135,7 @@
             border-radius: 1.25rem;
             padding: 1rem;
             height: 2.5rem;
-            box-shadow:  0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
             transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
             transform: translateZ(0);
             will-change: transform, backdrop-filter;
@@ -1166,8 +1162,10 @@
             div.notes-header-right,
             button.notes-header-right {
                 background: rgba(0, 0, 0, 0.3);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                box-shadow: none;
+                box-shadow: 
+                    -0.5px -0.5px rgba(255, 255, 255, 0.2), 
+                    0.5px  0.5px rgba(255, 255, 255, 0.2),
+                    0 8px 32px rgba(31, 38, 135, 0.1);
             }
         }
 
@@ -1615,10 +1613,6 @@
                 opacity: 1;
             }
 
-            .active .notes-back:hover {
-                transform: scale(1.05);
-            }
-
             .notes-modal.minimized {
                 display: none !important;
             }
@@ -1971,7 +1965,7 @@
                     <button class="notes-glass-btn notes-back" data-back="panel-folders" style="display: none;">
                         <img src="icons/chevron-left.svg"
                             class="back-hero-icon"
-                            style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
+                            style="width:16px; height:16px; display:inline-block; vertical-align:-3px;"
                             draggable="false">
                     </button>
                     <button class="notes-glass-btn" id="sidebar-toggle" title="Sidebar" oncontextmenu="return false;"
@@ -2001,13 +1995,13 @@
                     <button class="notes-glass-btn notes-back" data-back="panel-notes">
                         <img src="icons/chevron-left.svg"
                             class="back-hero-icon"
-                            style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
+                            style="width:16px; height:16px; display:inline-block; vertical-align:-3px;"
                             draggable="false">
                     </button>
                     <button id="new-note-btn-mobile" class="notes-glass-btn" title="New Note"
                         style="position: absolute; right: 12px; display: none;">
                         <img src="icons/square-and-pencil.svg"
-                            style="width: 20px; height: 20px; opacity: 0.8;" draggable="false">
+                            style="width: 20px; height: 20px;" draggable="false">
                     </button>
                 </div>
                 <div class="notes-header-right">
