@@ -5,12 +5,12 @@
     "banner": "「虹色キャレット」— GoogleDocsでキャレットに色をつけよう →"
   },
   "location": {
-    "text": "ミシガン州 イーストランシング",
-    "tooltipTitle": "ミシガン州 イーストランシング",
+    "text": "イーストランシング",
+    "tooltipTitle": "イーストランシング",
     "tooltipSub": "Googleマップで表示"
   },
   "bio": {
-    "bio": "ソフトウェアに興味を持つ大学生で、物事がどのように機能するのかに好奇心を持っています。<a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" style=\"color: var(--subtle); text-decoration: none; transition: color 0.2s;\" onmouseover=\"this.style.color='#2891df'\" onmouseout=\"this.style.color='var(--subtle)'\">ミシガン州立大学</a>でコンピュータサイエンスを専攻しており、時間があるときはSwiftを学んでいます。"
+    "bio": "<a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" style=\"color: var(--subtle); text-decoration: none; transition: color 0.2s;\" onmouseover=\"this.style.color='#2891df'\" onmouseout=\"this.style.color='var(--subtle)'\">ミシガン州立大学</a>でコンピュータサイエンスを専攻しており、物事がどのように機能するのかに好奇心を持っています。ユーザーインターフェースデザインにも少し手を広げており、空き時間にはSwiftを学んでいます。"
   },
   "footer": {
     "twitter": "ツイッター",
