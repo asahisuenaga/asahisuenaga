@@ -2618,12 +2618,16 @@
 
                 const handleClick = (e) => {
                     const notesContainer = document.getElementById('notes-modal');
+                    const shrineContainer = document.getElementById('shrine');
                     const targetInNotes = notesContainer && notesContainer.contains(e.target);
+                    const targetInShrine = shrineContainer && shrineContainer.contains(e.target);
                     if (targetInNotes) {
-                        playSound('/sounds/notes.wav');
-                    } else {
+                        // playSound('/sounds/notes.wav');
+                    } else if (!targetInShrine) {
                         playSound('/sounds/basic.wav');
                     }
+
+                    if (targetInNotes || targetInShrine) return;
 
                     const now = performance.now();
                     for (let i = 0; i < sparkCount; i++) {
