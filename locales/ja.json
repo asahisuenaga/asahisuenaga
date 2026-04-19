@@ -30,12 +30,12 @@
     "folders": {
       "title": "フォルダ",
       "all": "すべて",
-      "software": "ソフト",
-      "programming": "コーディング",
+      "personal": "個人",
+      "projects": "プロジェクト",
       "deleted": "削除済み",
       "headerAll": "すべてのノート",
-      "headerSoftware": "ソフト",
-      "headerProgramming": "コーディング",
+      "headerPersonal": "個人",
+      "headerProjects": "プロジェクト",
       "headerDeleted": "削除済み"
     },
     "buttons": {
@@ -63,8 +63,8 @@
       "checklist": "チェックリスト"
     },
     "folderDisplayNames": {
-      "Software": "ソフト",
-      "Programming": "コーディング",
+      "Personal": "個人",
+      "Projects": "プロジェクト",
       "all": "すべてのノート",
       "recently_deleted": "削除済み"
     },
