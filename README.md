@@ -1,7 +1,3 @@
-![Header](Header.png)
-
-<h2 align="left">About Me</h2>
-
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.herokuapp.com?font=Fira+Code&color=FFFFFF&size=45&center=true&vCenter=true&width=800&height=80&lines=Hey+there!+👋+I'm+Asahi;Computer+Science+Student;Michigan+State+University">
@@ -13,7 +9,7 @@
 
 <h3 align="left">Languages</h3>
 
-![HTML5](https://img.shields.io/badge/HTML5-000?style=for-the-badge&logo=html5&logoColor=white)
+![HTML](https://img.shields.io/badge/HTML-000?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS](https://img.shields.io/badge/CSS-000?style=for-the-badge&logo=css&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-000?style=for-the-badge&logo=javascript&logoColor=white)
 ![Markdown](https://img.shields.io/badge/Markdown-000?style=for-the-badge&logo=markdown&logoColor=white")
