@@ -30,12 +30,12 @@
     "folders": {
       "title": "Folders",
       "all": "All Notes",
-      "software": "Software",
-      "programming": "Dev",
+      "personal": "Personal",
+      "projects": "Projects",
       "deleted": "Deleted",
       "headerAll": "All Notes",
-      "headerSoftware": "Software",
-      "headerProgramming": "Dev",
+      "headerPersonal": "Personal",
+      "headerProjects": "Projects",
       "headerDeleted": "Recently Deleted"
     },
     "buttons": {
@@ -63,8 +63,8 @@
       "checklist": "Checklist"
     },
     "folderDisplayNames": {
-      "Software": "Software",
-      "Programming": "Dev",
+      "Personal": "Personal",
+      "Projects": "Projects",
       "all": "All Notes",
       "recently_deleted": "Recently Deleted"
     },
