@@ -938,7 +938,8 @@
         .notes-folder-info {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
+            font-size: 0.9375rem;
         }
 
         .notes-folder-icon {
@@ -947,7 +948,7 @@
 
         .notes-count {
             color: #8e8e93;
-            font-size: 16px;
+            font-size: 0.9375rem;
         }
 
         .note-preview {
@@ -1030,7 +1031,7 @@
         }
 
         .notes-title {
-            font-size: 1.5rem;
+            font-size: 1.375rem;
             font-weight: 700;
             margin: 0 0 12px 0;
             line-height: 1.2;
@@ -1919,23 +1920,23 @@
                             All Notes</div>
                         <div><span class="notes-count" id="count-all">0</span></div>
                     </div>
-                    <div class="notes-list-item folder-list-item" data-target="panel-notes-software"
+                    <div class="notes-list-item folder-list-item" data-target="panel-notes-personal"
                         style="user-select: none;">
                         <div class="notes-folder-info"><img
                                 src="icons/folder.svg"
                                 style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
                                 draggable="false">
-                            Software</div>
-                        <div><span class="notes-count" id="count-software">0</span></div>
+                            Personal</div>
+                        <div><span class="notes-count" id="count-personal">0</span></div>
                     </div>
-                    <div class="notes-list-item folder-list-item" data-target="panel-notes-programming"
+                    <div class="notes-list-item folder-list-item" data-target="panel-notes-projects"
                         style="user-select: none;">
                         <div class="notes-folder-info"><img
                                 src="icons/folder.svg"
                                 style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
                                 draggable="false">
-                            Programming</div>
-                        <div><span class="notes-count" id="count-programming">0</span></div>
+                            Projects</div>
+                        <div><span class="notes-count" id="count-projects">0</span></div>
                     </div>
                     <div class="notes-folder-divider" style="height: 1px; background: var(--divider-color); margin: 8px 0;"></div>
                     <div class="notes-list-item folder-list-item" data-target="panel-notes-deleted"
@@ -2061,7 +2062,7 @@
                 <div class="notes-date" id="active-note-date"></div>
                 <h2 class="notes-title" id="active-note-title" contenteditable="true" spellcheck="false"
                     style="outline: none;"></h2>
-                <div id="active-note-content" contenteditable="true" spellcheck="false" style="outline: none;"></div>
+                <div id="active-note-content" contenteditable="true" spellcheck="false" style="outline: none; font-size:0.875rem;"></div>
             </div>
         </div>
     </div>
@@ -2516,8 +2517,8 @@
 
             const folderMap = {
                 'panel-notes-all': 'all',
-                'panel-notes-software': 'Software',
-                'panel-notes-programming': 'Programming',
+                'panel-notes-personal': 'Personal',
+                'panel-notes-projects': 'Projects',
                 'panel-notes-deleted': 'recently_deleted'
             };
 
@@ -2569,8 +2570,8 @@
                 // Folder names (update text node after img)
                 const folderMap = {
                     'panel-notes-all': n.folders.all,
-                    'panel-notes-software': n.folders.software,
-                    'panel-notes-programming': n.folders.programming,
+                    'panel-notes-personal': n.folders.personal,
+                    'panel-notes-projects': n.folders.projects,
                     'panel-notes-deleted': n.folders.deleted
                 };
                 Object.entries(folderMap).forEach(([target, label]) => {
@@ -2717,7 +2718,7 @@
             const createFolder = () => {
                 const folderName = prompt(tcm('promptNewFolderName'));
                 if (!folderName) return;
-                if (['All Notes', 'Software', 'Programming', 'Recently Deleted'].includes(folderName)) {
+                if (['All Notes', 'Personal', 'Projects', 'Recently Deleted'].includes(folderName)) {
                     alert(tcm('reservedFolder'));
                     return;
                 }
@@ -2772,7 +2773,7 @@
             };
 
             const hydrateNotes = async () => {
-                const noteFiles = ['note-1', 'note-2', 'note-3', 'note-4'];
+                const noteFiles = ['about-me', "rainbow-cursor"];
                 const out = {};
                 await Promise.all(noteFiles.map(async (id) => {
                     const res = await fetch(`/notes/${id}.md`);
@@ -2804,7 +2805,7 @@
             notesReady = true;
 
             const updateCounts = () => {
-                const counts = { all: 0, Software: 0, Programming: 0, recently_deleted: 0 };
+                const counts = { all: 0, Personal: 0, Projects: 0, recently_deleted: 0 };
                 Object.values(notesData).forEach(note => {
                     if (note.folder === 'recently_deleted') {
                         counts.recently_deleted++;
@@ -2817,8 +2818,8 @@
                     }
                 });
                 if (document.getElementById('count-all')) document.getElementById('count-all').innerText = counts.all;
-                if (document.getElementById('count-software')) document.getElementById('count-software').innerText = counts.Software;
-                if (document.getElementById('count-programming')) document.getElementById('count-programming').innerText = counts.Programming;
+                if (document.getElementById('count-personal')) document.getElementById('count-personal').innerText = counts.Personal;
+                if (document.getElementById('count-projects')) document.getElementById('count-projects').innerText = counts.Projects;
                 if (document.getElementById('count-deleted')) document.getElementById('count-deleted').innerText = counts.recently_deleted;
 
                 customFolders.forEach(folderName => {
@@ -2911,10 +2912,10 @@
                         titleNode.innerText = getNotesLocale() === 'ja' ? '削除済み' : 'Recently Deleted';
                     } else if (folderFilter === 'all') {
                         titleNode.innerText = getNotesLocale() === 'ja' ? 'すべてのノート' : 'All Notes';
-                    } else if (folderFilter === 'Software') {
-                        titleNode.innerText = getNotesLocale() === 'ja' ? 'ソフト' : 'Software';
-                    } else if (folderFilter === 'Programming') {
-                        titleNode.innerText = getNotesLocale() === 'ja' ? 'コーディング' : 'Programming';
+                    } else if (folderFilter === 'Personal') {
+                        titleNode.innerText = getNotesLocale() === 'ja' ? '個人' : 'Personal';
+                    } else if (folderFilter === 'Projects') {
+                        titleNode.innerText = getNotesLocale() === 'ja' ? 'コーディング' : 'Projects';
                     } else {
                         titleNode.innerText = folderFilter;
                     }
@@ -3914,7 +3915,7 @@
                         menu.appendChild(separator);
                         menu.appendChild(deleteBtn);
                     } else {
-                        // System folders and built-in folders (All Notes, Software, Programming, Deleted)
+                        // System folders and built-in folders (All Notes, Personal, Projects, Deleted)
                         const info = document.createElement('div');
                         info.className = 'note-context-item';
                         info.style.color = '#999';
