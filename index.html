@@ -1296,13 +1296,51 @@
 
         .checklist-item {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 8px;
         }
 
         .checklist-checkbox {
-            accent-color: #eab308;
-            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            border-radius: 50%;
+            width: 1rem;
+            height: 1rem;
+            border: 1px solid var(--subtle);
+            background: var(--bg);
+            position: relative;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            outline: none;
+        }
+
+        .checklist-checkbox:active {
+            transform: scale(0.95);
+        }
+
+        .checklist-checkbox:checked {
+            background: #eab308;
+            border-color: #eab308;
+            transform: scale(1.1);
+        }
+
+        .checklist-checkbox:checked::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpolyline points='40 144 96 200 224 72' fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'/%3E%3C/svg%3E") no-repeat center / 70%;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpolyline points='40 144 96 200 224 72' fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'/%3E%3C/svg%3E") no-repeat center / 70%;
+            background-color: var(--bg); 
+        }
+
+        @keyframes checkmark-appear {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         p {
@@ -2786,7 +2824,8 @@
                         folder: m.folder || 'all',
                         lastEdited: m.date ? new Date(m.date).getTime() : Date.now(),
                         content: parsed.content || '',
-                        permalink: m.permalink || ''
+                        permalink: m.permalink || '',
+                        pinned: m.pinned === true || m.pinned === 'true' || m.pinned === '1'
                     };
                 }));
                 return out;
@@ -2832,7 +2871,16 @@
             const saveNotes = () => {
                 const userNotes = {};
                 for (const [id, note] of Object.entries(notesData)) {
-                    if (!seedNoteIds.has(id)) userNotes[id] = note;
+                    if (!seedNoteIds.has(id)) {
+                        userNotes[id] = {
+                            title: note.title,
+                            folder: note.folder,
+                            lastEdited: note.lastEdited,
+                            content: note.content,
+                            permalink: note.permalink,
+                            pinned: note.pinned
+                        };
+                    }
                 }
                 localStorage.setItem('apple_notes_data', JSON.stringify(userNotes));
                 updateCounts();
@@ -3779,7 +3827,8 @@
                         folder: (currentFolder === 'all' || currentFolder === 'recently_deleted') ? 'all' : currentFolder,
                         lastEdited: now.getTime(),
                         content: '<p></p>',
-                        permalink: '/notes/' + slugify(title)
+                        permalink: '/notes/' + slugify(title),
+                        pinned: false
                     };
                     saveNotes();
                     renderNotesList(currentFolder, true);
