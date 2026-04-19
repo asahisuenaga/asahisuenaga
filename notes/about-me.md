@@ -3,6 +3,7 @@ title: 📍 About Me
 folder: Personal
 date: 2026-04-19T01:20
 permalink: /notes/about-me
+pinned: true
 ---
 <p>Growing up, the computer was my sandbox, starting with Flash games and progressing to the space where design meets code. This led me to ship everything from browser extensions and Framer sites to link-in-bio platforms, all while obsessing over human bias and user psychology. Now a Computer Science student, I’ve turned those early experiments into a professional pursuit, building with the same curiosity that first drove me to hit "publish" as a kid.</p>
 
