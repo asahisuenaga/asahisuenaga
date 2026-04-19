@@ -3396,14 +3396,12 @@
                 titleEditor.addEventListener('input', handleEdit);
                 contentEditor.addEventListener('input', handleEdit);
 
-                // Checklist interaction — click handler to prevent focus issues
-                contentEditor.addEventListener('click', (e) => {
+                // Checklist interaction — prevent checkbox focus on click
+                contentEditor.addEventListener('mousedown', (e) => {
                     if (e.target.classList.contains('checklist-checkbox')) {
-                        handleEdit();
-                        e.target.blur();
-                        contentEditor.focus();
+                        e.preventDefault();
                     }
-                });
+                }, true);
 
                 // Keyboard Shortcuts & Backspace
                 titleEditor.addEventListener('keydown', (e) => {
