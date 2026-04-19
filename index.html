@@ -152,7 +152,7 @@
         }
 
         .music-title-wrap {
-            flex: 1;
+            flex: 0 0 auto;
             min-width: 0;
             overflow: hidden;
             cursor: pointer
@@ -165,7 +165,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             text-decoration: none;
-            display: inline-block;
+            display: inline;
             max-width: 100%;
             cursor: pointer;
         }
@@ -207,6 +207,10 @@
                 display: none;
             }
 
+            .music-note-icon {
+                display: flex !important;
+            }
+
             .footer-links {
                 gap: 1.5rem;
             }
@@ -230,6 +234,7 @@
             left: 0;
             width: 100%;
             box-sizing: border-box;
+            display: none; /* CONDITIONAL */
         }
 
         .banner:hover {
