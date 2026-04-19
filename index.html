@@ -60,6 +60,16 @@
             display: none;
         }
 
+        #click-spark-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
         .main-content {
             background-color: var(--bg);
             color: var(--text);
@@ -1859,6 +1869,7 @@
 </head>
 
 <body>
+    <canvas id="click-spark-canvas"></canvas>
     <main class="main-content">
         <div class="bookmark"></div>
         <a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc"
@@ -2540,6 +2551,92 @@
         });
 
         document.addEventListener('DOMContentLoaded', async () => {
+            // ClickSpark Effect
+            (function() {
+                const canvas = document.getElementById('click-spark-canvas');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                if (!ctx) return;
+
+                const sparks = [];
+                const sparkSize = 6;
+                const sparkRadius = 12;
+                const sparkCount = 6;
+                const duration = 300;
+                const sparkOpacity = 0.5;
+
+                const resize = () => {
+                    const dpr = window.devicePixelRatio || 1;
+                    canvas.width = window.innerWidth * dpr;
+                    canvas.height = window.innerHeight * dpr;
+                    canvas.style.width = window.innerWidth + 'px';
+                    canvas.style.height = window.innerHeight + 'px';
+                    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                };
+                resize();
+                window.addEventListener('resize', resize);
+
+                const easeOut = (t) => t * (2 - t);
+
+                let animationId;
+                const draw = (timestamp) => {
+                    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                    ctx.globalAlpha = sparkOpacity;
+                    for (let i = sparks.length - 1; i >= 0; i--) {
+                        const spark = sparks[i];
+                        const elapsed = timestamp - spark.startTime;
+                        if (elapsed >= duration) {
+                            sparks.splice(i, 1);
+                            continue;
+                        }
+                        const progress = elapsed / duration;
+                        const eased = easeOut(progress);
+                        const distance = eased * sparkRadius;
+                        const lineLength = sparkSize * (1 - eased);
+                        const x1 = spark.x + distance * Math.cos(spark.angle);
+                        const y1 = spark.y + distance * Math.sin(spark.angle);
+                        const x2 = spark.x + (distance + lineLength) * Math.cos(spark.angle);
+                        const y2 = spark.y + (distance + lineLength) * Math.sin(spark.angle);
+                        const style = getComputedStyle(document.documentElement);
+                        ctx.strokeStyle = style.getPropertyValue('--subtle').trim() || '#000';
+                        ctx.lineWidth = 1.5;
+                        ctx.lineCap = 'round';
+                        ctx.beginPath();
+                        ctx.moveTo(x1, y1);
+                        ctx.lineTo(x2, y2);
+                        ctx.stroke();
+                    }
+                    if (sparks.length > 0) {
+                        animationId = requestAnimationFrame(draw);
+                    }
+                };
+
+                const handleClick = (e) => {
+                    const notesContainer = document.getElementById('notes-modal');
+                    const targetInNotes = notesContainer && notesContainer.contains(e.target);
+                    if (targetInNotes) {
+                        playSound('/sounds/notes.wav');
+                    } else {
+                        playSound('/sounds/basic.wav');
+                    }
+
+                    const now = performance.now();
+                    for (let i = 0; i < sparkCount; i++) {
+                        sparks.push({
+                            x: e.clientX,
+                            y: e.clientY,
+                            angle: (2 * Math.PI * i) / sparkCount,
+                            startTime: now
+                        });
+                    }
+                    if (animationId) {
+                        cancelAnimationFrame(animationId);
+                    }
+                    animationId = requestAnimationFrame(draw);
+                };
+                window.addEventListener('click', handleClick);
+            })();
+
             const bookmark = document.querySelector('.bookmark');
             const notesModal = document.getElementById('notes-modal');
             const notesBackdrop = document.getElementById('notes-backdrop');
