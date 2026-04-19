@@ -3396,10 +3396,12 @@
                 titleEditor.addEventListener('input', handleEdit);
                 contentEditor.addEventListener('input', handleEdit);
 
-                // Checklist interaction — use native change event; don't intercept mouse
-                contentEditor.addEventListener('change', (e) => {
+                // Checklist interaction — click handler to prevent focus issues
+                contentEditor.addEventListener('click', (e) => {
                     if (e.target.classList.contains('checklist-checkbox')) {
                         handleEdit();
+                        e.target.blur();
+                        contentEditor.focus();
                     }
                 });
 
