@@ -409,7 +409,8 @@
             transition: opacity 0.2s cubic-bezier(0.25, 1, 0.5, 1), transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
             will-change: transform, left, top;
             background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: saturate(180%);
+            backdrop-filter: blur(1px) saturate(180%);
+            -webkit-backdrop-filter: blur(1px) saturate(180%);
             border: 1px solid rgba(255, 255, 255, 0.8);
             border-radius: 1rem;
             box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3);
@@ -429,7 +430,7 @@
             height: 100%;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 1rem;
-            backdrop-filter: blur(0px);
+            backdrop-filter: blur(1px);
             opacity: 0.6;
             z-index: -1;
         }
@@ -668,11 +669,6 @@
         @media (prefers-color-scheme: dark) {
             .active-folder {
                 background: rgba(255, 255, 255, 0.1) !important;
-                color: #d1b848 !important;
-            }
-
-            .active-folder .notes-folder-info {
-                color: #d1b848 !important;
             }
         }
 
@@ -735,8 +731,8 @@
 
         .notes-glass-btn {
             background: rgba(255, 255, 255);
-            backdrop-filter: saturate(180%);
-            -webkit-backdrop-filter: saturate(180%);
+            backdrop-filter: blur(1px) saturate(180%);
+            -webkit-backdrop-filter: blur(1px) saturate(180%);
             border-radius: 50%;
             box-shadow: -0.5px -0.5px rgba(255, 255, 255, 0.2), 0.5px  0.5px rgba(255, 255, 255, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
             cursor: pointer;
@@ -762,7 +758,7 @@
             height: 100%;
             background: rgba(255, 255, 255, 0.1);
             border-radius: inherit;
-            backdrop-filter: blur(0px);
+            backdrop-filter: blur(1px);
             opacity: 0.6;
             z-index: -1;
         }
@@ -1145,14 +1141,14 @@
             display: flex;
             gap: 0.125rem;
             align-items: center;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: saturate(180%);
-            -webkit-backdrop-filter: saturate(180%);
+            background: rgba(255, 255, 255);
+            backdrop-filter: blur(1px) saturate(180%);
+            -webkit-backdrop-filter: blur(1px) saturate(180%);
             border: none;
             border-radius: 1.25rem;
             padding: 1rem;
             height: 2.5rem;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            box-shadow: -0.5px -0.5px rgba(255, 255, 255, 0.2), 0.5px  0.5px rgba(255, 255, 255, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
             transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
             transform: translateZ(0);
             will-change: transform, backdrop-filter;
@@ -1168,7 +1164,7 @@
             height: 100%;
             background: rgba(255, 255, 255, 0.1);
             border-radius: inherit;
-            backdrop-filter: blur(0px);
+            backdrop-filter: blur(1px);
             opacity: 0.6;
             z-index: -1;
             }
@@ -1179,10 +1175,6 @@
             div.notes-header-right,
             button.notes-header-right {
                 background: rgba(0, 0, 0, 0.3);
-                box-shadow: 
-                    -0.5px -0.5px rgba(255, 255, 255, 0.2), 
-                    0.5px  0.5px rgba(255, 255, 255, 0.2),
-                    0 8px 32px rgba(31, 38, 135, 0.1);
             }
         }
 
@@ -1206,7 +1198,8 @@
 
         .notes-toolbar-btn:hover,
         .notes-toolbar-btn.active {
-            background: rgba(234, 179, 8, 0.3);
+            background: rgba(21, 76, 247, 0.3);
+            filter: invert(1);
         }
 
         .notes-toolbar-btn.active:hover {
@@ -1217,7 +1210,6 @@
             width: 1rem;
             height: 1rem;
             filter: brightness(0.2);
-            opacity: 0.6;
             transition: all 0.2s;
         }
 
@@ -1225,6 +1217,10 @@
         .notes-toolbar-btn[data-command="italic"] img {
             width: 0.75rem;
             height: 0.75rem;
+        }
+
+        .notes-toolbar-btn[data-command="underline"] img {
+            transform: translateY(-0.5px);
         }
 
         .notes-toolbar-btn[data-command="strikeThrough"] img {
@@ -1236,9 +1232,9 @@
             font-family: monospace;
             font-weight: 600;
             font-size: 1rem;
-            opacity: 0.4;
             filter: brightness(0.2);
             transition: all 0.2s;
+            transform: translateY(0.5px);
         }
 
         .notes-delete-notice {
@@ -1254,7 +1250,6 @@
         .notes-toolbar-btn:hover #notes-mono-text,
         .notes-toolbar-btn.active #notes-mono-text {
             filter: brightness(0);
-            opacity: 1;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -1265,12 +1260,10 @@
 
             .notes-toolbar-btn img {
                 filter: invert(0);
-                opacity: 0.6;
             }
 
             .notes-toolbar-btn #notes-mono-text {
                 filter: invert(1);
-                opacity: 0.5;
             }
 
             .notes-toolbar-btn:hover img,
