@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.herokuapp.com?font=Fira+Code&color=FFFFFF&size=45&center=true&vCenter=true&width=800&height=80&lines=Hey+there!+👋+I'm+Asahi;Computer+Science+Student;Michigan+State+University">
-    <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&color=333&size=45&center=true&vCenter=true&width=800&height=80&lines=Hey+there!+👋+I'm+Asahi;Computer+Science+Student;Michigan+State+University">
+    <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.herokuapp.com?font=Instrument+Serif&size=45&pause=400&color=F4F4F4&center=true&vCenter=true&repeat=false&width=800&height=80&lines=Hey%2C+I'm+Asahi+Suenaga;Studying+Computer+Science+at+MSU">
+    <img src="https://readme-typing-svg.herokuapp.com?font=Instrument+Serif&size=45&pause=400&color=202020&center=true&vCenter=true&repeat=false&width=800&height=80&lines=Hey%2C+I'm+Asahi+Suenaga;Studying+Computer+Science+at+MSU">
   </picture>
 </p>
 
