@@ -21,21 +21,20 @@
     <link rel="icon" type="image/webp" href="images/image.webp">
     <style>
         :root {
-            --bg: #ffffff;
+            --bg: #fff;
             --text: #646464;
-            --heading: #000000;
-            --subtle: #9ca3af;
-            --bio: #4b5563;
+            --heading: #202020;
+            --subtle: #afafaf;
+            --bio: #606060;
             --gap: 1.25rem;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg: #202020;
-                --text: #b4b4b4;
-                --heading: #f9f9f9;
-                --subtle: #9ca3af;
-                --bio: #d1d5db;
+                --text: #c8c8c8;
+                --heading: #fff;
+                --bio: #dcdcdc;
             }
         }
 
@@ -104,14 +103,13 @@
             left: 0;
             width: 100%;
             z-index: 1;
-            background: var(--heading);
             color: var(--bg);
             padding: 1.5rem;
             box-sizing: border-box;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 1rem;
+            gap: var(--gap);
             transform: translateY(100%);
             transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -122,7 +120,7 @@
 
         .footer-links {
             display: flex;
-            gap: 2rem;
+            gap: var(--gap);
             align-items: center;
             justify-content: flex-end;
             min-width: 0;
@@ -180,7 +178,7 @@
         .footer-link {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: calc(var(--gap) * 0.4);
             text-decoration: none;
             font-size: 0.9375rem;
             font-weight: 400;
@@ -213,7 +211,7 @@
             }
 
             .footer-links {
-                gap: 1.5rem;
+                gap: var(--gap);
             }
         }
 
@@ -451,7 +449,7 @@
             display: none;
             color: var(--text);
             align-items: center;
-            gap: 0.75rem;
+            gap: calc(var(--gap) * 0.5);
             padding: 0.75rem 1rem;
         }
 
@@ -487,6 +485,22 @@
             border-radius: 2px;
         }
 
+        /* .github-tile:first-child {
+            border-top-left-radius: 1rem;
+        }
+
+        .github-tile:nth-child(4) {
+            border-bottom-left-radius: 1rem;
+        }
+
+        .github-tile:nth-child(17) {
+            border-top-right-radius: 1rem;
+        }
+        
+        .github-tile:last-child {
+            border-bottom-right-radius: 1rem;
+        } */
+
         @media (prefers-color-scheme: dark) {
             .github-mini-grid {
                 filter: invert(0.93) hue-rotate(180deg);
@@ -509,7 +523,6 @@
         }
 
         .music-note-icon {
-            margin-bottom: 2px;
             cursor: pointer;
             padding-right: 0.5rem;
         }
@@ -1699,16 +1712,6 @@
             }
         }
 
-        :root {
-            --divider-color: rgba(0, 0, 0, 0.1);
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --divider-color: rgba(255, 255, 255, 0.15); 
-            }
-        }
-
         .notes-modal.fullscreen {
             width: 100vw !important;
             height: 100vh !important;
@@ -1986,7 +1989,7 @@
                             Projects</div>
                         <div><span class="notes-count" id="count-projects">0</span></div>
                     </div>
-                    <div class="notes-folder-divider" style="height: 1px; background: var(--divider-color); margin: 8px 0;"></div>
+                    <div class="notes-folder-divider" style="height: 1px; background: var(--heading); opacity: 0.15; margin: 8px 0;"></div>
                     <div class="notes-list-item folder-list-item" data-target="panel-notes-deleted"
                         style="user-select: none;">
                         <div class="notes-folder-info">
