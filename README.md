@@ -6,7 +6,7 @@
 </h1>
 
 ```bash
-# ╭────── README v{{DATE}} ───────────╮  ╭────── Profile Overview ───────────╮
+# ╭────── README v{{DATE}} ──────────╮  ╭────── Profile Overview ───────────╮
 # │                                  │  │  ● University: Michigan State     │
 # │          Hello there!            │  │  ● Tech: HTML, CSS, JS, Swift     │
 # │                                  │  │  ● Expertise: Mobile App, UI/UX   │
