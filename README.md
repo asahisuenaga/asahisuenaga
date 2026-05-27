@@ -6,25 +6,25 @@
 </h1>
 
 ```bash
-# ╭────── Asahi v2.0.24 ─────────────╮  ╭────── Profile Overview ───────────╮
-# │                                  │  │  ● Uni: Michigan State (MSU)      │
-# │       Welcome back Asahi!        │  │  ● Tech: HTML, CSS, JS, Swift     │
+# ╭────── README v5.27.26 ───────────╮  ╭────── Profile Overview ───────────╮
+# │                                  │  │  ● University: Michigan State     │
+# │          Hello there!            │  │  ● Tech: HTML, CSS, JS, Swift     │
 # │                                  │  │  ● Expertise: Mobile App, UI/UX   │
 # │              ▄▄▄                 │  │  ... /resume for more             │
 # │             █▄▄▄█                │  ╰───────────────────────────────────╯
 # │              █ █                 │  ╭────── Active Workflow ────────────╮
 # │                                  │  │  while learning_swift:            │
-# │    Asahi 3.5 · Credits 61        │  │    build_apps() && innovate()     │
+# │    Asahi Suenaga · Credits 61    │  │    build_apps() && innovate()     │
 # │   /users/asahi/Documents/Profile │  │  done                             │
 # ╰──────────────────────────────────╯  ╰───────────────────────────────────╯
 
-> dev college-progress
+> computer college-progress
 
-# 🧪 asahi: stable 2.0.24 (optimized)
+# 💻 README: stable 5.27.26 (optimized)
 # ==> Fetching academic status from reg.msu.edu...
 
 # ╭──────────────────────────────────────────────────────────────────────────╮
-# │ [🎓] Junior Year: [●●●●●●●●●●●●●●●●●●●●○○○○○○○○○○] 61/120 Credits (50%)  │
+# │ [🎓] Junior Year: [████████████████████░░░░░░░░░░] 61/120 Credits (50%)  │
 # ╰──────────────────────────────────────────────────────────────────────────╯
 
 > █
