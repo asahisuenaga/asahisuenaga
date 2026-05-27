@@ -5,20 +5,29 @@
   </picture>
 </h1>
 
-```javascript
-const profile = {
-  college: "Michigan State University",
-  location: "East Lansing, MI",
-  techStack: ["HTML", "CSS", "Javascript", "Framer"],
-  askMeAbout: ["Entrepreneurship", "Mobile App Dev", "UI/UX Design"],
-  currentFocus: "Learning Swift to make mobile apps",
-};
+```bash
+#  ▄▄▄       Asahi v2.0.24
+# █▄▄▄█      Credits 61 · Michigan State
+#  █ █       /users/asahi/Documents/Profile
 
-// Current Status
-while (learningSwift) {
-  buildApps();
-  innovate(); // Go Green!
-}
+> cat profile.sh
+
+# ╭──────────────────────────────────────────────────────────╮
+# │  [🏃] Speedrunning College...                            │
+# │  ⚙️  Credits: [█████████████░░░░░░░░░░] 50%              │
+# ╰──────────────────────────────────────────────────────────╯
+
+export COLLEGE="Michigan State University"
+export LOCATION="East Lansing, MI"
+export TECH_STACK=("HTML" "CSS" "Javascript" "Framer")
+export ASK_ME_ABOUT=("Entrepreneurship" "Mobile App Dev" "UI/UX Design")
+
+# Current Focus: Learning Swift to make mobile apps
+while [ "$learning_swift" = true ]; do
+  build_apps && innovate
+done
+
+> █
 ```
 
 <!-- ## What's my tech stack?
