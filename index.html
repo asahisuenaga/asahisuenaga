@@ -3528,6 +3528,48 @@
                 };
 
                 titleEditor.addEventListener('input', handleEdit);
+
+                // Normalize stray nodes inside checklist items and keep the caret inside the checklist text area
+                contentEditor.addEventListener('input', () => {
+                    const items = contentEditor.querySelectorAll('.checklist-item');
+                    items.forEach(item => {
+                        const contentDiv = item.querySelector('div');
+                        const checkbox = item.querySelector('input.checklist-checkbox');
+                        if (!contentDiv || !checkbox) return;
+
+                        let node = item.firstChild;
+                        while (node && node !== contentDiv) {
+                            const nextNode = node.nextSibling;
+                            if (node === checkbox) {
+                                node = nextNode;
+                                continue;
+                            }
+
+                            const text = node.nodeType === 3 ? node.textContent : node.innerHTML;
+                            if (text.trim()) {
+                                contentDiv.innerHTML = text + contentDiv.innerHTML;
+                            }
+                            node.remove();
+                            node = nextNode;
+                        }
+                    });
+                });
+
+                contentEditor.addEventListener('beforeinput', (e) => {
+                    const sel = window.getSelection();
+                    if (!sel.rangeCount) return;
+                    const range = sel.getRangeAt(0);
+                    const startNode = range.startContainer.nodeType === 3 ? range.startContainer.parentElement : range.startContainer;
+                    const item = startNode?.closest?.('.checklist-item');
+                    if (!item) return;
+                    const contentDiv = item.querySelector('div');
+                    if (contentDiv?.contains(startNode) || startNode === contentDiv) return;
+                    if (e.inputType && e.inputType.startsWith('insert')) {
+                        e.preventDefault();
+                        setCaretStart(contentDiv);
+                    }
+                });
+
                 contentEditor.addEventListener('input', handleEdit);
 
                 // Checklist interaction — prevent checkbox focus on click
@@ -3536,6 +3578,15 @@
                         e.preventDefault();
                     }
                 }, true);
+
+                contentEditor.addEventListener('click', (e) => {
+                    const item = e.target.closest('.checklist-item');
+                    if (!item) return;
+                    const contentDiv = item.querySelector('div');
+                    if (!contentDiv) return;
+                    if (contentDiv.contains(e.target) || e.target.classList.contains('checklist-checkbox')) return;
+                    setCaretStart(contentDiv);
+                });
 
                 // Checklist interaction — handle change immediately
                 contentEditor.addEventListener('change', (e) => {
@@ -3592,11 +3643,36 @@
                         if (e.key === 'u') { e.preventDefault(); document.execCommand('underline'); updateToolbar(); }
                     }
 
+                    const isTypingKey = e.key.length === 1 && !e.metaKey && !e.ctrlKey && !e.altKey;
+                    if (isTypingKey) {
+                        const sel = window.getSelection();
+                        const range = sel.rangeCount ? sel.getRangeAt(0) : null;
+                        if (range) {
+                            const startNode = range.startContainer.nodeType === 3 ? range.startContainer.parentElement : range.startContainer;
+                            const item = startNode?.closest?.('.checklist-item');
+                            if (item) {
+                                const contentDiv = item.querySelector('div');
+                                if (contentDiv && !contentDiv.contains(startNode)) {
+                                    setCaretStart(contentDiv);
+                                }
+                            }
+                        }
+                    }
+
                     if (e.key === 'Tab') {
                         e.preventDefault();
                         const sel = window.getSelection();
                         const node = sel.getRangeAt(0).startContainer.parentElement;
-                        const isList = node.closest('li, ul, ol, .checklist-item');
+                        const checklist = node.closest('.checklist-item');
+                        const isList = node.closest('li, ul, ol');
+
+                        if (checklist) {
+                            if (!e.shiftKey) {
+                                document.execCommand('insertHTML', false, '&nbsp;&nbsp;&nbsp;&nbsp;');
+                                handleEdit();
+                            }
+                            return;
+                        }
 
                         if (e.shiftKey) {
                             document.execCommand('outdent', false, null);
@@ -3647,18 +3723,12 @@
                                 setCaretEnd(p);
                                 return;
                             }
-                            // New checklist item
-                            const checkboxHtml = '<div class="checklist-item"><input type="checkbox" class="checklist-checkbox"><div>\u200B</div></div>';
-                            document.execCommand('insertHTML', false, checkboxHtml);
-                            const sel2 = window.getSelection();
-                            if (sel2.rangeCount > 0) {
-                                const inserted = sel2.getRangeAt(0).startContainer;
-                                const newItem = inserted.closest ? inserted.closest('.checklist-item') : inserted.parentElement?.closest('.checklist-item');
-                                if (newItem) {
-                                    const div = newItem.lastElementChild;
-                                    if (div && div.tagName === 'DIV') setCaretEnd(div);
-                                }
-                            }
+                            const newItem = document.createElement('div');
+                            newItem.className = 'checklist-item';
+                            newItem.innerHTML = '<input type="checkbox" class="checklist-checkbox"><div>\u200B</div>';
+                            checklist.parentNode.insertBefore(newItem, checklist.nextSibling);
+                            setCaretEnd(newItem.querySelector('div'));
+                            handleEdit();
                             return;
                         }
 
@@ -3721,6 +3791,15 @@
                         list: node.closest('ul, ol'),
                         checklist: node.closest('.checklist-item'),
                     };
+                };
+
+                const setCaretStart = (el) => {
+                    const sel = window.getSelection();
+                    const r = document.createRange();
+                    r.selectNodeContents(el);
+                    r.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(r);
                 };
 
                 const setCaretEnd = (el) => {
@@ -3869,10 +3948,23 @@
                     btn.addEventListener('click', () => {
                         const cmd = btn.getAttribute('data-command');
                         contentEditor.focus();
+                        const sel = window.getSelection();
+                        const node = sel.rangeCount ? sel.getRangeAt(0).startContainer.parentElement : null;
+                        const checklist = node?.closest?.('.checklist-item');
 
                         if (cmd === 'insertUnorderedList') return applyListType('bullet');
                         if (cmd === 'insertOrderedList') return applyListType('number');
                         if (cmd === 'insertChecklist') return applyListType('check');
+
+                        if (cmd === 'indent' && checklist) {
+                            document.execCommand('insertHTML', false, '&nbsp;&nbsp;&nbsp;&nbsp;');
+                            handleEdit();
+                            return;
+                        }
+
+                        if (cmd === 'outdent' && checklist) {
+                            return;
+                        }
 
                         if (cmd) {
                             document.execCommand(cmd, false, null);
