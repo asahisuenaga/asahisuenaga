@@ -20,7 +20,7 @@
 
 > computer college-progress
 
-# 💻 README: stable 5.27.26 (optimized)
+# 💻 README: stable v{{DATE}} (optimized)
 # ==> Fetching academic status from reg.msu.edu...
 
 # ╭──────────────────────────────────────────────────────────────────────────╮
