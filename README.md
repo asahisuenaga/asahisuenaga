@@ -6,28 +6,30 @@
 </h1>
 
 ```bash
-#  ▄▄▄       Asahi v2.0.24
-# █▄▄▄█      Credits 61 · Michigan State
-#  █ █       /users/asahi/Documents/Profile
+# ╭────── Asahi v2.0.24 ─────────────╮  ╭────── Profile Overview ───────────╮
+# │                                  │  │  ● Uni: Michigan State (MSU)      │
+# │       Welcome back Asahi!        │  │  ● Tech: HTML, CSS, JS, Swift     │
+# │                                  │  │  ● Expertise: Mobile App, UI/UX   │
+# │              ▄▄▄                 │  │  ... /resume for more             │
+# │             █▄▄▄█                │  ╰───────────────────────────────────╯
+# │              █ █                 │  ╭────── Active Workflow ────────────╮
+# │                                  │  │  while learning_swift:            │
+# │    Asahi 3.5 · Credits 61        │  │    build_apps() && innovate()     │
+# │   /users/asahi/Documents/Profile │  │  done                             │
+# ╰──────────────────────────────────╯  ╰───────────────────────────────────╯
 
-> cat profile.sh
+> dev college-progress
 
-# ╭──────────────────────────────────────────────────────────╮
-# │  [🏃] Speedrunning College...                            │
-# │  ⚙️  Credits: [█████████████░░░░░░░░░░] 50%              │
-# ╰──────────────────────────────────────────────────────────╯
+# 🧪 asahi: stable 2.0.24 (optimized)
+# ==> Fetching academic status from reg.msu.edu...
 
-export COLLEGE="Michigan State University"
-export LOCATION="East Lansing, MI"
-export TECH_STACK=("HTML" "CSS" "Javascript" "Framer")
-export ASK_ME_ABOUT=("Entrepreneurship" "Mobile App Dev" "UI/UX Design")
-
-# Current Focus: Learning Swift to make mobile apps
-while [ "$learning_swift" = true ]; do
-  build_apps && innovate
-done
+# ╭──────────────────────────────────────────────────────────────────────────╮
+# │ [🎓] Junior Year: [●●●●●●●●●●●●●●●●●●●●○○○○○○○○○○] 61/120 Credits (50%)  │
+# ╰──────────────────────────────────────────────────────────────────────────╯
 
 > █
+──────────────────────────────────────────────────────────────────────────────
+? for shortcuts                                   Thinking off (tab to toggle)
 ```
 
 <!-- ## What's my tech stack?
