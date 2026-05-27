@@ -22,10 +22,9 @@ jobs:
       
       - name: Update Date
         run: |
-          # Matches MM.DD.YY format (e.g., 05.27.26) and replaces it with today's date
           DATE=$(date +'%m.%d.%y')
-          # Specific regex to target the README version in your bash block
-          sed -i "s/README v[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{2\}/README v$DATE/g" README.md
+          # Matches either '{{DATE}}' OR an existing 'MM.DD.YY' sequence right after 'v'
+          sed -i -E "s/(README v|v)\{\{DATE\}\}/\1$DATE/g; s/(README v|v)[0-9]{2}\.[0-9]{2}\.[0-9]{2}/\1$DATE/g" README.md
           
       - name: Commit and Push
         run: |
