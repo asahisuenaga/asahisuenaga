@@ -1,0 +1,21 @@
+name: Update README Date
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs every day at midnight
+  workflow_dispatch:   # Allows you to run it manually
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update Date
+        run: |
+          DATE=$(date +'%m.%d.%y')
+          sed -i "s/v[0-9]\{2\}.[0-9]\{2\}.[0-9]\{2\}/v$DATE/g" README.md
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md
+          git commit -m "Update README version to $DATE"
+          git push
