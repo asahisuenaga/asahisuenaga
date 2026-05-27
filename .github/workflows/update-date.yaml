@@ -2,17 +2,19 @@ name: Update README Date
 on:
   schedule:
     - cron: '0 0 * * *' # Every night
-  workflow_dispatch:   # Manual trigger button in Actions tab
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   update:
     runs-on: ubuntu-latest 
     permissions:
-      contents: write # Crucial permission to allow pushing changes
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
-      # Setup Node.js 24 environment
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
