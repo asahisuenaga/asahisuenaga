@@ -6,16 +6,21 @@ on:
 
 jobs:
   update:
-    # Use latest ubuntu image which supports Node 24
     runs-on: ubuntu-latest 
     permissions:
       contents: write # Crucial permission to allow pushing changes
     steps:
-      - uses: actions/checkout@v4 # Already on v4, standard for Node 20/24 compatibility
+      - uses: actions/checkout@v4
+
+      # Setup Node.js 24 environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
       
       - name: Update Date
         run: |
-          # Matches MM.DD.YY format (e.g., 5.27.26) and replaces it with today's date
+          # Matches MM.DD.YY format (e.g., 05.27.26) and replaces it with today's date
           DATE=$(date +'%m.%d.%y')
           # Specific regex to target the README version in your bash block
           sed -i "s/README v[0-9]\{1,2\}.[0-9]\{1,2\}.[0-9]\{2\}/README v$DATE/g" README.md
