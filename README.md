@@ -5,11 +5,36 @@
   </picture>
 </h1>
 
-[![GitHub Game of Life](https://github4life.herokuapp.com/asahisuenaga.gif?z=6)](https://github4life.herokuapp.com/asahisuenaga)
+<p align="left">
+  <a href="https://github.com/asahisuenaga/asahisuenaga">
+    <img src="https://komarev.com/ghpvc/?username=asahisuenaga" alt="profile views" />
+  </a>
+  <!-- <a href="https://asahisuenaga.com">
+    <img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Fasahisuenaga.com">
+  </a> -->
+  <a href="https://github.com/asahisuenaga">
+    <img src="https://img.shields.io/github/followers/thaiane?label=follow&style=social" alt="page views" />
+  </a>
+</p>
 
-### What's my tech stack?
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=fff&style=for-the-badge) ![CSS](https://img.shields.io/badge/CSS-639?logo=css&logoColor=fff&style=for-the-badge) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=000&style=for-the-badge) ![Framer](https://img.shields.io/badge/Framer-05F?logo=framer&logoColor=fff&style=for-the-badge)
-### What are my stats?
+## What's my tech stack?
+
+<table>
+  <tr>
+    <td align="center" width="96">
+      <img src="https://www.readmecodegen.com/api/social-icon?name=html5&size=64" alt="html5" /><br>HTML
+    </td>
+    <td align="center" width="96">
+      <img src="https://www.readmecodegen.com/api/social-icon?name=css&size=64" alt="css" /><br>CSS
+    </td>
+    <td align="center" width="96">
+      <img src="https://www.readmecodegen.com/api/social-icon?name=javascript&size=64" alt="javascript" /><br>Javascript
+    </td>
+    <td align="center" width="96">
+      <img src="https://www.readmecodegen.com/api/social-icon?name=framer&size=64" alt="framer" /><br>Framer
+    </td>
+  </tr>
+</table>
+
+## What are my stats?
 [![Stats-Dark](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&disable_animations=true&hide=contribs&hide_border=true&hide_rank=false&include_all_commits=true&theme=apprentice&bg_color=00000000#gh-dark-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)[!['Stats-Light](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&disable_animations=true&hide=contribs&hide_border=true&hide_rank=false&include_all_commits=true&theme=graywhite#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)[![ProgrammingLanguage-Dark](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=normal&langs_count=8&disable_animations=true&hide_border=true&theme=apprentice&bg_color=00000000#gh-apprentice-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)[![ProgrammingLanguage-Light](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=normal&langs_count=8&disable_animations=true&hide_border=true&theme=graywhite#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)
-
-![](https://komarev.com/ghpvc/?username=asahisuenaga&style=for-the-badge&color=lightgray&abbreviated=true&show_icons=true)
