@@ -5,10 +5,10 @@ date: 2026-03-19T19:20
 permalink: /notes/rainbow-cursor
 pinned: false
 ---
-<p>Let’s be honest: staring at a flickering, thin black line all day is… well, soul-crushing. Whether you’re grinding through a 20-page report, drafting your next novel, or hunting for your spot in a messy brainstorm, the standard cursor is a master of hide-and-seek. <a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc" style="color:rgb(234, 179, 8);; text-decoration: underline;">Rainbow Cursor</a> extension is the <span style="background: linear-gradient(to right, #ffb6c1, #ff69b4, #da70d6, #9370db, #48c9b0, #f0e68c, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">vibrant upgrade</span> for Google Docs you didn’t know you wanted.</p>
+<p>Let’s be honest: staring at a flickering, thin black line all day is… well, soul-crushing. Whether you’re grinding through a 20-page report, drafting your next novel, or hunting for your spot in a messy brainstorm, your cursor is easily lost within your document. <a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc" style="color:rgb(234, 179, 8);; text-decoration: underline;">Rainbow Cursor</a> extension is the <span style="background: linear-gradient(to right, #ffb6c1, #ff69b4, #da70d6, #9370db, #48c9b0, #f0e68c, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">colorful vibrance</span> to the cursor in Google Docs you didn’t know you wanted.</p>
 
 <h3>Features</h3>
-<p>There isn't just one option; it’s a fully customizable caret. Here is how you can make it your own:</p>
+<p>There isn't just one option; it’s fully customizable to your personal preferences. Here is how you can make it your own:</p>
 
 <ul>
     <li><strong>Gradients:</strong> Move beyond solid colors. Choose from 20+ options on the entire color spectrum.</li>
