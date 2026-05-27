@@ -1723,8 +1723,8 @@
         .notes-modal.minimized {
             width: 200px !important;
             height: 120px !important;
-            top: calc(100% - 144px) !important;
-            left: calc(100% - 224px) !important;
+            top: calc(100% - 160px) !important;
+            left: calc(100% - 240px) !important;
             transform: none !important;
             border-radius: 12px;
             cursor: pointer;
@@ -4231,39 +4231,16 @@
                     bookmark.classList.add('active');
                     isMinimized = false;
 
-                    const hash = window.location.hash.replace('#', '');
-                    const path = window.location.pathname.replace(/\/$/, '') || '/';
+                    currentFolder = 'all';
                     renderFolderList();
-                    const permalinkNoteId = Object.keys(notesData).find(id => notesData[id].permalink === path);
-                    if (permalinkNoteId) {
-                        currentFolder = notesData[permalinkNoteId].folder;
-                        renderNotesList(currentFolder);
-                        const noteEl = document.querySelector(`[data-note-id="${permalinkNoteId}"]`);
-                        if (noteEl) noteEl.click();
-                    } else if (notesData[hash]) {
-                        currentFolder = notesData[hash].folder;
-                        renderNotesList(currentFolder);
-                        const noteEl = document.querySelector(`[data-note-id="${hash}"]`);
-                        if (noteEl) noteEl.click();
-                    } else {
-                        currentFolder = 'all';
-                        renderNotesList('all');
 
-                        // Highlight 'All Notes' folder
-                        document.querySelectorAll('[data-target]').forEach(f => f.classList.remove('active-folder'));
-                        const allNotesFolder = document.querySelector('[data-target="panel-notes-all"]');
-                        if (allNotesFolder) allNotesFolder.classList.add('active-folder');
+                    // Highlight 'All Notes' folder
+                    document.querySelectorAll('[data-target]').forEach(f => f.classList.remove('active-folder'));
+                    const allNotesFolder = document.querySelector('[data-target="panel-notes-all"]');
+                    if (allNotesFolder) allNotesFolder.classList.add('active-folder');
 
-                        // Select the most recent note
-                        const firstNote = document.querySelector('.note-preview');
-                        if (firstNote) {
-                            if (window.innerWidth >= 800) firstNote.click();
-                            navigateTo('notes', { skipListRender: true });
-                        } else {
-                            navigateTo('folders');
-                        }
-                    }
-                    playNotesClickSound();
+                    renderNotesList('all');
+                    navigateTo('notes', { skipListRender: true });
                 };
 
                 const closeNotes = (e) => {
@@ -4447,6 +4424,12 @@
                     minDragging = false;
                     mainDragging = false;
 
+                    // Don't re-snap if the user just tapped without dragging (allow openNotes to handle it)
+                    if (wasMin && !hasDragged && !forceSnap) {
+                        notesModal.style.transition = '';
+                        return;
+                    }
+
                     notesModal.style.transition = 'all 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
 
                     if (wasMin) {
@@ -4455,12 +4438,12 @@
                         const centerY = rect.top + rect.height / 2;
                         const winW = window.innerWidth;
                         const winH = window.innerHeight;
-                        const bannerH = 60;
-                        const footerH = revelationActive ? 120 : 60;
+                        const bannerH = 20;
+                        const footerH = revelationActive ? 100 : 40;
 
                         let snapX, snapY;
-                        if (centerX < winW / 2) snapX = 24;
-                        else snapX = winW - rect.width - 24;
+                        if (centerX < winW / 2) snapX = 40;
+                        else snapX = winW - rect.width - 40;
 
                         if (centerY < winH / 2) snapY = bannerH + 12;
                         else snapY = winH - rect.height - footerH;
