@@ -5,18 +5,6 @@
   </picture>
 </h1>
 
-<p align="left">
-  <a href="https://github.com/asahisuenaga/asahisuenaga">
-    <img src="https://komarev.com/ghpvc/?username=asahisuenaga" alt="profile views" />
-  </a>
-  <!-- <a href="https://asahisuenaga.com">
-    <img alt="Website" src="https://img.shields.io/website?url=https%3A%2F%2Fasahisuenaga.com">
-  </a> -->
-  <a href="https://github.com/asahisuenaga">
-    <img src="https://img.shields.io/github/followers/asahisuenaga?label=follow&style=social" alt="page views" />
-  </a>
-</p>
-
 ```javascript
 const profile = {
   college: "Michigan State University",
@@ -29,7 +17,7 @@ const profile = {
 // Current Status
 while (learningSwift) {
   buildApps();
-  innovate(); // Go Green! 🟢⚪️
+  innovate(); // Go Green!
 }
 ```
 
@@ -54,3 +42,5 @@ while (learningSwift) {
 
 ## What are my stats?
 [![Stats-Dark](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&disable_animations=true&hide=contribs&hide_border=true&hide_rank=false&include_all_commits=true&theme=apprentice&bg_color=00000000#gh-dark-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)[!['Stats-Light](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&disable_animations=true&hide=contribs&hide_border=true&hide_rank=false&include_all_commits=true&theme=graywhite#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)[![ProgrammingLanguage-Dark](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=normal&langs_count=8&disable_animations=true&hide_border=true&theme=apprentice&bg_color=00000000#gh-apprentice-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)[![ProgrammingLanguage-Light](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=normal&langs_count=8&disable_animations=true&hide_border=true&theme=graywhite#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)
+
+<a href="https://github.com/asahisuenaga/asahisuenaga"><img src="https://komarev.com/ghpvc/?username=asahisuenaga" alt="profile views" /></a>
