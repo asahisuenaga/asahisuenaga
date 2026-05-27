@@ -170,12 +170,6 @@
             cursor: pointer;
         }
 
-        #panel-note-view.note-view-readonly .notes-title,
-        #panel-note-view.note-view-readonly #active-note-content {
-            cursor: default;
-            user-select: text;
-        }
-
         .footer-link {
             display: flex;
             align-items: center;
@@ -870,6 +864,7 @@
             overflow-y: auto;
             overflow-x: hidden;
             font-size: 1rem;
+            cursor: text;
         }
 
         .notes-content-padded {
@@ -882,6 +877,7 @@
             margin: 0 0 16px 0;
             letter-spacing: -0.5px;
             color: #000;
+            user-select: none;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -993,6 +989,7 @@
             white-space: nowrap;
             overflow: hidden;
             width: 100%;
+            user-select: none;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -1006,6 +1003,7 @@
             width: 100%;
             gap: 8px;
             align-items: baseline;
+            user-select: none;
         }
 
         .notes-date-inline {
@@ -1054,6 +1052,7 @@
             font-size: 11px;
             color: #8e8e93;
             margin-bottom: 16px;
+            user-select: none;
         }
 
         .notes-title {
@@ -1329,21 +1328,16 @@
             border-radius: 50%;
             width: 1rem;
             height: 1rem;
-            border: 1px solid var(--subtle);
+            box-shadow: inset 0 0 0 1px var(--subtle);
             background: var(--bg);
             position: relative;
             transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
             outline: none;
         }
 
-        .checklist-checkbox:active {
-            transform: scale(0.95);
-        }
-
         .checklist-checkbox:checked {
             background: #eab308;
-            border-color: #eab308;
-            transform: scale(1.1);
+            box-shadow: inset 0 0 0 1px #eab308;
         }
 
         .checklist-checkbox:checked::after {
@@ -3079,13 +3073,13 @@
                     if (data.pinned && !hasPinnedHeader) {
                         const h = document.createElement('div');
                         h.innerText = getNotesLocale() === 'ja' ? 'ピン留め済み' : 'Pinned';
-                        h.style.cssText = 'font-size: 13px; font-weight: 500; color: #8e8e93; padding: 12px 16px 4px;';
+                        h.style.cssText = 'font-size: 0.875rem; user-select: none; font-weight: 500; color: #8e8e93; padding: 12px 16px 4px;';
                         listContainer.appendChild(h);
                         hasPinnedHeader = true;
                     } else if (!data.pinned && hasPinnedHeader && !hasNotesHeader && folderFilter !== 'recently_deleted') {
                         const h = document.createElement('div');
                         h.innerText = getNotesLocale() === 'ja' ? 'ノート' : 'Notes';
-                        h.style.cssText = 'font-size: 13px; font-weight: 500; color: #8e8e93; padding: 12px 16px 4px;';
+                        h.style.cssText = 'font-size: 0.875rem; user-select: none; font-weight: 500; color: #8e8e93; padding: 12px 16px 4px;';
                         listContainer.appendChild(h);
                         hasNotesHeader = true;
                     }
@@ -3146,7 +3140,7 @@
                         document.getElementById('active-note-content').setAttribute('data-current-note', noteId);
                         document.getElementById('active-note-content').innerHTML = data.content;
                         document.getElementById('active-note-title').innerText = data.title;
-                        document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? ((window.translations || {})[getNotesLocale()]?.notes?.modal?.deletedPrefix || 'Deleted: ') + formatNoteDate(data.deletedAt) : formatFullNoteDate(data.lastEdited);
+                        document.getElementById('active-note-date').innerText =formatFullNoteDate(data.lastEdited);
                         setNoteViewReadOnly(isBuiltInNoteId(noteId) || data.folder === 'recently_deleted');
                         if (data.permalink) {
                             history.pushState(null, '', data.permalink);
@@ -3223,7 +3217,9 @@
                             pinBtn.innerText = data.pinned ? tcm('unpinNote') : tcm('pinNote');
                             pinBtn.onclick = () => {
                                 data.pinned = !data.pinned;
-                                saveNotes();
+                                if (!isBuiltInNoteId(noteId)) {
+                                    saveNotes();
+                                }
                                 renderNotesList(folderFilter);
                                 menu.remove();
                                 playNotesClickSound();
@@ -3343,56 +3339,51 @@
                             };
                             menu.appendChild(permDelBtn);
                         } else if (!multiHasBuiltIn) {
-                            const delBtn = document.createElement('div');
-                            delBtn.className = 'note-context-item';
-                            delBtn.style.color = '#FF453A';
-                            delBtn.innerText = tcm('deleteN', selectedIds.length);
-                            delBtn.onclick = () => {
-                                selectedIds.forEach(id => {
-                                    notesData[id].originalFolder = notesData[id].folder;
-                                    notesData[id].folder = 'recently_deleted';
-                                    notesData[id].deletedAt = Date.now();
-                                    notesData[id].pinned = false;
-                                });
-                                saveNotes();
-                                renderNotesList(folderFilter);
-                                menu.remove();
-                                playNotesDeleteSound();
-                            };
-                            menu.appendChild(delBtn);
-                        }
+                            // Pin / Unpin Notes
+                            const selectedPinnedCount = selectedIds.filter(id => notesData[id]?.pinned).length;
+                            const selectedUnpinnedCount = selectedIds.length - selectedPinnedCount;
 
-                        if (!isInDeletedFolder) {
-                            const pinBtn = document.createElement('div');
-                            pinBtn.className = 'note-context-item';
-                            pinBtn.innerText = tcm('pinN', selectedIds.length);
-                            pinBtn.onclick = () => {
-                                selectedIds.forEach(id => {
-                                    notesData[id].pinned = true;
-                                });
-                                saveNotes();
-                                renderNotesList(folderFilter);
-                                menu.remove();
-                                playNotesClickSound();
-                            };
-                            menu.appendChild(pinBtn);
+                            if (selectedUnpinnedCount > 0) {
+                                const pinBtn = document.createElement('div');
+                                pinBtn.className = 'note-context-item';
+                                pinBtn.innerText = tcm('pinN', selectedUnpinnedCount);
+                                pinBtn.onclick = () => {
+                                    selectedIds.forEach(id => {
+                                        if (!notesData[id]?.pinned) notesData[id].pinned = true;
+                                    });
+                                    saveNotes();
+                                    renderNotesList(folderFilter);
+                                    menu.remove();
+                                    playNotesClickSound();
+                                };
+                                menu.appendChild(pinBtn);
+                            }
 
-                            const unpinBtn = document.createElement('div');
-                            unpinBtn.className = 'note-context-item';
-                            unpinBtn.innerText = tcm('unpinN', selectedIds.length);
-                            unpinBtn.onclick = () => {
-                                selectedIds.forEach(id => {
-                                    notesData[id].pinned = false;
-                                });
-                                saveNotes();
-                                renderNotesList(folderFilter);
-                                menu.remove();
-                                playNotesClickSound();
-                            };
-                            menu.appendChild(unpinBtn);
+                            if (selectedPinnedCount > 0) {
+                                const unpinBtn = document.createElement('div');
+                                unpinBtn.className = 'note-context-item';
+                                unpinBtn.innerText = tcm('unpinN', selectedPinnedCount);
+                                unpinBtn.onclick = () => {
+                                    selectedIds.forEach(id => {
+                                        if (notesData[id]?.pinned) notesData[id].pinned = false;
+                                    });
+                                    saveNotes();
+                                    renderNotesList(folderFilter);
+                                    menu.remove();
+                                    playNotesClickSound();
+                                };
+                                menu.appendChild(unpinBtn);
+                            }
                         }
 
                         if (!multiHasBuiltIn && !isInDeletedFolder) {
+                            const separator1 = document.createElement('div');
+                            separator1.style.height = '1px';
+                            separator1.style.background = 'rgba(0,0,0,0.1)';
+                            separator1.style.margin = '4px 0';
+                            separator1.className = 'context-separator';
+                            menu.appendChild(separator1);
+
                             const selectedFolders = Array.from(new Set(selectedIds.map(id => notesData[id].folder)));
                             getMoveTargets().forEach(f => {
                                 if (selectedFolders.length === 1 && selectedFolders[0] === f) return;
@@ -3412,6 +3403,33 @@
                                 };
                                 menu.appendChild(mbtn);
                             });
+
+                            const separator2 = document.createElement('div');
+                            separator2.style.height = '1px';
+                            separator2.style.background = 'rgba(0,0,0,0.1)';
+                            separator2.style.margin = '4px 0';
+                            separator2.className = 'context-separator';
+                            menu.appendChild(separator2);
+                        }
+
+                        if (!multiHasBuiltIn && !isInDeletedFolder) {
+                            const delBtn = document.createElement('div');
+                            delBtn.className = 'note-context-item';
+                            delBtn.style.color = '#FF453A';
+                            delBtn.innerText = tcm('deleteN', selectedIds.length);
+                            delBtn.onclick = () => {
+                                selectedIds.forEach(id => {
+                                    notesData[id].originalFolder = notesData[id].folder;
+                                    notesData[id].folder = 'recently_deleted';
+                                    notesData[id].deletedAt = Date.now();
+                                    notesData[id].pinned = false;
+                                });
+                                saveNotes();
+                                renderNotesList(folderFilter);
+                                menu.remove();
+                                playNotesDeleteSound();
+                            };
+                            menu.appendChild(delBtn);
                         }
 
                         document.body.appendChild(menu);
@@ -3455,7 +3473,7 @@
                             document.getElementById('active-note-content').setAttribute('data-current-note', noteId);
                             document.getElementById('active-note-content').innerHTML = data.content;
                             document.getElementById('active-note-title').innerText = data.title;
-                            document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? ((window.translations || {})[getNotesLocale()]?.notes?.modal?.deletedPrefix || 'Deleted: ') + formatNoteDate(data.deletedAt) : formatFullNoteDate(data.lastEdited);
+                            document.getElementById('active-note-date').innerText = formatFullNoteDate(data.lastEdited);
                             setNoteViewReadOnly(isBuiltInNoteId(noteId) || data.folder === 'recently_deleted');
                         }
                     }
@@ -3473,11 +3491,23 @@
             const titleEditor = document.getElementById('active-note-title');
             const contentEditor = document.getElementById('active-note-content');
 
+            const syncCheckboxState = () => {
+                const checkboxes = contentEditor.querySelectorAll('.checklist-checkbox');
+                checkboxes.forEach(cb => {
+                    if (cb.checked) {
+                        cb.setAttribute('checked', '');
+                    } else {
+                        cb.removeAttribute('checked');
+                    }
+                });
+            };
+
             if (titleEditor && contentEditor) {
                 const handleEdit = () => {
                     const noteId = contentEditor.getAttribute('data-current-note');
                     if (noteId && isBuiltInNoteId(noteId)) return;
                     if (noteId && notesData[noteId]) {
+                        syncCheckboxState();
                         notesData[noteId].title = titleEditor.innerText;
                         notesData[noteId].content = contentEditor.innerHTML;
                         notesData[noteId].lastEdited = Date.now();
@@ -3506,6 +3536,18 @@
                         e.preventDefault();
                     }
                 }, true);
+
+                // Checklist interaction — handle change immediately
+                contentEditor.addEventListener('change', (e) => {
+                    if (e.target.classList.contains('checklist-checkbox')) {
+                        if (e.target.checked) {
+                            e.target.setAttribute('checked', '');
+                        } else {
+                            e.target.removeAttribute('checked');
+                        }
+                        handleEdit();
+                    }
+                });
 
                 // Keyboard Shortcuts & Backspace
                 titleEditor.addEventListener('keydown', (e) => {
@@ -3867,6 +3909,7 @@
                 }
 
                 const updateToolbar = () => {
+                    const isReadOnly = document.getElementById('panel-note-view')?.classList.contains('note-view-readonly');
                     const activeElement = document.activeElement;
                     const isTitleFocused = activeElement && (activeElement.id === 'active-note-title' || activeElement.closest('#active-note-title'));
                     const toolbar = document.querySelector('.notes-header-right');
@@ -3878,8 +3921,8 @@
                         }
                         return;
                     } else if (toolbar) {
-                        toolbar.style.opacity = '1';
-                        toolbar.style.pointerEvents = 'auto';
+                        toolbar.style.opacity = isReadOnly ? '0.35' : '1';
+                        toolbar.style.pointerEvents = isReadOnly ? 'none' : 'auto';
                     }
 
                     const selection = window.getSelection();
@@ -3922,6 +3965,19 @@
                 titleEditor.addEventListener('blur', updateToolbar);
                 contentEditor.addEventListener('focus', updateToolbar);
 
+                const generateNewNotePermalink = () => {
+                    const pattern = /^\/notes\/new-note(?:-(\d+))?$/;
+                    let maxIndex = 0;
+                    Object.values(notesData).forEach(note => {
+                        const match = typeof note.permalink === 'string' ? note.permalink.match(pattern) : null;
+                        if (match) {
+                            const index = match[1] ? parseInt(match[1], 10) : 1;
+                            if (!Number.isNaN(index) && index > maxIndex) maxIndex = index;
+                        }
+                    });
+                    return `/notes/new-note-${maxIndex + 1}`;
+                };
+
                 const createNewNote = () => {
                     const id = 'note-' + Date.now();
                     const now = new Date();
@@ -3931,7 +3987,7 @@
                         folder: (currentFolder === 'all' || currentFolder === 'recently_deleted') ? 'all' : currentFolder,
                         lastEdited: now.getTime(),
                         content: '<p></p>',
-                        permalink: '/notes/' + slugify(title),
+                        permalink: generateNewNotePermalink(),
                         pinned: false
                     };
                     saveNotes();
@@ -4237,7 +4293,7 @@
                     document.getElementById('active-note-content').setAttribute('data-current-note', noteId);
                     document.getElementById('active-note-content').innerHTML = data.content;
                     document.getElementById('active-note-title').innerText = data.title;
-                    document.getElementById('active-note-date').innerText = (data.folder === 'recently_deleted') ? ((window.translations || {})[getNotesLocale()]?.notes?.modal?.deletedPrefix || 'Deleted: ') + formatNoteDate(data.deletedAt) : formatFullNoteDate(data.lastEdited);
+                    document.getElementById('active-note-date').innerText =  formatFullNoteDate(data.lastEdited);
                     setNoteViewReadOnly(isBuiltInNoteId(noteId) || data.folder === 'recently_deleted');
                     currentFolder = 'all';
                     renderNotesList('all', false);
