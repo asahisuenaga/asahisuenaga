@@ -82,7 +82,6 @@ jobs:
                   releases_url = f"https://api.github.com/repos/{repo['full_name']}/releases?per_page=1"
                   rel_resp = requests.get(releases_url, headers=headers)
                   if "Link" in rel_resp.headers:
-                      # Extract total count via page numbers in headers links optimization
                       links = rel_resp.headers["Link"]
                       match = re.search(r'page=(\d+)>; rel="last"', links)
                       if match:
@@ -158,7 +157,6 @@ jobs:
                       payload = event.get("payload", {})
                       
                       if etype == "PushEvent":
-                          # Patched to bypass the deprecated payload.commits object limitation
                           ref_branch = payload.get("ref", "main").replace("refs/heads/", "")
                           activity_lines.append(f"Push: Updated {ref_branch} ({repo_short})")
                       elif etype == "PullRequestEvent":
@@ -197,7 +195,9 @@ jobs:
           with open("template.md", "r", encoding="utf-8") as f:
               template = f.read().replace("\xa0", " ")
 
+          # Comprehensive Date Replacement Strategy (replaces standard tokens and sed regex patterns)
           updated_readme = template.replace("{{DATE}}", current_date)
+          updated_readme = re.sub(r'(INFO v|v)[0-9]{2}\.[0-9]{2}\.[0-9]{2}', f"\\1{current_date}", updated_readme)
 
           # Mapped to match exactly your text layout frame structural widths
           stats_payload = [
@@ -238,7 +238,6 @@ jobs:
           for i, act_text in enumerate(activity_lines, start=1):
               placeholder = f"REC_ACT_{i}"
               left_side = f"  » {act_text}"
-              # Truncate clean max alignment boundary string limits safely to preserve terminal box right border
               if len(left_side) > 33:
                   left_side = left_side[:30] + "..."
               needed_spaces = 35 - len(left_side)
