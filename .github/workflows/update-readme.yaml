@@ -14,12 +14,16 @@ jobs:
       contents: write
     steps:
       - name: Checkout Code Base
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Setup Python Environment
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
+
+      # Fixes the ModuleNotFoundError by supplying the missing library
+      - name: Install Dependencies
+        run: pip install requests
 
       - name: Fetch and Process GitHub Data
         env:
