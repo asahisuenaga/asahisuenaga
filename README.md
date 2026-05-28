@@ -29,8 +29,11 @@
 
 > █
 ──────────────────────────────────────────────────────────────────────────────
-? for shortcuts                                   Thinking off (tab to toggle)
+? for shortcuts                                   Thinking on (tab to toggle)
 ```
+
+![](https://raw.githubusercontent.com/asahisuenaga/github-stats/output/generated/overview.svg)
+![](https://raw.githubusercontent.com/asahisuenaga/github-stats/output/generated/languages.svg)
 
 <!-- ## What's my tech stack?
 
@@ -49,9 +52,9 @@
       <img src="https://www.readmecodegen.com/api/social-icon?name=framer&size=64" alt="framer" /><br>Framer
     </td>
   </tr>
-</table> -->
+</table>
 
 ## What are my stats?
-[![Stats-Dark](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&disable_animations=true&hide=contribs&hide_border=true&hide_rank=false&include_all_commits=true&theme=apprentice&bg_color=00000000#gh-dark-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)[!['Stats-Light](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&disable_animations=true&hide=contribs&hide_border=true&hide_rank=false&include_all_commits=true&theme=graywhite#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)[![ProgrammingLanguage-Dark](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=normal&langs_count=8&disable_animations=true&hide_border=true&theme=apprentice&bg_color=00000000#gh-apprentice-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)[![ProgrammingLanguage-Light](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=normal&langs_count=8&disable_animations=true&hide_border=true&theme=graywhite#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)
+[![Stats-Dark](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&disable_animations=true&hide=contribs&hide_border=true&hide_rank=false&include_all_commits=true&theme=apprentice&bg_color=00000000#gh-dark-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)[!['Stats-Light](https://github-readme-stats-eight-theta.vercel.app/api?username=asahisuenaga&show_icons=true&count_private=true&disable_animations=true&hide=contribs&hide_border=true&hide_rank=false&include_all_commits=true&theme=graywhite#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only)[![ProgrammingLanguage-Dark](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=normal&langs_count=8&disable_animations=true&hide_border=true&theme=apprentice&bg_color=00000000#gh-apprentice-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-dark-mode-only)[![ProgrammingLanguage-Light](https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=asahisuenaga&layout=normal&langs_count=8&disable_animations=true&hide_border=true&theme=graywhite#gh-light-mode-only)](https://github.com/asahisuenaga/github-readme-stats#gh-light-mode-only) -->
 
 <a href="https://github.com/asahisuenaga/asahisuenaga"><img src="https://komarev.com/ghpvc/?username=asahisuenaga" alt="profile views" /></a>
