@@ -8,13 +8,13 @@
 ```text
 # ╭────── INFO v05.28.26 ────────────────╮  ╭────── Profile Overview ────────────────╮
 # │                                      │  │  ● University: Michigan State          │
-# │          Hello there!                │  │  ● Tech: HTML, CSS, JS, Swift          │
+# │             Hello there!             │  │  ● Tech: HTML, CSS, JS, Swift          │
 # │                                      │  │  ● Expertise: Mobile App, UI/UX        │
-# │              ▄▄▄                     │  │  ... /resume for more                  │
-# │             █▄▄▄█                    │  ╰────────────────────────────────────────╯
-# │              █ █                     │  ╭────── Active Workflow ─────────────────╮
+# │                 ▄▄▄                  │  │  ... /resume for more                  │
+# │                █▄▄▄█                 │  ╰────────────────────────────────────────╯
+# │                 █ █                  │  ╭────── Active Workflow ─────────────────╮
 # │                                      │  │  while learning_swift:                 │
-# │    Asahi Suenaga · Credits 61        │  │    build_apps() && innovate()          │
+# │      Asahi Suenaga · Credits 61      │  │    build_apps() && innovate()          │
 # │    /users/asahi/Documents/Profile    │  │  done                                  │
 # ╰──────────────────────────────────────╯  ╰────────────────────────────────────────╯
 
@@ -24,14 +24,14 @@
 # ==> Fetching academic status from reg.msu.edu...
 
 # ╭──────────────────────────────────────────────────────────────────────────────────╮
-# │ [🎓] Junior Year: [████████████████████░░░░░░░░░░] 61/120 Credits (50%)          │
+# │   [🎓] Junior Year: [██████████████████████░░░░░░░░░░░░] 61/120 Credits (50%)    │
 # │                                                                                  │
-# │  ● GPA: 3.64          ● Classes Taken: 11      ● Honors College: True            │
+# │      ● GPA: 3.64           ● Classes Taken: 11       ● Honors College: True      │
 # ╰──────────────────────────────────────────────────────────────────────────────────╯
 
 > asahi github-stats
     
- ╭────── OG Icon ─────────────────────────────╮  ╭────── GitHub Statistics ──────────╮
+ ╭────── Icon ────────────────────────────────╮  ╭────── GitHub Statistics ──────────╮
  │   :GBB######BBBBGPPYJ?!~^:                 │  │                                   │
  │   :@@@@@@@@@@@@@@@@@@@@@@@&#G57^           │  │  ● Profile Views: {{VIEWS}}       │
  │   :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~       │  │  ● Repository Views: {{REPO_VIEWS}}│
@@ -66,3 +66,31 @@
 ![](https://raw.githubusercontent.com/asahisuenaga/github-stats/output/generated/languages.svg)
 
 <a href="https://github.com/asahisuenaga/asahisuenaga"><img src="https://komarev.com/ghpvc/?username=asahisuenaga" alt="profile views" /></a>
+
+
+<!-- ```text
+ ╭────── Icon ────────────────────────────────╮  ╭────── GitHub Statistics ──────────╮
+ │...:GBB######BBBBGPPYJ?!~^:.................│  │                                   │
+ │...:@@@@@@@@@@@@@@@@@@@@@@@&#G57^...........│  │  ● Profile Views: {{VIEWS}}       │
+ │...:@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~.......│  │  ● Repository Views: {{REPO_VIEWS}}│
+ │...:@@@@@@@@@@@@&&&#BBGGBBBB#&&@@@@@@#^.....│  │  ● Stars Received: {{STARS}}      │
+ │...:@@@@&BPY7~^:...............:~J#@@@#.....│  │  ● Total Commits: {{COMMITS}}     │
+ │....Y7^:..........................?@@&~.....│  │  ● Pull Requests: {{PRS}}         │
+ │........................::^~7J5GB&&B7.......│  │  ● Open Issues: {{ISSUES}}        │
+ │............... :~7YG#&&@@@@&#GY7^..........│  │  ● Lines Added: {{ADDITIONS}}     │
+ │...........^75B&@@@@@&#PJ!^:............... │  │  ● Lines Deleted: {{DELETIONS}}   │
+ │........!G&@@@@@@#Y!:.........^!7~:.........│  ╰───────────────────────────────────╯
+ │.....:5&@@@@@@&Y:...........J&@@@@@B!.......│  ╭────── Top Languages ──────────────╮
+ │....5@@@@@@@@P........... ^&@@@@@@@@@#^.....│  │                                   │
+ │..:#@@@@@@@@Y........... ^&@B7^~P@@@@@@^....│  │  █ {{LANG_NAME_1}}  {{LANG_BAR_1}} {{LANG_PCT_1}}  │
+ │.:&@@@@@@@@&........... :&@J.....J@@@@@&....│  │  █ {{LANG_NAME_2}}  {{LANG_BAR_2}} {{LANG_PCT_2}}  │
+ │.G@@@@@@@@@#...........:#@5.......&@@@@@?...│  │  █ {{LANG_NAME_3}}  {{LANG_BAR_3}} {{LANG_PCT_3}}  │
+ │^@@@@@@@@@@@7.........!&@&........&@@@@@B...│  │  █ {{LANG_NAME_4}}  {{LANG_BAR_4}} {{LANG_PCT_4}}  │
+ │!@@@@@@@@@@@@G~:..:^J#@@@?.......^@@@@@@&...│  │  █ {{LANG_NAME_5}}  {{LANG_BAR_5}} {{LANG_PCT_5}}  │
+ │^@@@@@@@@@@@@@@@&&@@@@@@B........P@@@@@@@:..│  ╰───────────────────────────────────╯
+ │.G@@@@@@@@@@@@@@@@@@@@@&:.......7@@@@@@@@:..│
+ │..G@@@@@@@@@@@@@@@@@@@B:.......!@@@@@@@@@:..│
+ │...7#@@@@@@@@@@@@@@@&J........7@@@@@@@@@@^..│
+ │.....~P&@@@@@@@@@&G7.........7&&&&&&&&&&&:..│
+ │........:~7?JJ7!^.......................... │
+ ╰────────────────────────────────────────────╯```-->
