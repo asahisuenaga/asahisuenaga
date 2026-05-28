@@ -33,11 +33,11 @@
     
  ╭────── Icon ────────────────────────────────╮  ╭────── Github Statistics ──────────╮
  │    :GBB######BBBBGPPYJ?!~^:                │  │                                   │
- │    :@@@@@@@@@@@@@@@@@@@@@@@&#G57^          │  │  ● Profile Views: 460             │
+ │    :@@@@@@@@@@@@@@@@@@@@@@@&#G57^          │  │  ● Profile Views: 465             │
  │    :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~      │  │  ● Repository Views: 160          │
  │    :@@@@@@@@@@@@&&&#BBGGBBBB#&&@@@@@@#^    │  │  ● Stars Received: 6              │
- │    :@@@@&BPY7~^:               :~J#@@@#    │  │  ● Total Commits: 451             │
- │     Y7^:                          ?@@&~    │  │  ● Commits (YTD): 298             │
+ │    :@@@@&BPY7~^:               :~J#@@@#    │  │  ● Total Commits: 453             │
+ │     Y7^:                          ?@@&~    │  │  ● Commits (YTD): 300             │
  │                         ::^~7J5GB&&B7      │  │  ● Issues/PRs/Releases: 2/7/7     │
  │                 :~7YG#&&@@@@&#GY7^         │  ╰───────────────────────────────────╯
  │            ^75B&@@@@@&#PJ!^:               │  ╭────── Top Languages ──────────────╮
@@ -61,4 +61,4 @@
 ──────────────────────────────────────────────────────────────────────────────
 ? for shortcuts                               Compiling thoughts... (100% CPU)                
 ```
-<a href="https://github.com/asahisuenaga/asahisuenaga"><img src="https://komarev.com/ghpvc/?username=asahisuenaga" alt="profile views" /></a> 
+![](https://komarev.com/ghpvc/?username=asahisuenaga&style=pixel)
