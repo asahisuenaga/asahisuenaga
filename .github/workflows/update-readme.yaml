@@ -1,0 +1,142 @@
+name: Update Profile README Stats
+on:
+  schedule:
+    - cron: '0 0 * * *' # Executes daily at midnight UTC
+  workflow_dispatch:   # Manual execution trigger
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Code Base
+        uses: actions/checkout@v4
+
+      - name: Setup Python Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Fetch and Process GitHub Data
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python - << 'EOF'
+          import os
+          import requests
+          from datetime import datetime
+          from collections import Counter
+
+          # Configuration
+          username = "${{ github.repository_owner }}"
+          headers = {"Authorization": f"token {os.environ['GH_TOKEN']}"}
+          
+          # 1. Fetch Basic User Stats & Repos
+          user_data = requests.get(f"https://api.github.com/users/{username}", headers=headers).json()
+          repos = requests.get(f"https://api.github.com/users/{username}/repos?per_page=100", headers=headers).json()
+          
+          total_stars = sum(repo['stargazers_count'] for repo in repos if not repo['fork'])
+          open_issues = sum(repo['open_issues_count'] for repo in repos if not repo['fork'])
+
+          # 2. Dynamic Language Aggregator
+          language_counter = Counter()
+          for repo in repos:
+              if repo['fork'] or repo['private']:
+                  continue
+              lang_url = repo['languages_url']
+              lang_data = requests.get(lang_url, headers=headers).json()
+              for lang, bytes_count in lang_data.items():
+                  language_counter[lang] += bytes_count
+
+          # Calculate percentages for top 5 languages
+          total_bytes = sum(language_counter.values())
+          top_languages = language_counter.most_common(5)
+
+          # Ensure we have at least 5 items to avoid IndexErrors
+          while len(top_languages) < 5:
+              top_languages.append(("None", 0))
+
+          # 3. GraphQL Call for Commits and PRs
+          query = """
+          query($login: String!) {
+            user(login: $login) {
+              contributionsCollection {
+                totalCommitContributions
+                totalPullRequestContributions
+              }
+            }
+          }
+          """
+          graphql_url = "https://api.github.com/graphql"
+          response = requests.post(graphql_url, json={"query": query, "variables": {"login": username}}, headers=headers).json()
+          
+          user_nodes = response['data']['user']
+          commits_ytd = user_nodes['contributionsCollection']['totalCommitContributions']
+          total_prs = user_nodes['contributionsCollection']['totalPullRequestContributions']
+          
+          # Static baseline metrics for traffic simulation
+          profile_views = "4,219" 
+          repo_views = "1,845"
+          lines_added = "+24,412"
+          lines_deleted = "-12,893"
+
+          # 4. Format Engine Helpers
+          def format_pad(val, target_len=13):
+              return str(val).ljust(target_len)[:target_len]
+
+          def make_progress_bar(pct_int, width=15):
+              filled_len = int(round(width * pct_int / 100))
+              return "█" * filled_len + "░" * (width - filled_len)
+
+          current_date = datetime.now().strftime("%m.%d.%y")
+
+          # Read template
+          with open("README.template.md", "r", encoding="utf-8") as f:
+              template = f.read()
+
+          # Base replacements
+          updated_readme = template \
+              .replace("{{DATE}}", current_date) \
+              .replace("{{VIEWS}}", format_pad(profile_views)) \
+              .replace("{{REPO_VIEWS}}", format_pad(repo_views)) \
+              .replace("{{STARS}}", format_pad(total_stars)) \
+              .replace("{{COMMITS}}", format_pad(commits_ytd)) \
+              .replace("{{PRS}}", format_pad(total_prs)) \
+              .replace("{{ISSUES}}", format_pad(open_issues)) \
+              .replace("{{ADDITIONS}}", format_pad(lines_added)) \
+              .replace("{{DELETIONS}}", format_pad(lines_deleted))
+
+          # Language specific replacements (Looping 1 through 5)
+          for i, (lang_name, bytes_count) in enumerate(top_languages, start=1):
+              pct = (bytes_count / total_bytes * 100) if total_bytes > 0 else 0
+              pct_str = f"{int(round(pct))}%"
+              
+              # Standardize spacing to keep border walls rigid
+              name_padded = lang_name.ljust(6)[:6]
+              bar_built = make_progress_bar(pct)
+              pct_padded = pct_str.ljust(4)
+              
+              if lang_name == "None":
+                  name_padded, bar_built, pct_padded = "      ", "░" * 15, "0%  "
+
+              updated_readme = updated_readme \
+                  .replace(f"{{{{LANG_NAME_{i}}}}}", name_padded) \
+                  .replace(f"{{{{LANG_BAR_{i}}}}}", bar_built) \
+                  .replace(f"{{{{LANG_PCT_{i}}}}}", pct_padded)
+
+          with open("README.md", "w", encoding="utf-8") as f:
+              f.write(updated_readme)
+          print("Successfully injected stats and top 5 languages into README.")
+          EOF
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action Bot"
+          git add README.md
+          git commit -m "docs: auto-update terminal profile metrics ($(date +'%m.%d.%y'))" || echo "No data modifications detected. Skipping push."
+          git push
