@@ -6,7 +6,7 @@
 </h1>
 
 ```text
-# ╭────── INFO v05.28.26 ────────────────╮  ╭────── Profile Overview ────────────────╮
+# ╭────── INFO 05.28.26 ────────────────╮  ╭────── Profile Overview ────────────────╮
 # │                                      │  │  ● University: Michigan State          │
 # │             Hello there!             │  │  ● Tech: HTML, CSS, JS, Swift          │
 # │                                      │  │  ● Expertise: Mobile App, UI/UX        │
@@ -20,7 +20,7 @@
 
 > asahi college-progress
 
-# 💻 INFO: stable v05.28.26 (optimized)
+# 💻 INFO: stable 05.28.26 (optimized)
 # ==> Fetching academic status from reg.msu.edu...
 
 # ╭──────────────────────────────────────────────────────────────────────────────────╮
@@ -32,14 +32,13 @@
 > asahi github-stats
     
  ╭────── Icon ────────────────────────────────╮  ╭────── Github Statistics ──────────╮
- │                                            │  │                                   │
- │    :GBB######BBBBGPPYJ?!~^:                │  │  ● Profile Views: 458             │
- │    :@@@@@@@@@@@@@@@@@@@@@@@&#G57^          │  │  ● Repository Views: 160          │
- │    :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~      │  │  ● Stars Received: 6              │
- │    :@@@@@@@@@@@@&&&#BBGGBBBB#&&@@@@@@#^    │  │  ● Total Commits: 444             │
- │    :@@@@&BPY7~^:               :~J#@@@#    │  │  ● Commits (YTD): 291             |
- │     Y7^:                          ?@@&~    │  │  ● Issues / PRs: 2 / 7            │
- │                         ::^~7J5GB&&B7      │  │  ● Total Releases: 7              │
+ │    :GBB######BBBBGPPYJ?!~^:                │  │                                   │
+ │    :@@@@@@@@@@@@@@@@@@@@@@@&#G57^          │  │  ● Profile Views: 458             │
+ │    :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~      │  │  ● Repository Views: 160          │
+ │    :@@@@@@@@@@@@&&&#BBGGBBBB#&&@@@@@@#^    │  │  ● Stars Received: 6              │
+ │    :@@@@&BPY7~^:               :~J#@@@#    │  │  ● Total Commits: 448             │
+ │     Y7^:                          ?@@&~    │  │  ● Commits (YTD): 295             │
+ │                         ::^~7J5GB&&B7      │  │  ● Contributions: 2 Issues / 7 PRs / 7 Releases│
  │                 :~7YG#&&@@@@&#GY7^         │  ╰───────────────────────────────────╯
  │            ^75B&@@@@@&#PJ!^:               │  ╭────── Top Languages ──────────────╮
  │         !G&@@@@@@#Y!:         ^!7~:        │  │                                   │
@@ -62,3 +61,4 @@
 ──────────────────────────────────────────────────────────────────────────────
 ? for shortcuts                               Compiling thoughts... (100% CPU)                
 ```
+<!-- <a href="https://github.com/asahisuenaga/asahisuenaga"><img src="https://komarev.com/ghpvc/?username=asahisuenaga" alt="profile views" /></a> -->
