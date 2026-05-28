@@ -116,7 +116,7 @@ jobs:
           # Process and inject Stats rows safely (Pads dynamically to perfectly fill the inner box)
           for placeholder, label, value in stats_payload:
               left_side = f"  ● {label}: {value}"
-              needed_spaces = 36 - len(left_side)
+              needed_spaces = 35 - len(left_side)
               line_built = f"{left_side}{' ' * needed_spaces}"
               updated_readme = updated_readme.replace(f"{{{{{placeholder}}}}}", line_built)
 
@@ -127,13 +127,16 @@ jobs:
                   line_built = "  █         ░░░░░░░░░░░░░░░ 0%    "
               else:
                   pct = (bytes_count / total_bytes * 100) if total_bytes > 0 else 0
-                  pct_str = f"{int(round(pct))}%"
+                  if pct < 10:
+                    pct_str = f"{int(round(pct))}% "
+                  else:
+                    pct_str = f"{int(round(pct))}%"
                   
                   name_fixed = lang_name.ljust(6)[:6]
                   bar_built = make_progress_bar(pct)
                   
                   left_side = f"  █ {name_fixed}  {bar_built} {pct_str}"
-                  needed_spaces = 36 - len(left_side)
+                  needed_spaces = 35 - len(left_side)
                   line_built = f"{left_side}{' ' * needed_spaces}"
 
               updated_readme = updated_readme.replace(f"{{{{{placeholder}}}}}", line_built)
