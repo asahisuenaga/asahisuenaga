@@ -14,14 +14,13 @@ jobs:
       contents: write
     steps:
       - name: Checkout Code Base
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Python Environment
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      # Fixes the ModuleNotFoundError by supplying the missing library
       - name: Install Dependencies
         run: pip install requests
 
@@ -89,9 +88,6 @@ jobs:
           lines_deleted = "-12,893"
 
           # 4. Format Engine Helpers
-          def format_pad(val, target_len=13):
-              return str(val).ljust(target_len)[:target_len]
-
           def make_progress_bar(pct_int, width=15):
               filled_len = int(round(width * pct_int / 100))
               return "█" * filled_len + "░" * (width - filled_len)
@@ -99,48 +95,54 @@ jobs:
           current_date = datetime.now().strftime("%m.%d.%y")
 
           # Read template
-          with open("README.md", "r", encoding="utf-8") as f:
+          with open("README.template.md", "r", encoding="utf-8") as f:
               template = f.read()
 
-          # Base replacements
-          updated_readme = template \
-              .replace("{{DATE}}", current_date) \
-              .replace("{{VIEWS}}", format_pad(profile_views)) \
-              .replace("{{REPO_VIEWS}}", format_pad(repo_views)) \
-              .replace("{{STARS}}", format_pad(total_stars)) \
-              .replace("{{COMMITS}}", format_pad(commits_ytd)) \
-              .replace("{{PRS}}", format_pad(total_prs)) \
-              .replace("{{ISSUES}}", format_pad(open_issues)) \
-              .replace("{{ADDITIONS}}", format_pad(lines_added)) \
-              .replace("{{DELETIONS}}", format_pad(lines_deleted))
+          # Base replacements with strict layout padding (Targeting exactly 36 inner characters)
+          stats_payload = [
+              ("Profile Views", profile_views),
+              ("Repository Views", repo_views),
+              ("Stars Received", total_stars),
+              ("Total Commits", commits_ytd),
+              ("Pull Requests", total_prs),
+              ("Open Issues", open_issues),
+              ("Lines Added", lines_added),
+              ("Lines Deleted", lines_deleted)
+          ]
 
-          # Language specific replacements (Looping 1 through 5)
+          updated_readme = template.replace("{{DATE}}", current_date)
+
+          # Dynamically compute remaining space so the right-side stats wall never shifts
+          for label, value in stats_payload:
+              left_side = f"  ● {label}: {value}"
+              needed_spaces = 36 - len(left_side)
+              line_built = f"{left_side}{' ' * needed_spaces}│"
+              
+              # Generate the template match key dynamically (e.g., {{VIEWS}}, {{STARS}})
+              key_name = label.split()[0].upper()
+              if label == "Profile Views": key_name = "VIEWS"
+              elif label == "Repository Views": key_name = "REPO_VIEWS"
+              elif label == "Total Commits": key_name = "COMMITS"
+              elif label == "Pull Requests": key_name = "PRS"
+              elif label == "Lines Added": key_name = "ADDITIONS"
+              elif label == "Lines Deleted": key_name = "DELETIONS"
+              
+              updated_readme = updated_readme.replace(f" │  ● {label}: {{{{{key_name}}}}}", f" │{line_built}")
+
+          # Language specific replacements with strict frame boundaries (Looping 1 through 5)
           for i, (lang_name, bytes_count) in enumerate(top_languages, start=1):
-              pct = (bytes_count / total_bytes * 100) if total_bytes > 0 else 0
-              pct_str = f"{int(round(pct))}%"
-              
-              # Standardize spacing to keep border walls rigid
-              name_padded = lang_name.ljust(6)[:6]
-              bar_built = make_progress_bar(pct)
-              pct_padded = pct_str.ljust(4)
-              
               if lang_name == "None":
-                  name_padded, bar_built, pct_padded = "      ", "░" * 15, "0%  "
+                  line_built = "  █         ░░░░░░░░░░░░░░░ 0%    │"
+              else:
+                  pct = (bytes_count / total_bytes * 100) if total_bytes > 0 else 0
+                  pct_str = f"{int(round(pct))}%"
+                  
+                  name_fixed = lang_name.ljust(6)[:6]
+                  bar_built = make_progress_bar(pct)
+                  
+                  # Assemble row components and force a matching 36-character length boundary
+                  left_side = f"  █ {name_fixed}  {bar_built} {pct_str}"
+                  needed_spaces = 36 - len(left_side)
+                  line_built = f"{left_side}{' ' * needed_spaces}│"
 
-              updated_readme = updated_readme \
-                  .replace(f"{{{{LANG_NAME_{i}}}}}", name_padded) \
-                  .replace(f"{{{{LANG_BAR_{i}}}}}", bar_built) \
-                  .replace(f"{{{{LANG_PCT_{i}}}}}", pct_padded)
-
-          with open("README.md", "w", encoding="utf-8") as f:
-              f.write(updated_readme)
-          print("Successfully injected stats and top 5 languages into README.")
-          EOF
-
-      - name: Commit and Push Changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action Bot"
-          git add README.md
-          git commit -m "docs: auto-update terminal profile metrics ($(date +'%m.%d.%y'))" || echo "No data modifications detected. Skipping push."
-          git push
+              # Targeted
