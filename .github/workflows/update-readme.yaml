@@ -36,14 +36,24 @@ jobs:
 
           # Configuration
           username = "${{ github.repository_owner }}"
-          headers = {"Authorization": f"token {os.environ['GH_TOKEN']}"}
           
-          # 1. Fetch User Data & Repositories (Now includes private repos via your PAT)
+          # Modernized Token Authorization format matching standard PAT setups
+          headers = {
+              "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
+              "Accept": "application/vnd.github+json"
+          }
+          
+          # 1. Fetch User Data & Repositories (Includes Private Repositories via your PAT)
           user_data = requests.get(f"https://api.github.com/users/{username}", headers=headers).json()
           
           # Paginate to make sure we grab all repos up to 100
           repos = requests.get(f"https://api.github.com/user/repos?per_page=100&type=owner", headers=headers).json()
           
+          # Fallback check to avoid parsing issues if API errors out
+          if isinstance(repos, dict) and "message" in repos:
+              print(f"API Error detected: {repos['message']}")
+              exit(1)
+              
           total_stars = sum(repo['stargazers_count'] for repo in repos if not repo['fork'])
 
           # 2. Dynamic Language Aggregator
@@ -51,11 +61,11 @@ jobs:
           for repo in repos:
               if repo['fork']:
                   continue
-              # We can now scan private repo language metrics securely too
               lang_url = repo['languages_url']
               lang_data = requests.get(lang_url, headers=headers).json()
-              for lang, bytes_count in lang_data.items():
-                  language_counter[lang] += bytes_count
+              if isinstance(lang_data, dict):
+                  for lang, bytes_count in lang_data.items():
+                      language_counter[lang] += bytes_count
 
           # Calculate percentages for top 5 languages
           total_bytes = sum(language_counter.values())
@@ -68,9 +78,6 @@ jobs:
           query = """
           query($login: String!) {
             user(login: $login) {
-              repositoriesContributedTo(roles: [COMMITTER, OWNER, COLLABORATOR], first: 100) {
-                totalCount
-              }
               contributionsCollection {
                 totalPullRequestContributions
               }
@@ -80,14 +87,22 @@ jobs:
           graphql_url = "https://api.github.com/graphql"
           graph_resp = requests.post(graphql_url, json={"query": query, "variables": {"login": username}}, headers=headers).json()
           
+          # Guardrail validation prints diagnostic info if the GraphQL fails again
+          if "data" not in graph_resp:
+              print(f"GraphQL Execution failed. Raw payload response: {graph_resp}")
+              exit(1)
+              
           user_nodes = graph_resp['data']['user']
           total_prs = user_nodes['contributionsCollection']['totalPullRequestContributions']
           
-          # Fetch total historical commits across all owned repositories (Public + Private) using REST Search
-          commit_search = requests.get(f"https://api.github.com/search/commits?q=author:{username}", headers=headers).json()
+          # 4. Fetch total historical commits via REST Search (Requires a Preview Acceptance Header)
+          search_headers = headers.copy()
+          search_headers["Accept"] = "application/vnd.github.cloak-preview+json"
+          
+          commit_search = requests.get(f"https://api.github.com/search/commits?q=author:{username}", headers=search_headers).json()
           commits_lifetime = commit_search.get('total_count', 0)
           
-          # 4. Search API for All-Time Issues Created (Open + Closed)
+          # 5. Search API for All-Time Issues Created (Open + Closed)
           issue_search = requests.get(f"https://api.github.com/search/issues?q=author:{username}+is:issue", headers=headers).json()
           all_time_issues = issue_search.get('total_count', 0)
           
@@ -97,7 +112,7 @@ jobs:
           lines_added = "+24,412"
           lines_deleted = "-12,893"
 
-          # 5. Format Engine Helpers
+          # 6. Format Engine Helpers
           def make_progress_bar(pct_int, width=15):
               filled_len = int(round(width * pct_int / 100))
               return "█" * filled_len + "░" * (width - filled_len)
@@ -117,7 +132,7 @@ jobs:
               ("STAT_ROW_STARS", "Stars Received", total_stars),
               ("STAT_ROW_COMMITS", "Total Commits", commits_lifetime),
               ("STAT_ROW_PRS", "Pull Requests", total_prs),
-              ("STAT_ROW_ISSUES", "Total Issues", all_time_issues), # Changed label text cleanly
+              ("STAT_ROW_ISSUES", "Total Issues", all_time_issues),
           ]
 
           # Process and inject Stats rows safely (Targeting exactly 35 internal block spaces)
