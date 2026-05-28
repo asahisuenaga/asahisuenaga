@@ -113,12 +113,15 @@ jobs:
               ("STAT_ROW_DELETIONS", "Lines Deleted", lines_deleted)
           ]
 
-          # Process and inject Stats rows safely (Pads dynamically to perfectly fill the inner box)
+          # Process and inject Stats rows safely (Targeting exactly 35 internal block spaces)
           for placeholder, label, value in stats_payload:
               left_side = f"  ● {label}: {value}"
               needed_spaces = 35 - len(left_side)
               line_built = f"{left_side}{' ' * needed_spaces}"
-              updated_readme = updated_readme.replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
+              
+              # Robust finder handles variations with or without inner padding spaces inside brackets
+              updated_readme = updated_readme \
+                  .replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
 
           # Process and inject Language rows safely
           for i, (lang_name, bytes_count) in enumerate(top_languages, start=1):
@@ -136,7 +139,8 @@ jobs:
                   needed_spaces = 35 - len(left_side)
                   line_built = f"{left_side}{' ' * needed_spaces}"
 
-              updated_readme = updated_readme.replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
+              updated_readme = updated_readme \
+                  .replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
 
           with open("README.md", "w", encoding="utf-8") as f:
               f.write(updated_readme)
