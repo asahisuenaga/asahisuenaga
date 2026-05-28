@@ -33,11 +33,11 @@
     
  ╭────── Icon ────────────────────────────────╮  ╭────── Github Statistics ──────────╮
  │                                            │  │                                   │
- │    :GBB######BBBBGPPYJ?!~^:                │  │  ● Profile Views: 457             │
+ │    :GBB######BBBBGPPYJ?!~^:                │  │  ● Profile Views: 458             │
  │    :@@@@@@@@@@@@@@@@@@@@@@@&#G57^          │  │  ● Repository Views: 160          │
  │    :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~      │  │  ● Stars Received: 6              │
- │    :@@@@@@@@@@@@&&&#BBGGBBBB#&&@@@@@@#^    │  │  ● Total Commits: 431             │
- │    :@@@@&BPY7~^:               :~J#@@@#    │  │  ● Commits (YTD): 278             |
+ │    :@@@@@@@@@@@@&&&#BBGGBBBB#&&@@@@@@#^    │  │  ● Total Commits: 432             │
+ │    :@@@@&BPY7~^:               :~J#@@@#    │  │  ● Commits (YTD): 279             |
  │     Y7^:                          ?@@&~    │  │  ● Issues / PRs: 2 / 7            │
  │                         ::^~7J5GB&&B7      │  │  ● Total Releases: 7              │
  │                 :~7YG#&&@@@@&#GY7^         │  ╰───────────────────────────────────╯
@@ -62,8 +62,3 @@
 ──────────────────────────────────────────────────────────────────────────────
 ? for shortcuts                               Compiling thoughts... (100% CPU)                
 ```
-
-![](https://raw.githubusercontent.com/asahisuenaga/github-stats/output/generated/overview.svg)
-![](https://raw.githubusercontent.com/asahisuenaga/github-stats/output/generated/languages.svg)
-
-<a href="https://github.com/asahisuenaga/asahisuenaga"><img src="https://komarev.com/ghpvc/?username=asahisuenaga" alt="profile views" /></a>
