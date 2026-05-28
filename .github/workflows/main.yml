@@ -197,7 +197,7 @@ jobs:
 
           # Strict regex bounding to keep titles safe from string collision replacements
           updated_readme = template.replace("{{DATE}}", current_date)
-          updated_readme = re.sub(r'\bv([0-9]{2}\.[0-9]{2}\.[0-9]{2})\b', current_date, updated_readme)
+          updated_readme = re.sub(r'\bv([0-9]{2}\.[0-9]{2}\.[0-9]{2})\b', f"v{current_date}", updated_readme)
           updated_readme = re.sub(r'\bINFO v([0-9]{2}\.[0-9]{2}\.[0-9]{2})\b', f"INFO v{current_date}", updated_readme)
 
           # Updated rows mappings to fit your structured specifications
