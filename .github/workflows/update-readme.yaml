@@ -14,7 +14,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout Code Base
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Setup Python Environment
         uses: actions/setup-python@v5
@@ -118,7 +118,7 @@ jobs:
               needed_spaces = 36 - len(left_side)
               line_built = f"{left_side}{' ' * needed_spaces}│"
               
-              # Generate the template match key dynamically (e.g., {{VIEWS}}, {{STARS}})
+              # Generate the template match key dynamically
               key_name = label.split()[0].upper()
               if label == "Profile Views": key_name = "VIEWS"
               elif label == "Repository Views": key_name = "REPO_VIEWS"
@@ -145,4 +145,20 @@ jobs:
                   needed_spaces = 36 - len(left_side)
                   line_built = f"{left_side}{' ' * needed_spaces}│"
 
-              # Targeted
+              # Targeted structural swap to preserve spacing around box dividers
+              updated_readme = updated_readme \
+                  .replace(f" │  █ {{{{LANG_NAME_{i}}}}}  {{{{LANG_BAR_{i}}}}} {{{{LANG_PCT_{i}}}}}  │", f" │{line_built}")
+
+          with open("README.md", "w", encoding="utf-8") as f:
+              f.write(updated_readme)
+          print("Successfully injected pixel-perfect stats and languages into README.")
+          EOF
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action Bot"
+          git add README.md
+          git commit -m "docs: auto-update terminal profile metrics ($(date +'%m.%d.%y'))" || echo "No data modifications detected. Skipping push."
+          git pull --rebase origin main
+          git push origin main
