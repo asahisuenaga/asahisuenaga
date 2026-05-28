@@ -207,7 +207,7 @@ jobs:
               ("STAT_ROW_STARS", "Stars Received", total_stars),
               ("STAT_ROW_COMMITS", "Total Commits", f"{commits_lifetime:,}"),
               ("STAT_ROW_COMMITS_YTD", "Commits (YTD)", f"{commits_ytd:,}"),
-              ("STAT_ROW_CONTRIBUTIONS", "Contributions", f"{all_time_issues:,} Issues / {total_prs:,} PRs / {total_releases:,} Releases"),
+              ("STAT_ROW_CONTRIBUTIONS", "Issues/PRs/Releases", f"{all_time_issues:,}/{total_prs:,}/{total_releases:,}"),
           ]
 
           for placeholder, label, value in stats_payload:
@@ -216,6 +216,34 @@ jobs:
               line_built = f"{left_side}{' ' * needed_spaces}"
               updated_readme = updated_readme.replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
 
+          # Language Abbreviations
+          const nameMap = {
+              "JavaScript": "JS",
+              "TypeScript": "TS",
+              "Jupyter Notebook": "Ipynb",
+              "PowerShell": "PS",
+              "Objective-C": "Obj-C",
+              "Visual Basic": "VB",
+              "CoffeeScript": "Coffee",
+              "ActionScript": "AS",
+              "WebAssembly": "Wasm",
+              "Common Lisp": "Lisp",
+              "Emacs Lisp": "Elisp",
+              "Mathematica": "Math",
+              "Processing": "P5",
+              "PureScript": "PS",
+              "Dockerfile": "Docker",
+              "Protocol Buffer": "Proto",
+              "ApacheConf": "Config",
+              "Terraform": "TF",
+              "Markdown": "MD",
+              "GraphQL": "GQL",
+              "Assembly": "Asm",
+              "Component Pascal": "Pascal",
+              "Standard ML": "SML",
+              "Smalltalk": "ST"
+          };
+
           # Inject Language Rows
           total_bytes = sum(language_counter.values())
           for i, (lang_name, bytes_count) in enumerate(top_languages, start=1):
@@ -223,6 +251,7 @@ jobs:
               if lang_name == "None":
                   line_built = "  █         ░░░░░░░░░░░░░░░ 0%     "
               else:
+                  short_name = nameMap[lang_name] if lang_name in nameMap else lang_name
                   pct = (bytes_count / total_bytes * 100) if total_bytes > 0 else 0
                   pct_str = f"{int(round(pct))}%"
                   name_fixed = lang_name.ljust(6)[:6]
