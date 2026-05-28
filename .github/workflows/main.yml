@@ -216,8 +216,8 @@ jobs:
               line_built = f"{left_side}{' ' * needed_spaces}"
               updated_readme = updated_readme.replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
 
-          # Language Abbreviations
-          const nameMap = {
+          # Language Abbreviations (Corrected to Python Dictionary Syntax)
+          nameMap = {
               "JavaScript": "JS",
               "TypeScript": "TS",
               "Jupyter Notebook": "Ipynb",
@@ -242,7 +242,7 @@ jobs:
               "Component Pascal": "Pascal",
               "Standard ML": "SML",
               "Smalltalk": "ST"
-          };
+          }
 
           # Inject Language Rows
           total_bytes = sum(language_counter.values())
@@ -251,10 +251,10 @@ jobs:
               if lang_name == "None":
                   line_built = "  █         ░░░░░░░░░░░░░░░ 0%     "
               else:
-                  short_name = nameMap[lang_name] if lang_name in nameMap else lang_name
+                  short_name = nameMap.get(lang_name, lang_name)
                   pct = (bytes_count / total_bytes * 100) if total_bytes > 0 else 0
                   pct_str = f"{int(round(pct))}%"
-                  name_fixed = lang_name.ljust(6)[:6]
+                  name_fixed = short_name.ljust(6)[:6]
                   bar_built = make_progress_bar(pct)
                   
                   left_side = f"  █ {name_fixed}  {bar_built} {pct_str}"
