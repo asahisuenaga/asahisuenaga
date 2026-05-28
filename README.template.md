@@ -37,7 +37,7 @@
  │    :@@@@@@@@@@@@@@@@@@@@@@@&#G57^          │  │{{STAT_ROW_REPO_VIEWS}}│
  │    :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~      │  │{{STAT_ROW_STARS}}│
  │    :@@@@@@@@@@@@&&&#BBGGBBBB#&&@@@@@@#^    │  │{{STAT_ROW_COMMITS}}│
- │    :@@@@&BPY7~^:               :~J#@@@#    │  │{{STAT_ROW_COMMITS_YTD}}
+ │    :@@@@&BPY7~^:               :~J#@@@#    │  │{{STAT_ROW_COMMITS_YTD}}|
  │     Y7^:                          ?@@&~    │  │{{STAT_ROW_ISSUES_PRS}}│
  │                         ::^~7J5GB&&B7      │  │{{STAT_ROW_RELEASES}}│
  │                 :~7YG#&&@@@@&#GY7^         │  ╰───────────────────────────────────╯
