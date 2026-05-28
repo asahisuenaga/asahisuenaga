@@ -95,44 +95,36 @@ jobs:
           current_date = datetime.now().strftime("%m.%d.%y")
 
           # Read template
-          with open("README.md", "r", encoding="utf-8") as f:
+          with open("README.template.md", "r", encoding="utf-8") as f:
               template = f.read()
 
-          # Base replacements with strict layout padding (Targeting exactly 36 inner characters)
-          stats_payload = [
-              ("Profile Views", profile_views),
-              ("Repository Views", repo_views),
-              ("Stars Received", total_stars),
-              ("Total Commits", commits_ytd),
-              ("Pull Requests", total_prs),
-              ("Open Issues", open_issues),
-              ("Lines Added", lines_added),
-              ("Lines Deleted", lines_deleted)
-          ]
-
+          # Base replacements (Top header boxes)
           updated_readme = template.replace("{{DATE}}", current_date)
 
-          # Dynamically compute remaining space so the right-side stats wall never shifts
-          for label, value in stats_payload:
+          # Base statistics payload configuration
+          stats_payload = [
+              ("STAT_ROW_VIEWS", "Profile Views", profile_views),
+              ("STAT_ROW_REPO_VIEWS", "Repository Views", repo_views),
+              ("STAT_ROW_STARS", "Stars Received", total_stars),
+              ("STAT_ROW_COMMITS", "Total Commits", commits_ytd),
+              ("STAT_ROW_PRS", "Pull Requests", total_prs),
+              ("STAT_ROW_ISSUES", "Open Issues", open_issues),
+              ("STAT_ROW_ADDITIONS", "Lines Added", lines_added),
+              ("STAT_ROW_DELETIONS", "Lines Deleted", lines_deleted)
+          ]
+
+          # Process and inject Stats rows safely (Pads dynamically to perfectly fill the inner box)
+          for placeholder, label, value in stats_payload:
               left_side = f"  ● {label}: {value}"
               needed_spaces = 36 - len(left_side)
-              line_built = f"{left_side}{' ' * needed_spaces}│"
-              
-              # Generate the template match key dynamically
-              key_name = label.split()[0].upper()
-              if label == "Profile Views": key_name = "VIEWS"
-              elif label == "Repository Views": key_name = "REPO_VIEWS"
-              elif label == "Total Commits": key_name = "COMMITS"
-              elif label == "Pull Requests": key_name = "PRS"
-              elif label == "Lines Added": key_name = "ADDITIONS"
-              elif label == "Lines Deleted": key_name = "DELETIONS"
-              
-              updated_readme = updated_readme.replace(f" │  ● {label}: {{{{{key_name}}}}}", f" │{line_built}")
+              line_built = f"{left_side}{' ' * needed_spaces}"
+              updated_readme = updated_readme.replace(f"{{{{{placeholder}}}}}", line_built)
 
-          # Language specific replacements with strict frame boundaries (Looping 1 through 5)
+          # Process and inject Language rows safely
           for i, (lang_name, bytes_count) in enumerate(top_languages, start=1):
+              placeholder = f"LANG_ROW_{i}"
               if lang_name == "None":
-                  line_built = "  █         ░░░░░░░░░░░░░░░ 0%    │"
+                  line_built = "  █         ░░░░░░░░░░░░░░░ 0%    "
               else:
                   pct = (bytes_count / total_bytes * 100) if total_bytes > 0 else 0
                   pct_str = f"{int(round(pct))}%"
@@ -140,14 +132,11 @@ jobs:
                   name_fixed = lang_name.ljust(6)[:6]
                   bar_built = make_progress_bar(pct)
                   
-                  # Assemble row components and force a matching 36-character length boundary
                   left_side = f"  █ {name_fixed}  {bar_built} {pct_str}"
                   needed_spaces = 36 - len(left_side)
-                  line_built = f"{left_side}{' ' * needed_spaces}│"
+                  line_built = f"{left_side}{' ' * needed_spaces}"
 
-              # Targeted structural swap to preserve spacing around box dividers
-              updated_readme = updated_readme \
-                  .replace(f" │  █ {{{{LANG_NAME_{i}}}}}  {{{{LANG_BAR_{i}}}}} {{{{LANG_PCT_{i}}}}}  │", f" │{line_built}")
+              updated_readme = updated_readme.replace(f"{{{{{placeholder}}}}}", line_built)
 
           with open("README.md", "w", encoding="utf-8") as f:
               f.write(updated_readme)
