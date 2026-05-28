@@ -61,4 +61,4 @@
 ──────────────────────────────────────────────────────────────────────────────
 ? for shortcuts                               Compiling thoughts... (100% CPU)                
 ```
-<!-- <a href="https://github.com/asahisuenaga/asahisuenaga"><img src="https://komarev.com/ghpvc/?username=asahisuenaga" alt="profile views" /></a> -->
+<a href="https://github.com/asahisuenaga/asahisuenaga"><img src="https://komarev.com/ghpvc/?username=asahisuenaga" alt="profile views" /></a> 
