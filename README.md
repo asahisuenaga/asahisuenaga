@@ -6,7 +6,7 @@
 </h1>
 
 ```bash
-# ╭────── README v05.27.26 ──────────╮  ╭────── Profile Overview ───────────╮
+# ╭────── README v05.28.26 ──────────╮  ╭────── Profile Overview ───────────╮
 # │                                  │  │  ● University: Michigan State     │
 # │          Hello there!            │  │  ● Tech: HTML, CSS, JS, Swift     │
 # │                                  │  │  ● Expertise: Mobile App, UI/UX   │
@@ -20,7 +20,7 @@
 
 > computer college-progress
 
-# 💻 README: stable v05.27.26 (optimized)
+# 💻 README: stable v05.28.26 (optimized)
 # ==> Fetching academic status from reg.msu.edu...
 
 # ╭──────────────────────────────────────────────────────────────────────────╮
