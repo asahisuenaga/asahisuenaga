@@ -14,7 +14,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout Code Base
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Python Environment
         uses: actions/setup-python@v5
@@ -95,7 +95,7 @@ jobs:
           current_date = datetime.now().strftime("%m.%d.%y")
 
           # Read template
-          with open("README.template.md", "r", encoding="utf-8") as f:
+          with open("README.md", "r", encoding="utf-8") as f:
               template = f.read()
 
           # Base replacements with strict layout padding (Targeting exactly 36 inner characters)
