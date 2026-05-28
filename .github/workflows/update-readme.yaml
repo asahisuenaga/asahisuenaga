@@ -194,7 +194,7 @@ jobs:
 
           current_date = datetime.now().strftime("%m.%d.%y")
 
-          with open("README.template.md", "r", encoding="utf-8") as f:
+          with open("template.md", "r", encoding="utf-8") as f:
               template = f.read().replace("\xa0", " ")
 
           updated_readme = template.replace("{{DATE}}", current_date)
