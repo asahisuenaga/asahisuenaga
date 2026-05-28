@@ -145,7 +145,7 @@ jobs:
           print("Fetching dynamic public activity events stream...")
           activity_lines = []
           try:
-              events_url = f"https://api.github.com/users/{username}/events/public?per_page=15"
+              events_url = f"https://api.github.com/users/{username}/events/public?per_page=20"
               events = requests.get(events_url, headers=headers).json()
               
               if isinstance(events, list):
@@ -155,26 +155,31 @@ jobs:
                           
                       etype = event.get("type")
                       repo_short = event.get("repo", {}).get("name", "").split("/")[-1]
+                      payload = event.get("payload", {})
                       
                       if etype == "PushEvent":
-                          commits = event.get("payload", {}).get("commits", [])
-                          if commits:
-                              msg = commits[0].get("message", "Commit code")
-                              msg = msg.split("\n")[0][:18] + "..." if len(msg) > 18 else msg
-                              activity_lines.append(f"Push: {msg} ({repo_short})")
+                          # Patched to bypass the deprecated payload.commits object limitation
+                          ref_branch = payload.get("ref", "main").replace("refs/heads/", "")
+                          activity_lines.append(f"Push: Updated {ref_branch} ({repo_short})")
                       elif etype == "PullRequestEvent":
-                          action = event.get("payload", {}).get("action", "")
-                          pr_num = event.get("payload", {}).get("number", "")
+                          action = payload.get("action", "updated")
+                          pr_num = payload.get("number", "")
                           activity_lines.append(f"PR #{pr_num} {action} ({repo_short})")
                       elif etype == "IssuesEvent":
-                          action = event.get("payload", {}).get("action", "")
-                          issue_num = event.get("payload", {}).get("issue", {}).get("number", "")
+                          action = payload.get("action", "updated")
+                          issue_num = payload.get("issue", {}).get("number", "")
                           activity_lines.append(f"Issue #{issue_num} {action} ({repo_short})")
                       elif etype == "CreateEvent":
-                          ref_type = event.get("payload", {}).get("ref_type", "repo")
+                          ref_type = payload.get("ref_type", "repo")
                           activity_lines.append(f"Created {ref_type} ({repo_short})")
                       elif etype == "ReleaseEvent":
-                          activity_lines.append(f"Released package ({repo_short})")
+                          action = payload.get("action", "published")
+                          tag_name = payload.get("release", {}).get("tag_name", "pkg")
+                          activity_lines.append(f"Release {tag_name} ({repo_short})")
+                      elif etype == "IssueCommentEvent":
+                          activity_lines.append(f"Commented on Issue ({repo_short})")
+                      elif etype == "WatchEvent":
+                          activity_lines.append(f"Starred repository ({repo_short})")
           except Exception as e:
               print(f"Failed to parse activity stream: {e}")
 
