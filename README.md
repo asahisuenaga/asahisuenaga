@@ -33,14 +33,14 @@
     
  ╭────── Icon ────────────────────────────────╮  ╭────── GitHub Statistics ──────────╮
  │    :GBB######BBBBGPPYJ?!~^:                │  │                                   │
- │    :@@@@@@@@@@@@@@@@@@@@@@@&#G57^          │  │  ● Profile Views: 4,219           │
- │    :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~      │  │  ● Repository Views: 1,845        │
+ │    :@@@@@@@@@@@@@@@@@@@@@@@&#G57^          │  │  ● Profile Views: 160             │
+ │    :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~      │  │  ● Repository Views: 72           │
  │    :@@@@@@@@@@@@&&&#BBGGBBBB#&&@@@@@@#^    │  │  ● Stars Received: 6              │
- │    :@@@@&BPY7~^:               :~J#@@@#    │  │  ● Total Commits: 425             │
+ │    :@@@@&BPY7~^:               :~J#@@@#    │  │  ● Total Commits: 426             │
  │     Y7^:                          ?@@&~    │  │  ● Pull Requests: 7               │
  │                         ::^~7J5GB&&B7      │  │  ● Total Issues: 2                │
- │                 :~7YG#&&@@@@&#GY7^         │  │{{STAT_ROW_ADDITIONS}}│
- │            ^75B&@@@@@&#PJ!^:               │  │{{STAT_ROW_DELETIONS}}│
+ │                 :~7YG#&&@@@@&#GY7^         │  │  ● Lines Added: 0                 │
+ │            ^75B&@@@@@&#PJ!^:               │  │  ● Lines Deleted: 0               │
  │         !G&@@@@@@#Y!:         ^!7~:        │  ╰───────────────────────────────────╯
  │      :5&@@@@@@&Y:           J&@@@@@B!      │  ╭────── Top Languages ──────────────╮
  │     5@@@@@@@@P            ^&@@@@@@@@@#^    │  │                                   │
