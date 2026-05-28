@@ -63,7 +63,7 @@ jobs:
               
           total_stars = sum(repo['stargazers_count'] for repo in repos if not repo['fork'])
 
-          # 3. Languages Aggregator
+          # 3. Languages and Releases Aggregator
           language_counter = Counter()
           total_releases = 0
           for repo in repos:
@@ -194,21 +194,20 @@ jobs:
 
           with open("template.md", "r", encoding="utf-8") as f:
               template = f.read().replace("\xa0", " ")
-              
-          # Comprehensive Date Replacement Strategy (Strictly matches 'v' or 'v' with spaces before a date)
+
+          # Strict regex bounding to keep titles safe from string collision replacements
           updated_readme = template.replace("{{DATE}}", current_date)
-          updated_readme = re.sub(r'\bv([0-9]{2}\.[0-9]{2}\.[0-9]{2})\b', rf'v{current_date}', updated_readme)
+          updated_readme = re.sub(r'\bv([0-9]{2}\.[0-9]{2}\.[0-9]{2})\b', current_date, updated_readme)
           updated_readme = re.sub(r'\bINFO v([0-9]{2}\.[0-9]{2}\.[0-9]{2})\b', f"INFO v{current_date}", updated_readme)
 
-          # Mapped to match exactly your text layout frame structural widths
+          # Updated rows mappings to fit your structured specifications
           stats_payload = [
               ("STAT_ROW_VIEWS", "Profile Views", profile_views),
               ("STAT_ROW_REPO_VIEWS", "Repository Views", repo_views),
               ("STAT_ROW_STARS", "Stars Received", total_stars),
-              ("STAT_ROW_COMMITS", "Total Commits", commits_lifetime),
+              ("STAT_ROW_COMMITS", "Total Commits", f"{commits_lifetime:,}"),
               ("STAT_ROW_COMMITS_YTD", "Commits (YTD)", f"{commits_ytd:,}"),
-              ("STAT_ROW_ISSUES_PRS", "Issues / PRs", f"{all_time_issues:,} / {total_prs:,}"),
-              ("STAT_ROW_RELEASES", "Total Releases", f"{total_releases:,}"),
+              ("STAT_ROW_CONTRIBUTIONS", "Contributions", f"{all_time_issues:,} Issues / {total_prs:,} PRs / {total_releases:,} Releases"),
           ]
 
           for placeholder, label, value in stats_payload:
