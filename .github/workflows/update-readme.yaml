@@ -94,9 +94,9 @@ jobs:
 
           current_date = datetime.now().strftime("%m.%d.%y")
 
-          # Read template
+          # Read template and normalize hidden non-breaking web spaces into standard layout spaces
           with open("README.template.md", "r", encoding="utf-8") as f:
-              template = f.read()
+              template = f.read().replace("\xa0", " ")
 
           # Base replacements (Top header boxes)
           updated_readme = template.replace("{{DATE}}", current_date)
@@ -118,7 +118,7 @@ jobs:
               left_side = f"  ● {label}: {value}"
               needed_spaces = 35 - len(left_side)
               line_built = f"{left_side}{' ' * needed_spaces}"
-              updated_readme = updated_readme.replace(f"{{{{{placeholder}}}}}", line_built)
+              updated_readme = updated_readme.replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
 
           # Process and inject Language rows safely
           for i, (lang_name, bytes_count) in enumerate(top_languages, start=1):
@@ -136,7 +136,7 @@ jobs:
                   needed_spaces = 35 - len(left_side)
                   line_built = f"{left_side}{' ' * needed_spaces}"
 
-              updated_readme = updated_readme.replace(f"{{{{{placeholder}}}}}", line_built)
+              updated_readme = updated_readme.replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
 
           with open("README.md", "w", encoding="utf-8") as f:
               f.write(updated_readme)
