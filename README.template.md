@@ -62,8 +62,3 @@
 ──────────────────────────────────────────────────────────────────────────────
 ? for shortcuts                               Compiling thoughts... (100% CPU)                
 ```
-
-![](https://raw.githubusercontent.com/asahisuenaga/github-stats/output/generated/overview.svg)
-![](https://raw.githubusercontent.com/asahisuenaga/github-stats/output/generated/languages.svg)
-
-<a href="https://github.com/asahisuenaga/asahisuenaga"><img src="https://komarev.com/ghpvc/?username=asahisuenaga" alt="profile views" /></a>
