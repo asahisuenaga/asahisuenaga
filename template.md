@@ -36,8 +36,8 @@
  │    :@@@@@@@@@@@@@@@@@@@@@@@&#G57^          │  │{{STAT_ROW_VIEWS}}│
  │    :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~      │  │{{STAT_ROW_REPO_VIEWS}}│
  │    :@@@@@@@@@@@@&&&#BBGGBBBB#&&@@@@@@#^    │  │{{STAT_ROW_STARS}}│
- │    :@@@@&BPY7~^:               :~J#@@@#    │  │{{STAT_ROW_COMMITS}}|
- │     Y7^:                          ?@@&~    │  │{{STAT_ROW_COMMITS_YTD}}|
+ │    :@@@@&BPY7~^:               :~J#@@@#    │  │{{STAT_ROW_COMMITS}}│
+ │     Y7^:                          ?@@&~    │  │{{STAT_ROW_COMMITS_YTD}}│
  │                         ::^~7J5GB&&B7      │  │{{STAT_ROW_CONTRIBUTIONS}}│
  │                 :~7YG#&&@@@@&#GY7^         │  ╰───────────────────────────────────╯
  │            ^75B&@@@@@&#PJ!^:               │  ╭────── Top Languages ──────────────╮
