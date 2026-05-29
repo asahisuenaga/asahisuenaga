@@ -158,26 +158,31 @@ jobs:
                       
                       if etype == "PushEvent":
                           ref_branch = payload.get("ref", "main").replace("refs/heads/", "")
-                          activity_lines.append(f"Push: Updated {ref_branch} ({repo_short})")
+                          activity_lines.append(f"Pushed {ref_branch} in {repo_short}")
                       elif etype == "PullRequestEvent":
                           action = payload.get("action", "updated")
                           pr_num = payload.get("number", "")
-                          activity_lines.append(f"PR #{pr_num} {action} ({repo_short})")
+                          if action == "closed" and payload.get("pull_request", {}).get("merged") is True:
+                              activity_lines.append(f"Merged PR #{pr_num} in {repo_short}")
+                          elif action == "closed":
+                              activity_lines.append(f"Closed PR #{pr_num} in {repo_short}")
+                          else:
+                              activity_lines.append(f"{action.capitalize()} PR #{pr_num} in {repo_short}")
                       elif etype == "IssuesEvent":
                           action = payload.get("action", "updated")
                           issue_num = payload.get("issue", {}).get("number", "")
-                          activity_lines.append(f"Issue #{issue_num} {action} ({repo_short})")
+                          activity_lines.append(f"{action.capitalize()} Issue #{issue_num} in {repo_short}")
                       elif etype == "CreateEvent":
                           ref_type = payload.get("ref_type", "repo")
-                          activity_lines.append(f"Created {ref_type} ({repo_short})")
+                          activity_lines.append(f"Create {ref_type} in {repo_short}")
                       elif etype == "ReleaseEvent":
                           action = payload.get("action", "published")
                           tag_name = payload.get("release", {}).get("tag_name", "pkg")
-                          activity_lines.append(f"Release {tag_name} ({repo_short})")
+                          activity_lines.append(f"Release {tag_name} in {repo_short}")
                       elif etype == "IssueCommentEvent":
-                          activity_lines.append(f"Commented on Issue ({repo_short})")
+                          activity_lines.append(f"Commented on Issue in {repo_short}")
                       elif etype == "WatchEvent":
-                          activity_lines.append(f"Starred repository ({repo_short})")
+                          activity_lines.append(f"Starred {repo_short}")
           except Exception as e:
               print(f"Failed to parse activity stream: {e}")
 
@@ -212,7 +217,7 @@ jobs:
 
           for placeholder, label, value in stats_payload:
               left_side = f"  ● {label}: {value}"
-              needed_spaces = 35 - len(left_side)
+              needed_spaces = 37 - len(left_side)
               line_built = f"{left_side}{' ' * needed_spaces}"
               updated_readme = updated_readme.replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
 
@@ -258,7 +263,7 @@ jobs:
                   bar_built = make_progress_bar(pct)
                   
                   left_side = f"  █ {name_fixed}  {bar_built} {pct_str}"
-                  needed_spaces = 35 - len(left_side)
+                  needed_spaces = 37 - len(left_side)
                   line_built = f"{left_side}{' ' * needed_spaces}"
 
               updated_readme = updated_readme.replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
@@ -269,7 +274,7 @@ jobs:
               left_side = f"  » {act_text}"
               if len(left_side) > 33:
                   left_side = left_side[:30] + "..."
-              needed_spaces = 35 - len(left_side)
+              needed_spaces = 37 - len(left_side)
               line_built = f"{left_side}{' ' * needed_spaces}"
               updated_readme = updated_readme.replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
 
