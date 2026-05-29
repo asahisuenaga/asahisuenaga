@@ -254,7 +254,7 @@ jobs:
           for i, (lang_name, bytes_count) in enumerate(top_languages, start=1):
               placeholder = f"LANG_ROW_{i}"
               if lang_name == "None":
-                  line_built = "  █         ░░░░░░░░░░░░░░░ 0%     "
+                  line_built = "  █         ░░░░░░░░░░░░░░░ 0%       "
               else:
                   short_name = nameMap.get(lang_name, lang_name)
                   pct = (bytes_count / total_bytes * 100) if total_bytes > 0 else 0
