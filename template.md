@@ -32,7 +32,7 @@
 > asahi github-stats
     
 ╭────── Icon ────────────────────────────────╮  ╭────── Github Statistics ────────────╮
-│    :GBB######BBBBGPPYJ?!~^:                │  │                                    │
+│    :GBB######BBBBGPPYJ?!~^:                │  │                                     │
 │    :@@@@@@@@@@@@@@@@@@@@@@@&#G57^          │  │{{STAT_ROW_VIEWS}}│
 │    :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~      │  │{{STAT_ROW_REPO_VIEWS}}│
 │    :@@@@@@@@@@@@&&&#BBGGBBBB#&&@@@@@@#^    │  │{{STAT_ROW_STARS}}│
