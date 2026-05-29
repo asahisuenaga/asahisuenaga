@@ -217,7 +217,7 @@ jobs:
 
           for placeholder, label, value in stats_payload:
               left_side = f"  ● {label}: {value}"
-              needed_spaces = 37 - len(left_side)
+              needed_spaces = 38 - len(left_side)
               line_built = f"{left_side}{' ' * needed_spaces}"
               updated_readme = updated_readme.replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
 
@@ -254,7 +254,7 @@ jobs:
           for i, (lang_name, bytes_count) in enumerate(top_languages, start=1):
               placeholder = f"LANG_ROW_{i}"
               if lang_name == "None":
-                  line_built = "  █         ░░░░░░░░░░░░░░░ 0%       "
+                  line_built = "  █         ░░░░░░░░░░░░░░░ 0%        "
               else:
                   short_name = nameMap.get(lang_name, lang_name)
                   pct = (bytes_count / total_bytes * 100) if total_bytes > 0 else 0
@@ -263,7 +263,7 @@ jobs:
                   bar_built = make_progress_bar(pct)
                   
                   left_side = f"  █ {name_fixed}  {bar_built} {pct_str}"
-                  needed_spaces = 37 - len(left_side)
+                  needed_spaces = 38 - len(left_side)
                   line_built = f"{left_side}{' ' * needed_spaces}"
 
               updated_readme = updated_readme.replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
@@ -274,7 +274,7 @@ jobs:
               left_side = f"  » {act_text}"
               if len(left_side) > 33:
                   left_side = left_side[:30] + "..."
-              needed_spaces = 37 - len(left_side)
+              needed_spaces = 38 - len(left_side)
               line_built = f"{left_side}{' ' * needed_spaces}"
               updated_readme = updated_readme.replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
 
