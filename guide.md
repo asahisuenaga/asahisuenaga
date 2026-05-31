@@ -1,10 +1,12 @@
-# How-To Guide: Personalize the README.md
+# How to Make Your Own README.md
 
 **This repository is [Asahi](https://github.com/asahisuenaga)'s README designed to generate an automated, terminal-styled GitHub Profile README.**
 
 ## Installation
 
-1. Click [here](https://github.com/login?return_to=%2Fasahisuenaga%2Fasahisuenaga) to copy it directly into your own GitHub account. Make sure your new repository is named exactly after your GitHub username (e.g., `yourusername/yourusername`).
+Use the following guide to set up your repository, configure your access tokens, and trigger the initial build.
+
+1. Click [here](https://github.com/asahisuenaga/asahisuenaga/fork) to copy it directly into your own GitHub account. Make sure your new repository is named exactly after your GitHub username (e.g., `yourusername/yourusername`).
 
 2. Because the README tracks real-time metrics (like year-to-date commits, combined issue counts, and private contributions), the default `GITHUB_TOKEN` isn't enough. Generate a Classic PAT or Fine-Grained PAT with the `repo` and `read:user` scopes enabled.
 
@@ -16,48 +18,12 @@
 
 ---
 
-## Tools and Inspirations
+## Template
 
-* **Data:** Initial inspiration for gathering live platform statistics and arranging them in padded grid blocks came from [rahul-jha98/github-stats-transparent](https://github.com/rahul-jha98/github-stats-transparent).
+The framework uses `template.md` file in the root directory, which the build script populates by updating (`{{ ... }}`) tags on every run. To customize it, follow these steps:
 
-* **Inspiration:** Interface and layout elements were heavily inspired by [Andrew6rant's Profile Layout](https://github.com/Andrew6rant) (*Note: Roughly half of this layout's primary framework was independently built before incorporating ideas from this repository*).
+1. Replace all instances of `asahi` with `your-name` and `asahisuenaga` with `your-full-name`.
 
-* **ASCII:** The retro-terminal logo on the left block was generated using the [Text-Image ASCII Converter](https://www.text-image.com/convert/ascii.html). The extra contrast filter was used and all `.` from the output were manually replaced with ` `.
+2. Generate a custom title with [README Typing SVG](https://readme-typing-svg.herokuapp.com).
 
-* **Persistent Profile Counter:** Dynamic lifetime profile traffic metrics are pulled live using the [Anton Komarev Profile Views Counter](https://github.com/antonkomarev/github-profile-views-counter). The Python backend scrapes the numbers from this SVG badge directly to keep the count continuous over a rolling 14-day limit.
-
----
-
-## Layout Template Blueprint
-
-The framework relies on a backend template file named `template.md` located in the root directory. The build script updates the placeholders wrapped in double curly braces (`{{ ... }}`) on every execution pass. 
-
-If you wish to alter your text alignment frames, modify the blueprint grid directly within your `template.md`:
-
-```text
- ╭────── Icon ────────────────────────────────╮  ╭────── Github Statistics ──────────╮
- │                                            │  │                                   │
- │    [Your Custom ASCII Art Goes Here]       │  │{{STAT_ROW_VIEWS}}│
- │                                            │  │{{STAT_ROW_REPO_VIEWS}}│
- │                                            │  │{{STAT_ROW_STARS}}│
- │                                            │  │{{STAT_ROW_COMMITS}}│
- │                                            │  │{{STAT_ROW_COMMITS_YTD}}│
- │                                            │  │{{STAT_ROW_ISSUES_PRS}}│
- │                                            │  │{{STAT_ROW_RELEASES}}│
- ╰────────────────────────────────────────────╯  ╰───────────────────────────────────╯
-                                                 ╭────── Top Languages ──────────────╮
-                                                 │                                   │
-                                                 │{{LANG_ROW_1}}│
-                                                 │{{LANG_ROW_2}}│
-                                                 │{{LANG_ROW_3}}│
-                                                 │{{LANG_ROW_4}}│
-                                                 │{{LANG_ROW_5}}│
-                                                 ╰───────────────────────────────────╯
-                                                 ╭────── Recent Activity ────────────╮
-                                                 │                                   │
-                                                 │{{REC_ACT_1}}│
-                                                 │{{REC_ACT_2}}│
-                                                 │{{REC_ACT_3}}│
-                                                 │{{REC_ACT_4}}│
-                                                 │{{REC_ACT_5}}│
-                                                 ╰───────────────────────────────────╯
+3. Use the [Text-Image ASCII Converter](https://www.text-image.com/convert/ascii.html) to build a retro-terminal logo. For the best look, apply the extra contrast filter and manually swap all periods with spaces.
