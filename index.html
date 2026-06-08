@@ -2503,21 +2503,6 @@
             audioPool[file].play().catch(() => { });
         }
 
-        // Unlock audio on iOS — create silent AudioContext from user gesture
-        document.addEventListener('touchstart', () => {
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                ctx.resume();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                gain.gain.value = 0;
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start(0);
-                osc.stop(0.01);
-            } catch {}
-        }, { once: true });
-
         function playNotesClickSound() {
             playSound('/sounds/notes.wav');
         }
@@ -4506,14 +4491,28 @@
                 let currentY = 0;
                 let isDragging = false;
 
-                const handleMobileDragStart = (e) => {
-                    if (window.innerWidth < 800) {
-                        currentY = 0;
-                        startY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
-                        isDragging = true;
-                        notesModal.style.setProperty('transition', 'none', 'important');
-                        e.stopPropagation();
+                function findScrollableAncestor(el, root) {
+                    while (el && el !== root) {
+                        const style = getComputedStyle(el);
+                        if ((style.overflowY === 'auto' || style.overflowY === 'scroll') && el.scrollHeight > el.clientHeight) {
+                            return el;
+                        }
+                        el = el.parentElement;
                     }
+                    return null;
+                }
+
+                const handleMobileDragStart = (e) => {
+                    if (window.innerWidth >= 800) return;
+
+                    const scrollable = findScrollableAncestor(e.target, notesModal);
+                    if (scrollable && scrollable.scrollTop > 0) return;
+
+                    currentY = 0;
+                    startY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+                    isDragging = true;
+                    notesModal.style.setProperty('transition', 'none', 'important');
+                    e.stopPropagation();
                 };
 
                 const handleMobileDragMove = (e) => {
@@ -4643,22 +4642,17 @@
 
                 if (window.innerWidth >= 800) {
                     notesModal.addEventListener('mousedown', handleDragStart);
+                    notesModal.addEventListener('touchstart', handleDragStart, { passive: true });
                     window.addEventListener('mousemove', handleDragMove);
+                    window.addEventListener('touchmove', handleDragMove, { passive: false });
                     window.addEventListener('mouseup', handleDragEnd);
+                    window.addEventListener('touchend', handleDragEnd);
                 }
-                notesModal.addEventListener('touchstart', handleDragStart, { passive: true });
-                window.addEventListener('touchmove', handleDragMove, { passive: false });
-                window.addEventListener('touchend', handleDragEnd);
 
-                const handle = document.getElementById('notes-drawer-handle');
-                if (handle) {
-                    handle.addEventListener('mousedown', handleMobileDragStart);
-                    handle.addEventListener('touchstart', handleMobileDragStart, { passive: true });
-                    window.addEventListener('mousemove', handleMobileDragMove);
-                    window.addEventListener('touchmove', handleMobileDragMove, { passive: false });
-                    window.addEventListener('mouseup', handleMobileDragEnd);
-                    window.addEventListener('touchend', handleMobileDragEnd);
-                }
+                // Mobile: drag-to-close on the whole modal
+                notesModal.addEventListener('touchstart', handleMobileDragStart, { passive: true });
+                window.addEventListener('touchmove', handleMobileDragMove, { passive: false });
+                window.addEventListener('touchend', handleMobileDragEnd);
 
                 document.querySelectorAll('.mac-min').forEach(btn => {
                     btn.addEventListener('click', minimizeNotes);
