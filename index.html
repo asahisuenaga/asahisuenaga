@@ -1552,6 +1552,15 @@
                 cursor: pointer;
             }
 
+            .notes-drawer-handle::after {
+                content: "";
+                position: absolute;
+                top: -20px;
+                bottom: -20px;
+                left: -200px;
+                right: -200px;
+            }
+
             @media (prefers-color-scheme: dark) {
                 .notes-drawer-handle {
                     background: rgba(255, 255, 255, 0.3);
