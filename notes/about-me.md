@@ -5,12 +5,14 @@ date: 2026-04-19T14:20
 permalink: /notes/about-me
 pinned: true
 ---
-<p>Growing up, the computer was my playground. I started with flash games and gradually built everything from browser extensions and Framer sites to link-in-bio platforms. Along the way, I delved into human bias and user psychology in software. Fast forward to today, I’m persuing a computer science degree, chasing the euphoric feeling of building something that addresses real-world problems; the same curiosity that first ignited my interest in software.</p>
+<p>Growing up, the computer was my playground. I began with flash games and gradually expanded my skills to create everything from browser extensions and Framer sites to link-in-bio platforms. Along the way, I delved into human biases and user psychology within software. Fast forward to today, I’m pursuing a computer science degree, driven by the same exhilarating feeling of building something that addresses real-world problems. My pursuit is fueled by the same curiosity that first sparked my interest in software.</p>
 
 <h3>Present (2)</h3>
 
 <ul>
     <li>Working towards a Bachelor's degree in Computer Science from Michigan State University.</li>
+    <li>Secretary for the Japanese Student Association (JSA) at MSU.</li>
+    <li>Doing Outreach & Finance for Spartahack 12.</li>
     <li>Learning Swift to develop native iOS apps.</li>
 </ul>
 
