@@ -2479,14 +2479,35 @@
         }
 
         let lastSoundPlayedAt = 0;
+        const audioPool = {};
+
         function playSound(file) {
             const now = Date.now();
-            if (now - lastSoundPlayedAt < 150) return; // Increased debounce to prevent double-audio
+            if (now - lastSoundPlayedAt < 150) return;
             lastSoundPlayedAt = now;
 
-            const audio = new Audio(file);
-            audio.play().catch(() => { });
+            if (!audioPool[file]) {
+                audioPool[file] = new Audio(file);
+            } else {
+                audioPool[file].currentTime = 0;
+            }
+            audioPool[file].play().catch(() => { });
         }
+
+        // Unlock audio on iOS — create silent AudioContext from user gesture
+        document.addEventListener('touchstart', () => {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                ctx.resume();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                gain.gain.value = 0;
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(0);
+                osc.stop(0.01);
+            } catch {}
+        }, { once: true });
 
         function playNotesClickSound() {
             playSound('/sounds/notes.wav');
@@ -2585,13 +2606,27 @@
         document.addEventListener('DOMContentLoaded', async () => {
             // ClickSpark Effect
             (function() {
+                const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+                // Sound click handler — always registered on all devices
+                const handleClickSound = (e) => {
+                    const notesContainer = document.getElementById('notes-modal');
+                    const shrineContainer = document.getElementById('shrine');
+                    const targetInNotes = notesContainer && notesContainer.contains(e.target);
+                    const targetInShrine = shrineContainer && shrineContainer.contains(e.target);
+                    if (!targetInNotes && !targetInShrine) {
+                        playSound('/sounds/basic.wav');
+                    }
+                };
+                window.addEventListener('click', handleClickSound);
+
+                // Spark animation — only on non-touch devices
+                if (isTouchDevice) return;
+
                 const canvas = document.getElementById('click-spark-canvas');
                 if (!canvas) return;
                 const ctx = canvas.getContext('2d');
                 if (!ctx) return;
-
-                const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-                if (isTouchDevice) return;
 
                 const sparks = [];
                 const sparkSize = 6;
@@ -2646,17 +2681,11 @@
                     }
                 };
 
-                const handleClick = (e) => {
+                const handleClickSpark = (e) => {
                     const notesContainer = document.getElementById('notes-modal');
                     const shrineContainer = document.getElementById('shrine');
                     const targetInNotes = notesContainer && notesContainer.contains(e.target);
                     const targetInShrine = shrineContainer && shrineContainer.contains(e.target);
-                    if (targetInNotes) {
-                        // playSound('/sounds/notes.wav');
-                    } else if (!targetInShrine) {
-                        playSound('/sounds/basic.wav');
-                    }
-
                     if (targetInNotes || targetInShrine) return;
 
                     const now = performance.now();
@@ -2673,7 +2702,7 @@
                     }
                     animationId = requestAnimationFrame(draw);
                 };
-                window.addEventListener('click', handleClick);
+                window.addEventListener('click', handleClickSpark);
             })();
 
             const bookmark = document.querySelector('.bookmark');
@@ -4430,6 +4459,10 @@
                 });
 
                 const minimizeNotes = (e) => {
+                    if (window.innerWidth < 800) {
+                        closeNotes(e);
+                        return;
+                    }
                     document.body.style.overflow = '';
                     if (e && e.stopPropagation) e.stopPropagation();
                     wasFullscreenBeforeMinimize = notesModal.classList.contains('fullscreen');
@@ -4465,10 +4498,13 @@
                 let isDragging = false;
 
                 const handleMobileDragStart = (e) => {
-                    if (window.innerWidth >= 800) return;
-                    startY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
-                    isDragging = true;
-                    notesModal.style.setProperty('transition', 'none', 'important');
+                    if (window.innerWidth < 800) {
+                        currentY = 0;
+                        startY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+                        isDragging = true;
+                        notesModal.style.setProperty('transition', 'none', 'important');
+                        e.stopPropagation();
+                    }
                 };
 
                 const handleMobileDragMove = (e) => {
@@ -4476,6 +4512,7 @@
                     currentY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
                     const diff = currentY - startY;
                     if (diff > 0) {
+                        e.preventDefault();
                         notesModal.style.setProperty('transform', `translateY(${diff}px)`, 'important');
                     }
                 };
@@ -4489,7 +4526,8 @@
                         closeNotes();
                     } else {
                         notesModal.style.setProperty('transform', 'translateY(0)', 'important');
-                        setTimeout(() => notesModal.style.removeProperty('transform'), 300);
+                        clearTimeout(window._mobileDragReset);
+                        window._mobileDragReset = setTimeout(() => notesModal.style.removeProperty('transform'), 300);
                     }
                 };
 
@@ -4594,11 +4632,13 @@
                     }
                 });
 
-                notesModal.addEventListener('mousedown', handleDragStart);
+                if (window.innerWidth >= 800) {
+                    notesModal.addEventListener('mousedown', handleDragStart);
+                    window.addEventListener('mousemove', handleDragMove);
+                    window.addEventListener('mouseup', handleDragEnd);
+                }
                 notesModal.addEventListener('touchstart', handleDragStart, { passive: true });
-                window.addEventListener('mousemove', handleDragMove);
                 window.addEventListener('touchmove', handleDragMove, { passive: false });
-                window.addEventListener('mouseup', handleDragEnd);
                 window.addEventListener('touchend', handleDragEnd);
 
                 const handle = document.getElementById('notes-drawer-handle');
