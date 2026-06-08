@@ -4503,7 +4503,10 @@
                 }
 
                 const handleMobileDragStart = (e) => {
-                    if (window.innerWidth >= 800) return;
+                    const isDesktop = window.innerWidth >= 800;
+
+                    // On desktop, let header drags go to handleDragStart for repositioning
+                    if (isDesktop && e.target.closest('.notes-header')) return;
 
                     const scrollable = findScrollableAncestor(e.target, notesModal);
                     if (scrollable && scrollable.scrollTop > 0) return;
@@ -4649,9 +4652,12 @@
                     window.addEventListener('touchend', handleDragEnd);
                 }
 
-                // Mobile: drag-to-close on the whole modal
+                // Drag-to-close on any device
+                notesModal.addEventListener('mousedown', handleMobileDragStart);
                 notesModal.addEventListener('touchstart', handleMobileDragStart, { passive: true });
+                window.addEventListener('mousemove', handleMobileDragMove);
                 window.addEventListener('touchmove', handleMobileDragMove, { passive: false });
+                window.addEventListener('mouseup', handleMobileDragEnd);
                 window.addEventListener('touchend', handleMobileDragEnd);
 
                 document.querySelectorAll('.mac-min').forEach(btn => {
