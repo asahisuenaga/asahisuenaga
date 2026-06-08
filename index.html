@@ -94,6 +94,18 @@
             -webkit-overflow-scrolling: touch;
         }
 
+        .lang-switching .main-content, 
+        .lang-switching .footer {
+            color: transparent !important;
+            text-shadow: 0 0 8px currentColor;
+            transition: color 0.1s ease, text-shadow 0.1s ease;
+        }
+
+        .lang-switching .main-content svg, .lang-switching .footer svg {
+            filter: none !important;
+            opacity: 1 !important;
+        }
+
         .main-content.reveal-corners {
             clip-path: inset(0 0 60px 0 round 0 0 3rem 3rem);
         }
@@ -110,7 +122,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: var(--gap);
+            gap: calc(var(--gap)*2);
             transform: translateY(100%);
             transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -1882,7 +1894,7 @@
             </div>
 
             <div class="header">
-                <h1 class="name name-link" id="name" role="button" style="cursor: pointer;">Asahi Suenaga</h1>
+                <h1 class="name name-link" id="name" role="button" style="cursor: cell;">Asahi Suenaga</h1>
                 <a href="https://maps.google.com/?q=East+Lansing,+MI" class="footer-link location-link" id="location"
                     target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;">
                     <span>East Lansing, MI</span>
@@ -2250,50 +2262,67 @@
                     fetch('/locales/ja.json').then(r => r.json())
                 ]);
                 window.translations = { en, ja };
-                applyLang(currentLang);
+                applyLang(currentLang, false);
             }
 
-            function applyLang(lang) {
+            function applyLang(lang, animate = true) {
                 const d = (window.translations || {})[lang];
                 if (!d) return;
-                document.documentElement.lang = lang;
-                document.title = d.site.pageTitle;
-                if (nameEl) nameEl.innerText = d.site.title;
-                const banner = document.getElementById('banner');
-                if (banner) banner.innerText = d.site.banner;
-                const locNode = document.getElementById('location');
-                if (locNode) { const s = locNode.querySelector('span'); if (s) s.innerText = d.location.text; }
-                const tooltipLoc = document.getElementById('tooltip-location');
-                if (tooltipLoc) {
-                    const t = tooltipLoc.querySelector('.tooltip-title');
-                    const s = tooltipLoc.querySelector('.tooltip-subtitle');
-                    if (t) t.innerText = d.location.tooltipTitle;
-                    if (s) s.innerText = d.location.tooltipSub;
+
+                const doSwap = () => {
+                    document.documentElement.lang = lang;
+                    document.title = d.site.pageTitle;
+                    if (nameEl) nameEl.innerText = d.site.title;
+                    const banner = document.getElementById('banner');
+                    if (banner) banner.innerText = d.site.banner;
+                    const locNode = document.getElementById('location');
+                    if (locNode) { const s = locNode.querySelector('span'); if (s) s.innerText = d.location.text; }
+                    const tooltipLoc = document.getElementById('tooltip-location');
+                    if (tooltipLoc) {
+                        const t = tooltipLoc.querySelector('.tooltip-title');
+                        const s = tooltipLoc.querySelector('.tooltip-subtitle');
+                        if (t) t.innerText = d.location.tooltipTitle;
+                        if (s) s.innerText = d.location.tooltipSub;
+                    }
+                    const b = document.getElementById('bio');
+                    if (b) b.innerHTML = d.bio.bio;
+                    const ft = document.getElementById('footer-twitter');
+                    if (ft) ft.innerText = d.footer.twitter;
+                    const fb = document.getElementById('footer-bmc');
+                    if (fb) fb.innerText = d.footer.bmc;
+                    const fg = document.getElementById('footer-github');
+                    if (fg) fg.innerText = d.footer.github;
+                    const ttT = document.querySelector('#tooltip-twitter .tooltip-title');
+                    if (ttT) ttT.innerText = d.tooltips.twitterTitle;
+                    const ttS = document.querySelector('#tooltip-twitter .tooltip-subtitle');
+                    if (ttS) ttS.innerText = d.tooltips.twitterSub;
+                    const btT = document.querySelector('#tooltip-bmc .tooltip-title');
+                    if (btT) btT.innerText = d.tooltips.bmcTitle;
+                    const btS = document.querySelector('#tooltip-bmc .tooltip-subtitle');
+                    if (btS) btS.innerText = d.tooltips.bmcSub;
+                    const ymT = document.querySelector('#tooltip-music .tooltip-title');
+                    if (ymT) ymT.innerText = d.tooltips.musicTitle;
+                    const ymS = document.querySelector('#tooltip-music .tooltip-subtitle');
+                    if (ymS) ymS.innerText = d.tooltips.musicSub;
+                    const nameTooltipTitle = document.getElementById('tooltip-name-title');
+                    if (nameTooltipTitle) nameTooltipTitle.innerText = d.tooltips.nameTitle;
+                    currentLang = lang;
+                    if (window.applyNotesLang) window.applyNotesLang(lang);
+                };
+
+                if (animate) {
+                    document.body.classList.add('lang-switching');
+                    requestAnimationFrame(() => {
+                        setTimeout(() => {
+                            doSwap();
+                            requestAnimationFrame(() => {
+                                document.body.classList.remove('lang-switching');
+                            });
+                        }, 150);
+                    });
+                } else {
+                    doSwap();
                 }
-                const b = document.getElementById('bio');
-                if (b) b.innerHTML = d.bio.bio;
-                const ft = document.getElementById('footer-twitter');
-                if (ft) ft.innerText = d.footer.twitter;
-                const fb = document.getElementById('footer-bmc');
-                if (fb) fb.innerText = d.footer.bmc;
-                const fg = document.getElementById('footer-github');
-                if (fg) fg.innerText = d.footer.github;
-                const ttT = document.querySelector('#tooltip-twitter .tooltip-title');
-                if (ttT) ttT.innerText = d.tooltips.twitterTitle;
-                const ttS = document.querySelector('#tooltip-twitter .tooltip-subtitle');
-                if (ttS) ttS.innerText = d.tooltips.twitterSub;
-                const btT = document.querySelector('#tooltip-bmc .tooltip-title');
-                if (btT) btT.innerText = d.tooltips.bmcTitle;
-                const btS = document.querySelector('#tooltip-bmc .tooltip-subtitle');
-                if (btS) btS.innerText = d.tooltips.bmcSub;
-                const ymT = document.querySelector('#tooltip-music .tooltip-title');
-                if (ymT) ymT.innerText = d.tooltips.musicTitle;
-                const ymS = document.querySelector('#tooltip-music .tooltip-subtitle');
-                if (ymS) ymS.innerText = d.tooltips.musicSub;
-                const nameTooltipTitle = document.getElementById('tooltip-name-title');
-                if (nameTooltipTitle) nameTooltipTitle.innerText = d.tooltips.nameTitle;
-                currentLang = lang;
-                if (window.applyNotesLang) window.applyNotesLang(lang);
             }
 
             loadTranslations();
@@ -2489,6 +2518,8 @@
         }, true);
 
         document.addEventListener('DOMContentLoaded', () => {
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
             const cursorTooltip = document.getElementById('cursor-tooltip');
             const tooltips = {
                 'name-link': document.getElementById('tooltip-name'),
@@ -2515,34 +2546,38 @@
 
             const links = document.querySelectorAll('.footer-link, .location-link, .name-link, .music-link');
 
-            links.forEach(link => {
-                link.addEventListener('mouseenter', (e) => {
-                    let type;
-                    if (link.classList.contains('twitter-link')) type = 'twitter-link';
-                    else if (link.classList.contains('bmc-link')) type = 'bmc-link';
-                    else if (link.classList.contains('github-link')) type = 'github-link';
-                    else if (link.classList.contains('location-link')) type = 'location-link';
-                    else if (link.classList.contains('name-link')) type = 'name-link';
-                    else if (link.classList.contains('music-link')) type = 'music-link';
+            if (isTouchDevice) {
+                links.forEach(link => { link.style.cursor = 'default'; });
+            } else {
+                links.forEach(link => {
+                    link.addEventListener('mouseenter', (e) => {
+                        let type;
+                        if (link.classList.contains('twitter-link')) type = 'twitter-link';
+                        else if (link.classList.contains('bmc-link')) type = 'bmc-link';
+                        else if (link.classList.contains('github-link')) type = 'github-link';
+                        else if (link.classList.contains('location-link')) type = 'location-link';
+                        else if (link.classList.contains('name-link')) type = 'name-link';
+                        else if (link.classList.contains('music-link')) type = 'music-link';
 
-                    if (type && tooltips[type]) {
-                        Object.values(tooltips).forEach(t => t.classList.remove('active'));
-                        tooltips[type].classList.add('active');
+                        if (type && tooltips[type]) {
+                            Object.values(tooltips).forEach(t => t.classList.remove('active'));
+                            tooltips[type].classList.add('active');
 
-                        cursorTooltip.classList.add('visible');
+                            cursorTooltip.classList.add('visible');
 
-                        void cursorTooltip.offsetWidth;
+                            void cursorTooltip.offsetWidth;
 
-                        updateTooltipPosition(e);
-                    }
+                            updateTooltipPosition(e);
+                        }
+                    });
+
+                    link.addEventListener('mousemove', updateTooltipPosition);
+
+                    link.addEventListener('mouseleave', () => {
+                        cursorTooltip.classList.remove('visible');
+                    });
                 });
-
-                link.addEventListener('mousemove', updateTooltipPosition);
-
-                link.addEventListener('mouseleave', () => {
-                    cursorTooltip.classList.remove('visible');
-                });
-            });
+            }
 
             initGithubTooltip();
         });
@@ -2554,6 +2589,9 @@
                 if (!canvas) return;
                 const ctx = canvas.getContext('2d');
                 if (!ctx) return;
+
+                const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                if (isTouchDevice) return;
 
                 const sparks = [];
                 const sparkSize = 6;
