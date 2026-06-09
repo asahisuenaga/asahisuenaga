@@ -1960,9 +1960,9 @@
         <!-- SHARED WINDOW CONTROLS -->
         <div class="mac-stoplights" id="shared-stoplights"
             style="position: absolute; top: 20px; left: 16px; z-index: 100; transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1); margin-top: 6px; display: flex; gap: 6px; align-items: center;">
-            <button class="mac-close"></button>
-            <button class="mac-min"></button>
-            <button class="mac-max"></button>
+            <button class="mac-close" aria-label="Close"></button>
+            <button class="mac-min" aria-label="Minimize"></button>
+            <button class="mac-max" aria-lablel="Maximize"></button>
         </div>
 
         <!-- FOLDERS PANEL -->
@@ -2087,7 +2087,7 @@
                             src="icons/underline.svg">
                     </button>
                     <button class="notes-toolbar-btn" data-command="strikeThrough" title="Strikethrough">
-                        <img
+                        <img alt="Strikethrough"
                             src="icons/strikethrough.svg">
                     </button>
                     <button class="notes-toolbar-btn" aria-label="Monostyle" id="notes-mono-btn" title="Monostyle">

@@ -10,7 +10,7 @@
     "tooltipSub": "Googleマップで表示"
   },
   "bio": {
-    "bio": "<a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" style=\"color: var(--subtle); text-decoration: none; transition: color 0.2s;\" onmouseover=\"this.style.color='#2891df'\" onmouseout=\"this.style.color='var(--subtle)'\">ミシガン州立大学</a>でコンピュータサイエンスを専攻しており、物事がどのように機能するのかに好奇心を持っています。ユーザーインターフェースデザインにも少し手を広げており、空き時間にはSwiftを学んでいます。"
+    "bio": "<a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" style=\"color: var(--subtle); text-decoration: none; transition: color 0.2s;\" onmouseover=\"this.style.color='#1D78BF'\" onmouseout=\"this.style.color='var(--subtle)'\">ミシガン州立大学</a>でコンピュータサイエンスを専攻しており、物事がどのように機能するのかに好奇心を持っています。ユーザーインターフェースデザインにも少し手を広げており、空き時間にはSwiftを学んでいます。"
   },
   "footer": {
     "twitter": "ツイッター",
