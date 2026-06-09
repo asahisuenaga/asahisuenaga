@@ -2,7 +2,9 @@
   "site": {
     "title": "末永朝飛",
     "pageTitle": "末永朝飛",
-    "banner": "「虹色キャレット」— GoogleDocsでキャレットに色をつけよう →"
+    "banner": "「虹色キャレット」— GoogleDocsでキャレットに色をつけよう →",
+    "shrineAlt": "神社のアイコン",
+    "translateAlt": "翻訳"
   },
   "location": {
     "text": "イーストランシング",
@@ -47,7 +49,11 @@
       "titlePlaceholder": "タイトル",
       "contentPlaceholder": "内容",
       "deletedPrefix": "削除:",
-      "minimizedLabel": "\"メモ\""
+      "minimizedLabel": "\"メモ\"",
+      "close": "閉じる",
+      "minimize": "最小化",
+      "maximize": "最大化",
+      "back": "戻る"
     },
     "toolbar": {
       "bold": "太字",
