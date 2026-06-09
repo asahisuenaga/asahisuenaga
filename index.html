@@ -4515,6 +4515,9 @@
                 }
 
                 const handleMobileDragStart = (e) => {
+                    // Don't interfere with minimized modal drag (handleDragStart handles that)
+                    if (notesModal.classList.contains('minimized')) return;
+
                     const isDesktop = window.innerWidth >= 800;
 
                     // On desktop, let header drags go to handleDragStart for repositioning
