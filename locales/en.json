@@ -2,7 +2,9 @@
   "site": {
     "title": "Asahi Suenaga",
     "pageTitle": "Asahi Suenaga",
-    "banner": "Try Rainbow Cursor — A Browser Extension to Change Your Cursor in Google Docs →"
+    "banner": "Try Rainbow Cursor — A Browser Extension to Change Your Cursor in Google Docs →",
+    "shrineAlt": "Shrine Icon",
+    "translateAlt": "Translate"
   },
   "location": {
     "text": "East Lansing, MI",
@@ -47,7 +49,11 @@
       "titlePlaceholder": "Title",
       "contentPlaceholder": "Content",
       "deletedPrefix": "Deleted:",
-      "minimizedLabel": "\"Apple Notes\""
+      "minimizedLabel": "\"Apple Notes\"",
+      "close": "Close",
+      "minimize": "Minimize",
+      "maximize": "Maximize",
+      "back": "Back"
     },
     "toolbar": {
       "bold": "Bold",
