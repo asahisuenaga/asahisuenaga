@@ -570,7 +570,7 @@
             position: absolute;
             top: 0;
             right: 2rem;
-            height: 12rem;
+            height: 8rem;
             width: 1.5rem;
             -webkit-transform: rotate(0deg) skew(0deg);
             transform: rotate(0deg) skew(0deg);
@@ -584,12 +584,12 @@
 
         .bookmark:hover,
         .bookmark.active {
-            height: 15rem;
+            height: 10rem;
             top: 0;
         }
 
         .bookmark:active {
-            height: 13rem;
+            height: 8.5rem;
             top: 0;
         }
 
@@ -2327,6 +2327,21 @@
                     if (ymS) ymS.innerText = d.tooltips.musicSub;
                     const nameTooltipTitle = document.getElementById('tooltip-name-title');
                     if (nameTooltipTitle) nameTooltipTitle.innerText = d.tooltips.nameTitle;
+
+                    // Aria-labels, alts, and titles
+                    const twitterLink = document.querySelector('.twitter-link');
+                    if (twitterLink) twitterLink.setAttribute('aria-label', d.footer.twitter);
+                    const bmcLink = document.querySelector('.bmc-link');
+                    if (bmcLink) bmcLink.setAttribute('aria-label', d.footer.bmc);
+                    const githubLink = document.querySelector('.github-link');
+                    if (githubLink) githubLink.setAttribute('aria-label', d.footer.github);
+                    const bmcSvg = document.querySelector('.bmc-link svg');
+                    if (bmcSvg) bmcSvg.setAttribute('title', d.footer.bmc);
+                    const shrineImg = document.querySelector('#shrine .icon');
+                    if (shrineImg) shrineImg.setAttribute('alt', d.site.shrineAlt);
+                    const translateIcon = document.querySelector('#tooltip-name .tooltip-icon');
+                    if (translateIcon) translateIcon.setAttribute('alt', d.site.translateAlt);
+
                     currentLang = lang;
                     if (window.applyNotesLang) window.applyNotesLang(lang);
                 };
@@ -2795,6 +2810,8 @@
                 // New Folder button
                 const newFolderBtn = document.getElementById('new-folder-btn-top');
                 if (newFolderBtn) newFolderBtn.title = n.buttons.newFolder;
+                const newFolderFooter = document.getElementById('new-folder-btn');
+                if (newFolderFooter) newFolderFooter.title = n.buttons.newFolder;
 
                 // Sidebar button
                 const sidebarBtn = document.getElementById('sidebar-toggle');
@@ -2810,6 +2827,27 @@
                 const notesModal = document.querySelector('.notes-modal');
                 if (notesModal) notesModal.style.setProperty('--notes-minimized-label', n.modal.minimizedLabel);
 
+                // Window controls (stoplights)
+                document.querySelectorAll('.mac-close').forEach(el => el.setAttribute('aria-label', n.modal.close));
+                document.querySelectorAll('.mac-min').forEach(el => el.setAttribute('aria-label', n.modal.minimize));
+                document.querySelectorAll('.mac-max').forEach(el => el.setAttribute('aria-label', n.modal.maximize));
+
+                // Back buttons
+                document.querySelectorAll('.notes-back').forEach(el => el.setAttribute('aria-label', n.modal.back));
+
+                // New Folder button aria-label
+                const newFolderTop = document.getElementById('new-folder-btn-top');
+                if (newFolderTop) newFolderTop.setAttribute('aria-label', n.buttons.newFolder);
+                const newFolderFooter2 = document.getElementById('new-folder-btn');
+                if (newFolderFooter) newFolderFooter.setAttribute('aria-label', n.buttons.newFolder);
+
+                // Sidebar aria-label
+                if (sidebarBtn) sidebarBtn.setAttribute('aria-label', n.buttons.sidebar);
+
+                // New Note aria-label
+                if (newNoteBtn) newNoteBtn.setAttribute('aria-label', n.buttons.newNote);
+                if (newNoteBtnMobile) newNoteBtnMobile.setAttribute('aria-label', n.buttons.newNote);
+
                 // Toolbar button titles
                 const toolbarTitles = {
                     bold: n.toolbar.bold, italic: n.toolbar.italic, underline: n.toolbar.underline,
@@ -2819,13 +2857,20 @@
                 document.querySelectorAll('.notes-toolbar-btn[data-command]').forEach(btn => {
                     const cmd = btn.getAttribute('data-command');
                     if (toolbarTitles[cmd]) btn.title = toolbarTitles[cmd];
+                    const img = btn.querySelector('img');
+                    if (img && toolbarTitles[cmd]) img.alt = toolbarTitles[cmd];
                 });
                 const monoBtn = document.getElementById('notes-mono-btn');
                 if (monoBtn) monoBtn.title = n.toolbar.mono;
+                if (monoBtn) monoBtn.setAttribute('aria-label', n.toolbar.mono);
                 const dashBtn = document.getElementById('notes-dash-btn');
                 if (dashBtn) dashBtn.title = n.toolbar.dash;
+                const dashImg = dashBtn?.querySelector('img');
+                if (dashImg) dashImg.alt = n.toolbar.dash;
                 const checklistBtn = document.getElementById('notes-checklist-btn');
                 if (checklistBtn) checklistBtn.title = n.toolbar.checklist;
+                const checklistImg = checklistBtn?.querySelector('img');
+                if (checklistImg) checklistImg.alt = n.toolbar.checklist;
 
                 // Re-render the current notes list
                 renderNotesList(currentFolder, false);
