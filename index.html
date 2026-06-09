@@ -570,7 +570,7 @@
             position: absolute;
             top: 0;
             right: 2rem;
-            height: 6rem;
+            height: 12rem;
             width: 1.5rem;
             -webkit-transform: rotate(0deg) skew(0deg);
             transform: rotate(0deg) skew(0deg);
@@ -584,12 +584,12 @@
 
         .bookmark:hover,
         .bookmark.active {
-            height: 7.5rem;
+            height: 15rem;
             top: 0;
         }
 
         .bookmark:active {
-            height: 6.5rem;
+            height: 13rem;
             top: 0;
         }
 
@@ -4381,14 +4381,15 @@
 
                 const openNotes = () => {
                     document.body.style.overflow = 'hidden';
-                    notesBackdrop.classList.add('visible');
-                    notesModal.classList.add('visible');
-                    notesModal.classList.remove('minimized');
 
-                    // Clear drag positions for expansion
+                    // Clear drag positions before showing so the modal starts centered
                     notesModal.style.removeProperty('left');
                     notesModal.style.removeProperty('top');
                     notesModal.style.removeProperty('transform');
+
+                    notesBackdrop.classList.add('visible');
+                    notesModal.classList.add('visible');
+                    notesModal.classList.remove('minimized');
 
                     if (wasFullscreenBeforeMinimize) {
                         notesModal.classList.add('fullscreen');
@@ -4422,6 +4423,8 @@
                     setTimeout(() => {
                         notesModal.style.removeProperty('transform');
                         notesModal.style.removeProperty('transition');
+                        notesModal.style.removeProperty('left');
+                        notesModal.style.removeProperty('top');
                     }, 400);
 
                     history.replaceState(null, null, '/');
@@ -4472,6 +4475,12 @@
                     document.body.style.overflow = '';
                     if (e && e.stopPropagation) e.stopPropagation();
                     wasFullscreenBeforeMinimize = notesModal.classList.contains('fullscreen');
+
+                    // Clear drag positioning so CSS .minimized can place it at the corner
+                    notesModal.style.removeProperty('left');
+                    notesModal.style.removeProperty('top');
+                    notesModal.style.removeProperty('transform');
+
                     notesBackdrop.classList.remove('visible');
                     notesModal.classList.add('minimized');
                     notesModal.classList.remove('fullscreen');
