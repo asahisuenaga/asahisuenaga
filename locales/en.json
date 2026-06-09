@@ -10,7 +10,7 @@
     "tooltipSub": "Show on Google Maps"
   },
   "bio": {
-    "bio": "I’m a computer science major at <a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" style=\"color: var(--subtle); text-decoration: none; transition: color 0.2s;\" onmouseover=\"this.style.color='#1D78BF'\" onmouseout=\"this.style.color='var(--subtle)'\">MSU</a> with a curiosity for how things work. I dabble in user interface design and learn Swift in my free time."
+    "bio": "I’m a computer science major at <a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" style=\"color: var(--subtle); text-decoration: none; transition: color 0.2s;\" onmouseover=\"this.style.color='#155A8E'\" onmouseout=\"this.style.color='var(--subtle)'\">MSU</a> with a curiosity for how things work. I dabble in user interface design and learn Swift in my free time."
   },
   "footer": {
     "twitter": "Twitter",
