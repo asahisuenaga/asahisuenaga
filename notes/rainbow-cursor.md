@@ -5,18 +5,15 @@ date: 2026-03-19T19:20
 permalink: /notes/rainbow-cursor
 pinned: false
 ---
-<p>Let’s be honest: staring at a flickering, thin black line all day is… well, soul-crushing. Whether you’re grinding through a 20-page report, drafting your next novel, or hunting for your spot in a messy brainstorm, your cursor is easily lost within your document. <a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc" style="color:rgb(234, 179, 8);; text-decoration: underline;">Rainbow Cursor</a> extension is the <span style="background: linear-gradient(to right, #ffb6c1, #ff69b4, #da70d6, #9370db, #48c9b0, #f0e68c, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">colorful vibrance</span> to the cursor in Google Docs you didn’t know you wanted.</p>
+<p>If you want to skip the reading and give your cursor the <span style="background: linear-gradient(to right, #ffb6c1, #ff69b4, #da70d6, #9370db, #48c9b0, #f0e68c, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">colorful vibrance</span> it needs, <a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc" style="color:rgb(234, 179, 8);; text-decoration: underline;">install it on the Chrome Web Store.</a></p>
+<h3>What it is</h3>
+<p>Rainbow Cursor is a browser extension that manipulates the cursor in Google Docs into creating a visible gradient. You can change the gradient colors, the cursor thickness, kill the cursor blink, turn on typewriter animation, or make the cursor translucent. That's the entire extension. No bloated features, no hidden trackers, and no unnecessary configuration screens.</p>
 
-<h3>Features</h3>
-<p>There isn't just one option; it’s fully customizable to your personal preferences. Here is how you can make it your own:</p>
+<h3>Why</h3>
+<p>Historically, there was an extension that had only one color. I built a new extension because I wanted to fully personalize my caret. I thought that users shouldn't be constrained to the gradient that the developer set. So I built the perfect solution. If you're going to stare at a blinking line for hours while writing, coding, or taking notes, you should at least enjoy looking at it.</p>
 
-<ul>
-    <li><strong>Gradients:</strong> Move beyond solid colors. Choose from 20+ options on the entire color spectrum.</li>
-    <li><strong>Thickness:</strong> If the default line is too spindly, beef it up. Increase the width for better visibility on high-res monitors.</li>
-    <li><strong>Kill the Blink:</strong> Constant flashing can be a major distraction. Turn off the caret blink for a more "zen" writing environment.</li>
-    <li><strong>Typewriter Animation:</strong> Activate a snappy 80ms typewriter effect that makes every keystroke feel tactile.</li>
-    <li><strong>Translucent Effects:</strong> Want thickness without blocking text? Apply a glass-like look.</li>
-</ul>
+<h3>How</h3>
+<p>Google Docs doesn't render the caret like other places on the internet. It's actually a div element called 'kix-cursor' that you can manipulate. Because Google Docs uses a custom-built rendering engine instead of standard HTML text areas, a typical CSS override won't cut it. By targeting that specific DOM element, the extension injects custom CSS properties directly into the Google Docs interface.</p>
 
-<h3>Ready to Chase the Rainbow?</h3>
-<p>If you're tired of the <span style="text-decoration: line-through;">"same old, same old"</span> and want to add a spark of joy (and a lot of clarity) to your workspace, it’s time to give your Google Docs a makeover.</p>
+<h3>What I learned</h3>
+<p>I learned how to make a browser extension and publish an item on the Chrome Web Store. Beyond the basics, I got a crash course in reverse-engineering proprietary DOM structures, managing extension state, and navigating Google's developer dashboard. Figuring out how to efficiently manipulate real-time web elements without lagging the browser taught me a ton about optimization.</p>
