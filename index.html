@@ -254,6 +254,7 @@
             display: flex;
             flex-direction: column;
             gap: var(--gap);
+            padding: 2rem;
         }
 
         .shrine-container {
@@ -1895,11 +1896,51 @@
         .MSU-link:hover, .MSU-link:focus {
             color: #2891df;
         }
+
+        .scroll-indicator {
+            position: fixed;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .scroll-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1.5px solid var(--text);
+            transition: background 0.3s, border-color 0.3s, opacity 0.3s;
+            opacity: 0.4;
+        }
+
+        .scroll-dot.active {
+            background: var(--text);
+            opacity: 0.7;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 12px;
+            background: var(--text);
+            opacity: 0.2;
+        }
     </style>
 </head>
 
 <body>
     <canvas id="click-spark-canvas"></canvas>
+    <div class="scroll-indicator" id="scroll-indicator">
+        <div class="scroll-dot active" id="dot-main"></div>
+        <!-- <div class="scroll-line"></div> -->
+        <div class="scroll-dot" id="dot-footer"></div>
+    </div>
     <main class="main-content">
         <div class="bookmark"></div>
         <a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc"
@@ -2249,7 +2290,8 @@
             const updateDrawer = () => {
                 if (!footer || !main) return;
                 const globalNotesModal = document.getElementById('notes-modal');
-                if (window.scrollY > 0) {
+                const scrolled = window.scrollY > 0;
+                if (scrolled) {
                     footer.classList.add('drawer-open');
                     main.classList.add('reveal-corners');
                     if (globalNotesModal && globalNotesModal.classList.contains('minimized')) globalNotesModal.classList.add('minimized-shifted');
@@ -2263,6 +2305,10 @@
                     if (globalNotesModal) globalNotesModal.classList.remove('minimized-shifted');
                     footerWasOpen = false;
                 }
+                const dotMain = document.getElementById('dot-main');
+                const dotFooter = document.getElementById('dot-footer');
+                if (dotMain) dotMain.classList.toggle('active', !scrolled);
+                if (dotFooter) dotFooter.classList.toggle('active', scrolled);
             };
 
             window.addEventListener('scroll', updateDrawer, { passive: true });
@@ -4432,6 +4478,9 @@
                     notesModal.style.removeProperty('top');
                     notesModal.style.removeProperty('transform');
 
+                    const indicator = document.getElementById('scroll-indicator');
+                    if (indicator) indicator.style.display = 'none';
+
                     notesBackdrop.classList.add('visible');
                     notesModal.classList.add('visible');
                     notesModal.classList.remove('minimized');
@@ -4457,6 +4506,10 @@
                 const closeNotes = (e) => {
                     document.body.style.overflow = '';
                     if (e && e.stopPropagation) e.stopPropagation();
+
+                    const indicator = document.getElementById('scroll-indicator');
+                    if (indicator) indicator.style.display = '';
+
                     notesBackdrop.classList.remove('visible');
                     notesModal.classList.remove('visible');
                     notesModal.classList.remove('minimized');
