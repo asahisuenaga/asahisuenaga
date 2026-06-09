@@ -872,7 +872,7 @@
             }
         }
 
-        .notes-content {
+        #panel-note-view .notes-content {
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
@@ -1550,7 +1550,6 @@
                 left: 50%;
                 transform: translateX(-50%);
                 z-index: 1000;
-                cursor: pointer;
             }
 
             .notes-drawer-handle::after {
@@ -4550,7 +4549,7 @@
                     if (diff > 100) {
                         notesModal.style.removeProperty('transform');
                         closeNotes();
-                    } else {
+                    } else if (diff > 5 && window.innerWidth < 800) {
                         notesModal.style.setProperty('transform', 'translateY(0)', 'important');
                         clearTimeout(window._mobileDragReset);
                         window._mobileDragReset = setTimeout(() => notesModal.style.removeProperty('transform'), 400);
