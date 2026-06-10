@@ -3,30 +3,18 @@
     "title": "Asahi Suenaga",
     "pageTitle": "Asahi Suenaga",
     "banner": "Try Rainbow Cursor — A Browser Extension to Change Your Cursor in Google Docs →",
-    "shrineAlt": "Shrine Icon",
-    "translateAlt": "Translate"
+    "shrineAlt": "Shrine Icon"
   },
-  "location": {
-    "text": "East Lansing, MI",
-    "tooltipTitle": "East Lansing, MI",
-    "tooltipSub": "Show on Google Maps"
-  },
-  "bio": {
-    "bio": "I’m a computer science major at <a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"MSU-link\">MSU</a> with a curiosity for how things work. I dabble in user interface design and learn Swift in my free time."
-  },
-  "footer": {
+  "location": "East Lansing, MI",
+  "bio": "I’m a computer science major at <a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"MSU-link\">MSU</a> with a curiosity for how things work. I dabble in user interface design and learn Swift in my free time.",
+  "actions": {
+    "notes": "About",
     "twitter": "Twitter",
-    "bmc": "Buy Me a Coffee",
     "github": "GitHub"
   },
-  "tooltips": {
-    "twitterTitle": "Twitter",
-    "twitterSub": "@asahisuenaga",
-    "bmcTitle": "Buy Me a Coffee",
-    "bmcSub": "Support my work",
-    "musicTitle": "YouTube Music",
-    "musicSub": "Listen to my favorites!",
-    "nameTitle": "日本語"
+  "menu": {
+    "translate": "Language",
+    "darkmode": "Dark Mode"
   },
   "notes": {
     "folders": {
@@ -49,7 +37,7 @@
       "titlePlaceholder": "Title",
       "contentPlaceholder": "Content",
       "deletedPrefix": "Deleted:",
-      "minimizedLabel": "\"Apple Notes\"",
+      "minimizedLabel": "\"Notes\"",
       "close": "Close",
       "minimize": "Minimize",
       "maximize": "Maximize",
