@@ -887,7 +887,7 @@
 
         #panel-note-view .notes-content {
             padding: 1.5rem 1.5rem;
-            padding-top: 0rem;
+            padding-top: 0;
             margin-top: 2rem;
         }
 
@@ -4186,6 +4186,7 @@
                     const selection = window.getSelection();
                     const anchorNode = (selection.rangeCount > 0) ? selection.anchorNode : null;
                     const parentNode = anchorNode ? (anchorNode.nodeType === 3 ? anchorNode.parentElement : anchorNode) : null;
+                    if (parentNode && titleEditor && titleEditor.contains(parentNode)) return;
                     const currentList = parentNode ? parentNode.closest('ul') : null;
                     const isDashed = currentList && currentList.style.listStyleType === '"- "';
 
@@ -4590,21 +4591,13 @@
                             notesModal.classList.remove('fullscreen');
                             return;
                         }
-                        const w = notesModal.offsetWidth + 'px';
-                        const h = notesModal.offsetHeight + 'px';
-                        notesModal.style.width = w;
-                        notesModal.style.height = h;
-                        notesModal.style.left = '50%';
-                        notesModal.style.top = '50%';
-                        notesModal.style.transform = 'translate(-50%, -50%) scale(1)';
+                        // Smoothly shrink from fullscreen to default size
+                        notesModal.style.removeProperty('left');
+                        notesModal.style.removeProperty('top');
+                        notesModal.style.removeProperty('transform');
+                        notesModal.style.transition = 'all 0.25s cubic-bezier(0.25, 1, 0.5, 1)';
                         notesModal.classList.remove('fullscreen');
-                        requestAnimationFrame(() => {
-                            notesModal.style.removeProperty('width');
-                            notesModal.style.removeProperty('height');
-                            notesModal.style.removeProperty('left');
-                            notesModal.style.removeProperty('top');
-                            notesModal.style.removeProperty('transform');
-                        });
+                        setTimeout(() => notesModal.style.removeProperty('transition'), 300);
                     } else {
                         notesModal.classList.add('fullscreen');
                     }
