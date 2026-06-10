@@ -5,7 +5,7 @@ date: 2026-04-19T14:20
 permalink: /notes/about-me
 pinned: true
 ---
-<p>Growing up, computers were my playground. I have made everything from browser extensions to a link-in-bio platform. My pursuit is fueled by a curiosity for human interaction with software.</p>
+<p>Growing up, the computer was my playground. I have made everything from browser extensions to a link-in-bio platform. I focus on the intersection of software and humans to create projects that softly integrates into one's being. I believe in code over opinions, users as the most valuable tool for validation, and exploring one hundred ideas to find the best one. I am a person empowered by a curiosity and strive for pure functionality and recursion in my work.</p>
 
 <h3>Present (4)</h3>
 
