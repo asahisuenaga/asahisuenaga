@@ -1554,7 +1554,7 @@
             left: 0 !important;
             border-radius: 0 !important;
             transform: none !important;
-            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: none !important;
             z-index: 3000;
         }
 
@@ -2012,6 +2012,7 @@
 </head>
 
 <body>
+    <script>if(sessionStorage.getItem('darkMode')==='true')document.body.classList.add('dark-mode')</script>
     <canvas id="click-spark-canvas"></canvas> 
     <main class="main-content">
         <a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc"
@@ -2351,10 +2352,11 @@
             }
             document.getElementById('menu-darkmode-badge').innerText = document.body.classList.contains('dark-mode') ? '✓' : '';
 
-            // Ellipsis menu — open on hover, close on leave
+            // Ellipsis menu — open on hover (desktop) or click (any)
             let menuTimer;
             const ellipsisBtn = document.getElementById('ellipsis-btn');
             const ellipsisMenu = document.getElementById('ellipsis-menu');
+            const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
             function closeMenu() {
                 if (ellipsisMenu) ellipsisMenu.classList.remove('open');
@@ -2367,25 +2369,37 @@
                 if (ellipsisMenu) ellipsisMenu.classList.add('open');
             }
 
-            ellipsisBtn?.addEventListener('mouseenter', () => {
+            if (!isTouch) {
+                ellipsisBtn?.addEventListener('mouseenter', () => {
+                    clearTimeout(menuTimer);
+                    openMenu();
+                });
+
+                ellipsisBtn?.addEventListener('mouseleave', () => {
+                    menuTimer = setTimeout(() => {
+                        if (!ellipsisMenu?.matches(':hover')) {
+                            closeMenu();
+                        }
+                    }, 200);
+                });
+
+                ellipsisMenu?.addEventListener('mouseenter', () => {
+                    clearTimeout(menuTimer);
+                });
+
+                ellipsisMenu?.addEventListener('mouseleave', () => {
+                    menuTimer = setTimeout(closeMenu, 200);
+                });
+            }
+
+            ellipsisBtn?.addEventListener('click', (e) => {
+                e.stopPropagation();
                 clearTimeout(menuTimer);
-                openMenu();
-            });
-
-            ellipsisBtn?.addEventListener('mouseleave', () => {
-                menuTimer = setTimeout(() => {
-                    if (!ellipsisMenu?.matches(':hover')) {
-                        closeMenu();
-                    }
-                }, 200);
-            });
-
-            ellipsisMenu?.addEventListener('mouseenter', () => {
-                clearTimeout(menuTimer);
-            });
-
-            ellipsisMenu?.addEventListener('mouseleave', () => {
-                menuTimer = setTimeout(closeMenu, 200);
+                if (ellipsisMenu?.classList.contains('open')) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
             });
 
             document.addEventListener('click', () => {
@@ -2423,7 +2437,7 @@
 
             if (!shrine) return;
 
-            shrine.addEventListener('mouseenter', () => {
+            shrine.addEventListener('pointerenter', () => {
                 hoverInterval = setInterval(() => {
                     if (!shrine.classList.contains('holding') || Math.random() < 0.2) {
                         createFirefly(shrine.classList.contains('holding') ? 0.8 : 1);
@@ -2437,7 +2451,7 @@
 
             shrine.oncontextmenu = (e) => e.preventDefault();
 
-            shrine.addEventListener('mouseleave', () => {
+            shrine.addEventListener('pointerleave', () => {
                 clearInterval(hoverInterval);
                 shrine.classList.remove('holding');
                 shrine.classList.remove('post-press');
@@ -2469,6 +2483,7 @@
             };
 
             shrine.onpointercancel = () => {
+                clearInterval(hoverInterval);
                 shrine.classList.remove('holding');
                 shrine.classList.remove('post-press');
             };
@@ -2657,9 +2672,9 @@
                     const shrineContainer = document.getElementById('shrine');
                     const targetInNotes = notesContainer && notesContainer.contains(e.target);
                     const targetInShrine = shrineContainer && shrineContainer.contains(e.target);
-                    if (!targetInNotes && !targetInShrine) {
-                        playSound('/sounds/basic.wav');
-                    }
+                if (!isTouchDevice && !targetInNotes && !targetInShrine) {
+                    playSound('/sounds/basic.wav');
+                }
                 };
                 window.addEventListener('click', handleClickSound);
 
