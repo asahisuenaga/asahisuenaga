@@ -127,7 +127,6 @@
             left: 0;
             width: 100%;
             box-sizing: border-box;
-            display: none;
         }
         .banner:hover {
             opacity: 0.8;
@@ -343,17 +342,6 @@
         }
         .tooltip-content.active {
             display: flex;
-        }
-        #tooltip-github {
-            padding: 0.75rem 1rem;
-            background: 0 0;
-            border: none;
-            box-shadow: none;
-            display: none;
-            border-radius: 0;
-        }
-        #tooltip-github.active {
-            display: block;
         }
         .github-mini-grid {
             display: grid;
@@ -1526,6 +1514,7 @@
         .actions-row {
             display: flex;
             gap: 0.75rem;
+            flex-wrap: wrap;
         }
         .action-label-btn {
             border-radius: 2rem;
@@ -1972,12 +1961,12 @@
 <body>
     <canvas id="click-spark-canvas"></canvas> 
     <main class="main-content">
-        <a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc"
+        <!-- <a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc"
             target="_blank" class="banner">
             <span class="banner-text" id="banner">Try Rainbow Cursor — A Browser Extension to Change Your Cursor in
                 Google
                 Docs →</span>
-        </a>
+        </a> -->
 
         <div class="container">
             <div id="shrine" class="shrine-container" role="button">
@@ -2321,8 +2310,16 @@
                 if (cursorTooltip) cursorTooltip.classList.remove('visible');
                 if (!ellipsisMenu || !ellipsisBtn) return;
                 const rect = ellipsisBtn.getBoundingClientRect();
-                ellipsisMenu.style.top = (rect.bottom + 8) + 'px';
-                ellipsisMenu.style.left = (rect.left + rect.width / 2) + 'px';
+                ellipsisMenu.style.display = 'flex';
+                const { width, height } = ellipsisMenu.getBoundingClientRect();
+                ellipsisMenu.style.display = '';
+                let x = rect.left + rect.width / 2;
+                let y = rect.bottom + 8;
+                if (x + width / 2 > window.innerWidth - 10) x = window.innerWidth - 10 - width / 2;
+                if (x - width / 2 < 10) x = 10 + width / 2;
+                if (y + height > window.innerHeight - 10) y = rect.top - height - 8;
+                ellipsisMenu.style.left = x + 'px';
+                ellipsisMenu.style.top = y + 'px';
                 ellipsisMenu.classList.add('open');
             }
 
