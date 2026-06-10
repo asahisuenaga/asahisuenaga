@@ -1831,6 +1831,17 @@
             opacity: 0.6;
         }
 
+        @media (prefers-color-scheme: dark) {
+            .ellipsis-menu {
+                background: rgba(0, 0, 0, 0.3);
+                box-shadow: -0.5px -0.5px rgba(255, 255, 255, 0.2), 0.5px 0.5px rgba(255, 255, 255, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
+            }
+
+            .ellipsis-menu button:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+        }
+
         body.dark-mode .ellipsis-menu {
             background: rgba(0, 0, 0, 0.3);
             box-shadow: -0.5px -0.5px rgba(255, 255, 255, 0.2), 0.5px 0.5px rgba(255, 255, 255, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
@@ -4574,7 +4585,29 @@
 
                 const maximizeNotes = (e) => {
                     if (e && e.stopPropagation) e.stopPropagation();
-                    notesModal.classList.toggle('fullscreen');
+                    if (notesModal.classList.contains('fullscreen')) {
+                        if (window.innerWidth < 800) {
+                            notesModal.classList.remove('fullscreen');
+                            return;
+                        }
+                        const w = notesModal.offsetWidth + 'px';
+                        const h = notesModal.offsetHeight + 'px';
+                        notesModal.style.width = w;
+                        notesModal.style.height = h;
+                        notesModal.style.left = '50%';
+                        notesModal.style.top = '50%';
+                        notesModal.style.transform = 'translate(-50%, -50%) scale(1)';
+                        notesModal.classList.remove('fullscreen');
+                        requestAnimationFrame(() => {
+                            notesModal.style.removeProperty('width');
+                            notesModal.style.removeProperty('height');
+                            notesModal.style.removeProperty('left');
+                            notesModal.style.removeProperty('top');
+                            notesModal.style.removeProperty('transform');
+                        });
+                    } else {
+                        notesModal.classList.add('fullscreen');
+                    }
                 };
 
                 notesModal.addEventListener('click', (e) => {
