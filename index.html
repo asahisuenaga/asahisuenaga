@@ -306,6 +306,19 @@
             opacity: 0.6;
             z-index: -1;
         }
+        .cursor-tooltip::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: inherit;
+            backdrop-filter: blur(1px);
+            opacity: 0.6;
+            z-index: -1;
+        }
         .cursor-tooltip.visible {
             opacity: 1;
             transform: scale(1);
@@ -417,7 +430,7 @@
             z-index: 2001;
             opacity: 0;
             pointer-events: none;
-            transform: translate(-50%, -50%) scale(0.95);
+            transform: translateX(-50%);  scale(0.95);
             transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
             overflow: hidden;
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
@@ -425,7 +438,7 @@
         .notes-modal.visible {
             opacity: 1;
             pointer-events: auto;
-            transform: translate(-50%, -50%) scale(1);
+            transform: translateX(-50%);  scale(1);
         }
         @media (prefers-color-scheme: dark) {
             .notes-modal {
@@ -1559,11 +1572,10 @@
         }
         .ellipsis-menu {
             position: fixed;
-            bottom: 25%;
-            left: 50%;
-            background: rgba(255, 255, 255);
+            background: 0 0;
             backdrop-filter: blur(1px) saturate(180%);
             -webkit-backdrop-filter: blur(1px) saturate(180%);
+            border: none;
             border-radius: 1rem;
             box-shadow:
                 -0.5px -0.5px rgba(222, 222, 222, 0.2),
@@ -1573,11 +1585,24 @@
             min-width: 200px;
             display: none;
             flex-direction: column;
+            transform: translateX(-50%); 
             gap: 0.25rem;
             z-index: 1000;
-            transform: translateX(-50%);
             opacity: 0;
-            will-change: transform, opacity, backdrop-filter;
+            will-change: opacity, backdrop-filter;
+        }
+        .ellipsis-menu::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: inherit;
+            backdrop-filter: blur(1px);
+            opacity: 0.6;
+            z-index: -1;
         }
         .ellipsis-menu.open {
             display: flex;
@@ -1632,22 +1657,28 @@
         }
         @media (prefers-color-scheme: dark) {
             .ellipsis-menu {
-                background: rgba(0, 0, 0, 0.3);
+                background: 0 0;
                 box-shadow:
                     -0.5px -0.5px rgba(255, 255, 255, 0.2),
                     0.5px 0.5px rgba(255, 255, 255, 0.2),
                     0 8px 32px rgba(31, 38, 135, 0.1);
+            }
+            .ellipsis-menu::after {
+                background: rgba(0, 0, 0, 0.2);
             }
             .ellipsis-menu button:hover {
                 background: rgba(255, 255, 255, 0.1);
             }
         }
         body.dark-mode .ellipsis-menu {
-            background: rgba(0, 0, 0, 0.3);
+            background: 0 0;
             box-shadow:
                 -0.5px -0.5px rgba(255, 255, 255, 0.2),
                 0.5px 0.5px rgba(255, 255, 255, 0.2),
                 0 8px 32px rgba(31, 38, 135, 0.1);
+        }
+        body.dark-mode .ellipsis-menu::after {
+            background: rgba(0, 0, 0, 0.2);
         }
         body.dark-mode .ellipsis-menu button:hover {
             background: rgba(255, 255, 255, 0.1);
@@ -1794,6 +1825,145 @@
             }
             body.dark-mode .notes-panel.active {
                 background: #212121;
+            }
+        }
+        body.light-mode {
+            --dark-mode: 0 !important;
+            --bg: #fff !important;
+            --heading: #202020 !important;
+            --subtitle: #595959 !important;
+            --text: #202020 !important;
+        }
+        body.light-mode .notes-modal {
+            background: #f5f5f5;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+        }
+        body.light-mode .notes-panel {
+            background: #f5f5f5;
+        }
+        body.light-mode .notes-header {
+            background: rgba(242, 242, 247, 0.85);
+        }
+        body.light-mode #panel-note-view .notes-header {
+            background: rgba(255, 255, 255, 0.85);
+        }
+        body.light-mode .notes-glass-btn {
+            background: rgba(255, 255, 255);
+            box-shadow: -0.5px -0.5px rgba(222, 222, 222, 0.2), 0.5px 0.5px rgba(222, 222, 222, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
+        }
+        body.light-mode .notes-glass-btn:hover {
+            background: rgba(109, 109, 109, 0.15);
+        }
+        body.light-mode .notes-btn {
+            color: #d4a346;
+        }
+        body.light-mode .notes-content {
+            color: var(--subtitle);
+        }
+        body.light-mode .notes-large-title {
+            color: #000;
+        }
+        body.light-mode .notes-title {
+            color: #000;
+        }
+        body.light-mode #panel-note-view {
+            background: #f5f5f5;
+        }
+        body.light-mode div.notes-header-right {
+            background: rgba(255, 255, 255);
+        }
+        body.light-mode .notes-toolbar-btn img {
+            filter: invert(0.55);
+        }
+        body.light-mode .note-context-menu {
+            background: rgba(255, 255, 255);
+        }
+        body.light-mode .note-context-item {
+            color: initial;
+        }
+        body.light-mode .note-context-item:hover {
+            background: rgba(234, 179, 8, 0.2);
+        }
+        body.light-mode .context-separator {
+            background: rgba(0, 0, 0, 0.1) !important;
+        }
+        body.light-mode .active-folder {
+            background: rgba(0, 0, 0, 0.05) !important;
+            color: #eab308 !important;
+        }
+        body.light-mode .notes-list-item.selected {
+            background: rgba(234, 179, 8, 0.3);
+        }
+        body.light-mode .note-preview-title {
+            color: #000;
+        }
+        body.light-mode .notes-view-content blockquote {
+            border-left: 4px solid rgba(0, 0, 0, 0.2) !important;
+        }
+        body.light-mode #new-note-btn-header,
+        body.light-mode button.notes-header-right,
+        body.light-mode div.notes-header-right {
+            background: rgba(255, 255, 255);
+        }
+        body.light-mode .notes-modal.minimized::after {
+            color: #000;
+            background: rgba(255, 255, 255, 0.4);
+        }
+        body.light-mode .themed-icon,
+        body.light-mode .notes-folder-info img,
+        body.light-mode #sidebar-toggle img,
+        body.light-mode .back-hero-icon,
+        body.light-mode #new-note-btn-header img,
+        body.light-mode #new-note-btn-mobile img,
+        body.light-mode #notes-btn img,
+        body.light-mode #ellipsis-btn img,
+        body.light-mode #new-folder-btn-top img,
+        body.light-mode .notes-toolbar-btn.active img,
+        body.light-mode .notes-toolbar-btn:hover img {
+            filter: invert(1);
+        }
+        body.light-mode .notes-toolbar-btn img {
+            filter: invert(0.55);
+        }
+        body.light-mode .notes-toolbar-btn #notes-mono-text,
+        body.light-mode .notes-toolbar-btn.active #notes-mono-text,
+        body.light-mode .notes-toolbar-btn:hover #notes-mono-text {
+            filter: invert(1);
+        }
+        body.light-mode .github-mini-grid {
+            filter: none;
+        }
+        body.light-mode .cursor-tooltip::after {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        body.light-mode .cursor-tooltip {
+            box-shadow: -0.5px -0.5px rgba(222, 222, 222, 0.2), 0.5px 0.5px rgba(222, 222, 222, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
+        }
+        body.light-mode .ellipsis-menu {
+            background: 0 0;
+            box-shadow: -0.5px -0.5px rgba(222, 222, 222, 0.2), 0.5px 0.5px rgba(222, 222, 222, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
+        }
+        body.light-mode .ellipsis-menu::after {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        body.light-mode .ellipsis-menu button:hover {
+            background: rgba(109, 109, 109, 0.15);
+        }
+        @media (min-width: 800px) {
+            body.light-mode #panel-folders,
+            body.light-mode #panel-notes {
+                border-right: 1px solid rgba(0, 0, 0, 0.1);
+            }
+            body.light-mode #panel-notes {
+                background: #ffffff;
+            }
+        }
+        @media (max-width: 800px) {
+            body.light-mode .notes-drawer-handle {
+                background: rgba(0, 0, 0, 0.2);
+            }
+            body.light-mode .notes-panel.active {
+                background: #f5f5f5;
             }
         }
     </style>
@@ -2133,7 +2303,7 @@
 
             loadTranslations();
 
-            document.getElementById('menu-darkmode-badge').innerText = document.body.classList.contains('dark-mode') ? '✓' : '';
+            document.getElementById('menu-darkmode-badge').innerText = document.body.classList.contains('dark-mode') || (window.matchMedia('(prefers-color-scheme: dark)').matches && !document.body.classList.contains('light-mode')) ? '✓' : '';
 
             // Ellipsis menu — open on hover (desktop) or click (any)
             let menuTimer;
@@ -2149,7 +2319,11 @@
                 // Hide all tooltips when menu opens
                 const cursorTooltip = document.getElementById('cursor-tooltip');
                 if (cursorTooltip) cursorTooltip.classList.remove('visible');
-                if (ellipsisMenu) ellipsisMenu.classList.add('open');
+                if (!ellipsisMenu || !ellipsisBtn) return;
+                const rect = ellipsisBtn.getBoundingClientRect();
+                ellipsisMenu.style.top = (rect.bottom + 8) + 'px';
+                ellipsisMenu.style.left = (rect.left + rect.width / 2) + 'px';
+                ellipsisMenu.classList.add('open');
             }
 
             if (!isTouch) {
@@ -2185,6 +2359,12 @@
                 }
             });
 
+            window.addEventListener('resize', () => {
+                if (ellipsisMenu?.classList.contains('open')) {
+                    openMenu();
+                }
+            });
+
             document.addEventListener('click', () => {
                 closeMenu();
             });
@@ -2199,16 +2379,30 @@
                 document.getElementById('ellipsis-menu')?.classList.remove('open');
             });
 
+            const isDarkEffective = () => document.body.classList.contains('dark-mode') || (window.matchMedia('(prefers-color-scheme: dark)').matches && !document.body.classList.contains('light-mode'));
+
             document.getElementById('menu-darkmode')?.addEventListener('click', () => {
-                document.body.classList.toggle('dark-mode');
-                document.getElementById('menu-darkmode-badge').innerText = document.body.classList.contains('dark-mode') ? '✓' : '';
+                const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (document.body.classList.contains('dark-mode') || document.body.classList.contains('light-mode')) {
+                    document.body.classList.remove('dark-mode', 'light-mode');
+                } else {
+                    document.body.classList.add(systemDark ? 'light-mode' : 'dark-mode');
+                }
+                document.getElementById('menu-darkmode-badge').innerText = isDarkEffective() ? '✓' : '';
                 playClickSound();
                 setTimeout(closeMenu, 400);
             });
 
+            // Re-check badge on system color scheme change
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+                if (!document.body.classList.contains('dark-mode') && !document.body.classList.contains('light-mode')) {
+                    document.getElementById('menu-darkmode-badge').innerText = window.matchMedia('(prefers-color-scheme: dark)').matches ? '✓' : '';
+                }
+            });
+
             // Initialize menu badges
             document.getElementById('menu-translate-badge').innerText = currentLang === 'ja' ? 'JA' : 'EN';
-            document.getElementById('menu-darkmode-badge').innerText = document.body.classList.contains('dark-mode') ? '✓' : '';
+            document.getElementById('menu-darkmode-badge').innerText = isDarkEffective() ? '✓' : '';
 
         });
 
