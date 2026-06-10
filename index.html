@@ -23,21 +23,41 @@
     <style>
         :root {
             --bg: #fff;
-            --text: #646464;
             --heading: #202020;
-            --subtle: #595959;
-            --bio: #262626;
+            --subtitle: #595959;
+            --text: #202020;
             --gap: 1.25rem;
+            --dark-mode: 0;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
                 --bg: #202020;
-                --text: #c8c8c8;
                 --heading: #fff;
-                --subtle: #969696;
-                --bio: #eeeeee;
+                --subtitle: #969696;
+                --text: #fff;
+                --dark-mode: 1;
             }
+        }
+
+        body.dark-mode {
+            --dark-mode: 1;
+        }
+
+        body.dark-mode {
+            --bg: #202020;
+            --heading: #fff;
+            --subtitle: #969696;
+            --text: #fff;
+        }
+
+        * {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
         }
 
         body {
@@ -52,15 +72,6 @@
             -ms-overflow-style: none;
         }
 
-        * {
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        *::-webkit-scrollbar {
-            display: none;
-        }
-
         #click-spark-canvas {
             position: fixed;
             top: 0;
@@ -73,7 +84,7 @@
 
         .main-content {
             background-color: var(--bg);
-            color: var(--text);
+            color: var(--subtitle);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -95,132 +106,15 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        .lang-switching .main-content, 
-        .lang-switching .footer {
+        .lang-switching .main-content {
             color: transparent !important;
             text-shadow: 0 0 8px currentColor;
             transition: color 0.1s ease, text-shadow 0.1s ease;
         }
 
-        .lang-switching .main-content svg, .lang-switching .footer svg {
+        .lang-switching .main-content svg {
             filter: none !important;
             opacity: 1 !important;
-        }
-
-        .main-content.reveal-corners {
-            clip-path: inset(0 0 60px 0 round 0 0 3rem 3rem);
-        }
-
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1;
-            color: var(--bg);
-            padding: 1.5rem;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: calc(var(--gap)*2);
-            transform: translateY(100%);
-            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .footer.drawer-open {
-            transform: translateY(0.25rem);
-        }
-
-        .footer-links {
-            display: flex;
-            gap: var(--gap);
-            align-items: center;
-            justify-content: flex-end;
-            min-width: 0;
-        }
-
-        /* Footer: music player */
-        .footer-music {
-            min-width: 0;
-            margin-right: auto;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .music-card {
-            display: flex;
-            align-items: center;
-            align-self: center;
-            user-select: none;
-            -webkit-user-select: none;
-            min-width: 0;
-            border: none;
-            background: transparent;
-            pointer-events: auto;
-        }
-
-        .music-card:hover {
-            opacity: 0.8;
-        }
-
-        .music-title-wrap {
-            flex: 0 0 auto;
-            min-width: 0;
-            overflow: hidden;
-            cursor: pointer
-        }
-
-        .music-title {
-            font-size: 0.9375rem;
-            color: var(--bg);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            text-decoration: none;
-            display: inline;
-            max-width: 100%;
-            cursor: pointer;
-        }
-
-        .footer-link {
-            display: flex;
-            align-items: center;
-            gap: calc(var(--gap) * 0.4);
-            text-decoration: none;
-            font-size: 0.9375rem;
-            font-weight: 400;
-            transition: opacity 0.2s;
-        }
-
-        .footer-link:hover {
-            opacity: 0.8;
-        }
-
-        .twitter-link {
-            color: #1DA1F2;
-        }
-
-        .bmc-link {
-            color: #FFDD00;
-        }
-
-        .github-link {
-            color: var(--bg);
-        }
-
-        @media (max-width: 800px) {
-            .footer-text {
-                display: none;
-            }
-
-            .music-note-icon {
-                display: flex !important;
-            }
-
-            .footer-links {
-                gap: var(--gap);
-            }
         }
 
         .banner {
@@ -249,13 +143,11 @@
         }
 
         .container {
-            /* max-width: 532px; */
-            max-width: 500px;
+            max-width: 530px;
             width: 100%;
             display: flex;
             flex-direction: column;
             gap: var(--gap);
-            /* padding: 1rem; */
         }
 
         .shrine-container {
@@ -379,27 +271,25 @@
             }
         }
 
+        .header {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
         .name {
+            display: inline;
             font-size: 1rem;
-            font-weight: 400;
+            font-weight: 500;
             color: var(--heading);
             margin: 0;
-            line-height: 1.2;
-            max-width: 7.5rem
+            max-width: 7.5rem;
         }
 
-        #location {
-            font-size: 0.875rem;
-            color: var(--subtle);
-            margin: 0.25rem 0 0;
-            font-weight: 400;
-            letter-spacing: 0.01em;
-        }
-
-        .bio {
-            font-size: 0.9375rem;
-            color: var(--bio);
-            line-height: 2;
+        #bio {
+            font-size: 1rem;
+            color: var(--heading);
+            line-height: 1.5rem;
         }
 
         @keyframes border-crawl {
@@ -407,26 +297,21 @@
                 background-position: 200% center;
             }
         }
-
+        
         .cursor-tooltip {
             position: fixed;
             pointer-events: none;
             z-index: 9999;
             opacity: 0;
-            transform: scale(0.9);
             transition: opacity 0.2s cubic-bezier(0.25, 1, 0.5, 1), transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
             will-change: transform, left, top;
-            background: rgba(255, 255, 255, 0.75);
+            background: none;
             backdrop-filter: blur(1px) saturate(180%);
             -webkit-backdrop-filter: blur(1px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border: none;
             border-radius: 1rem;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3);
-        }
-
-        .cursor-tooltip.visible {
-            opacity: 1;
-            transform: scale(1);
+            box-shadow: -0.5px -0.5px rgba(222, 222, 222, 0.2), 0.5px  0.5px rgba(222, 222, 222, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
+            will-change: transform, backdrop-filter;
         }
 
         .cursor-tooltip::after {
@@ -437,10 +322,15 @@
             width: 100%;
             height: 100%;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 1rem;
+            border-radius: inherit;
             backdrop-filter: blur(1px);
             opacity: 0.6;
             z-index: -1;
+        }
+
+        .cursor-tooltip.visible {
+            opacity: 1;
+            transform: scale(1);
         }
 
         @media (prefers-color-scheme: dark) {
@@ -449,15 +339,13 @@
             }
 
             .cursor-tooltip {
-                background: rgba(0, 0, 0, 0.75);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                box-shadow: none;
+                box-shadow: -0.5px -0.5px rgba(255, 255, 255, 0.2), 0.5px  0.5px rgba(255, 255, 255, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
             }
         }
 
         .tooltip-content {
             display: none;
-            color: var(--text);
+            color: var(--subtitle);
             align-items: center;
             gap: calc(var(--gap) * 0.5);
             padding: 0.75rem 1rem;
@@ -495,22 +383,6 @@
             border-radius: 2px;
         }
 
-        /* .github-tile:first-child {
-            border-top-left-radius: 1rem;
-        }
-
-        .github-tile:nth-child(4) {
-            border-bottom-left-radius: 1rem;
-        }
-
-        .github-tile:nth-child(17) {
-            border-top-right-radius: 1rem;
-        }
-        
-        .github-tile:last-child {
-            border-bottom-right-radius: 1rem;
-        } */
-
         @media (prefers-color-scheme: dark) {
             .github-mini-grid {
                 filter: invert(0.93) hue-rotate(180deg);
@@ -522,23 +394,6 @@
             height: 1.5rem;
             flex-shrink: 0;
             fill: var(--heading);
-        }
-
-        #tooltip-twitter .tooltip-icon {
-            fill: #1DA1F2;
-        }
-
-        #tooltip-music .tooltip-icon {
-            fill: #FF0000;
-        }
-
-        .music-note-icon {
-            cursor: pointer;
-            padding-right: 0.5rem;
-        }
-
-        #tooltip-bmc .tooltip-icon {
-            fill: #FFDD00;
         }
 
         .tooltip-text {
@@ -556,7 +411,7 @@
 
         .tooltip-subtitle {
             font-size: 0.75rem;
-            color: var(--subtle);
+            color: var(--subtitle);
             white-space: nowrap;
         }
 
@@ -566,33 +421,6 @@
             box-sizing: border-box;
             -moz-box-sizing: border-box;
             -webkit-box-sizing: border-box;
-        }
-
-        .bookmark {
-            position: absolute;
-            top: 0;
-            right: 2rem;
-            height: 8rem;
-            width: 1.5rem;
-            -webkit-transform: rotate(0deg) skew(0deg);
-            transform: rotate(0deg) skew(0deg);
-            border-left: 1.5rem solid rgb(139, 24, 24);
-            border-right: 1.5rem solid rgb(139, 24, 24);
-            border-bottom: 1.5rem solid transparent;
-            z-index: 1000;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        .bookmark:hover,
-        .bookmark.active {
-            height: 10rem;
-            top: 0;
-        }
-
-        .bookmark:active {
-            height: 8.5rem;
-            top: 0;
         }
 
         .notes-backdrop {
@@ -757,7 +585,7 @@
             backdrop-filter: blur(1px) saturate(180%);
             -webkit-backdrop-filter: blur(1px) saturate(180%);
             border-radius: 50%;
-            box-shadow: -0.5px -0.5px rgba(255, 255, 255, 0.2), 0.5px  0.5px rgba(255, 255, 255, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
+            box-shadow: -0.5px -0.5px rgba(222, 222, 222, 0.2), 0.5px  0.5px rgba(222, 222, 222, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
             cursor: pointer;
             padding: 0.75rem;
             transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
@@ -794,11 +622,11 @@
         }
 
         .note-context-menu {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            background: rgb(255, 255, 255);
+            backdrop-filter: blur(1px) saturate(180%);
+            -webkit-backdrop-filter: blur(1px) saturate(180%);
+            border: none;
+            box-shadow: -0.5px -0.5px rgba(222, 222, 222, 0.2), 0.5px  0.5px rgba(222, 222, 222, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);;
             display: flex;
             flex-direction: column;
             position: fixed;
@@ -813,9 +641,9 @@
 
         @media (prefers-color-scheme: dark) {
             .note-context-menu {
-                background: rgba(40, 40, 40, 0.85);
-                border: 1px solid rgba(255, 255, 255, 0.15);
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+                background: rgba(0, 0, 0, 0.3);
+                border: none;
+                box-shadow: -0.5px -0.5px rgba(255, 255, 255, 0.2), 0.5px 0.5px rgba(255, 255, 255, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
             }
         }
 
@@ -850,6 +678,7 @@
 
             .notes-glass-btn {
                 background: rgba(0, 0, 0, 0.3);
+                box-shadow: -0.5px -0.5px rgba(255, 255, 255, 0.2), 0.5px  0.5px rgba(255, 255, 255, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
             }
 
             .notes-glass-btn:hover {
@@ -1286,21 +1115,11 @@
                 background: rgba(255, 255, 255, 0.3);
             }
 
-            .notes-toolbar-btn img {
+            .notes-toolbar-btn img, .notes-toolbar-btn:hover img, .notes-toolbar-btn.active img  {
                 filter: invert(0);
             }
 
-            .notes-toolbar-btn #notes-mono-text {
-                filter: invert(1);
-            }
-
-            .notes-toolbar-btn:hover img,
-            .notes-toolbar-btn.active img {
-                filter: invert(0);
-            }
-
-            .notes-toolbar-btn.active #notes-mono-text,
-            .notes-toolbar-btn:hover #notes-mono-text {
+            .notes-toolbar-btn #notes-mono-text, .notes-toolbar-btn.active #notes-mono-text, .notes-toolbar-btn:hover #notes-mono-text {
                 filter: invert(1);
             }
         }
@@ -1343,7 +1162,7 @@
             border-radius: 50%;
             width: 1rem;
             height: 1rem;
-            box-shadow: inset 0 0 0 1px var(--subtle);
+            box-shadow: inset 0 0 0 1px var(--subtitle);
             background: var(--bg);
             position: relative;
             transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
@@ -1513,10 +1332,6 @@
         }
 
         @media (max-width: 800px) {
-            .bookmark {
-                right: 1rem;
-            }
-
             #shared-stoplights {
                 display: none !important;
             }
@@ -1622,7 +1437,7 @@
                 transform: translateX(-50%) !important;
                 margin: 0 !important;
                 flex-shrink: 0 !important;
-                max-width: 75% !important;
+                max-width: 65% !important;
                 width: auto !important;
                 display: flex !important;
             }
@@ -1793,10 +1608,6 @@
             color: #fff;
         }
 
-        .notes-modal.minimized.minimized-shifted {
-            top: calc(100% - 235px) !important;
-        }
-
         .mac-stoplights>button {
             position: relative;
             display: flex;
@@ -1841,15 +1652,11 @@
         .notes-folder-info img,
         .back-hero-icon,
         #new-note-btn-header img,
-        #new-folder-btn-top img, #new-note-btn-mobile img {
+        #new-folder-btn-top img, #new-note-btn-mobile img, #notes-btn img, #ellipsis-btn img {
             filter: invert(1);
             -webkit-user-drag: none;
             user-select: none;
             pointer-events: none;
-        }
-
-        .tooltranslate{
-            filter: invert(0);
         }
 
         @media (prefers-color-scheme: dark) {
@@ -1859,12 +1666,8 @@
             #sidebar-toggle img,
             .back-hero-icon,
             #new-note-btn-header img,
-            #new-folder-btn-top img, #new-note-btn-mobile img {
+            #new-folder-btn-top img, #new-note-btn-mobile img, #notes-btn img, #ellipsis-btn img {
                 filter: invert(0);
-            }
-
-            .tooltranslate {
-                filter: invert(1) !important;
             }
         }
 
@@ -1887,56 +1690,330 @@
         }
 
         .MSU-link {
-            color: var(--subtle);
+            color: var(--subtitle);
             text-decoration: underline;
-            text-decoration-color: transparent;
+            text-decoration-color: var(--subtitle);
             text-underline-offset: 3px;
             transition: color 0.2s;
         }
 
         .MSU-link:hover, .MSU-link:focus {
             color: #2891df;
+            text-decoration-color: #2891df;
         }
 
-        .scroll-indicator {
-            position: fixed;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
+        .actions-row {
             display: flex;
-            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .action-label-btn {
+            border-radius: 2rem;
+            width: auto;
+            height: auto;
+            padding: 0.5rem 0.875rem;
+            gap: 0.375rem;
+            font-size: 0.875rem;
+            color: var(--text);
+            text-decoration: none;
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            z-index: 100;
-            pointer-events: none;
+            font-family: inherit;
+            transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        .scroll-dot {
-            width: 0.375rem;
-            height: 0.375rem;
-            border-radius: 50%;
-            background: transparent;
-            border: 1.5px solid var(--text);
-            transition: background 0.3s, border-color 0.3s, opacity 0.3s;
-            opacity: 0.4;
+        .action-label-btn svg {
+            width: 14px;
+            height: 14px;
         }
 
-        .scroll-dot.active {
-            background: var(--text);
-            opacity: 0.7;
+        .action-label-btn:hover {
+            filter: brightness(90%);
+        }
+
+        #notes-btn.active {
+            background: rgba(109, 109, 109, 0.3);
+        }
+
+        body {
+            transition: background-color 0.4s ease;
+        }
+
+        .main-content,
+        .name {
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        .color-mode {
+            width: 16px;
+            height: 16px;
+            filter: invert(var(--dark-mode)) brightness(calc(1 + var(--dark-mode) * 0.15));
+            transform: rotate(calc(var(--dark-mode) * 180deg));
+            transition: filter 0.6s ease, transform 0.6s ease;
+            display: block;
+        }
+
+        .ellipsis-menu {
+            position: fixed;
+            bottom: 25%;
+            left: 50%;
+            background: rgba(255, 255, 255);
+            backdrop-filter: blur(1px) saturate(180%);
+            -webkit-backdrop-filter: blur(1px) saturate(180%);
+            border-radius: 1rem;
+            box-shadow: -0.5px -0.5px rgba(222, 222, 222, 0.2), 0.5px 0.5px rgba(222, 222, 222, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
+            padding: 0.5rem;
+            min-width: 200px;
+            display: none;
+            flex-direction: column;
+            gap: 0.25rem;
+            z-index: 1000;
+            transform: translateX(-50%);
+            opacity: 0;
+            will-change: transform, opacity, backdrop-filter;
+        }
+
+        .ellipsis-menu.open {
+            display: flex;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.95);
+            }
+        }
+
+        .ellipsis-menu button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background: none;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-family: inherit;
+            color: var(--text);
+            transition: background 0.15s ease;
+            width: 100%;
+            text-align: left;
+        }
+
+        .ellipsis-menu button:hover {
+            background: rgba(109, 109, 109, 0.15);
+        }
+
+        .ellipsis-menu button svg {
+            flex-shrink: 0;
+        }
+
+        .menu-badge {
+            margin-left: auto;
+            font-size: 0.75rem;
+            opacity: 0.6;
+        }
+
+        body.dark-mode .ellipsis-menu {
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: -0.5px -0.5px rgba(255, 255, 255, 0.2), 0.5px 0.5px rgba(255, 255, 255, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
+        }
+
+        body.dark-mode .ellipsis-menu button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .cursor-tooltip::after {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-mode .cursor-tooltip {
+            box-shadow: -0.5px -0.5px rgba(255, 255, 255, 0.2), 0.5px  0.5px rgba(255, 255, 255, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
+        }
+
+        body.dark-mode .github-mini-grid {
+            filter: invert(0.93) hue-rotate(180deg);
+        }
+
+        body.dark-mode .notes-modal {
+            background: #212121;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .notes-panel {
+            background: #212121;
+        }
+
+        body.dark-mode .active-folder {
+            background: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        body.dark-mode .notes-header {
+            background: rgba(0, 0, 0, 0.85);
+        }
+
+        body.dark-mode .notes-btn {
+            color: #eab308;
+        }
+
+        body.dark-mode .note-context-menu {
+            background: rgba(0, 0, 0, 0.3);
+            border: none;
+            box-shadow: -0.5px -0.5px rgba(255, 255, 255, 0.2), 0.5px 0.5px rgba(255, 255, 255, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
+        }
+
+        body.dark-mode .note-context-item {
+            color: #ffffff;
+        }
+
+        body.dark-mode .note-context-item:hover {
+            background: rgba(234, 179, 8, 0.3);
+        }
+
+        body.dark-mode .context-separator {
+            background: rgba(255, 255, 255, 0.15) !important;
+        }
+
+        body.dark-mode .notes-glass-btn {
+            background: rgba(0, 0, 0, 0.3);
+            box-shadow: -0.5px -0.5px rgba(255, 255, 255, 0.2), 0.5px  0.5px rgba(255, 255, 255, 0.2), 0 8px 32px rgba(31, 38, 135, 0.1);
+        }
+
+        body.dark-mode .notes-glass-btn:hover {
+            background: rgba(109, 109, 109, 0.3);
+        }
+
+        body.dark-mode .notes-content {
+            color: #e5e5e5;
+        }
+
+        body.dark-mode .notes-large-title {
+            color: #fff;
+        }
+
+        body.dark-mode .folder-list-item:hover,
+        body.dark-mode .notes-preview:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        body.dark-mode .notes-list-item.selected {
+            background: rgba(234, 179, 8, 0.3);
+        }
+
+        body.dark-mode .notes-list-item.selected .note-preview-title {
+            color: #fff !important;
+        }
+
+        body.dark-mode .notes-list-item:active {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .note-preview-title {
+            color: #fff;
+        }
+
+        body.dark-mode #panel-note-view {
+            background: #1e1e1e;
+        }
+
+        body.dark-mode #panel-note-view .notes-header {
+            background: rgba(30, 30, 30, 0.85);
+        }
+
+        body.dark-mode .notes-title {
+            color: #fff;
+        }
+
+        body.dark-mode .notes-view-content blockquote {
+            border-left: 4px solid rgba(255, 255, 255, 0.2) !important;
+        }
+
+        body.dark-mode #new-note-btn-header,
+        body.dark-mode div.notes-header-right,
+        body.dark-mode button.notes-header-right {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .notes-toolbar.btn.active:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        body.dark-mode .notes-toolbar-btn img,
+        body.dark-mode .notes-toolbar-btn:hover img,
+        body.dark-mode .notes-toolbar-btn.active img {
+            filter: invert(0);
+        }
+
+        body.dark-mode .notes-toolbar-btn #notes-mono-text,
+        body.dark-mode .notes-toolbar-btn.active #notes-mono-text,
+        body.dark-mode .notes-toolbar-btn:hover #notes-mono-text {
+            filter: invert(1);
+        }
+
+        body.dark-mode #panel-note-view {
+            background: rgb(28, 28, 30);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .notes-modal.minimized::after {
+            color: #fff;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        body.dark-mode .themed-icon,
+        body.dark-mode .notes-folder-info img,
+        body.dark-mode #sidebar-toggle img,
+        body.dark-mode .back-hero-icon,
+        body.dark-mode #new-note-btn-header img,
+        body.dark-mode #new-folder-btn-top img,
+        body.dark-mode #new-note-btn-mobile img,
+        body.dark-mode #notes-btn img {
+            filter: invert(0);
+        }
+
+        @media (min-width: 800px) {
+            body.dark-mode #panel-folders,
+            body.dark-mode #panel-notes {
+                border-right: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            body.dark-mode #panel-notes {
+                background: #1c1c1e;
+            }
+        }
+
+        @media (max-width: 800px) {
+            body.dark-mode .notes-drawer-handle {
+                background: rgba(255, 255, 255, 0.3);
+            }
+
+            body.dark-mode .notes-panel.active {
+                background: #212121;
+            }
         }
     </style>
 </head>
 
 <body>
     <canvas id="click-spark-canvas"></canvas> 
-    <!-- Note: Uncomment the following and search '.container' to uncomment the max-width and padding. -->
-    <!-- <div class="scroll-indicator" id="scroll-indicator"> 
-        <div class="scroll-dot active" id="dot-main"></div>
-        <div class="scroll-dot" id="dot-footer"></div>
-    </div> -->
     <main class="main-content">
-        <div class="bookmark"></div>
         <a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc"
             target="_blank" class="banner">
             <span class="banner-text" id="banner">Try Rainbow Cursor — A Browser Extension to Change Your Cursor in
@@ -1950,55 +2027,51 @@
             </div>
 
             <div class="header">
-                <h1 class="name name-link" id="name" role="button" style="cursor: cell;">Asahi Suenaga</h1>
-                <a href="https://maps.google.com/?q=East+Lansing,+MI" class="footer-link location-link" id="location"
-                    target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;">
-                    <span>East Lansing, MI</span>
+                <h1 class="name" id="name"></h1>
+                <p id="location"></p>
+            </div>
+            <p id="bio"></p>
+            <div class="actions-row">
+                <button id="notes-btn" class="notes-glass-btn action-label-btn notes-link" aria-label="Notes" draggable="false">
+                    <span id="action-notes">About</span>
+                </button>
+                <a href="https://twitter.com/asahisuenaga" aria-label="Twitter" class="notes-glass-btn action-label-btn twitter-link" target="_blank" draggable="false">
+                    <span id="action-twitter">Twitter</span>
                 </a>
-            </div>
-            <div class="bio">
-                <p id="bio"></p>
+                <a href="https://github.com/asahisuenaga" aria-label="Github" class="notes-glass-btn action-label-btn github-link" target="_blank" draggable="false">
+                    <span id="action-github">GitHub</span>
+                </a>
+                <button id="ellipsis-btn" class="notes-glass-btn" aria-label="More options">
+                    <svg viewBox="0 0 18.584 3.7207" width="20" height="20" fill="var(--heading)">
+                        <path d="M16.3672 3.70117C17.3926 3.70117 18.2227 2.88086 18.2227 1.85547C18.2227 0.830078 17.3926 0 16.3672 0C15.3418 0 14.5117 0.830078 14.5117 1.85547C14.5117 2.88086 15.3418 3.70117 16.3672 3.70117Z"/>
+                        <path d="M9.11133 3.70117C10.1367 3.70117 10.957 2.88086 10.957 1.85547C10.957 0.830078 10.1367 0 9.11133 0C8.08594 0 7.25586 0.830078 7.25586 1.85547C7.25586 2.88086 8.08594 3.70117 9.11133 3.70117Z"/>
+                        <path d="M1.85547 3.70117C2.88086 3.70117 3.70117 2.88086 3.70117 1.85547C3.70117 0.830078 2.88086 0 1.85547 0C0.830078 0 0 0.830078 0 1.85547C0 2.88086 0.830078 3.70117 1.85547 3.70117Z"/>
+                    </svg>
+                </button>
+                <div class="ellipsis-menu" id="ellipsis-menu">
+                    <button id="menu-translate" aria-label="Switch language">
+                        <svg viewBox="0 0 31.0938 22.3535" width="20" height="16" fill="currentColor">
+                            <path d="M17.6367 4.04297L17.6367 4.93164L17.1777 4.93164C16.7796 4.93164 16.4069 4.9673 16.0645 5.04126L16.0645 4.0918C16.0645 2.37305 15.0977 1.47461 13.4668 1.47461L4.16992 1.47461C2.53906 1.47461 1.57227 2.37305 1.57227 4.0918L1.57227 9.76562C1.57227 11.4941 2.54883 12.3828 4.16992 12.3828L5.19531 12.3828C5.61523 12.3828 5.94727 12.627 5.94727 13.1738L5.94727 15.6445L9.0918 12.832C9.47266 12.4902 9.7168 12.3828 10.2441 12.3828L13.0957 12.3828L13.0957 13.8477L10.1855 13.8477L6.92383 16.6406C6.33789 17.1484 6.01562 17.4121 5.53711 17.4121C4.86328 17.4121 4.48242 16.9336 4.48242 16.1914L4.48242 13.8477L4.08203 13.8477C1.63086 13.8477 0 12.373 0 9.81445L0 4.04297C0 1.48438 1.63086 0 4.08203 0L13.5547 0C16.0059 0 17.6367 1.48438 17.6367 4.04297Z"/>
+                            <path d="M9.85352 3.36914L12.2656 9.84375C12.4609 10.3809 12.1777 10.8789 11.6016 10.8789C11.2305 10.8789 11.0059 10.6738 10.8594 10.2637L10.2637 8.54492L7.39258 8.54492L6.79688 10.2637C6.66016 10.6738 6.42578 10.8789 6.05469 10.8789C5.48828 10.8789 5.19531 10.3809 5.39062 9.84375L7.79297 3.36914C7.96875 2.89062 8.33008 2.62695 8.81836 2.62695C9.32617 2.62695 9.67773 2.89062 9.85352 3.36914ZM7.79297 7.34375L9.85352 7.34375L8.82324 4.33879Z"/>
+                            <path d="M30.7324 8.97461L30.7324 14.7461C30.7324 17.2949 29.1016 18.7793 26.6504 18.7793L26.2402 18.7793L26.2402 21.123C26.2402 21.8652 25.8691 22.3438 25.1953 22.3438C24.7168 22.3438 24.3945 22.0801 23.8086 21.5723L20.5371 18.7793L17.1777 18.7793C14.6094 18.7793 13.0957 17.3047 13.0957 14.7461L13.0957 8.97461C13.0957 6.41602 14.6094 4.93164 17.1777 4.93164L26.6504 4.93164C29.1016 4.93164 30.7324 6.41602 30.7324 8.97461ZM18.7891 9.60938C18.3887 9.60938 18.0957 9.88281 18.0957 10.2539C18.0957 10.6348 18.3887 10.918 18.7891 10.918L19.5312 10.918C19.7949 11.875 20.293 12.7832 20.9766 13.5449C20.3125 13.9844 19.541 14.3066 18.6523 14.5215C18.2715 14.6094 18.0469 14.9707 18.125 15.3613C18.2324 15.752 18.623 15.9277 19.043 15.8105C20.1074 15.5762 21.1035 15.127 21.9922 14.4727C22.8418 15.1172 23.8379 15.5664 24.8242 15.8008C25.3027 15.918 25.7031 15.7715 25.8105 15.3613C25.918 14.9414 25.7227 14.6094 25.3027 14.5215C24.4141 14.3164 23.6523 13.9941 22.9688 13.5449C23.6621 12.8027 24.1504 11.9043 24.4141 10.918L25.166 10.918C25.5664 10.918 25.8594 10.6348 25.8594 10.2539C25.8594 9.88281 25.5664 9.60938 25.166 9.60938ZM21.9922 12.7148C21.5137 12.1875 21.1328 11.5723 20.9082 10.918L23.0469 10.918C22.8223 11.5625 22.4609 12.1777 21.9922 12.7148ZM21.0156 7.02148C20.6836 7.17773 20.5371 7.57812 20.7129 7.93945L21.1816 8.92578C21.3379 9.27734 21.7383 9.41406 22.0801 9.26758C22.4414 9.08203 22.5879 8.69141 22.4121 8.33984L21.9336 7.36328C21.7578 6.99219 21.3672 6.82617 21.0156 7.02148Z"/>
+                        </svg>
+                        <span id="menu-translate-label">Language</span>
+                        <span id="menu-translate-badge" class="menu-badge"></span>
+                    </button>
+                    <button id="menu-darkmode" aria-label="Toggle dark mode">
+                        <svg viewBox="0 0 400 400" width="16" height="16" class="color-mode">
+                            <circle r="200" cx="200" cy="200" fill="#202020"/>
+                            <path d="M 200 375 A 175 175 0 0 1 200 25" fill="#ffffff" />
+                            <path d="M 200 300 A 100 100 0 0 1 200 100" fill="#202020" />
+                            <path d="M 200 100 A 100 100 180 0 1 200 300" fill="#ffffff" />
+                        </svg>
+                        <span id="menu-darkmode-label">Dark Mode</span>
+                        <span id="menu-darkmode-badge" class="menu-badge"></span>
+                    </button>
+                </div>
             </div>
         </div>
-
     </main>
-
-    <footer class="footer">
-        <div class="footer-music">
-            <div class="music-card" id="music-card" role="button" tabindex="0">
-                <svg class="music-note-icon" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-                    <path
-                        d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
-                </svg>
-                <span class="music-title-wrap"><span class="music-title music-link" id="music-title">play
-                        something</span></span>
-            </div>
-        </div>
-        <div class="footer-links">
-            <a href="https://twitter.com/asahisuenaga" aria-label="Twitter" class="footer-link twitter-link" target="_blank">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                    <path
-                        d="M24 4.557a9.83 9.83 0 01-2.828.775 4.932 4.932 0 002.165-2.724 9.864 9.864 0 01-3.127 1.195 4.916 4.916 0 00-8.38 4.482A13.94 13.94 0 011.671 3.149a4.93 4.93 0 001.523 6.574 4.903 4.903 0 01-2.229-.616v.061a4.924 4.924 0 003.946 4.827 4.896 4.896 0 01-2.224.084 4.928 4.928 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.945 13.945 0 007.548 2.212c9.057 0 14.002-7.496 14.002-13.986 0-.21 0-.42-.015-.63A10.012 10.012 0 0024 4.557z" />
-                </svg>
-                <span class="footer-text" id="footer-twitter">Twitter</span>
-            </a>
-            <a href="https://buymeacoffee.com/asahisuenaga" aria-label="Buy Me a Coffee" class="footer-link bmc-link" target="_blank">
-                <svg role="img" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" title="Coffee"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M20.216 6.415l-.132-.666c-.119-.598-.388-1.163-1.001-1.379-.197-.069-.42-.098-.57-.241-.152-.143-.196-.366-.231-.572-.065-.378-.125-.756-.192-1.133-.057-.325-.102-.69-.25-.987-.195-.4-.597-.634-.996-.788a5.723 5.723 0 00-.626-.194c-1-.263-2.05-.36-3.077-.416a25.834 25.834 0 00-3.7.062c-.915.083-1.88.184-2.75.5-.318.116-.646.256-.888.501-.297.302-.393.77-.177 1.146.154.267.415.456.692.58.36.162.737.284 1.123.366 1.075.238 2.189.331 3.287.37 1.218.05 2.437.01 3.65-.118.299-.033.598-.073.896-.119.352-.054.578-.513.474-.834-.124-.383-.457-.531-.834-.473-.466.074-.96.108-1.382.146-1.177.08-2.358.082-3.536.006a22.228 22.228 0 01-1.157-.107c-.086-.01-.18-.025-.258-.036-.243-.036-.484-.08-.724-.13-.111-.027-.111-.185 0-.212h.005c.277-.06.557-.108.838-.147h.002c.131-.009.263-.032.394-.048a25.076 25.076 0 013.426-.12c.674.019 1.347.067 2.017.144l.228.031c.267.04.533.088.798.145.392.085.895.113 1.07.542.055.137.08.288.111.431l.319 1.484a.237.237 0 01-.199.284h-.003c-.037.006-.075.01-.112.015a36.704 36.704 0 01-4.743.295 37.059 37.059 0 01-4.699-.304c-.14-.017-.293-.042-.417-.06-.326-.048-.649-.108-.973-.161-.393-.065-.768-.032-1.123.161-.29.16-.527.404-.675.701-.154.316-.199.66-.267 1-.069.34-.176.707-.135 1.056.087.753.613 1.365 1.37 1.502a39.69 39.69 0 0011.343.376.483.483 0 01.535.53l-.071.697-1.018 9.907c-.041.41-.047.832-.125 1.237-.122.637-.553 1.028-1.182 1.171-.577.131-1.165.2-1.756.205-.656.004-1.31-.025-1.966-.022-.699.004-1.556-.06-2.095-.58-.475-.458-.54-1.174-.605-1.793l-.731-7.013-.322-3.094c-.037-.351-.286-.695-.678-.678-.336.015-.718.3-.678.679l.228 2.185.949 9.112c.147 1.344 1.174 2.068 2.446 2.272.742.12 1.503.144 2.257.156.966.016 1.942.053 2.892-.122 1.408-.258 2.465-1.198 2.616-2.657.34-3.332.683-6.663 1.024-9.995l.215-2.087a.484.484 0 01.39-.426c.402-.078.787-.212 1.074-.518.455-.488.546-1.124.385-1.766zm-1.478.772c-.145.137-.363.201-.578.233-2.416.359-4.866.54-7.308.46-1.748-.06-3.477-.254-5.207-.498-.17-.024-.353-.055-.47-.18-.22-.236-.111-.71-.054-.995.052-.26.152-.609.463-.646.484-.057 1.046.148 1.526.22.577.088 1.156.159 1.737.212 2.48.226 5.002.19 7.472-.14.45-.06.899-.13 1.345-.21.399-.072.84-.206 1.08.206.166.281.188.657.162.974a.544.544 0 01-.169.364zm-6.159 3.9c-.862.37-1.84.788-3.109.788a5.884 5.884 0 01-1.569-.217l.877 9.004c.065.78.717 1.38 1.5 1.38 0 0 1.243.065 1.658.065.447 0 1.786-.065 1.786-.065.783 0 1.434-.6 1.499-1.38l.94-9.95a3.996 3.996 0 00-1.322-.238c-.826 0-1.491.284-2.26.613z" />
-                </svg>
-                <span class="footer-text" id="footer-bmc">Buy Me a Coffee</span>
-            </a>
-            <a href="https://github.com/asahisuenaga" aria-label="Github" class="footer-link github-link" target="_blank">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                    <path
-                        d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-                </svg>
-                <span class="footer-text" id="footer-github">GitHub</span>
-            </a>
-        </div>
-    </footer>
 
     <div class="notes-backdrop" id="notes-backdrop"></div>
     <div class="notes-modal" id="notes-modal">
@@ -2018,7 +2091,7 @@
                 </div>
                 <button id="new-folder-btn-top" class="notes-glass-btn" aria-label="New Folder" title="New Folder"
                     style="margin-left: auto; width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;">
-                    <img alt="Folder Badge Plus" src="icons/folder-badge-plus.svg"
+                    <img alt="Folder Badge Plus" src="icons/folder.badge.plus.svg"
                         style="width: 24px; height: 24px;" draggable="false" />
                 </button>
             </div>
@@ -2067,7 +2140,7 @@
             </div>
             <div class="notes-footer">
                 <button class="notes-glass-btn" aria-label="New Folder" id="new-folder-btn" title="New Folder">
-                    <img alt="Folder Badge Plus" src="icons/folder-badge-plus.svg"
+                    <img alt="Folder Badge Plus" src="icons/folder.badge.plus.svg"
                         style="width:20px; height:20px;">
                 </button>
             </div>
@@ -2078,20 +2151,20 @@
             <div class="notes-header">
                 <div class="notes-header-left">
                     <button class="notes-glass-btn notes-back" aria-label="Return" data-back="panel-folders" style="display: none;">
-                        <img alt="Chevron Left" src="icons/chevron-left.svg"
+                        <img alt="Chevron Left" src="icons/chevron.left.svg"
                             class="back-hero-icon"
                             style="width:16px; height:16px; display:inline-block; vertical-align:-3px;"
                             draggable="false">
                     </button>
                     <button class="notes-glass-btn" aria-label="Sidebar" id="sidebar-toggle" title="Sidebar" oncontextmenu="return false;"
                         style="margin-left: 0px; transition: margin-left 0.3s cubic-bezier(0.25, 1, 0.5, 1);">
-                        <img alt="Sidebar Left" src="icons/sidebar-left.svg"
+                        <img alt="Sidebar Left" src="icons/sidebar.left.svg"
                             style="width:18px; height:18px; display:inline-block; vertical-align:-3px;"
                             draggable="false">
                     </button>
                 </div>
                 <button id="new-note-btn-header" class="notes-glass-btn" aria-label="New Note" title="New Note">
-                    <img alt="Square and Pencil" src="icons/square-and-pencil.svg"
+                    <img alt="Square and Pencil" src="icons/square.and.pencil.svg"
                         draggable="false">
                 </button>
             </div>
@@ -2108,14 +2181,14 @@
             <div class="notes-header">
                 <div class="notes-header-left">
                     <button class="notes-glass-btn notes-back"  aria-label="Return" data-back="panel-notes">
-                        <img alt="Chevron Left" src="icons/chevron-left.svg"
+                        <img alt="Chevron Left" src="icons/chevron.left.svg"
                             class="back-hero-icon"
                             style="width:16px; height:16px; display:inline-block; vertical-align:-3px;"
                             draggable="false">
                     </button>
                     <button id="new-note-btn-mobile" class="notes-glass-btn"  aria-label="New Note" title="New Note"
                         style="position: absolute; right: 12px; display: none;">
-                        <img alt="Square and Pencil" src="icons/square-and-pencil.svg"
+                        <img alt="Square and Pencil" src="icons/square.and.pencil.svg"
                             style="width: 20px; height: 20px;" draggable="false">
                     </button>
                 </div>
@@ -2143,26 +2216,26 @@
                         style="width: 1px; height: 16px; background: rgba(0,0,0,0.1); margin: 0 2px;"></div>
                     <button class="notes-toolbar-btn" data-command="outdent" title="Decrease Indent">
                         <img alt="Increase Indent"
-                            src="icons/decrease-indent.svg">
+                            src="icons/decrease.indent.svg">
                     </button>
                     <button class="notes-toolbar-btn" data-command="indent" title="Increase Indent">
                         <img alt="Increase Indent"
-                            src="icons/increase-indent.svg">
+                            src="icons/increase.indent.svg">
                     </button>
                     <div class="toolbar-divider divider-lists"
                         style="width: 1px; height: 16px; background: rgba(0,0,0,0.1); margin: 0 2px;"></div>
                     <button class="notes-toolbar-btn" data-command="insertUnorderedList" title="Bulleted List">
                         <img alt="List Bullet"
-                            src="icons/list-bullet.svg">
+                            src="icons/list.bullet.svg">
                     </button>
                     <button class="notes-toolbar-btn" data-command="insertOrderedList" title="Numbered List">
                         <img alt="List Number"
-                            src="icons/list-number.svg">
+                            src="icons/list.number.svg">
                     </button>
                     <button class="notes-toolbar-btn" id="notes-dash-btn" title="Dashed List"
                         data-command="insertDashList">
                         <img alt="List Dash"
-                            src="icons/list-dash.svg">
+                            src="icons/list.dash.svg">
                     </button>
                     <button class="notes-toolbar-btn" id="notes-checklist-btn" title="Checklist"
                         data-command="insertChecklist">
@@ -2182,53 +2255,6 @@
     </div>
 
     <div class="cursor-tooltip" id="cursor-tooltip">
-        <div class="tooltip-content" id="tooltip-name">
-            <img class="tooltip-icon themed-icon tooltranslate" alt="Translate"
-                src="icons/translate.svg"
-                draggable="false">
-            <div class="tooltip-text">
-                <div class="tooltip-title" id="tooltip-name-title">日本語</div>
-            </div>
-        </div>
-        <div class="tooltip-content" id="tooltip-music">
-            <svg class="tooltip-icon" viewBox="0 0 24 24">
-                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
-            </svg>
-            <div class="tooltip-text">
-                <div class="tooltip-title">YouTube Music</div>
-                <div class="tooltip-subtitle">Listen to my favorites!</div>
-            </div>
-        </div>
-        <div class="tooltip-content" id="tooltip-twitter">
-            <svg class="tooltip-icon" viewBox="0 0 24 24">
-                <path
-                    d="M24 4.557a9.83 9.83 0 01-2.828.775 4.932 4.932 0 002.165-2.724 9.864 9.864 0 01-3.127 1.195 4.916 4.916 0 00-8.38 4.482A13.94 13.94 0 011.671 3.149a4.93 4.93 0 001.523 6.574 4.903 4.903 0 01-2.229-.616v.061a4.924 4.924 0 003.946 4.827 4.896 4.896 0 01-2.224.084 4.928 4.928 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.945 13.945 0 007.548 2.212c9.057 0 14.002-7.496 14.002-13.986 0-.21 0-.42-.015-.63A10.012 10.012 0 0024 4.557z" />
-            </svg>
-            <div class="tooltip-text">
-                <div class="tooltip-title">Twitter</div>
-                <div class="tooltip-subtitle">@asahisuenaga</div>
-            </div>
-        </div>
-        <div class="tooltip-content" id="tooltip-bmc">
-            <svg class="tooltip-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M20.216 6.415l-.132-.666c-.119-.598-.388-1.163-1.001-1.379-.197-.069-.42-.098-.57-.241-.152-.143-.196-.366-.231-.572-.065-.378-.125-.756-.192-1.133-.057-.325-.102-.69-.25-.987-.195-.4-.597-.634-.996-.788a5.723 5.723 0 00-.626-.194c-1-.263-2.05-.36-3.077-.416a25.834 25.834 0 00-3.7.062c-.915.083-1.88.184-2.75.5-.318.116-.646.256-.888.501-.297.302-.393.77-.177 1.146.154.267.415.456.692.58.36.162.737.284 1.123.366 1.075.238 2.189.331 3.287.37 1.218.05 2.437.01 3.65-.118.299-.033.598-.073.896-.119.352-.054.578-.513.474-.834-.124-.383-.457-.531-.834-.473-.466.074-.96.108-1.382.146-1.177.08-2.358.082-3.536.006a22.228 22.228 0 01-1.157-.107c-.086-.01-.18-.025-.258-.036-.243-.036-.484-.08-.724-.13-.111-.027-.111-.185 0-.212h.005c.277-.06.557-.108.838-.147h.002c.131-.009.263-.032.394-.048a25.076 25.076 0 013.426-.12c.674.019 1.347.067 2.017.144l.228.031c.267.04.533.088.798.145.392.085.895.113 1.07.542.055.137.08.288.111.431l.319 1.484a.237.237 0 01-.199.284h-.003c-.037.006-.075.01-.112.015a36.704 36.704 0 01-4.743.295 37.059 37.059 0 01-4.699-.304c-.14-.017-.293-.042-.417-.06-.326-.048-.649-.108-.973-.161-.393-.065-.768-.032-1.123.161-.29.16-.527.404-.675.701-.154.316-.199.66-.267 1-.069.34-.176.707-.135 1.056.087.753.613 1.365 1.37 1.502a39.69 39.69 0 0011.343.376.483.483 0 01.535.53l-.071.697-1.018 9.907c-.041.41-.047.832-.125 1.237-.122.637-.553 1.028-1.182 1.171-.577.131-1.165.2-1.756.205-.656.004-1.31-.025-1.966-.022-.699.004-1.556-.06-2.095-.58-.475-.458-.54-1.174-.605-1.793l-.731-7.013-.322-3.094c-.037-.351-.286-.695-.678-.678-.336.015-.718.3-.678.679l.228 2.185.949 9.112c.147 1.344 1.174 2.068 2.446 2.272.742.12 1.503.144 2.257.156.966.016 1.942.053 2.892-.122 1.408-.258 2.465-1.198 2.616-2.657.34-3.332.683-6.663 1.024-9.995l.215-2.087a.484.484 0 01.39-.426c.402-.078.787-.212 1.074-.518.455-.488.546-1.124.385-1.766zm-1.478.772c-.145.137-.363.201-.578.233-2.416.359-4.866.54-7.308.46-1.748-.06-3.477-.254-5.207-.498-.17-.024-.353-.055-.47-.18-.22-.236-.111-.71-.054-.995.052-.26.152-.609.463-.646.484-.057 1.046.148 1.526.22.577.088 1.156.159 1.737.212 2.48.226 5.002.19 7.472-.14.45-.06.899-.13 1.345-.21.399-.072.84-.206 1.08.206.166.281.188.657.162.974a.544.544 0 01-.169.364zm-6.159 3.9c-.862.37-1.84.788-3.109.788a5.884 5.884 0 01-1.569-.217l.877 9.004c.065.78.717 1.38 1.5 1.38 0 0 1.243.065 1.658.065.447 0 1.786-.065 1.786-.065.783 0 1.434-.6 1.499-1.38l.94-9.95a3.996 3.996 0 00-1.322-.238c-.826 0-1.491.284-2.26.613z" />
-            </svg>
-            <div class="tooltip-text">
-                <div class="tooltip-title">Buy Me a Coffee</div>
-                <div class="tooltip-subtitle">Support my work</div>
-            </div>
-        </div>
-        <div class="tooltip-content" id="tooltip-location">
-            <svg class="tooltip-icon" viewBox="0 0 24 24">
-                <path
-                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-            </svg>
-            <div class="tooltip-text">
-                <div class="tooltip-title">East Lansing, MI</div>
-                <div class="tooltip-subtitle">Show on Google Maps</div>
-            </div>
-        </div>
         <div class="tooltip-content" id="tooltip-github">
             <div id="github-mini-grid" class="github-mini-grid">
                 <!-- Tiles populated by JS -->
@@ -2238,77 +2264,10 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const footer = document.querySelector('.footer');
             const main = document.querySelector('.main-content');
 
             if (history.scrollRestoration) history.scrollRestoration = 'manual';
             window.scrollTo(0, 0);
-
-            let tracks = [];
-            let currentTrackIdx = -1;
-            let footerWasOpen = false;
-
-            const titleEl = document.getElementById('music-title');
-            const musicBtn = document.getElementById('music-card');
-
-            function pickRandomTrack() {
-                if (!tracks.length) return null;
-                let idx;
-                do { idx = Math.floor(Math.random() * tracks.length); } while (idx === currentTrackIdx && tracks.length > 1);
-                currentTrackIdx = idx;
-                if (titleEl) {
-                    titleEl.textContent = tracks[idx].title;
-                }
-                return tracks[idx];
-            }
-
-            function openRandomTrack() {
-                if (!tracks.length) return;
-                const track = pickRandomTrack();
-                if (track) window.open('https://music.youtube.com/watch?v=' + track.id, '_blank');
-            }
-
-            musicBtn?.addEventListener('click', openRandomTrack);
-
-            musicBtn?.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    openRandomTrack();
-                }
-            });
-
-            fetch('/tracks.json')
-                .then(res => res.json())
-                .then(data => { tracks = data; pickRandomTrack(); });
-
-            const updateDrawer = () => {
-                if (!footer || !main) return;
-                const globalNotesModal = document.getElementById('notes-modal');
-                const scrolled = window.scrollY > 0;
-                if (scrolled) {
-                    footer.classList.add('drawer-open');
-                    main.classList.add('reveal-corners');
-                    if (globalNotesModal && globalNotesModal.classList.contains('minimized')) globalNotesModal.classList.add('minimized-shifted');
-                    if (!footerWasOpen) {
-                        footerWasOpen = true;
-                        pickRandomTrack();
-                    }
-                } else {
-                    footer.classList.remove('drawer-open');
-                    main.classList.remove('reveal-corners');
-                    if (globalNotesModal) globalNotesModal.classList.remove('minimized-shifted');
-                    footerWasOpen = false;
-                }
-                const dotMain = document.getElementById('dot-main');
-                const dotFooter = document.getElementById('dot-footer');
-                if (dotMain) dotMain.classList.toggle('active', !scrolled);
-                if (dotFooter) dotFooter.classList.toggle('active', scrolled);
-            };
-
-            window.addEventListener('scroll', updateDrawer, { passive: true });
-            window.addEventListener('resize', updateDrawer);
-
-            updateDrawer();
 
             const userLang = navigator.language || navigator.userLanguage;
             const isJa = userLang.startsWith('ja');
@@ -2337,52 +2296,35 @@
                     const banner = document.getElementById('banner');
                     if (banner) banner.innerText = d.site.banner;
                     const locNode = document.getElementById('location');
-                    if (locNode) { const s = locNode.querySelector('span'); if (s) s.innerText = d.location.text; }
-                    const tooltipLoc = document.getElementById('tooltip-location');
-                    if (tooltipLoc) {
-                        const t = tooltipLoc.querySelector('.tooltip-title');
-                        const s = tooltipLoc.querySelector('.tooltip-subtitle');
-                        if (t) t.innerText = d.location.tooltipTitle;
-                        if (s) s.innerText = d.location.tooltipSub;
-                    }
+                    if (locNode) locNode.innerHTML = d.location;
                     const b = document.getElementById('bio');
-                    if (b) b.innerHTML = d.bio.bio;
-                    const ft = document.getElementById('footer-twitter');
-                    if (ft) ft.innerText = d.footer.twitter;
-                    const fb = document.getElementById('footer-bmc');
-                    if (fb) fb.innerText = d.footer.bmc;
-                    const fg = document.getElementById('footer-github');
-                    if (fg) fg.innerText = d.footer.github;
-                    const ttT = document.querySelector('#tooltip-twitter .tooltip-title');
-                    if (ttT) ttT.innerText = d.tooltips.twitterTitle;
-                    const ttS = document.querySelector('#tooltip-twitter .tooltip-subtitle');
-                    if (ttS) ttS.innerText = d.tooltips.twitterSub;
-                    const btT = document.querySelector('#tooltip-bmc .tooltip-title');
-                    if (btT) btT.innerText = d.tooltips.bmcTitle;
-                    const btS = document.querySelector('#tooltip-bmc .tooltip-subtitle');
-                    if (btS) btS.innerText = d.tooltips.bmcSub;
-                    const ymT = document.querySelector('#tooltip-music .tooltip-title');
-                    if (ymT) ymT.innerText = d.tooltips.musicTitle;
-                    const ymS = document.querySelector('#tooltip-music .tooltip-subtitle');
-                    if (ymS) ymS.innerText = d.tooltips.musicSub;
-                    const nameTooltipTitle = document.getElementById('tooltip-name-title');
-                    if (nameTooltipTitle) nameTooltipTitle.innerText = d.tooltips.nameTitle;
+                    if (b) b.innerHTML = d.bio;
+
+                    // Action button text
+                    const actionNotes = document.getElementById('action-notes');
+                    if (actionNotes) actionNotes.innerText = d.actions.notes;
+                    const actionTwitter = document.getElementById('action-twitter');
+                    if (actionTwitter) actionTwitter.innerText = d.actions.twitter;
+                    const actionGithub = document.getElementById('action-github');
+                    if (actionGithub) actionGithub.innerText = d.actions.github;
 
                     // Aria-labels, alts, and titles
                     const twitterLink = document.querySelector('.twitter-link');
-                    if (twitterLink) twitterLink.setAttribute('aria-label', d.footer.twitter);
-                    const bmcLink = document.querySelector('.bmc-link');
-                    if (bmcLink) bmcLink.setAttribute('aria-label', d.footer.bmc);
+                    if (twitterLink) twitterLink.setAttribute('aria-label', d.actions.twitter);
                     const githubLink = document.querySelector('.github-link');
-                    if (githubLink) githubLink.setAttribute('aria-label', d.footer.github);
-                    const bmcSvg = document.querySelector('.bmc-link svg');
-                    if (bmcSvg) bmcSvg.setAttribute('title', d.footer.bmc);
+                    if (githubLink) githubLink.setAttribute('aria-label', d.actions.github);
                     const shrineImg = document.querySelector('#shrine .icon');
                     if (shrineImg) shrineImg.setAttribute('alt', d.site.shrineAlt);
-                    const translateIcon = document.querySelector('#tooltip-name .tooltip-icon');
-                    if (translateIcon) translateIcon.setAttribute('alt', d.site.translateAlt);
+
+                    // Menu labels
+                    const menuTranslate = document.getElementById('menu-translate-label');
+                    if (menuTranslate) menuTranslate.innerText = d.menu.translate;
+                    const menuDarkmode = document.getElementById('menu-darkmode-label');
+                    if (menuDarkmode) menuDarkmode.innerText = d.menu.darkmode;
 
                     currentLang = lang;
+                    const badge = document.getElementById('menu-translate-badge');
+                    if (badge) badge.innerText = lang === 'ja' ? '字' : 'A';
                     if (window.applyNotesLang) window.applyNotesLang(lang);
                 };
 
@@ -2403,10 +2345,75 @@
 
             loadTranslations();
 
-            nameEl?.addEventListener('click', () => {
+            // Restore dark mode preference from session
+            if (sessionStorage.getItem('darkMode') === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+            document.getElementById('menu-darkmode-badge').innerText = document.body.classList.contains('dark-mode') ? '✓' : '';
+
+            // Ellipsis menu — open on hover, close on leave
+            let menuTimer;
+            const ellipsisBtn = document.getElementById('ellipsis-btn');
+            const ellipsisMenu = document.getElementById('ellipsis-menu');
+
+            function closeMenu() {
+                if (ellipsisMenu) ellipsisMenu.classList.remove('open');
+            }
+
+            function openMenu() {
+                // Hide all tooltips when menu opens
+                const cursorTooltip = document.getElementById('cursor-tooltip');
+                if (cursorTooltip) cursorTooltip.classList.remove('visible');
+                if (ellipsisMenu) ellipsisMenu.classList.add('open');
+            }
+
+            ellipsisBtn?.addEventListener('mouseenter', () => {
+                clearTimeout(menuTimer);
+                openMenu();
+            });
+
+            ellipsisBtn?.addEventListener('mouseleave', () => {
+                menuTimer = setTimeout(() => {
+                    if (!ellipsisMenu?.matches(':hover')) {
+                        closeMenu();
+                    }
+                }, 200);
+            });
+
+            ellipsisMenu?.addEventListener('mouseenter', () => {
+                clearTimeout(menuTimer);
+            });
+
+            ellipsisMenu?.addEventListener('mouseleave', () => {
+                menuTimer = setTimeout(closeMenu, 200);
+            });
+
+            document.addEventListener('click', () => {
+                closeMenu();
+            });
+
+            ellipsisMenu?.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+
+            document.getElementById('menu-translate')?.addEventListener('click', () => {
                 applyLang(currentLang === 'ja' ? 'en' : 'ja');
                 playClickSound();
+                document.getElementById('ellipsis-menu')?.classList.remove('open');
             });
+
+            document.getElementById('menu-darkmode')?.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                const isDark = document.body.classList.contains('dark-mode');
+                document.getElementById('menu-darkmode-badge').innerText = isDark ? '✓' : '';
+                sessionStorage.setItem('darkMode', isDark ? 'true' : 'false');
+                playClickSound();
+                setTimeout(closeMenu, 400);
+            });
+
+            // Initialize menu badges
+            document.getElementById('menu-translate-badge').innerText = currentLang === 'ja' ? 'JA' : 'EN';
+            document.getElementById('menu-darkmode-badge').innerText = document.body.classList.contains('dark-mode') ? '✓' : '';
 
         });
 
@@ -2466,18 +2473,6 @@
                 shrine.classList.remove('post-press');
             };
 
-            const FIREFLY_BURN_THRESHOLD = 50;
-
-            function burnAllFireflies() {
-                const fireflies = shrine.querySelectorAll('.firefly:not(.burned)');
-                if (fireflies.length === 0) return;
-                fireflies.forEach(f => f.classList.add('burned'));
-                new Audio('/sounds/firefly-death.wav').play().catch(() => { });
-                setTimeout(() => {
-                    fireflies.forEach(f => { if (f.parentNode) f.remove(); });
-                }, 600);
-            }
-
             function createFirefly(spreadMultiplier = 1) {
                 const p = document.createElement('div');
                 p.className = 'firefly';
@@ -2489,10 +2484,10 @@
                 const driftY = (Math.random() * -30 * spreadMultiplier) - 10 + "px";
 
                 const r = (Math.random() - 0.5) * 360 + "deg";
-                const isBlue = Math.random() < 0.01;
-                const color = isBlue
-                    ? `hsl(${200 + Math.random() * 20}, ${90 + Math.random() * 10}%, ${60 + Math.random() * 15}%)`
-                    : `hsl(${45 + Math.random() * 15}, ${90 + Math.random() * 10}%, ${50 + Math.random() * 10}%)`;
+                
+                // Always generate the warm yellow/orange color
+                const color = `hsl(${45 + Math.random() * 15}, ${90 + Math.random() * 10}%, ${50 + Math.random() * 10}%)`;
+                
                 p.style.left = `${startX}%`;
                 p.style.top = `${startY}%`;
                 p.style.setProperty('--x', driftX);
@@ -2504,10 +2499,6 @@
                 p.style.animationDelay = `0s, -${(Math.random() * 0.5).toFixed(2)}s`;
 
                 shrine.appendChild(p);
-
-                if (shrine.querySelectorAll('.firefly:not(.burned)').length >= FIREFLY_BURN_THRESHOLD) {
-                    burnAllFireflies();
-                }
 
                 setTimeout(() => {
                     if (p.parentNode) p.remove();
@@ -2548,7 +2539,7 @@
                 for (let i = 0; i < 20; i++) {
                     const tile = document.createElement('div');
                     tile.className = 'github-tile';
-                    tile.style.backgroundColor = 'var(--subtle)';
+                    tile.style.backgroundColor = 'var(--subtitle)';
                     grid.appendChild(tile);
                 }
             }
@@ -2604,29 +2595,22 @@
 
             const cursorTooltip = document.getElementById('cursor-tooltip');
             const tooltips = {
-                'name-link': document.getElementById('tooltip-name'),
-                'music-link': document.getElementById('tooltip-music'),
-                'twitter-link': document.getElementById('tooltip-twitter'),
-                'bmc-link': document.getElementById('tooltip-bmc'),
                 'github-link': document.getElementById('tooltip-github'),
-                'location-link': document.getElementById('tooltip-location')
             };
 
-            const updateTooltipPosition = (e) => {
-                if (!cursorTooltip.classList.contains('visible')) return;
-
-                const rect = cursorTooltip.getBoundingClientRect();
-                let x = e.clientX + 15;
-                let y = e.clientY + 15;
-
-                if (x + rect.width > window.innerWidth - 10) x = window.innerWidth - rect.width - 10;
-                if (y + rect.height > window.innerHeight - 10) y = e.clientY - rect.height - 15;
-
+            function positionTooltip(link) {
+                const linkRect = link.getBoundingClientRect();
+                const tooltipRect = cursorTooltip.getBoundingClientRect();
+                let x = linkRect.left + linkRect.width / 2 - tooltipRect.width / 2;
+                let y = linkRect.bottom + 8;
+                if (x < 10) x = 10;
+                if (x + tooltipRect.width > window.innerWidth - 10) x = window.innerWidth - tooltipRect.width - 10;
+                if (y + tooltipRect.height > window.innerHeight - 10) y = linkRect.top - tooltipRect.height - 8;
                 cursorTooltip.style.left = `${x}px`;
                 cursorTooltip.style.top = `${y}px`;
-            };
+            }
 
-            const links = document.querySelectorAll('.footer-link, .location-link, .name-link, .music-link');
+            const links = document.querySelectorAll('.twitter-link, .github-link, .notes-link');
 
             if (isTouchDevice) {
                 links.forEach(link => { link.style.cursor = 'default'; });
@@ -2635,25 +2619,23 @@
                     link.addEventListener('mouseenter', (e) => {
                         let type;
                         if (link.classList.contains('twitter-link')) type = 'twitter-link';
-                        else if (link.classList.contains('bmc-link')) type = 'bmc-link';
                         else if (link.classList.contains('github-link')) type = 'github-link';
-                        else if (link.classList.contains('location-link')) type = 'location-link';
-                        else if (link.classList.contains('name-link')) type = 'name-link';
-                        else if (link.classList.contains('music-link')) type = 'music-link';
+                        else if (link.classList.contains('notes-link')) type = 'notes-link';
 
                         if (type && tooltips[type]) {
+                            // Close ellipsis menu if open
+                            const ellipsisMenu = document.getElementById('ellipsis-menu');
+                            if (ellipsisMenu) ellipsisMenu.classList.remove('open');
+
                             Object.values(tooltips).forEach(t => t.classList.remove('active'));
                             tooltips[type].classList.add('active');
 
                             cursorTooltip.classList.add('visible');
-
                             void cursorTooltip.offsetWidth;
 
-                            updateTooltipPosition(e);
+                            positionTooltip(link);
                         }
                     });
-
-                    link.addEventListener('mousemove', updateTooltipPosition);
 
                     link.addEventListener('mouseleave', () => {
                         cursorTooltip.classList.remove('visible');
@@ -2729,7 +2711,7 @@
                         const x2 = spark.x + (distance + lineLength) * Math.cos(spark.angle);
                         const y2 = spark.y + (distance + lineLength) * Math.sin(spark.angle);
                         const style = getComputedStyle(document.documentElement);
-                        ctx.strokeStyle = style.getPropertyValue('--subtle').trim() || '#000';
+                        ctx.strokeStyle = style.getPropertyValue('--subtitle').trim() || '#000';
                         ctx.lineWidth = 1.5;
                         ctx.lineCap = 'round';
                         ctx.beginPath();
@@ -2766,7 +2748,7 @@
                 window.addEventListener('click', handleClickSpark);
             })();
 
-            const bookmark = document.querySelector('.bookmark');
+            const bookmark = document.getElementById('notes-btn');
             const notesModal = document.getElementById('notes-modal');
             const notesBackdrop = document.getElementById('notes-backdrop');
 
@@ -4472,12 +4454,9 @@
                     notesModal.style.removeProperty('top');
                     notesModal.style.removeProperty('transform');
 
-                    const indicator = document.getElementById('scroll-indicator');
-                    if (indicator) indicator.style.display = 'none';
-
                     notesBackdrop.classList.add('visible');
-                    notesModal.classList.add('visible');
                     notesModal.classList.remove('minimized');
+                    notesModal.classList.add('visible');
 
                     if (wasFullscreenBeforeMinimize) {
                         notesModal.classList.add('fullscreen');
@@ -4500,9 +4479,6 @@
                 const closeNotes = (e) => {
                     document.body.style.overflow = '';
                     if (e && e.stopPropagation) e.stopPropagation();
-
-                    const indicator = document.getElementById('scroll-indicator');
-                    if (indicator) indicator.style.display = '';
 
                     notesBackdrop.classList.remove('visible');
                     notesModal.classList.remove('visible');
@@ -4564,7 +4540,7 @@
                         closeNotes(e);
                         return;
                     }
-                    document.body.style.overflow = '';
+                    document.body.style.overflow = 'hidden';
                     if (e && e.stopPropagation) e.stopPropagation();
                     wasFullscreenBeforeMinimize = notesModal.classList.contains('fullscreen');
 
