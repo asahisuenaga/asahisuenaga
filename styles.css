@@ -139,8 +139,10 @@ body {
         transform: translateX(0);
     }
 }
-.shrine-container:hover:not(.holding):not(.pressed):not(.post-press) {
-    animation: shake .4s ease-in-out;
+@media (hover: hover) {
+    .shrine-container:hover:not(.holding):not(.pressed):not(.post-press) {
+        animation: shake .4s ease-in-out;
+    }
 }
 @keyframes press-down {
     0% {
