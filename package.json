@@ -1,11 +1,10 @@
 {
+  "scripts": {
+    "build": "mkdir -p dist && cp index.html dist/ && npx terser js/*.js -o dist/script.js && npx csso css/*.css -o dist/style.css"
+  },
   "devDependencies": {
     "terser": "latest",
     "csso-cli": "latest",
-    "html-minifier": "latest",
     "wrangler": "latest"
-  },
-  "scripts": {
-    "build": "mkdir -p dist && terser js/*.js -o dist/script.js && csso css/*.css -o dist/style.css && html-minifier --collapse-whitespace index.html -o dist/index.html"
   }
 }
