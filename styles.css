@@ -403,7 +403,7 @@ body {
 .notes-modal.visible {
     opacity: 1;
     pointer-events: auto;
-    transform: translateX(-50%) scale(1);
+    transform: translate(-50%, -50%) scale(1);
 }
 @media (prefers-color-scheme: dark) {
     .notes-modal {
