@@ -118,9 +118,11 @@ body {
     line-height: 0;
     cursor: pointer;
 }
-.icon {
+.icon, .shrine-container {
     -webkit-user-drag: none;
     user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
 }
 @keyframes shake {
     0% {
