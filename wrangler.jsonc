@@ -1,12 +1,13 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "asahisuenaga",
+  "main": "index.html",
   "compatibility_date": "2025-04-01",
   "observability": {
     "enabled": true
   },
   "assets": {
     "directory": ".",
+    "binding": "ASSETS",
     "not_found_handling": "single-page-application"
   },
   "compatibility_flags": [
