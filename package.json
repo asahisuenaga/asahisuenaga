@@ -1,6 +1,6 @@
 {
 "scripts": {
-  "build": "mkdir -p dist && cp index.html dist/ && npx terser script.js -o dist/script.js && npx csso style.css -o dist/style.css"
+  "build": "mkdir -p dist && cp index.html dist/ && npx terser script.js -o dist/script.js && npx csso styles.css -o dist/styles.css"
 },
   "devDependencies": {
     "terser": "latest",
