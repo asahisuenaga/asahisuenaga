@@ -33,7 +33,6 @@ body.dark-mode {
 }
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Inter, Inter-Fallback, Geist, Geist-Fallback, Roboto, Roboto-Fallback, Arial, Arial-Fallback, sans-serif;
-    font-display: swap;
     background-color: var(--heading);
     margin: 0;
     padding: 0;
