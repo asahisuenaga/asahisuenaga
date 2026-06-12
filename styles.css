@@ -33,6 +33,7 @@ body.dark-mode {
 }
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Inter, Inter-Fallback, Geist, Geist-Fallback, Roboto, Roboto-Fallback, Arial, Arial-Fallback, sans-serif;
+    font-display: swap;
     background-color: var(--heading);
     margin: 0;
     padding: 0;
@@ -1350,14 +1351,14 @@ p {
     content: "+";
     transform: translateY(-1px);
 }
-#ellipsis-btn img, #new-folder-btn-top img, #new-note-btn-header img, #new-note-btn-mobile img, #notes-btn img, #sidebar-toggle img, .back-hero-icon, .notes-folder-info img, .themed-icon {
+#ellipsis-btn img, #new-folder-btn-top img, #new-note-btn-header img, #new-note-btn-mobile img, #notes-btn img, #sidebar-toggle img, .back-hero-icon, .notes-folder-info img, .themed-icon, #menu-translate img {
     filter: invert(1);
     -webkit-user-drag: none;
     user-select: none;
     pointer-events: none;
 }
 @media (prefers-color-scheme: dark) {
-    #ellipsis-btn img, #new-folder-btn-top img, #new-note-btn-header img, #new-note-btn-mobile img, #notes-btn img, #sidebar-toggle img, .back-hero-icon, .notes-folder-info img, .themed-icon {
+    #ellipsis-btn img, #new-folder-btn-top img, #new-note-btn-header img, #new-note-btn-mobile img, #notes-btn img, #sidebar-toggle img, .back-hero-icon, .notes-folder-info img, .themed-icon, #menu-translate img {
         filter: invert(0);
     }
 }
@@ -1632,7 +1633,7 @@ body.dark-mode .notes-modal.minimized::after {
     color: #fff;
     background: rgba(0, 0, 0, .4);
 }
-body.dark-mode #new-folder-btn-top img, body.dark-mode #new-note-btn-header img, body.dark-mode #new-note-btn-mobile img, body.dark-mode #notes-btn img, body.dark-mode #sidebar-toggle img, body.dark-mode .back-hero-icon, body.dark-mode .notes-folder-info img, body.dark-mode .themed-icon {
+body.dark-mode #new-folder-btn-top img, body.dark-mode #new-note-btn-header img, body.dark-mode #new-note-btn-mobile img, body.dark-mode #notes-btn img, body.dark-mode #ellipsis-btn img, body.dark-mode #sidebar-toggle img, body.dark-mode .back-hero-icon, body.dark-mode .notes-folder-info img, body.dark-mode .themed-icon, body.dark-mode #menu-translate img {
     filter: invert(0);
 }
 @media (min-width: 800px) {
@@ -1731,7 +1732,7 @@ body.light-mode .notes-modal.minimized::after {
     color: #000;
     background: rgba(255, 255, 255, .4);
 }
-body.light-mode .themed-icon, body.light-mode .notes-folder-info img, body.light-mode #sidebar-toggle img, body.light-mode .back-hero-icon, body.light-mode #new-note-btn-header img, body.light-mode #new-note-btn-mobile img, body.light-mode #notes-btn img, body.light-mode #ellipsis-btn img, body.light-mode #new-folder-btn-top img, body.light-mode .notes-toolbar-btn.active img, body.light-mode .notes-toolbar-btn:hover img {
+body.light-mode .themed-icon, body.light-mode .notes-folder-info img, body.light-mode #sidebar-toggle img, body.light-mode .back-hero-icon, body.light-mode #new-note-btn-header img, body.light-mode #new-note-btn-mobile img, body.light-mode #notes-btn img, body.light-mode #ellipsis-btn img, body.light-mode #new-folder-btn-top img, body.light-mode .notes-toolbar-btn.active img, body.light-mode .notes-toolbar-btn:hover img, body.light-mode #menu-translate img {
     filter: invert(1);
 }
 body.light-mode .notes-toolbar-btn #notes-mono-text, body.light-mode .notes-toolbar-btn.active #notes-mono-text, body.light-mode .notes-toolbar-btn:hover #notes-mono-text {
