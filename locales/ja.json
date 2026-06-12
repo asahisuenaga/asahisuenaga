@@ -6,7 +6,7 @@
     "shrineAlt": "神社のアイコン"
   },
   "location": "イーストランシング",
-  "bio": "<a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"MSU-link\">ミシガン州立大学</a>でコンピュータサイエンスを専攻しており、物事がどのように機能するのかに好奇心を持っています。ユーザーインターフェースデザインにも少し手を広げており、空き時間にはSwiftを学んでいます。",
+  "bio": "<a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"bioLink\">ミシガン州立大学</a>でコンピュータサイエンスを専攻しており、物事がどのように機能するのかに好奇心を持っています。ユーザーインターフェースデザインにも少し手を広げており、空き時間にはSwiftを学んでいます。",
   "actions": {
     "notes": "僕について",
     "twitter": "ツイッター",
