@@ -1376,14 +1376,14 @@ p {
         margin-top: 0;
     }
 }
-.MSU-link {
+.bioLink {
     color: var(--subtitle);
     text-decoration: underline;
     text-decoration-color: var(--subtitle);
     text-underline-offset: 3px;
     transition: color .2s;
 }
-.MSU-link:focus, .MSU-link:hover {
+.bioLink:focus, .bioLink:hover {
     color: #2891df;
     text-decoration-color: #2891df;
 }
