@@ -6,7 +6,7 @@
     "shrineAlt": "Shrine Icon"
   },
   "location": "East Lansing, MI",
-  "bio": "I’m a computer science major at <a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"MSU-link\">MSU</a> with a curiosity for how things work. I dabble in user interface design and learn Swift in my free time.",
+  "bio": "I’m a computer science major at <a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"bioLink\">MSU</a> with a curiosity for how things work. I dabble in user interface design and learn Swift in my free time.",
   "actions": {
     "notes": "About",
     "twitter": "Twitter",
