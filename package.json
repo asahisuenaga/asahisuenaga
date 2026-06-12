@@ -1,6 +1,6 @@
 {
 "scripts": {
-  "build": "mkdir -p dist && cp index.html robots.txt sitemap.xml dist/ && cp -r icons images locales notes sounds dist/ && npx terser script.js -o dist/script.js && npx csso styles.css -o dist/styles.css"
+  "build": "mkdir -p dist && npx html-minifier-terser index.html --collapse-whitespace --remove-comments --minify-css true --minify-js true -o dist/index.html && cp robots.txt sitemap.xml dist/ && cp -r icons images locales notes sounds dist/ && npx terser script.js -o dist/script.js && npx csso styles.css -o dist/styles.css"
 },
   "devDependencies": {
     "terser": "latest",
