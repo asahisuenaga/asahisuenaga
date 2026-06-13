@@ -585,6 +585,7 @@ body {
     overflow: hidden auto;
     font-size: 1rem;
     cursor: text;
+    caret-color: #eab308;
 }
 .notes-content-padded {
     padding: 1rem;
