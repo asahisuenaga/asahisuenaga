@@ -6,7 +6,7 @@
 </h1>
 
 ```text
-╭─────── INFO v06.14.26 ───────────────────╮  ╭────── Profile Overview ──────────────────╮
+╭─────── INFO v06.15.26 ───────────────────╮  ╭────── Profile Overview ──────────────────╮
 │                                          │  │  ● School: Michigan State University     │
 │              Hello there!                │  │  ● Tech: HTML, CSS, JS, Swift            │
 │                                          │  │  ● Expertise: Mobile App, UI/UX Design   │
@@ -20,7 +20,7 @@
 
 > asahi college-progress
 
-INFO: stable v06.14.26 (optimized)
+INFO: stable v06.15.26 (optimized)
 ==> Fetching academic status from reg.msu.edu...
 
 ╭────────────────────────────────────────────────────────────────────────────────────────╮
