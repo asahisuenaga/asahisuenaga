@@ -233,9 +233,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!shrine.classList.contains('holding') || Math.random() < 0.2) {
                 createFirefly(shrine.classList.contains('holding') ? 0.8 : 1);
             }
-        }, 350);
+        }, 200);
 
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 8; i++) {
             createFirefly(1.5);
         }
     });
@@ -264,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Sound is handled by global listener as shrine is role="button"
 
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 15; i++) {
             const randomLifetime = 1200 + Math.random() * 1300;
             createFirefly(1.5, randomLifetime);
         }
