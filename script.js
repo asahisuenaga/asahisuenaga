@@ -233,10 +233,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!shrine.classList.contains('holding') || Math.random() < 0.2) {
                 createFirefly(shrine.classList.contains('holding') ? 0.8 : 1);
             }
-        }, 200);
+        }, 350);
 
-        for (let i = 0; i < 8; i++) {
-            createFirefly(2);
+        for (let i = 0; i < 6; i++) {
+            createFirefly(1.5);
         }
     });
 
@@ -264,8 +264,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Sound is handled by global listener as shrine is role="button"
 
-        for (let i = 0; i < 15; i++) {
-            createFirefly(2.5);
+        for (let i = 0; i < 8; i++) {
+            const randomLifetime = 1200 + Math.random() * 1300;
+            createFirefly(1.5, randomLifetime);
         }
 
         setTimeout(() => {
@@ -279,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
         shrine.classList.remove('post-press');
     };
 
-    function createFirefly(spreadMultiplier = 1) {
+    function createFirefly(spreadMultiplier = 1, lifetime = 2000) {
         const p = document.createElement('div');
         p.className = 'firefly';
 
@@ -302,13 +303,14 @@ document.addEventListener('DOMContentLoaded', () => {
         p.style.setProperty('--firefly-color', color);
         p.style.setProperty('--firefly-size', (3 + Math.random() * 0.5) + 'px');
         p.style.setProperty('--firefly-flicker', (0.7 + Math.random() * 0.8) + 's');
+        p.style.animationDuration = `${lifetime}ms, ${(0.7 + Math.random() * 0.8)}s`;
         p.style.animationDelay = `0s, -${(Math.random() * 0.5).toFixed(2)}s`;
 
         shrine.appendChild(p);
 
         setTimeout(() => {
             if (p.parentNode) p.remove();
-        }, 2000);
+        }, lifetime);
     }
 });
 
