@@ -112,6 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ellipsisMenu.style.top = y + 'px';
         ellipsisMenu.classList.remove('close');
         ellipsisMenu.classList.add('open');
+        const firstBtn = ellipsisMenu.querySelector('button');
+        if (firstBtn) firstBtn.focus();
     }
 
     if (!isTouch) {
@@ -147,6 +149,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    ellipsisBtn?.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab' && !e.shiftKey) {
+            e.preventDefault();
+            closeMenu();
+            const bioLink = document.querySelector('.bioLink');
+            if (bioLink) bioLink.focus();
+        }
+    });
+
     window.addEventListener('resize', () => {
         if (ellipsisMenu?.classList.contains('open')) {
             openMenu();
@@ -159,6 +170,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     ellipsisMenu?.addEventListener('click', (e) => {
         e.stopPropagation();
+    });
+
+    ellipsisMenu?.addEventListener('keydown', (e) => {
+        const btns = Array.from(ellipsisMenu.querySelectorAll('button'));
+        if (!btns.length) return;
+        const idx = btns.indexOf(document.activeElement);
+        if (e.key === 'Tab' && !e.shiftKey && idx === btns.length - 1) {
+            e.preventDefault();
+            btns[0].focus();
+        } else if (e.key === 'Tab' && e.shiftKey && idx === 0) {
+            e.preventDefault();
+            btns[btns.length - 1].focus();
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            closeMenu();
+            if (ellipsisBtn) ellipsisBtn.focus();
+        }
     });
 
     document.getElementById('menu-translate')?.addEventListener('click', () => {
