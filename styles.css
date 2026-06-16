@@ -235,6 +235,9 @@ body {
     margin: 0;
     max-width: 7.5rem;
 }
+#location {
+    color: var(--subtitle);
+}
 #bio {
     font-size: 1rem;
     color: var(--heading);
@@ -245,12 +248,12 @@ body {
         background-position: 200% center;
     }
 }
-.cursor-tooltip {
+.tooltip {
     position: fixed;
     pointer-events: none;
     z-index: 9999;
     opacity: 0;
-    transition: opacity .2s cubic-bezier(.25, 1, .5, 1), transform .2s cubic-bezier(.25, 1, .5, 1);
+    display: none;
     background: 0 0;
     backdrop-filter: blur(1px) saturate(180%);
     -webkit-backdrop-filter: blur(1px) saturate(180%);
@@ -258,8 +261,12 @@ body {
     border-radius: 1rem;
     box-shadow: -.5px -.5px rgba(222, 222, 222, .2), .5px .5px rgba(222, 222, 222, .2), 0 8px 32px rgba(31, 38, 135, .1);
     will-change: transform, backdrop-filter;
+    padding: .75rem 1rem;
+    align-items: center;
+    gap: calc(var(--gap) * .5);
+    color: var(--subtitle);
 }
-.cursor-tooltip::after {
+.tooltip::after {
     content: "";
     position: absolute;
     top: 0;
@@ -271,27 +278,29 @@ body {
     backdrop-filter: blur(1px);
     opacity: .6;
 }
-.cursor-tooltip.visible {
-    opacity: 1;
-    transform: scale(1);
+.tooltip.open {
+    display: flex;
+    animation: tooltipFadeIn .15s ease-in forwards;
+}
+.tooltip.close {
+    display: flex;
+    animation: tooltipFadeOut .15s ease-out forwards;
+}
+@keyframes tooltipFadeIn {
+    from { opacity: 0; transform: scale(.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+@keyframes tooltipFadeOut {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(.95); }
 }
 @media (prefers-color-scheme: dark) {
-    .cursor-tooltip::after {
+    .tooltip::after {
         background: rgba(0, 0, 0, .2);
     }
-    .cursor-tooltip {
+    .tooltip {
         box-shadow: -.5px -.5px rgba(255, 255, 255, .2), .5px .5px rgba(255, 255, 255, .2), 0 8px 32px rgba(31, 38, 135, .1);
     }
-}
-.tooltip-content {
-    display: none;
-    color: var(--subtitle);
-    align-items: center;
-    gap: calc(var(--gap) * .5);
-    padding: .75rem 1rem;
-}
-.tooltip-content.active {
-    display: flex;
 }
 .github-mini-grid {
     display: grid;
@@ -310,28 +319,6 @@ body {
     .github-mini-grid {
         filter: invert(.9) hue-rotate(180deg);
     }
-}
-.tooltip-icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    flex-shrink: 0;
-    fill: var(--heading);
-}
-.tooltip-text {
-    display: flex;
-    flex-direction: column;
-    gap: .1rem;
-}
-.tooltip-title {
-    font-size: .8125rem;
-    font-weight: 500;
-    color: var(--heading);
-    white-space: nowrap;
-}
-.tooltip-subtitle {
-    font-size: .75rem;
-    color: var(--subtitle);
-    white-space: nowrap;
 }
 *, :after, :before {
     box-sizing: border-box;
@@ -1464,7 +1451,11 @@ body {
 }
 .ellipsis-menu.open {
     display: flex;
-    animation: fadeIn .3s ease-out forwards;
+    animation: fadeIn .15s ease-in forwards;
+}
+.ellipsis-menu.close {
+    display: flex;
+    animation: fadeOut .15s ease-out forwards;
 }
 @keyframes fadeIn {
     from {
@@ -1535,10 +1526,10 @@ body.dark-mode .ellipsis-menu::after {
 body.dark-mode .ellipsis-menu button:hover {
     background: rgba(255, 255, 255, .1);
 }
-body.dark-mode .cursor-tooltip::after {
+body.dark-mode .tooltip::after {
     background: rgba(0, 0, 0, .2);
 }
-body.dark-mode .cursor-tooltip {
+body.dark-mode .tooltip {
     box-shadow: -.5px -.5px rgba(255, 255, 255, .2), .5px .5px rgba(255, 255, 255, .2), 0 8px 32px rgba(31, 38, 135, .1);
 }
 body.dark-mode .github-mini-grid {
@@ -1741,10 +1732,10 @@ body.light-mode .notes-toolbar-btn #notes-mono-text, body.light-mode .notes-tool
 body.light-mode .github-mini-grid {
     filter: none;
 }
-body.light-mode .cursor-tooltip::after {
+body.light-mode .tooltip::after {
     background: rgba(255, 255, 255, .1);
 }
-body.light-mode .cursor-tooltip {
+body.light-mode .tooltip {
     box-shadow: -.5px -.5px rgba(222, 222, 222, .2), .5px .5px rgba(222, 222, 222, .2), 0 8px 32px rgba(31, 38, 135, .1);
 }
 body.light-mode .ellipsis-menu {

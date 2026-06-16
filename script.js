@@ -89,18 +89,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
     function closeMenu() {
-        if (ellipsisMenu) ellipsisMenu.classList.remove('open');
+        if (ellipsisMenu) {
+            ellipsisMenu.classList.remove('open');
+            ellipsisMenu.classList.add('close');
+        }
     }
 
     function openMenu() {
         // Hide all tooltips when menu opens
-        const cursorTooltip = document.getElementById('cursor-tooltip');
-        if (cursorTooltip) cursorTooltip.classList.remove('visible');
+        const tooltip = document.getElementById('tooltip');
+        if (tooltip) { tooltip.classList.remove('open'); tooltip.classList.add('close'); }
         if (!ellipsisMenu || !ellipsisBtn) return;
         const rect = ellipsisBtn.getBoundingClientRect();
         ellipsisMenu.style.display = 'flex';
         const { width, height } = ellipsisMenu.getBoundingClientRect();
-        ellipsisMenu.style.display = '';
         let x = rect.left + rect.width / 2;
         let y = rect.bottom + 8;
         if (x + width / 2 > window.innerWidth - 10) x = window.innerWidth - 10 - width / 2;
@@ -108,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (y + height > window.innerHeight - 10) y = rect.top - height - 8;
         ellipsisMenu.style.left = x + 'px';
         ellipsisMenu.style.top = y + 'px';
+        ellipsisMenu.classList.remove('close');
         ellipsisMenu.classList.add('open');
     }
 
@@ -368,21 +371,18 @@ document.addEventListener('pointerup', (e) => {
 document.addEventListener('DOMContentLoaded', () => {
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-    const cursorTooltip = document.getElementById('cursor-tooltip');
-    const tooltips = {
-        'github-link': document.getElementById('tooltip-github'),
-    };
+    const tooltip = document.getElementById('tooltip');
 
     function positionTooltip(link) {
         const linkRect = link.getBoundingClientRect();
-        const tooltipRect = cursorTooltip.getBoundingClientRect();
+        const tooltipRect = tooltip.getBoundingClientRect();
         let x = linkRect.left + linkRect.width / 2 - tooltipRect.width / 2;
         let y = linkRect.bottom + 8;
         if (x < 10) x = 10;
         if (x + tooltipRect.width > window.innerWidth - 10) x = window.innerWidth - tooltipRect.width - 10;
         if (y + tooltipRect.height > window.innerHeight - 10) y = linkRect.top - tooltipRect.height - 8;
-        cursorTooltip.style.left = `${x}px`;
-        cursorTooltip.style.top = `${y}px`;
+        tooltip.style.left = `${x}px`;
+        tooltip.style.top = `${y}px`;
     }
 
     const links = document.querySelectorAll('.twitter-link, .github-link, .notes-link');
@@ -392,28 +392,22 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         links.forEach(link => {
             link.addEventListener('mouseenter', (e) => {
-                let type;
-                if (link.classList.contains('twitter-link')) type = 'twitter-link';
-                else if (link.classList.contains('github-link')) type = 'github-link';
-                else if (link.classList.contains('notes-link')) type = 'notes-link';
+                if (!link.classList.contains('github-link')) return;
+                // Close ellipsis menu if open
+                const ellipsisMenu = document.getElementById('ellipsis-menu');
+                if (ellipsisMenu) { ellipsisMenu.classList.remove('open'); ellipsisMenu.classList.add('close'); }
 
-                if (type && tooltips[type]) {
-                    // Close ellipsis menu if open
-                    const ellipsisMenu = document.getElementById('ellipsis-menu');
-                    if (ellipsisMenu) ellipsisMenu.classList.remove('open');
+                tooltip.style.display = 'flex';
+                tooltip.classList.remove('close');
+                tooltip.classList.add('open');
+                void tooltip.offsetWidth;
 
-                    Object.values(tooltips).forEach(t => t.classList.remove('active'));
-                    tooltips[type].classList.add('active');
-
-                    cursorTooltip.classList.add('visible');
-                    void cursorTooltip.offsetWidth;
-
-                    positionTooltip(link);
-                }
+                positionTooltip(link);
             });
 
             link.addEventListener('mouseleave', () => {
-                cursorTooltip.classList.remove('visible');
+                tooltip.classList.remove('open');
+                tooltip.classList.add('close');
             });
         });
     }

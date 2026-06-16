@@ -131,7 +131,7 @@
             overflow: hidden auto;
             -webkit-overflow-scrolling: touch;
         }
-        .cursor-tooltip::after {
+        .tooltip::after {
             position: absolute;
             top: 0;
             left: 0;
@@ -173,35 +173,15 @@
             margin: 0;
             max-width: 7.5rem;
         }
+        .location {
+            color: var(--subtitle);
+        }
         #bio {
             line-height: 1.5rem;
         }
-        .cursor-tooltip {
-            position: fixed;
-            z-index: 9999;
-            opacity: 0;
-            background: 0 0;
-            backdrop-filter: blur(1px) saturate(180%);
-            -webkit-backdrop-filter: blur(1px) saturate(180%);
-            border: 0;
-            border-radius: 1rem;
-            box-shadow: -.5px -.5px rgba(222, 222, 222, .2), .5px .5px rgba(222, 222, 222, .2), 0 8px 32px rgba(31, 38, 135, .1);
-            will-change: transform, backdrop-filter;
-        }
-        .cursor-tooltip::after {
-            content: "";
-            height: 100%;
-            background: rgba(255, 255, 255, .1);
-            border-radius: inherit;
-            backdrop-filter: blur(1px);
-            opacity: .6;
-        }
-        .tooltip-content {
+        .tooltip {
             display: none;
-            color: var(--subtitle);
-            align-items: center;
-            gap: calc(var(--gap) * .5);
-            padding: .75rem 1rem;
+            opacity: 0;
         }
         .github-mini-grid {
             display: grid;
@@ -225,10 +205,10 @@
                 --text: #fff;
                 --dark-mode: 1;
             }
-            .cursor-tooltip::after {
+            .tooltip::after {
                 background: rgba(0, 0, 0, .2);
             }
-            .cursor-tooltip {
+            .tooltip {
                 box-shadow: -.5px -.5px rgba(255, 255, 255, .2), .5px .5px rgba(255, 255, 255, .2), 0 8px 32px rgba(31, 38, 135, .1);
             }
             .github-mini-grid {
@@ -864,7 +844,7 @@
                     <a href="https://twitter.com/asahisuenaga" aria-label="Twitter" class="notes-glass-btn action-label-btn twitter-link" target="_blank" draggable="false"><span id="action-twitter">Twitter</span></a>
                     <a href="https://github.com/asahisuenaga" aria-label="Github" class="notes-glass-btn action-label-btn github-link" target="_blank" draggable="false"><span id="action-github">GitHub</span></a>
                     <button id="ellipsis-btn" class="notes-glass-btn" aria-label="More options"><svg viewBox="0 0 18.584 3.7207" width="20" height="20" fill="var(--heading)"><path d="M16.3672 3.70117C17.3926 3.70117 18.2227 2.88086 18.2227 1.85547C18.2227 0.830078 17.3926 0 16.3672 0C15.3418 0 14.5117 0.830078 14.5117 1.85547C14.5117 2.88086 15.3418 3.70117 16.3672 3.70117Z"/><path d="M9.11133 3.70117C10.1367 3.70117 10.957 2.88086 10.957 1.85547C10.957 0.830078 10.1367 0 9.11133 0C8.08594 0 7.25586 0.830078 7.25586 1.85547C7.25586 2.88086 8.08594 3.70117 9.11133 3.70117Z"/><path d="M1.85547 3.70117C2.88086 3.70117 3.70117 2.88086 3.70117 1.85547C3.70117 0.830078 2.88086 0 1.85547 0C0.830078 0 0 0.830078 0 1.85547C0 2.88086 0.830078 3.70117 1.85547 3.70117Z"/></svg></button>
-                    <div class="ellipsis-menu" id="ellipsis-menu"><button id="menu-translate"><img alt="Toggle language" src="icons/translate.svg" style="width: 20px; height: 16px;"><span id="menu-translate-label">Language</span><span id="menu-translate-badge" class="menu-badge"></span></button><button id="menu-darkmode" aria-label="Toggle dark mode"><svg viewBox="0 0 400 400" width="16" height="16" class="color-mode"><circle r="200" cx="200" cy="200" fill="#202020"/><path d="M 200 375 A 175 175 0 0 1 200 25" fill="#ffffff"/><path d="M 200 300 A 100 100 0 0 1 200 100" fill="#202020"/><path d="M 200 100 A 100 100 180 0 1 200 300" fill="#ffffff"/></svg><span id="menu-darkmode-label">Dark Mode</span><span id="menu-darkmode-badge" class="menu-badge"></span></button></div>
+                    <div class="ellipsis-menu" id="ellipsis-menu" style="display:none"><button id="menu-translate"><img alt="Toggle language" src="icons/translate.svg" style="width: 20px; height: 16px;"><span id="menu-translate-label">Language</span><span id="menu-translate-badge" class="menu-badge"></span></button><button id="menu-darkmode" aria-label="Toggle dark mode"><svg viewBox="0 0 400 400" width="16" height="16" class="color-mode"><circle r="200" cx="200" cy="200" fill="#202020"/><path d="M 200 375 A 175 175 0 0 1 200 25" fill="#ffffff"/><path d="M 200 300 A 100 100 0 0 1 200 100" fill="#202020"/><path d="M 200 100 A 100 100 180 0 1 200 300" fill="#ffffff"/></svg><span id="menu-darkmode-label">Dark Mode</span><span id="menu-darkmode-badge" class="menu-badge"></span></button></div>
                 </div>
             </div>
         </main>
@@ -937,10 +917,8 @@
                 </div>
             </div>
         </div>
-        <div class="cursor-tooltip" id="cursor-tooltip">
-            <div class="tooltip-content" id="tooltip-github">
-                <div id="github-mini-grid" class="github-mini-grid"></div>
-            </div>
+        <div class="tooltip" id="tooltip" style="display:none">
+            <div id="github-mini-grid" class="github-mini-grid"></div>
         </div>
     </body>
 </html>
