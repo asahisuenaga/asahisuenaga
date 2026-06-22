@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('menu-translate')?.addEventListener('click', () => {
         applyLang(currentLang === 'ja' ? 'en' : 'ja');
-        playClickSound();
+        playBasicSound();
         document.getElementById('ellipsis-menu')?.classList.remove('open');
         closeMenu();
     });
@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.add(systemDark ? 'light-mode' : 'dark-mode');
         }
         document.getElementById('menu-darkmode-badge').innerText = isDarkEffective() ? '✓' : '';
-        playClickSound();
+        playBasicSound();
         setTimeout(closeMenu, 400);
     });
 
@@ -357,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetInNotes = notesContainer && notesContainer.contains(e.target);
             const targetInShrine = shrineContainer && shrineContainer.contains(e.target);
         if (!isTouch && !targetInNotes && !targetInShrine) {
-            playSound('/sounds/basic.wav');
+            playBasicSound();
         }
         };
         window.addEventListener('click', handleClickSound);
@@ -680,7 +680,7 @@ document.addEventListener('DOMContentLoaded', () => {
         customFolders.push(folderName);
         localStorage.setItem(CUSTOM_FOLDER_KEY, JSON.stringify(customFolders));
         renderFolderList();
-        playNotesClickSound();
+        playNotesSound();
     };
 
     const navigateTo = (targetId, opts = {}) => {
@@ -977,7 +977,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     history.pushState(null, '', data.permalink);
                 }
                 navigateTo('view');
-                playNotesClickSound();
+                playNotesSound();
 
                 lastSelectedIndex = currentIndex;
             });
@@ -1019,7 +1019,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         saveNotes();
                         renderNotesList(folderFilter);
                         menu.remove();
-                        playNotesClickSound();
+                        playNotesSound();
                     };
                     menu.appendChild(restoreBtn);
 
@@ -1032,7 +1032,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         saveNotes();
                         renderNotesList(folderFilter);
                         menu.remove();
-                        playNotesClickSound();
+                        playNotesSound();
                     };
                     menu.appendChild(delBtn);
                 } else {
@@ -1046,7 +1046,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                         renderNotesList(folderFilter);
                         menu.remove();
-                        playNotesClickSound();
+                        playNotesSound();
                     };
                     menu.appendChild(pinBtn);
 
@@ -1068,7 +1068,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 saveNotes();
                                 renderNotesList(folderFilter);
                                 menu.remove();
-                                playMoveSound();
+                                playNotesSound();
                             };
                             menu.appendChild(moveBtn);
                         });
@@ -1092,7 +1092,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             saveNotes();
                             renderNotesList(folderFilter);
                             menu.remove();
-                            playNotesClickSound();
+                            playNotesSound();
                         };
                         menu.appendChild(actionBtn);
                     }
@@ -1141,7 +1141,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         saveNotes();
                         renderNotesList(folderFilter);
                         menu.remove();
-                        playNotesClickSound();
+                        playNotesSound();
                     };
                     menu.appendChild(recoverBtn);
 
@@ -1156,7 +1156,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         saveNotes();
                         renderNotesList(folderFilter);
                         menu.remove();
-                        playNotesClickSound();
+                        playNotesSound();
                     };
                     menu.appendChild(permDelBtn);
                 } else if (!multiHasBuiltIn) {
@@ -1174,7 +1174,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             saveNotes();
                             renderNotesList(folderFilter);
                             menu.remove();
-                            playNotesClickSound();
+                            playNotesSound();
                         };
                         menu.appendChild(pinBtn);
                     }
@@ -1190,7 +1190,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             saveNotes();
                             renderNotesList(folderFilter);
                             menu.remove();
-                            playNotesClickSound();
+                            playNotesSound();
                         };
                         menu.appendChild(unpinBtn);
                     }
@@ -1219,7 +1219,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             saveNotes();
                             renderNotesList(folderFilter);
                             menu.remove();
-                            playMoveSound();
+                            playNotesSound();
                         };
                         menu.appendChild(mbtn);
                     });
@@ -1247,7 +1247,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         saveNotes();
                         renderNotesList(folderFilter);
                         menu.remove();
-                        playNotesClickSound();
+                        playNotesSound();
                     };
                     menu.appendChild(delBtn);
                 }
@@ -1765,7 +1765,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     setTimeout(updateToolbar, 10);
                 }
                 updateToolbar();
-                playNotesClickSound();
+                playNotesSound();
             });
         });
 
@@ -1779,7 +1779,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.execCommand('fontName', false, 'monospace');
                 }
                 contentEditor.focus();
-                playNotesClickSound();
+                playNotesSound();
             });
         }
 
@@ -1789,7 +1789,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 applyListType('dash');
                 contentEditor.focus();
                 updateToolbar();
-                playNotesClickSound();
+                playNotesSound();
             });
         }
 
@@ -1886,7 +1886,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.execCommand('selectAll', false, null);
                 }
             }, 500);
-            playNotesClickSound();
+            playNotesSound();
         };
 
         document.getElementById('new-note-btn-header')?.addEventListener('click', createNewNote);
@@ -1958,7 +1958,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     renderFolderList();
                     renderNotesList(trimmedNewName);
                     menu.remove();
-                    playNotesClickSound();
+                    playNotesSound();
                 };
 
                 const separator = document.createElement('div');
@@ -1990,7 +1990,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     saveNotes();
                     renderFolderList();
                     renderNotesList('all');
-                    playNotesClickSound();
+                    playNotesSound();
                     menu.remove();
                 };
 
@@ -2039,7 +2039,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             firstNote.click();
                         }
                     }, 50);
-                    playNotesClickSound();
+                    playNotesSound();
                 };
 
                 let folderPressTimer;
@@ -2130,7 +2130,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 400);
 
             history.replaceState(null, null, '/');
-            playNotesClickSound();
+            playNotesSound();
         };
 
         const openNoteByPermalink = (permalink) => {
@@ -2187,7 +2187,7 @@ document.addEventListener('DOMContentLoaded', () => {
             notesModal.classList.remove('fullscreen');
             bookmark.classList.remove('active');
             isMinimized = true;
-            playNotesClickSound();
+            playNotesSound();
         };
 
         const maximizeNotes = (e) => {
@@ -2417,7 +2417,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         autoSelected = true;
                     }
                 }
-                if (!autoSelected) playNotesClickSound();
+                if (!autoSelected) playNotesSound();
                 navigateTo('notes', { skipListRender: true });
             });
         });
@@ -2462,7 +2462,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     navigateTo('notes');
                 }
-                playNotesClickSound();
+                playNotesSound();
             });
         });
 
@@ -2479,7 +2479,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         sidebarToggle.style.marginLeft = "0px";
                     }
                 }
-                playNotesClickSound();
+                playNotesSound();
             });
         }
     }
@@ -2540,19 +2540,11 @@ function playSound(file) {
     audioPool[file].play().catch(() => { /* autoplay blocked */ });
 }
 
-function playNotesClickSound() {
+function playNotesSound() {
     playSound('/sounds/notes.wav');
 }
 
-function playNotesClickSound() {
-    playSound('/sounds/delete.wav');
-}
-
-function playMoveSound() {
-    playSound('/sounds/move.wav');
-}
-
-function playClickSound() {
+function playBasicSound() {
     playSound('/sounds/basic.wav');
 }
 
@@ -2560,9 +2552,9 @@ document.addEventListener('pointerup', (e) => {
     const target = e.target.closest('a, button, [role="button"]');
     if (target) {
         if (target.closest('.notes-modal') || target.closest('.mac-stoplights')) {
-            playNotesClickSound();
+            playNotesSound();
         } else {
-            playClickSound();
+            playBasicSound();
         }
     }
 }, true);
