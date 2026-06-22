@@ -197,7 +197,7 @@ jobs:
 
           current_date = datetime.now().strftime("%m.%d.%y")
 
-          with open("docs/template.md", "r", encoding="utf-8") as f:
+          with open("docs/TEMPLATE.md", "r", encoding="utf-8") as f:
               template = f.read().replace("\xa0", " ")
 
           # Strict regex bounding to keep titles safe from string collision replacements
