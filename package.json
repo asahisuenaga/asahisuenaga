@@ -1,6 +1,6 @@
 {
 "scripts": {
-  "build": "mkdir -p dist && npx html-minifier-terser src/index.html --collapse-whitespace --remove-comments --minify-css true --minify-js true -o dist/index.html && cp src/robots.txt src/sitemap.xml dist/ && cp -r src/assets/icons src/assets/metadata src/locales src/notes src/assets/sounds dist/ && npx terser src/assets/js/script.js -o dist/script.js && npx csso src/assets/css/styles.css -o dist/styles.css"
+   "build": "mkdir -p dist/assets/css dist/assets/js && cp -r src/assets/icons src/assets/metadata src/assets/sounds dist/assets/ && cp -r src/locales src/notes dist/ && cp src/robots.txt src/sitemap.xml dist/ && npx html-minifier-terser src/index.html --collapse-whitespace --remove-comments --minify-css true --minify-js true -o dist/index.html && npx terser src/assets/js/script.js -o dist/assets/js/script.js && npx csso src/assets/css/styles.css -o dist/assets/css/styles.css"
 },
   "devDependencies": {
     "terser": "latest",
