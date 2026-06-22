@@ -1473,6 +1473,7 @@ body {
 .ellipsis-menu.close {
     display: flex;
     animation: fadeOut .15s ease-out forwards;
+    pointer-events: none;
 }
 @keyframes fadeIn {
     from {
