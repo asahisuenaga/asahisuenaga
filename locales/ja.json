@@ -22,11 +22,7 @@
       "all": "すべて",
       "personal": "個人",
       "projects": "プロジェクト",
-      "deleted": "削除済み",
-      "headerAll": "すべてのノート",
-      "headerPersonal": "個人",
-      "headerProjects": "プロジェクト",
-      "headerDeleted": "削除済み"
+      "deleted": "削除済み"
     },
     "buttons": {
       "newFolder": "新規フォルダ",
@@ -34,9 +30,6 @@
       "newNote": "新規ノート"
     },
     "modal": {
-      "titlePlaceholder": "タイトル",
-      "contentPlaceholder": "内容",
-      "deletedPrefix": "削除:",
       "minimizedLabel": "\"メモ\"",
       "close": "閉じる",
       "minimize": "最小化",

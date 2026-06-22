@@ -88,7 +88,6 @@
         }
         * {
             scrollbar-width: none;
-            -ms-overflow-style: none;
         }
         ::-webkit-scrollbar {
             display: none;
@@ -102,7 +101,6 @@
             height: 101dvh;
             overflow-x: hidden;
             scrollbar-width: none;
-            -ms-overflow-style: none;
         }
         #click-spark-canvas, .main-content {
             height: 100dvh;
@@ -129,7 +127,6 @@
             box-sizing: border-box;
             clip-path: inset(0 0 0 0 round 0);
             overflow: hidden auto;
-            -webkit-overflow-scrolling: touch;
         }
         .tooltip::after {
             position: absolute;
@@ -354,6 +351,12 @@
                 color: #fff;
             }
         }
+        .folder-icon { 
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+            vertical-align: -3px;
+        }
         .notes-list-group {
             background: 0 0;
             overflow: visible;
@@ -367,6 +370,7 @@
         .notes-list-item {
             padding: 12px 16px;
             justify-content: space-between;
+            border-radius: .625rem;
         }
         .notes-folder-info {
             display: flex;
@@ -706,10 +710,6 @@
                 opacity: 1;
                 transform: translateX(100%);
             }
-            .notes-footer {
-                margin-left: 0;
-                margin-top: 0;
-            }
         }
         .notes-drawer-handle {
             display: none;
@@ -732,15 +732,6 @@
             #new-folder-btn-top img, #new-note-btn-header img, #new-note-btn-mobile img, #sidebar-toggle img, .back-hero-icon, .notes-folder-info img {
                 filter: invert(0);
             }
-        }
-        .notes-footer {
-            display: none;
-            position: relative;
-            margin-left: 0;
-            margin-top: 0;
-            padding: .5rem 1rem;
-            justify-content: flex-end;
-            align-items: center;
         }
         .actions-row {
             display: flex;
@@ -861,29 +852,28 @@
                     <h1 class="notes-large-title">Folders</h1>
                     <div class="notes-list-group">
                         <div class="notes-list-item folder-list-item" data-target="panel-notes-all" style="user-select: none;">
-                            <div class="notes-folder-info"><img alt="Folder" src="icons/folder.svg" style="width:18px; height:18px; display:inline-block; vertical-align:-3px;" draggable="false">All Notes</div>
+                            <div class="notes-folder-info"><img alt="Folder" src="icons/folder.svg" class="folder-icon" draggable="false">All Notes</div>
                             <div><span class="notes-count" id="count-all"></span></div>
                         </div>
                         <div class="notes-list-item folder-list-item" data-target="panel-notes-personal" style="user-select: none;">
-                            <div class="notes-folder-info"><img alt="Folder" src="icons/folder.svg" style="width:18px; height:18px; display:inline-block; vertical-align:-3px;" draggable="false">Personal</div>
+                            <div class="notes-folder-info"><img alt="Folder" src="icons/folder.svg" class="folder-icon" draggable="false">Personal</div>
                             <div><span class="notes-count" id="count-personal">0</span></div>
                         </div>
                         <div class="notes-list-item folder-list-item" data-target="panel-notes-projects" style="user-select: none;">
-                            <div class="notes-folder-info"><img alt="Folder" src="icons/folder.svg" style="width:18px; height:18px; display:inline-block; vertical-align:-3px;" draggable="false">Projects</div>
+                            <div class="notes-folder-info"><img alt="Folder" src="icons/folder.svg" class="folder-icon" draggable="false">Projects</div>
                             <div><span class="notes-count" id="count-projects">0</span></div>
                         </div>
                         <div class="notes-folder-divider" style="height: 1px; background: var(--heading); opacity: 0.15; margin: 8px 0;"></div>
                         <div class="notes-list-item folder-list-item" data-target="panel-notes-deleted" style="user-select: none;">
-                            <div class="notes-folder-info"><img alt="Trash" src="icons/trash.svg" style="width:18px; height:18px; display:inline-block; vertical-align:-3px;" draggable="false">Deleted</div>
+                            <div class="notes-folder-info"><img alt="Trash" src="icons/trash.svg" class="folder-icon" draggable="false">Deleted</div>
                             <div><span class="notes-count" id="count-deleted">0</span></div>
                         </div>
                     </div>
                 </div>
-                <div class="notes-footer"><button class="notes-glass-btn" aria-label="New Folder" id="new-folder-btn" title="New Folder"><img alt="Folder Badge Plus" src="icons/folder.badge.plus.svg" style="width:20px; height:20px;"></button></div>
             </div>
             <div class="notes-panel" id="panel-notes">
                 <div class="notes-header">
-                    <div class="notes-header-left"><button class="notes-glass-btn notes-back" aria-label="Return" data-back="panel-folders" style="display: none;"><img alt="Chevron Left" src="icons/chevron.left.svg" class="back-hero-icon" style="width:16px; height:16px; display:inline-block; vertical-align:-3px;" draggable="false"></button><button class="notes-glass-btn" aria-label="Sidebar" id="sidebar-toggle" title="Sidebar" oncontextmenu="return false;" style="margin-left: 0px; transition: margin-left 0.3s cubic-bezier(0.25, 1, 0.5, 1);"><img alt="Sidebar Left" src="icons/sidebar.left.svg" style="width:18px; height:18px; display:inline-block; vertical-align:-3px;" draggable="false"></button></div>
+                    <div class="notes-header-left"><button class="notes-glass-btn notes-back" aria-label="Return" data-back="panel-folders" style="display: none;"><img alt="Chevron Left" src="icons/chevron.left.svg" class="back-hero-icon" style="width:16px; height:16px; display:inline-block; vertical-align:-3px;" draggable="false"></button><button class="notes-glass-btn" aria-label="Sidebar" id="sidebar-toggle" title="Sidebar" style="margin-left: 0px; transition: margin-left 0.3s cubic-bezier(0.25, 1, 0.5, 1);"><img alt="Sidebar Left" src="icons/sidebar.left.svg" class="folder-icon" draggable="false"></button></div>
                     <button id="new-note-btn-header" class="notes-glass-btn" aria-label="New Note" title="New Note"><img alt="Square and Pencil" src="icons/square.and.pencil.svg" draggable="false"></button>
                 </div>
                 <div class="notes-content notes-content-padded">

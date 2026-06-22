@@ -26,7 +26,6 @@ body.dark-mode {
 }
 * {
     scrollbar-width: none;
-    -ms-overflow-style: none;
 }
 ::-webkit-scrollbar {
     display: none;
@@ -40,7 +39,6 @@ body {
     height: 101dvh;
     overflow-x: hidden;
     scrollbar-width: none;
-    -ms-overflow-style: none;
 }
 #click-spark-canvas {
     position: fixed;
@@ -71,7 +69,6 @@ body {
     box-sizing: border-box;
     clip-path: inset(0 0 0 0 round 0);
     overflow: hidden auto;
-    -webkit-overflow-scrolling: touch;
 }
 .lang-switching .main-content {
     color: transparent !important;
@@ -93,7 +90,7 @@ body {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     text-decoration: none;
-    transition: all .2s;
+    transition: background-color .2s, color .2s, opacity .2s;
     display: flex;
     position: absolute;
     top: 0;
@@ -200,28 +197,6 @@ body {
         opacity: 0;
     }
 }
-.firefly.burned {
-    animation: burnOut .6s forwards ease-in !important;
-}
-@keyframes burnOut {
-    0% {
-        background: #ff3b00;
-        box-shadow: 0 0 8px 3px rgba(255, 60, 0, .8);
-        transform: scale(1.5);
-        opacity: 1;
-    }
-    50% {
-        background: #ff6a00;
-        box-shadow: 0 0 10px 4px rgba(255, 100, 0, .6);
-        transform: scale(1);
-    }
-    100% {
-        background: #333;
-        box-shadow: none;
-        transform: scale(0);
-        opacity: 0;
-    }
-}
 .header {
     display: flex;
     flex-direction: column;
@@ -242,11 +217,6 @@ body {
     font-size: 1rem;
     color: var(--heading);
     line-height: 1.5rem;
-}
-@keyframes border-crawl {
-    to {
-        background-position: 200% center;
-    }
 }
 .tooltip {
     position: fixed;
@@ -352,7 +322,7 @@ body {
     opacity: 0;
     pointer-events: none;
     transform: translateX(-50%) scale(.95);
-    transition: all .3s cubic-bezier(.25, 1, .5, 1);
+    transition: opacity .3s cubic-bezier(.25, 1, .5, 1), transform .3s cubic-bezier(.25, 1, .5, 1);;
     overflow: hidden;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
 }
@@ -435,30 +405,6 @@ body {
 .notes-header-right {
     justify-content: flex-end;
 }
-.notes-btn {
-    background: 0 0;
-    border: 0;
-    color: #d4a346;
-    font-size: 17px;
-    font-weight: 400;
-    cursor: pointer;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    letter-spacing: -.2px;
-    font-family: inherit;
-}
-.notes-btn.bold {
-    font-weight: 500;
-}
-.notes-btn:active {
-    opacity: .6;
-}
-@media (prefers-color-scheme: dark) {
-    .notes-btn {
-        color: #eab308;
-    }
-}
 .notes-glass-btn {
     background: rgba(255, 255, 255);
     backdrop-filter: blur(1px) saturate(180%);
@@ -467,7 +413,7 @@ body {
     box-shadow: -.5px -.5px rgba(222, 222, 222, .2), .5px .5px rgba(222, 222, 222, .2), 0 8px 32px rgba(31, 38, 135, .1);
     cursor: pointer;
     padding: .75rem;
-    transition: all .2s cubic-bezier(.25, 1, .5, 1);
+    transition: background-color .2s cubic-bezier(.25, 1, .5, 1), backdrop-filter .2s cubic-bezier(.25, 1, .5, 1), transform .2s cubic-bezier(.25, 1, .5, 1), box-shadow .2s cubic-bezier(.25, 1, .5, 1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -516,7 +462,7 @@ body {
 }
 @media (prefers-color-scheme: dark) {
     .note-context-menu {
-        background: rgba(0, 0, 0, .3);
+        background: rgba(32, 32, 32, .3);
         border: 0;
         box-shadow: -.5px -.5px rgba(255, 255, 255, .2), .5px .5px rgba(255, 255, 255, .2), 0 8px 32px rgba(31, 38, 135, .1);
     }
@@ -556,12 +502,6 @@ body {
 .mac-stoplights {
     display: none;
 }
-.notes-back-icon {
-    font-size: 24px;
-    line-height: 1;
-    margin-right: 4px;
-    padding-bottom: 2px;
-}
 @media (prefers-color-scheme: dark) {
     .notes-content {
         color: #e5e5e5;
@@ -590,6 +530,12 @@ body {
         color: #fff;
     }
 }
+.folder-icon { 
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    vertical-align: -3px;
+}
 .notes-list-group {
     background: 0 0;
     overflow: visible;
@@ -600,23 +546,23 @@ body {
     display: flex;
     align-items: center;
     padding: 12px 16px;
+    border-radius: .625rem;
     cursor: pointer;
     justify-content: space-between;
-    transition: all .2s cubic-bezier(.25, 1, .5, 1);
+    transition: background-color .2s cubic-bezier(.25, 1, .5, 1), transform .2s cubic-bezier(.25, 1, .5, 1);
 }
 .folder-list-item:hover, .note-preview:hover {
     background: rgba(0, 0, 0, .05);
     border-radius: 10px;
 }
 @media (prefers-color-scheme: dark) {
-    .folder-list-item:hover, .notes-preview:hover {
+    .folder-list-item:hover, .note-preview:hover {
         background: rgba(255, 255, 255, .12);
     }
 }
 .notes-list-item.selected {
     background: rgba(234, 179, 8, .2);
     color: inherit !important;
-    border-radius: .625rem;
 }
 .notes-list-item.selected * {
     color: inherit !important;
@@ -651,9 +597,6 @@ body {
     align-items: center;
     gap: 8px;
     font-size: .9375rem;
-}
-.notes-folder-icon {
-    font-size: 20px;
 }
 .notes-count {
     color: #8e8e93;
@@ -758,9 +701,6 @@ body {
     margin: 0 !important;
     padding: 0;
 }
-.notes-dashed-list {
-    list-style-type: "- ";
-}
 .notes-view-content blockquote {
     border-left: 4px solid rgba(0, 0, 0, .2) !important;
     padding-left: 1rem !important;
@@ -775,11 +715,6 @@ body {
 }
 .notes-view-content ol, .notes-view-content ul {
     padding-left: 20px !important;
-}
-@media (prefers-color-scheme: dark) {
-    .notes-view-content blockquote {
-        border-left: 4px solid rgba(255, 255, 255, .2) !important;
-    }
 }
 .notes-view-content code, .notes-view-content pre {
     font-family: "SF Mono", Menlo, monospace;
@@ -818,7 +753,7 @@ div.notes-header-right {
     padding: 1rem;
     height: 2.5rem;
     box-shadow: -.5px -.5px rgba(255, 255, 255, .2), .5px .5px rgba(255, 255, 255, .2), 0 8px 32px rgba(31, 38, 135, .1);
-    transition: all .2s cubic-bezier(.25, 1, .5, 1);
+    transition: background-color .2s cubic-bezier(.25, 1, .5, 1), backdrop-filter .2s cubic-bezier(.25, 1, .5, 1), transform .2s cubic-bezier(.25, 1, .5, 1);
     transform: translateZ(0);
     will-change: transform, backdrop-filter;
     max-width: 400px;
@@ -837,7 +772,7 @@ div.notes-header-right::after {
     z-index: -1;
 }
 @media (prefers-color-scheme: dark) {
-    #new-note-btn-header, button.notes-header-right, div.notes-header-right {
+    #new-note-btn-header, div.notes-header-right {
         background: rgba(0, 0, 0, .3);
     }
 }
@@ -854,7 +789,7 @@ div.notes-header-right::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all .2s;
+    transition: background-color .2s, color .2s, transform .2s;
     padding: 0;
     overflow: hidden;
 }
@@ -869,7 +804,7 @@ div.notes-header-right::after {
     width: 1rem;
     height: 1rem;
     filter: brightness(.2);
-    transition: all .2s;
+    transition: filter .2s, transform .2s;
 }
 .notes-toolbar-btn[data-command="bold"] img, .notes-toolbar-btn[data-command="italic"] img {
     width: .75rem;
@@ -887,7 +822,7 @@ div.notes-header-right::after {
     font-weight: 600;
     font-size: 1rem;
     filter: brightness(.2);
-    transition: all .2s;
+    transition: filter .2s, transform .2s;
     transform: translateY(.5px);
 }
 .notes-delete-notice {
@@ -901,7 +836,7 @@ div.notes-header-right::after {
     filter: brightness(0);
 }
 @media (prefers-color-scheme: dark) {
-    .notes-toolbar.btn.active:hover {
+    .notes-toolbar-btn.active:hover {
         background: rgba(255, 255, 255, .3);
     }
     .notes-toolbar-btn img, .notes-toolbar-btn.active img, .notes-toolbar-btn:hover img {
@@ -947,7 +882,7 @@ div.notes-header-right::after {
     box-shadow: inset 0 0 0 1px var(--subtitle);
     background: var(--bg);
     position: relative;
-    transition: all .2s cubic-bezier(.2, 0, 0, 1);
+    transition: background-color .2s cubic-bezier(.2, 0, 0, 1), box-shadow .2s cubic-bezier(.2, 0, 0, 1);
     outline: 0;
 }
 .checklist-checkbox:checked {
@@ -961,16 +896,6 @@ div.notes-header-right::after {
     -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpolyline points='40 144 96 200 224 72' fill='none' stroke='#000' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'/%3E%3C/svg%3E") no-repeat center/70%;
     mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpolyline points='40 144 96 200 224 72' fill='none' stroke='#000' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'/%3E%3C/svg%3E") no-repeat center/70%;
     background-color: var(--bg);
-}
-@keyframes checkmark-appear {
-    0% {
-        opacity: 0;
-        transform: scale(.5);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
 }
 p {
     margin: 0;
@@ -1072,9 +997,6 @@ p {
     .mac-max {
         background: #27c93f;
         border: 1px solid #1aab29;
-    }
-    #mobile-done-btn {
-        display: none;
     }
     #sidebar-toggle {
         display: flex !important;
@@ -1273,7 +1195,7 @@ p {
     border-radius: 12px;
     cursor: pointer;
     z-index: 2005;
-    transition: all .4s cubic-bezier(.25, 1, .5, 1);
+    transition: width .4s cubic-bezier(.25, 1, .5, 1), height .4s cubic-bezier(.25, 1, .5, 1), top .4s cubic-bezier(.25, 1, .5, 1), left .4s cubic-bezier(.25, 1, .5, 1), border-radius .4s cubic-bezier(.25, 1, .5, 1), box-shadow .4s cubic-bezier(.25, 1, .5, 1);
     box-shadow: 0 10px 30px rgba(0, 0, 0, .2);
 }
 .notes-modal.minimized .notes-panel {
@@ -1338,30 +1260,15 @@ p {
     content: "+";
     transform: translateY(-1px);
 }
-#ellipsis-btn img, #new-folder-btn-top img, #new-note-btn-header img, #new-note-btn-mobile img, #notes-btn img, #sidebar-toggle img, .back-hero-icon, .notes-folder-info img, .themed-icon, #menu-translate img {
+#ellipsis-btn img, #new-folder-btn-top img, #new-note-btn-header img, #new-note-btn-mobile img, #sidebar-toggle img, .back-hero-icon, .notes-folder-info img, #menu-translate img {
     filter: invert(1);
     -webkit-user-drag: none;
     user-select: none;
     pointer-events: none;
 }
 @media (prefers-color-scheme: dark) {
-    #ellipsis-btn img, #new-folder-btn-top img, #new-note-btn-header img, #new-note-btn-mobile img, #notes-btn img, #sidebar-toggle img, .back-hero-icon, .notes-folder-info img, .themed-icon, #menu-translate img {
+    #ellipsis-btn img, #new-folder-btn-top img, #new-note-btn-header img, #new-note-btn-mobile img, #sidebar-toggle img, .back-hero-icon, .notes-folder-info img, #menu-translate img {
         filter: invert(0);
-    }
-}
-.notes-footer {
-    display: none;
-    position: relative;
-    margin-left: 0;
-    margin-top: 0;
-    padding: .5rem 1rem;
-    justify-content: flex-end;
-    align-items: center;
-}
-@media (max-width: 800px) {
-    .notes-footer {
-        margin-left: 0;
-        margin-top: 0;
     }
 }
 .bioLink {
@@ -1409,7 +1316,7 @@ p {
     display: inline-flex;
     align-items: center;
     font-family: inherit;
-    transition: all .2s cubic-bezier(.25, 1, .5, 1);
+    transition: background-color .2s cubic-bezier(.25, 1, .5, 1), color .2s cubic-bezier(.25, 1, .5, 1), transform .2s cubic-bezier(.25, 1, .5, 1);
 }
 .action-label-btn svg {
     width: 14px;
@@ -1566,11 +1473,8 @@ body.dark-mode .active-folder {
 body.dark-mode .notes-header {
     background: rgba(0, 0, 0, .85);
 }
-body.dark-mode .notes-btn {
-    color: #eab308;
-}
 body.dark-mode .note-context-menu {
-    background: rgba(0, 0, 0, .3);
+    background: rgba(32, 32, 32, .3);
     border: 0;
     box-shadow: -.5px -.5px rgba(255, 255, 255, .2), .5px .5px rgba(255, 255, 255, .2), 0 8px 32px rgba(31, 38, 135, .1);
 }
@@ -1599,7 +1503,7 @@ body.dark-mode .notes-content {
 body.dark-mode .notes-large-title {
     color: #fff;
 }
-body.dark-mode .folder-list-item:hover, body.dark-mode .notes-preview:hover {
+body.dark-mode .folder-list-item:hover, body.dark-mode .note-preview:hover {
     background: rgba(255, 255, 255, .12);
 }
 body.dark-mode .notes-list-item.selected {
@@ -1626,10 +1530,10 @@ body.dark-mode .notes-title {
 body.dark-mode .notes-view-content blockquote {
     border-left: 4px solid rgba(255, 255, 255, .2) !important;
 }
-body.dark-mode #new-note-btn-header, body.dark-mode button.notes-header-right, body.dark-mode div.notes-header-right {
+body.dark-mode #new-note-btn-header, body.dark-mode div.notes-header-right {
     background: rgba(0, 0, 0, .3);
 }
-body.dark-mode .notes-toolbar.btn.active:hover {
+body.dark-mode .notes-toolbar-btn.active:hover {
     background: rgba(255, 255, 255, .3);
 }
 body.dark-mode .notes-toolbar-btn img, body.dark-mode .notes-toolbar-btn.active img, body.dark-mode .notes-toolbar-btn:hover img {
@@ -1645,7 +1549,7 @@ body.dark-mode .notes-modal.minimized::after {
     color: #fff;
     background: rgba(0, 0, 0, .4);
 }
-body.dark-mode #new-folder-btn-top img, body.dark-mode #new-note-btn-header img, body.dark-mode #new-note-btn-mobile img, body.dark-mode #notes-btn img, body.dark-mode #ellipsis-btn img, body.dark-mode #sidebar-toggle img, body.dark-mode .back-hero-icon, body.dark-mode .notes-folder-info img, body.dark-mode .themed-icon, body.dark-mode #menu-translate img {
+body.dark-mode #new-folder-btn-top img, body.dark-mode #new-note-btn-header img, body.dark-mode #new-note-btn-mobile img, body.dark-mode #ellipsis-btn img, body.dark-mode #sidebar-toggle img, body.dark-mode .back-hero-icon, body.dark-mode .notes-folder-info img, body.dark-mode #menu-translate img {
     filter: invert(0);
 }
 @media (min-width: 800px) {
@@ -1694,9 +1598,6 @@ body.light-mode .notes-glass-btn:hover {
 body.light-mode .notes-glass-btn:focus-visible {
     box-shadow: 0 0 0 2px #2891df, -.5px -.5px rgba(222, 222, 222, .2), .5px .5px rgba(222, 222, 222, .2), 0 8px 32px rgba(31, 38, 135, .1);
 }
-body.light-mode .notes-btn {
-    color: #d4a346;
-}
 body.light-mode .notes-content {
     color: var(--subtitle);
 }
@@ -1740,14 +1641,14 @@ body.light-mode .note-preview-title {
 body.light-mode .notes-view-content blockquote {
     border-left: 4px solid rgba(0, 0, 0, .2) !important;
 }
-body.light-mode #new-note-btn-header, body.light-mode button.notes-header-right, body.light-mode div.notes-header-right {
+body.light-mode #new-note-btn-header, body.light-mode div.notes-header-right {
     background: rgba(255, 255, 255);
 }
 body.light-mode .notes-modal.minimized::after {
     color: #000;
     background: rgba(255, 255, 255, .4);
 }
-body.light-mode .themed-icon, body.light-mode .notes-folder-info img, body.light-mode #sidebar-toggle img, body.light-mode .back-hero-icon, body.light-mode #new-note-btn-header img, body.light-mode #new-note-btn-mobile img, body.light-mode #notes-btn img, body.light-mode #ellipsis-btn img, body.light-mode #new-folder-btn-top img, body.light-mode .notes-toolbar-btn.active img, body.light-mode .notes-toolbar-btn:hover img, body.light-mode #menu-translate img {
+body.light-mode .notes-folder-info img, body.light-mode #sidebar-toggle img, body.light-mode .back-hero-icon, body.light-mode #new-note-btn-header img, body.light-mode #new-note-btn-mobile img, body.light-mode #ellipsis-btn img, body.light-mode #new-folder-btn-top img, body.light-mode .notes-toolbar-btn.active img, body.light-mode .notes-toolbar-btn:hover img, body.light-mode #menu-translate img {
     filter: invert(1);
 }
 body.light-mode .notes-toolbar-btn #notes-mono-text, body.light-mode .notes-toolbar-btn.active #notes-mono-text, body.light-mode .notes-toolbar-btn:hover #notes-mono-text {

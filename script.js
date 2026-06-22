@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const main = document.querySelector('.main-content');
-
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
     if (history.scrollRestoration) history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
 
@@ -35,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const b = document.getElementById('bio');
             if (b) b.innerHTML = d.bio;
 
-            // Action button text
             const actionNotes = document.getElementById('action-notes');
             if (actionNotes) actionNotes.innerText = d.actions.notes;
             const actionTwitter = document.getElementById('action-twitter');
@@ -43,23 +42,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const actionGithub = document.getElementById('action-github');
             if (actionGithub) actionGithub.innerText = d.actions.github;
 
-            // Aria-labels, alts, and titles
             const twitterLink = document.querySelector('.twitter-link');
             if (twitterLink) twitterLink.setAttribute('aria-label', d.actions.twitter);
             const githubLink = document.querySelector('.github-link');
             if (githubLink) githubLink.setAttribute('aria-label', d.actions.github);
-            const shrineImg = document.querySelector('#shrine .icon');
-            if (shrineImg) shrineImg.setAttribute('alt', d.site.shrineAlt);
 
-            // Menu labels
             const menuTranslate = document.getElementById('menu-translate-label');
             if (menuTranslate) menuTranslate.innerText = d.menu.translate;
             const menuDarkmode = document.getElementById('menu-darkmode-label');
             if (menuDarkmode) menuDarkmode.innerText = d.menu.darkmode;
 
             currentLang = lang;
-            const badge = document.getElementById('menu-translate-badge');
-            if (badge) badge.innerText = lang === 'ja' ? '字' : 'A';
+            document.getElementById('menu-translate-badge').innerText = currentLang === 'ja' ? '字' : 'A';
             if (window.applyNotesLang) window.applyNotesLang(lang);
         };
 
@@ -82,11 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('menu-darkmode-badge').innerText = document.body.classList.contains('dark-mode') || (window.matchMedia('(prefers-color-scheme: dark)').matches && !document.body.classList.contains('light-mode')) ? '✓' : '';
 
-    // Ellipsis menu — open on hover (desktop) or click (any)
     let menuTimer;
     const ellipsisBtn = document.getElementById('ellipsis-btn');
     const ellipsisMenu = document.getElementById('ellipsis-menu');
-    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
     function closeMenu() {
         if (ellipsisMenu) {
@@ -96,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function openMenu(focusFirst) {
-        // Hide all tooltips when menu opens
         const tooltip = document.getElementById('tooltip');
         if (tooltip) { tooltip.classList.remove('open'); tooltip.classList.add('close'); }
         if (!ellipsisMenu || !ellipsisBtn) return;
@@ -206,6 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         applyLang(currentLang === 'ja' ? 'en' : 'ja');
         playClickSound();
         document.getElementById('ellipsis-menu')?.classList.remove('open');
+        closeMenu();
     });
 
     const isDarkEffective = () => document.body.classList.contains('dark-mode') || (window.matchMedia('(prefers-color-scheme: dark)').matches && !document.body.classList.contains('light-mode'));
@@ -222,20 +214,13 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(closeMenu, 400);
     });
 
-    // Re-check badge on system color scheme change
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
         if (!document.body.classList.contains('dark-mode') && !document.body.classList.contains('light-mode')) {
             document.getElementById('menu-darkmode-badge').innerText = window.matchMedia('(prefers-color-scheme: dark)').matches ? '✓' : '';
         }
     });
-
-    // Initialize menu badges
-    document.getElementById('menu-translate-badge').innerText = currentLang === 'ja' ? 'JA' : 'EN';
     document.getElementById('menu-darkmode-badge').innerText = isDarkEffective() ? '✓' : '';
 
-});
-
-document.addEventListener('DOMContentLoaded', () => {
     const shrine = document.getElementById('shrine');
     let hoverInterval;
 
@@ -275,8 +260,6 @@ document.addEventListener('DOMContentLoaded', () => {
         shrine.classList.add('pressed');
         shrine.classList.add('post-press');
 
-        // Sound is handled by global listener as shrine is role="button"
-
         for (let i = 0; i < 15; i++) {
             const randomLifetime = 1200 + Math.random() * 1300;
             createFirefly(1.5, randomLifetime);
@@ -305,7 +288,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const r = (Math.random() - 0.5) * 360 + "deg";
         
-        // Always generate the warm yellow/orange color
         const color = `hsl(${45 + Math.random() * 15}, ${90 + Math.random() * 10}%, ${50 + Math.random() * 10}%)`;
         
         p.style.left = `${startX}%`;
@@ -325,94 +307,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (p.parentNode) p.remove();
         }, lifetime);
     }
-});
-
-async function initGithubTooltip() {
-    const grid = document.getElementById('github-mini-grid');
-    if (!grid) return;
-
-    try {
-        const response = await fetch('https://github-contributions-api.deno.dev/asahisuenaga.json');
-        if (!response.ok) throw new Error('Fetch failed');
-
-        const data = await response.json();
-        const allContributions = data.contributions.flat();
-
-        const today = new Date();
-        const offset = today.getTimezoneOffset() * 60000;
-        const localToday = new Date(today.getTime() - offset).toISOString().split('T')[0];
-
-        let todayIndex = allContributions.findIndex(day => day.date === localToday);
-
-        const end = todayIndex !== -1 ? todayIndex + 1 : allContributions.length;
-        const last20 = allContributions.slice(Math.max(0, end - 20), end);
-
-        grid.innerHTML = '';
-        last20.forEach(day => {
-            const tile = document.createElement('div');
-            tile.className = 'github-tile';
-            tile.style.backgroundColor = day.color;
-            grid.appendChild(tile);
-        });
-    } catch (e) {
-        console.error('GitHub chart error:', e);
-        grid.innerHTML = '';
-        for (let i = 0; i < 20; i++) {
-            const tile = document.createElement('div');
-            tile.className = 'github-tile';
-            tile.style.backgroundColor = 'var(--subtitle)';
-            grid.appendChild(tile);
-        }
-    }
-}
-
-let lastSoundPlayedAt = 0;
-const audioPool = {};
-
-function playSound(file) {
-    const now = Date.now();
-    if (now - lastSoundPlayedAt < 150) return;
-    lastSoundPlayedAt = now;
-
-    if (!audioPool[file]) {
-        audioPool[file] = new Audio(file);
-    } else {
-        audioPool[file].currentTime = 0;
-    }
-    audioPool[file].play().catch(() => { });
-}
-
-function playNotesClickSound() {
-    playSound('/sounds/notes.wav');
-}
-
-function playNotesDeleteSound() {
-    playSound('/sounds/delete.wav');
-}
-
-function playMoveSound() {
-    // Use a move-specific sound file; fallback to notes on error is handled by browser
-    playSound('/sounds/move.wav');
-}
-
-function playClickSound() {
-    playSound('/sounds/basic.wav');
-}
-
-document.addEventListener('pointerup', (e) => {
-    const target = e.target.closest('a, button, [role="button"]');
-    if (target) {
-        // Determine which sound to play
-        if (target.closest('.notes-modal') || target.closest('.mac-stoplights')) {
-            playNotesClickSound();
-        } else {
-            playClickSound();
-        }
-    }
-}, true);
-
-document.addEventListener('DOMContentLoaded', () => {
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
     const tooltip = document.getElementById('tooltip');
 
@@ -430,13 +324,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const links = document.querySelectorAll('.twitter-link, .github-link, .notes-link');
 
-    if (isTouchDevice) {
+    if (isTouch) {
         links.forEach(link => { link.style.cursor = 'default'; });
     } else {
         links.forEach(link => {
             link.addEventListener('mouseenter', (e) => {
                 if (!link.classList.contains('github-link')) return;
-                // Close ellipsis menu if open
                 const ellipsisMenu = document.getElementById('ellipsis-menu');
                 if (ellipsisMenu) { ellipsisMenu.classList.remove('open'); ellipsisMenu.classList.add('close'); }
 
@@ -456,27 +349,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     initGithubTooltip();
-});
-
-document.addEventListener('DOMContentLoaded', async () => {
-    // ClickSpark Effect
+    
     (function() {
-        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-        // Sound click handler — always registered on all devices
         const handleClickSound = (e) => {
             const notesContainer = document.getElementById('notes-modal');
             const shrineContainer = document.getElementById('shrine');
             const targetInNotes = notesContainer && notesContainer.contains(e.target);
             const targetInShrine = shrineContainer && shrineContainer.contains(e.target);
-        if (!isTouchDevice && !targetInNotes && !targetInShrine) {
+        if (!isTouch && !targetInNotes && !targetInShrine) {
             playSound('/sounds/basic.wav');
         }
         };
         window.addEventListener('click', handleClickSound);
 
-        // Spark animation — only on non-touch devices
-        if (isTouchDevice) return;
+        if (isTouch) return;
 
         const canvas = document.getElementById('click-spark-canvas');
         if (!canvas) return;
@@ -571,6 +457,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     const CUSTOM_FOLDER_KEY = 'apple_notes_custom_folders';
+    const NOTES_DATA_KEY = 'apple_notes_data';
     let customFolders = JSON.parse(localStorage.getItem(CUSTOM_FOLDER_KEY) || '[]');
 
     const folderMap = {
@@ -621,11 +508,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const n = (window.translations || {})[lang]?.notes;
         if (!n) return;
 
-        // Folders panel title
         const foldersTitle = document.querySelector('#panel-folders .notes-large-title');
         if (foldersTitle) foldersTitle.innerText = n.folders.title;
 
-        // Folder names (update text node after img)
         const folderMap = {
             'panel-notes-all': n.folders.all,
             'panel-notes-personal': n.folders.personal,
@@ -641,48 +526,32 @@ document.addEventListener('DOMContentLoaded', async () => {
             el.append(label);
         });
 
-        // New Folder button
         const newFolderBtn = document.getElementById('new-folder-btn-top');
         if (newFolderBtn) newFolderBtn.title = n.buttons.newFolder;
-        const newFolderFooter = document.getElementById('new-folder-btn');
-        if (newFolderFooter) newFolderFooter.title = n.buttons.newFolder;
-
-        // Sidebar button
         const sidebarBtn = document.getElementById('sidebar-toggle');
         if (sidebarBtn) sidebarBtn.title = n.buttons.sidebar;
 
-        // New Note button
         const newNoteBtn = document.getElementById('new-note-btn-header');
         if (newNoteBtn) newNoteBtn.title = n.buttons.newNote;
         const newNoteBtnMobile = document.getElementById('new-note-btn-mobile');
         if (newNoteBtnMobile) newNoteBtnMobile.title = n.buttons.newNote;
 
-        // Minimized label
         const notesModal = document.querySelector('.notes-modal');
         if (notesModal) notesModal.style.setProperty('--notes-minimized-label', n.modal.minimizedLabel);
 
-        // Window controls (stoplights)
         document.querySelectorAll('.mac-close').forEach(el => el.setAttribute('aria-label', n.modal.close));
         document.querySelectorAll('.mac-min').forEach(el => el.setAttribute('aria-label', n.modal.minimize));
         document.querySelectorAll('.mac-max').forEach(el => el.setAttribute('aria-label', n.modal.maximize));
 
-        // Back buttons
         document.querySelectorAll('.notes-back').forEach(el => el.setAttribute('aria-label', n.modal.back));
 
-        // New Folder button aria-label
         const newFolderTop = document.getElementById('new-folder-btn-top');
         if (newFolderTop) newFolderTop.setAttribute('aria-label', n.buttons.newFolder);
-        const newFolderFooter2 = document.getElementById('new-folder-btn');
-        if (newFolderFooter2) newFolderFooter2.setAttribute('aria-label', n.buttons.newFolder);
-
-        // Sidebar aria-label
         if (sidebarBtn) sidebarBtn.setAttribute('aria-label', n.buttons.sidebar);
 
-        // New Note aria-label
         if (newNoteBtn) newNoteBtn.setAttribute('aria-label', n.buttons.newNote);
         if (newNoteBtnMobile) newNoteBtnMobile.setAttribute('aria-label', n.buttons.newNote);
 
-        // Toolbar button titles
         const toolbarTitles = {
             bold: n.toolbar.bold, italic: n.toolbar.italic, underline: n.toolbar.underline,
             strikeThrough: n.toolbar.strikeThrough, outdent: n.toolbar.outdent, indent: n.toolbar.indent,
@@ -706,7 +575,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const checklistImg = checklistBtn?.querySelector('img');
         if (checklistImg) checklistImg.alt = n.toolbar.checklist;
 
-        // Re-render the current notes list
         renderNotesList(currentFolder, false);
     };
 
@@ -731,18 +599,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     const slugify = (name) => name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
 
     const constrainMenuToViewport = (menu, x, y) => {
-        // Position menu
         menu.style.left = x + 'px';
         menu.style.top = y + 'px';
 
-        // Get menu dimensions after positioning
         setTimeout(() => {
             const rect = menu.getBoundingClientRect();
             const padding = 10;
             let newX = x;
             let newY = y;
 
-            // Adjust horizontal position if menu goes off-screen
             if (rect.right > window.innerWidth - padding) {
                 newX = window.innerWidth - rect.width - padding;
             }
@@ -750,7 +615,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 newX = padding;
             }
 
-            // Adjust vertical position if menu goes off-screen
             if (rect.bottom > window.innerHeight - padding) {
                 newY = window.innerHeight - rect.height - padding;
             }
@@ -770,7 +634,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const renderFolderList = () => {
         if (!folderGroup) return;
 
-        // Remove custom items first
         folderGroup.querySelectorAll('.folder-list-item.custom').forEach(el => el.remove());
 
         const divider = folderGroup.querySelector('div[style*="height: 1px"]');
@@ -787,7 +650,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const info = document.createElement('div');
             info.className = 'notes-folder-info';
-            info.innerHTML = `<img alt="Folder" src="icons/folder.svg" style="width:18px; height:18px; display:inline-block; vertical-align:-3px;" draggable="false">${folderName}`;
+            info.innerHTML = `<img alt="Folder" src="icons/folder.svg" class="folder-icon" draggable="false">${folderName}`;
 
             const count = document.createElement('div');
             count.innerHTML = `<span class="notes-count" id="count-${folderKey}">0</span>`;
@@ -882,7 +745,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     let notesReady = false;
-    let notesData = await hydrateNotes();
+    let notesData = {};
+
+    (async () => {
+        notesData = await hydrateNotes();
+        seedNoteIds = new Set(Object.keys(notesData));
+        
+        const savedNotes = localStorage.getItem('apple_notes_data');
+        if (savedNotes) {
+            const userNotes = JSON.parse(savedNotes);
+            for (const [id, note] of Object.entries(userNotes)) {
+                if (!seedNoteIds.has(id)) notesData[id] = note;
+            }
+        }
+        notesReady = true;
+
+        updateCounts(); 
+        renderFolderList();
+    })();
+
     seedNoteIds = new Set(Object.keys(notesData));
     const savedNotes = localStorage.getItem('apple_notes_data');
     if (savedNotes) {
@@ -975,11 +856,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         let selectionTarget = null;
         listContainer.innerHTML = '';
 
-        // Recently Deleted Notice
         if (folderFilter === 'recently_deleted') {
             const notice = document.createElement('div');
             notice.className = 'notes-delete-notice';
-            notice.innerText = getNotesLocale() === 'ja' ? '削除されたノートは三時間後に完全に削除されます。' : 'Deleted notes are permanently removed after 3 hours.';
+            notice.innerText = getNotesLocale() === 'ja' ? '削除されたノートは30日後に完全に削除されます。' : 'Deleted notes are permanently removed after 30 days.';
             listContainer.appendChild(notice);
         }
         let filteredNotes = Object.keys(notesData).filter(key => {
@@ -988,7 +868,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             return note.folder === folderFilter;
         });
 
-        // Sort notes: Pinned first, then by lastEdited
         filteredNotes.sort((a, b) => {
             if (notesData[a].pinned && !notesData[b].pinned) return -1;
             if (!notesData[a].pinned && notesData[b].pinned) return 1;
@@ -1103,7 +982,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 lastSelectedIndex = currentIndex;
             });
 
-            // Deletion Logic (Long Press & Right Click)
             let pressTimer;
             let isLongPress = false;
             const clearTimer = () => {
@@ -1111,10 +989,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             };
 
             const handleNoteAction = (e) => {
-                if (e.type === 'pointerdown') {
-                    if (!pressTimer) return;
-                }
-
                 isLongPress = true;
                 e.preventDefault();
                 e.stopPropagation();
@@ -1126,7 +1000,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 menu.id = 'note-context-menu';
                 menu.className = 'note-context-menu';
 
-                // Handle coordinates for both Mouse and Pointer events
                 const x = (e.clientX || (e.touches ? e.touches[0].clientX : 0)) - 10;
                 const y = (e.clientY || (e.touches ? e.touches[0].clientY : 0)) - 10;
 
@@ -1159,11 +1032,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                         saveNotes();
                         renderNotesList(folderFilter);
                         menu.remove();
-                        playNotesDeleteSound();
+                        playNotesClickSound();
                     };
                     menu.appendChild(delBtn);
                 } else {
-                    // Pin / Unpin Note
                     const pinBtn = document.createElement('div');
                     pinBtn.className = 'note-context-item';
                     pinBtn.innerText = data.pinned ? tcm('unpinNote') : tcm('pinNote');
@@ -1186,7 +1058,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         separator1.className = 'context-separator';
                         menu.appendChild(separator1);
 
-                        // Move to Folder (all available, includes custom)
                         getMoveTargets().forEach(f => {
                             if (data.folder === f) return;
                             const moveBtn = document.createElement('div');
@@ -1221,7 +1092,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             saveNotes();
                             renderNotesList(folderFilter);
                             menu.remove();
-                            playNotesDeleteSound();
+                            playNotesClickSound();
                         };
                         menu.appendChild(actionBtn);
                     }
@@ -1258,7 +1129,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const isInDeletedFolder = folderFilter === 'recently_deleted';
 
                 if (isInDeletedFolder) {
-                    // Recover N Notes
                     const recoverBtn = document.createElement('div');
                     recoverBtn.className = 'note-context-item';
                     recoverBtn.innerText = tcm('recoverN', selectedIds.length);
@@ -1275,7 +1145,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     };
                     menu.appendChild(recoverBtn);
 
-                    // Delete N Notes Permanently
                     const permDelBtn = document.createElement('div');
                     permDelBtn.className = 'note-context-item';
                     permDelBtn.style.color = '#FF453A';
@@ -1287,11 +1156,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                         saveNotes();
                         renderNotesList(folderFilter);
                         menu.remove();
-                        playNotesDeleteSound();
+                        playNotesClickSound();
                     };
                     menu.appendChild(permDelBtn);
                 } else if (!multiHasBuiltIn) {
-                    // Pin / Unpin Notes
                     const selectedPinnedCount = selectedIds.filter(id => notesData[id]?.pinned).length;
                     const selectedUnpinnedCount = selectedIds.length - selectedPinnedCount;
 
@@ -1379,7 +1247,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         saveNotes();
                         renderNotesList(folderFilter);
                         menu.remove();
-                        playNotesDeleteSound();
+                        playNotesClickSound();
                     };
                     menu.appendChild(delBtn);
                 }
@@ -1388,7 +1256,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 constrainMenuToViewport(menu, x, y);
 
                 const closeMultiMenu = (ev) => {
-                    if (ev.button === 2) return; // ignore right-click
+                    if (ev.button === 2) return;
                     if (!menu.contains(ev.target)) {
                         menu.remove();
                         document.removeEventListener('click', closeMultiMenu);
@@ -1408,11 +1276,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             });
             el.addEventListener('pointerdown', (e) => {
-                // Clear existing to avoid double menus
                 clearTimer();
                 pressTimer = setTimeout(() => {
                     handleNoteAction(e);
-                }, 500); // 500ms for long press
+                }, 500); 
             });
             el.addEventListener('pointermove', clearTimer);
             el.addEventListener('pointerup', clearTimer);
@@ -1432,14 +1299,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             listContainer.appendChild(el);
         });
-
-        // Update counts
-        const deletedCount = Object.values(notesData).filter(n => n.folder === 'recently_deleted').length;
-        const delCountNode = document.getElementById('deleted-notes-count');
-        if (delCountNode) delCountNode.innerText = deletedCount;
     }
 
-    // Edit Event Listeners
     const titleEditor = document.getElementById('active-note-title');
     const contentEditor = document.getElementById('active-note-content');
 
@@ -1463,26 +1324,24 @@ document.addEventListener('DOMContentLoaded', async () => {
                 notesData[noteId].title = titleEditor.innerText;
                 notesData[noteId].content = contentEditor.innerHTML;
                 notesData[noteId].lastEdited = Date.now();
-                if (!isBuiltInNoteId(noteId)) {
-                    notesData[noteId].permalink = '/notes/' + slugify(titleEditor.innerText);
-                    history.replaceState(null, '', notesData[noteId].permalink);
-                }
+                notesData[noteId].permalink = '/notes/' + slugify(titleEditor.innerText);
+                history.replaceState(null, '', notesData[noteId].permalink);
                 saveNotes();
-                // Update date display in view
                 document.getElementById('active-note-date').innerText = formatFullNoteDate(notesData[noteId].lastEdited);
-                // Re-render the list to update previews and sorting
                 const currentF = document.querySelector('.active-folder')?.getAttribute('data-target');
                 const filter = (currentF && Object.prototype.hasOwnProperty.call(folderMap, currentF))
                     ? folderMap[currentF]
                     : currentFolder;
-                renderNotesList(filter, false); // false to avoid recursive click
+                renderNotesList(filter, false);
             }
         };
 
         titleEditor.addEventListener('input', handleEdit);
 
         // Normalize stray nodes inside checklist items and keep the caret inside the checklist text area
-        contentEditor.addEventListener('input', () => {
+        contentEditor.addEventListener('input', (event) => {
+            handleEdit(event);
+
             const items = contentEditor.querySelectorAll('.checklist-item');
             items.forEach(item => {
                 const contentDiv = item.querySelector('div');
@@ -1522,8 +1381,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
 
-        contentEditor.addEventListener('input', handleEdit);
-
         // Checklist interaction — prevent checkbox focus on click
         contentEditor.addEventListener('mousedown', (e) => {
             if (e.target.classList.contains('checklist-checkbox')) {
@@ -1557,7 +1414,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (e.key === 'Enter' || e.key === 'Tab') {
                 e.preventDefault();
                 contentEditor.focus();
-                // Place cursor at the start
                 const range = document.createRange();
                 const sel = window.getSelection();
                 range.selectNodeContents(contentEditor);
@@ -1583,7 +1439,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         titleEditor.addEventListener('blur', () => {
-            // Force plain text
             titleEditor.innerHTML = titleEditor.innerText;
             handleEdit();
         });
@@ -1664,7 +1519,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (e.key === 'Enter') {
                 const { li, checklist } = getListContext();
 
-                // Exit empty checklist
                 if (checklist) {
                     e.preventDefault();
                     const contentDiv = checklist.querySelector('div:not(.checklist-item)');
@@ -1684,7 +1538,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     return;
                 }
 
-                // Exit empty list
                 if (li && li.innerText.trim() === '') {
                     e.preventDefault();
                     clearAllListFormats();
@@ -1731,7 +1584,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
 
-        // --- List helpers ---
         const getListContext = () => {
             const sel = window.getSelection();
             if (!sel.rangeCount) return {};
@@ -1792,21 +1644,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             return null;
         };
 
-        // Convert current block to a list type: 'bullet' | 'number' | 'dash' | 'check'
         const applyListType = (type) => {
             const { node, li, list, checklist } = getListContext();
 
-            // --- Toggle off checklist ---
             if (checklist) {
                 if (type === 'check') {
-                    // Toggle checklist off
                     const p = document.createElement('p');
                     p.innerHTML = checklist.querySelector('div')?.innerHTML || '\u00A0';
                     checklist.replaceWith(p);
                     setCaretEnd(p);
                     return;
                 }
-                // Converting checklist to something else
                 const text = checklist.querySelector('div')?.innerHTML || '';
                 checklist.remove();
                 if (type === 'bullet' || type === 'number' || type === 'dash') {
@@ -1827,14 +1675,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            // --- Toggle off same list type ---
             if (list && li) {
                 const isDashed = list.style.listStyleType === '"- "';
                 const isOrdered = list.tagName === 'OL';
                 const currentType = isDashed ? 'dash' : isOrdered ? 'number' : 'bullet';
 
                 if (type === currentType) {
-                    // Toggle off — convert to paragraph
                     const p = document.createElement('p');
                     p.innerHTML = li.innerHTML || '\u00A0';
                     if (list.querySelectorAll('li').length <= 1) {
@@ -1847,10 +1693,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     return;
                 }
 
-                // --- Switch list type ---
                 const text = li.innerHTML;
                 if (list.querySelectorAll('li').length <= 1) {
-                    // Only one item — replace whole list
                     list.remove();
                 } else {
                     li.remove();
@@ -1876,7 +1720,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            // --- Not in any list — create new ---
             if (type === 'check') {
                 const checkItem = document.createElement('div');
                 checkItem.className = 'checklist-item';
@@ -1895,7 +1738,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         };
 
-        // Toolbar click handlers
         document.querySelectorAll('.notes-toolbar-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const cmd = btn.getAttribute('data-command');
@@ -1932,13 +1774,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             monoBtn.addEventListener('click', () => {
                 const isMono = document.queryCommandValue('fontName').includes('monospace');
                 if (isMono) {
-                    // Reset to system font
                     document.execCommand('fontName', false, '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif');
                 } else {
                     document.execCommand('fontName', false, 'monospace');
                 }
                 contentEditor.focus();
-                playNotesClickSound(); // Mono button plays notes click sound
+                playNotesClickSound();
             });
         }
 
@@ -1981,7 +1822,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (cmd) {
                     const state = document.queryCommandState(cmd);
                     if (state) {
-                        // For unordered lists, only show active if NOT dashed
                         if (cmd === 'insertUnorderedList' && isDashed) {
                             btn.classList.remove('active');
                         } else {
@@ -1993,7 +1833,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             });
 
-            // Custom checks
             const isMono = document.queryCommandValue('fontName').includes('monospace');
             if (isMono) document.getElementById('notes-mono-btn')?.classList.add('active');
             else document.getElementById('notes-mono-btn')?.classList.remove('active');
@@ -2047,14 +1886,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                     document.execCommand('selectAll', false, null);
                 }
             }, 500);
-            playNotesClickSound(); // New note creation plays sound
+            playNotesClickSound();
         };
 
         document.getElementById('new-note-btn-header')?.addEventListener('click', createNewNote);
         document.getElementById('new-note-btn-mobile')?.addEventListener('click', createNewNote);
         document.getElementById('new-folder-btn-top')?.addEventListener('click', createFolder);
-        document.getElementById('new-folder-btn')?.addEventListener('click', createFolder); // hidden; legacy fallback
-
         openFolderContextMenu = (e, folderName, targetKey) => {
             const existing = document.getElementById('folder-context-menu');
             if (existing) existing.remove();
@@ -2075,7 +1912,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const newName = prompt(tcm('promptRenameFolder'), folderName);
                     const trimmedNewName = newName ? newName.trim() : '';
                     if (!trimmedNewName || trimmedNewName === folderName) return;
-                    // Check all existing folder names to prevent conflicts
                     const allFolderNames = Object.values(folderMap);
                     if (allFolderNames.includes(trimmedNewName)) {
                         alert(tcm('folderExistsRename'));
@@ -2085,7 +1921,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const oldKey = `panel-notes-${slugify(folderName)}`;
                     const newKey = `panel-notes-${slugify(trimmedNewName)}`;
 
-                    // First: Update notes folder property (must happen before any rendering)
                     let updatedCount = 0;
                     Object.values(notesData).forEach(note => {
                         if (note.folder === folderName) {
@@ -2102,14 +1937,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (folderMap[oldKey]) delete folderMap[oldKey];
                     folderMap[newKey] = trimmedNewName;
 
-                    // Update the built-in folder element's data-target and label text
                     if (!isCustom && targetKey) {
                         const folderEl = document.querySelector(`[data-target="${targetKey}"]`);
                         if (folderEl) {
                             folderEl.setAttribute('data-target', newKey);
                             const infoDiv = folderEl.querySelector('.notes-folder-info');
                             if (infoDiv) {
-                                // Replace only the text node, keep the img
                                 Array.from(infoDiv.childNodes).forEach(node => {
                                     if (node.nodeType === Node.TEXT_NODE) node.remove();
                                 });
@@ -2121,11 +1954,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                     currentFolder = trimmedNewName;
 
-                    // Save notes with updated folder names
                     saveNotes();
-                    // Re-render folder list from persisted data
                     renderFolderList();
-                    // Render notes for the renamed folder
                     renderNotesList(trimmedNewName);
                     menu.remove();
                     playNotesClickSound();
@@ -2149,7 +1979,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         customFolders = customFolders.filter(n => n !== folderName);
                         localStorage.setItem(CUSTOM_FOLDER_KEY, JSON.stringify(customFolders));
                     } else {
-                        // Remove built-in folder element from DOM
                         const folderEl = document.querySelector(`[data-target="${folderKey}"]`);
                         if (folderEl) folderEl.remove();
                     }
@@ -2161,7 +1990,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     saveNotes();
                     renderFolderList();
                     renderNotesList('all');
-                    playNotesDeleteSound();
+                    playNotesClickSound();
                     menu.remove();
                 };
 
@@ -2169,7 +1998,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 menu.appendChild(separator);
                 menu.appendChild(deleteBtn);
             } else {
-                // System folders and built-in folders (All Notes, Personal, Projects, Deleted)
                 const info = document.createElement('div');
                 info.className = 'note-context-item';
                 info.style.color = '#999';
@@ -2184,7 +2012,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             constrainMenuToViewport(menu, x, y);
 
             const closeFolderMenu = (ev) => {
-                if (ev.button === 2) return; // ignore right-click
+                if (ev.button === 2) return;
                 if (!menu.contains(ev.target)) {
                     menu.remove();
                     document.removeEventListener('click', closeFolderMenu);
@@ -2205,7 +2033,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     document.querySelectorAll('.notes-list-item').forEach(n => n.classList.remove('active-folder'));
                     item.classList.add('active-folder');
                     navigateTo('notes');
-                    // Auto-open the latest note or pinned note
                     setTimeout(() => {
                         const firstNote = document.querySelector('.note-preview');
                         if (firstNote && window.innerWidth >= 800) {
@@ -2250,9 +2077,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         };
 
         bindFolderClicks();
-        document.getElementById('notes-back-btn')?.addEventListener('click', playNotesClickSound);
-        document.getElementById('notes-back-to-folders')?.addEventListener('click', playNotesClickSound);
-        document.getElementById('notes-sidebar-toggle')?.addEventListener('click', playNotesClickSound);
     }
 
     if (bookmark && notesModal && notesBackdrop) {
@@ -2262,7 +2086,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const openNotes = () => {
             document.body.style.overflow = 'hidden';
 
-            // Clear drag positions before showing so the modal starts centered
             notesModal.style.removeProperty('left');
             notesModal.style.removeProperty('top');
             notesModal.style.removeProperty('transform');
@@ -2280,7 +2103,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             currentFolder = 'all';
             renderFolderList();
 
-            // Highlight 'All Notes' folder
             document.querySelectorAll('[data-target]').forEach(f => f.classList.remove('active-folder'));
             const allNotesFolder = document.querySelector('[data-target="panel-notes-all"]');
             if (allNotesFolder) allNotesFolder.classList.add('active-folder');
@@ -2300,7 +2122,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             wasFullscreenBeforeMinimize = false;
             bookmark.classList.remove('active');
 
-            // Clear manual JS transforms
             setTimeout(() => {
                 notesModal.style.removeProperty('transform');
                 notesModal.style.removeProperty('transition');
@@ -2357,7 +2178,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (e && e.stopPropagation) e.stopPropagation();
             wasFullscreenBeforeMinimize = notesModal.classList.contains('fullscreen');
 
-            // Clear drag positioning so CSS .minimized can place it at the corner
             notesModal.style.removeProperty('left');
             notesModal.style.removeProperty('top');
             notesModal.style.removeProperty('transform');
@@ -2397,11 +2217,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         bookmark.addEventListener('click', openNotes);
         notesBackdrop.addEventListener('click', closeNotes);
 
-        document.querySelectorAll('.mac-close, #mobile-done-btn').forEach(btn => {
+        document.querySelectorAll('.mac-close').forEach(btn => {
             btn.addEventListener('click', closeNotes);
         });
 
-        // Draggable Sheet Logic (Mobile Drawer)
         let startY = 0;
         let currentY = 0;
         let isDragging = false;
@@ -2418,12 +2237,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         const handleMobileDragStart = (e) => {
-            // Don't interfere with minimized modal drag (handleDragStart handles that)
             if (notesModal.classList.contains('minimized')) return;
 
             const isDesktop = window.innerWidth >= 800;
 
-            // On desktop, let header drags go to handleDragStart for repositioning
             if (isDesktop && e.target.closest('.notes-header')) return;
 
             const scrollable = findScrollableAncestor(e.target, notesModal);
@@ -2462,7 +2279,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         };
 
-        // Draggable Minimized & Main Modal Logic
         let minDragging = false;
         let mainDragging = false;
         let hasDragged = false;
@@ -2489,7 +2305,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             startDragY = event.clientY;
 
             notesModal.style.transition = 'none';
-            if (isHeader) e.preventDefault(); // Prevent text selection
+            if (isHeader) e.preventDefault();
         };
 
         const handleDragMove = (e) => {
@@ -2503,7 +2319,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             let x = event.clientX - modalOffsetX;
             let y = event.clientY - modalOffsetY;
 
-            // Bound constraints
             const winW = window.innerWidth;
             const winH = window.innerHeight;
             const rect = notesModal.getBoundingClientRect();
@@ -2523,7 +2338,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             minDragging = false;
             mainDragging = false;
 
-            // Don't re-snap if the user just tapped without dragging (allow openNotes to handle it)
             if (wasMin && !hasDragged && !forceSnap) {
                 notesModal.style.transition = '';
                 return;
@@ -2558,7 +2372,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             revelationActive = window.scrollY > 0;
 
             if (wasActive !== revelationActive && notesModal.classList.contains('minimized')) {
-                // Re-snap if footer state changed while minimized
                 handleDragEnd(true);
             }
         });
@@ -2572,7 +2385,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             window.addEventListener('touchend', handleDragEnd);
         }
 
-        // Drag-to-close on any device
         notesModal.addEventListener('mousedown', handleMobileDragStart);
         notesModal.addEventListener('touchstart', handleMobileDragStart, { passive: true });
         window.addEventListener('mousemove', handleMobileDragMove);
@@ -2610,13 +2422,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         });
 
-        // Auto Purge Logic
         const purgeDeleted = () => {
             const now = Date.now();
-            const threeHours = 3 * 3600 * 1000;
+            const thirtyDays = 30 * 24 * 3600 * 1000;
             let changed = false;
             Object.keys(notesData).forEach(id => {
-                if (notesData[id].folder === 'recently_deleted' && (now - notesData[id].deletedAt > threeHours)) {
+                if (notesData[id].folder === 'recently_deleted' && (now - notesData[id].deletedAt > thirtyDays)) {
                     delete notesData[id];
                     changed = true;
                 }
@@ -2671,7 +2482,87 @@ document.addEventListener('DOMContentLoaded', async () => {
                 playNotesClickSound();
             });
         }
-
     }
-
 });
+
+async function initGithubTooltip() {
+    const grid = document.getElementById('github-mini-grid');
+    if (!grid) return;
+
+    try {
+        const response = await fetch('https://github-contributions-api.deno.dev/asahisuenaga.json');
+        if (!response.ok) throw new Error('Fetch failed');
+
+        const data = await response.json();
+        const allContributions = data.contributions.flat();
+
+        const today = new Date();
+        const offset = today.getTimezoneOffset() * 60000;
+        const localToday = new Date(today.getTime() - offset).toISOString().split('T')[0];
+
+        let todayIndex = allContributions.findIndex(day => day.date === localToday);
+
+        const end = todayIndex !== -1 ? todayIndex + 1 : allContributions.length;
+        const last20 = allContributions.slice(Math.max(0, end - 20), end);
+
+        grid.innerHTML = '';
+        last20.forEach(day => {
+            const tile = document.createElement('div');
+            tile.className = 'github-tile';
+            tile.style.backgroundColor = day.color;
+            grid.appendChild(tile);
+        });
+    } catch (e) {
+        console.error('GitHub chart error:', e);
+        grid.innerHTML = '';
+        for (let i = 0; i < 20; i++) {
+            const tile = document.createElement('div');
+            tile.className = 'github-tile';
+            tile.style.backgroundColor = 'var(--subtitle)';
+            grid.appendChild(tile);
+        }
+    }
+}
+
+let lastSoundPlayedAt = 0;
+const audioPool = {};
+
+function playSound(file) {
+    const now = Date.now();
+    if (now - lastSoundPlayedAt < 150) return;
+    lastSoundPlayedAt = now;
+
+    if (!audioPool[file]) {
+        audioPool[file] = new Audio(file);
+    } else {
+        audioPool[file].currentTime = 0;
+    }
+    audioPool[file].play().catch(() => { /* autoplay blocked */ });
+}
+
+function playNotesClickSound() {
+    playSound('/sounds/notes.wav');
+}
+
+function playNotesClickSound() {
+    playSound('/sounds/delete.wav');
+}
+
+function playMoveSound() {
+    playSound('/sounds/move.wav');
+}
+
+function playClickSound() {
+    playSound('/sounds/basic.wav');
+}
+
+document.addEventListener('pointerup', (e) => {
+    const target = e.target.closest('a, button, [role="button"]');
+    if (target) {
+        if (target.closest('.notes-modal') || target.closest('.mac-stoplights')) {
+            playNotesClickSound();
+        } else {
+            playClickSound();
+        }
+    }
+}, true);

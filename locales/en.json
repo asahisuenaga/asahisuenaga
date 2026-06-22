@@ -22,11 +22,7 @@
       "all": "All Notes",
       "personal": "Personal",
       "projects": "Projects",
-      "deleted": "Deleted",
-      "headerAll": "All Notes",
-      "headerPersonal": "Personal",
-      "headerProjects": "Projects",
-      "headerDeleted": "Recently Deleted"
+      "deleted": "Deleted"
     },
     "buttons": {
       "newFolder": "New Folder",
@@ -34,9 +30,6 @@
       "newNote": "New Note"
     },
     "modal": {
-      "titlePlaceholder": "Title",
-      "contentPlaceholder": "Content",
-      "deletedPrefix": "Deleted:",
       "minimizedLabel": "\"Notes\"",
       "close": "Close",
       "minimize": "Minimize",
