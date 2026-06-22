@@ -650,7 +650,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const info = document.createElement('div');
             info.className = 'notes-folder-info';
-            info.innerHTML = `<img alt="Folder" src="icons/folder.svg" class="folder-icon" draggable="false">${folderName}`;
+            info.innerHTML = `<img alt="Folder" src="assets/icons/folder.svg" class="folder-icon" draggable="false">${folderName}`;
 
             const count = document.createElement('div');
             count.innerHTML = `<span class="notes-count" id="count-${folderKey}">0</span>`;
@@ -747,7 +747,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let notesReady = false;
     let notesData = {};
 
-    (async () => {
+    const hydratePromise = (async () => {
         notesData = await hydrateNotes();
         seedNoteIds = new Set(Object.keys(notesData));
         
@@ -763,16 +763,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCounts(); 
         renderFolderList();
     })();
-
-    seedNoteIds = new Set(Object.keys(notesData));
-    const savedNotes = localStorage.getItem('apple_notes_data');
-    if (savedNotes) {
-        const userNotes = JSON.parse(savedNotes);
-        for (const [id, note] of Object.entries(userNotes)) {
-            if (!seedNoteIds.has(id)) notesData[id] = note;
-        }
-    }
-    notesReady = true;
 
     const updateCounts = () => {
         const counts = { all: 0, Personal: 0, Projects: 0, recently_deleted: 0 };
@@ -2440,16 +2430,18 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(purgeDeleted, 60000);
         purgeDeleted();
 
-        const initialPath = window.location.pathname.replace(/\/$/, '') || '/';
-        if (initialPath !== '/' && initialPath !== '/index.html') {
-            if (openNoteByPermalink(initialPath)) {
-                renderFolderList();
-                document.body.style.overflow = 'hidden';
-                notesBackdrop.classList.add('visible');
-                notesModal.classList.add('visible');
-                bookmark.classList.add('active');
+        hydratePromise.then(() => {
+            const initialPath = window.location.pathname.replace(/\/$/, '') || '/';
+            if (initialPath !== '/' && initialPath !== '/index.html') {
+                if (openNoteByPermalink(initialPath)) {
+                    renderFolderList();
+                    document.body.style.overflow = 'hidden';
+                    notesBackdrop.classList.add('visible');
+                    notesModal.classList.add('visible');
+                    bookmark.classList.add('active');
+                }
             }
-        }
+        });
     }
 
     if (bookmark && notesModal && notesBackdrop) {
@@ -2541,11 +2533,11 @@ function playSound(file) {
 }
 
 function playNotesSound() {
-    playSound('/sounds/notes.wav');
+    playSound('assets/sounds/notes.wav');
 }
 
 function playBasicSound() {
-    playSound('/sounds/basic.wav');
+    playSound('assets/sounds/basic.wav');
 }
 
 document.addEventListener('pointerup', (e) => {
