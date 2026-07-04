@@ -6,7 +6,7 @@
 </h1>
 
 ```text
-╭─────── INFO v07.03.26 ───────────────────╮  ╭────── Profile Overview ──────────────────╮
+╭─────── INFO v07.04.26 ───────────────────╮  ╭────── Profile Overview ──────────────────╮
 │                                          │  │  ● School: Michigan State University     │
 │              Hello there!                │  │  ● Tech: HTML, CSS, JS, Swift            │
 │                                          │  │  ● Expertise: Mobile App, UI/UX Design   │
@@ -20,7 +20,7 @@
 
 > asahi college-progress
 
-INFO: stable v07.03.26 (optimized)
+INFO: stable v07.04.26 (optimized)
 ==> Fetching academic status from reg.msu.edu...
 
 ╭────────────────────────────────────────────────────────────────────────────────────────╮
@@ -33,12 +33,12 @@ INFO: stable v07.03.26 (optimized)
     
 ╭────── Icon ──────────────────────────────────╮  ╭────── Github Statistics ─────────────╮
 │     :GBB######BBBBGPPYJ?!~^:                 │  │                                      │
-│     :@@@@@@@@@@@@@@@@@@@@@@@&#G57^           │  │  ● Profile Views: 690                │
-│     :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~       │  │  ● Repository Views: 127             │
+│     :@@@@@@@@@@@@@@@@@@@@@@@&#G57^           │  │  ● Profile Views: 692                │
+│     :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~       │  │  ● Repository Views: 108             │
 │     :@@@@@@@@@@@@&&&#BBGGBBBB#&&@@@@@@#^     │  │  ● Stars Received: 6                 │
 │     :@@@@&BPY7~^:               :~J#@@@#     │  │  ● Total Commits: 637                │
 │      Y7^:                          ?@@&~     │  │  ● Commits (YTD): 480                │
-│                          ::^~7J5GB&&B7       │  │  ● Issues/PRs/Releases: 2/9/7        │
+│                          ::^~7J5GB&&B7       │  │  ● Issues/PRs/Releases: 2/10/9       │
 │                  :~7YG#&&@@@@&#GY7^          │  ╰──────────────────────────────────────╯
 │             ^75B&@@@@@&#PJ!^:                │  ╭────── Top Languages ─────────────────╮
 │          !G&@@@@@@#Y!:         ^!7~:         │  │                                      │
@@ -50,10 +50,10 @@ INFO: stable v07.03.26 (optimized)
 │  ^@@@@@@@@@@@7         !&@&        &@@@@@B   │  ╰──────────────────────────────────────╯
 │  !@@@@@@@@@@@@G~:  :^J#@@@?       ^@@@@@@&   │  ╭────── Recent Activity ───────────────╮
 │  ^@@@@@@@@@@@@@@@&&@@@@@@B        P@@@@@@@:  │  │                                      │
-│   G@@@@@@@@@@@@@@@@@@@@@&:       7@@@@@@@@:  │  │  » Pushed feat/toggles in hid...     │
+│   G@@@@@@@@@@@@@@@@@@@@@&:       7@@@@@@@@:  │  │  » Labeled PR #7 in rainbow-c...     │
 │    G@@@@@@@@@@@@@@@@@@@B:       !@@@@@@@@@:  │  │  » Pushed feat/toggles in hid...     │
-│     7#@@@@@@@@@@@@@@@&J        7@@@@@@@@@@^  │  │  » Pushed feat/toggles in hid...     │
-│       ~P&@@@@@@@@@&G7         7&&&&&&&&&&&:  │  │  » Pushed feat/toggles in hid...     │
+│     7#@@@@@@@@@@@@@@@&J        7@@@@@@@@@@^  │  │  » Pushed feat/new-ui-june-20...     │
+│       ~P&@@@@@@@@@&G7         7&&&&&&&&&&&:  │  │  » Pushed feat/new-ui-june-20...     │
 │          :~7?JJ7!^                           │  │  » Pushed feat/toggles in hid...     │
 ╰──────────────────────────────────────────────╯  ╰──────────────────────────────────────╯
 
