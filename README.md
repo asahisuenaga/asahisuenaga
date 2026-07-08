@@ -6,7 +6,7 @@
 </h1>
 
 ```text
-╭─────── INFO v07.07.26 ───────────────────╮  ╭────── Profile Overview ──────────────────╮
+╭─────── INFO v07.08.26 ───────────────────╮  ╭────── Profile Overview ──────────────────╮
 │                                          │  │  ● School: Michigan State University     │
 │              Hello there!                │  │  ● Tech: HTML, CSS, JS, Swift            │
 │                                          │  │  ● Expertise: Mobile App, UI/UX Design   │
@@ -20,7 +20,7 @@
 
 > asahi college-progress
 
-INFO: stable v07.07.26 (optimized)
+INFO: stable v07.08.26 (optimized)
 ==> Fetching academic status from reg.msu.edu...
 
 ╭────────────────────────────────────────────────────────────────────────────────────────╮
@@ -33,12 +33,12 @@ INFO: stable v07.07.26 (optimized)
     
 ╭────── Icon ──────────────────────────────────╮  ╭────── Github Statistics ─────────────╮
 │     :GBB######BBBBGPPYJ?!~^:                 │  │                                      │
-│     :@@@@@@@@@@@@@@@@@@@@@@@&#G57^           │  │  ● Profile Views: 694                │
-│     :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~       │  │  ● Repository Views: 98              │
+│     :@@@@@@@@@@@@@@@@@@@@@@@&#G57^           │  │  ● Profile Views: 696                │
+│     :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~       │  │  ● Repository Views: 93              │
 │     :@@@@@@@@@@@@&&&#BBGGBBBB#&&@@@@@@#^     │  │  ● Stars Received: 6                 │
-│     :@@@@&BPY7~^:               :~J#@@@#     │  │  ● Total Commits: 663                │
-│      Y7^:                          ?@@&~     │  │  ● Commits (YTD): 506                │
-│                          ::^~7J5GB&&B7       │  │  ● Issues/PRs/Releases: 2/10/8       │
+│     :@@@@&BPY7~^:               :~J#@@@#     │  │  ● Total Commits: 667                │
+│      Y7^:                          ?@@&~     │  │  ● Commits (YTD): 510                │
+│                          ::^~7J5GB&&B7       │  │  ● Issues/PRs/Releases: 2/11/8       │
 │                  :~7YG#&&@@@@&#GY7^          │  ╰──────────────────────────────────────╯
 │             ^75B&@@@@@&#PJ!^:                │  ╭────── Top Languages ─────────────────╮
 │          !G&@@@@@@#Y!:         ^!7~:         │  │                                      │
@@ -50,11 +50,11 @@ INFO: stable v07.07.26 (optimized)
 │  ^@@@@@@@@@@@7         !&@&        &@@@@@B   │  ╰──────────────────────────────────────╯
 │  !@@@@@@@@@@@@G~:  :^J#@@@?       ^@@@@@@&   │  ╭────── Recent Activity ───────────────╮
 │  ^@@@@@@@@@@@@@@@&&@@@@@@B        P@@@@@@@:  │  │                                      │
-│   G@@@@@@@@@@@@@@@@@@@@@&:       7@@@@@@@@:  │  │  » Release v2.0.1 in rainbow-...     │
-│    G@@@@@@@@@@@@@@@@@@@B:       !@@@@@@@@@:  │  │  » Release v1.1.1 in hide-goo...     │
-│     7#@@@@@@@@@@@@@@@&J        7@@@@@@@@@@^  │  │  » Pushed main in rainbow-cursor     │
-│       ~P&@@@@@@@@@&G7         7&&&&&&&&&&&:  │  │  » Pushed main in hide-google-ai     │
-│          :~7?JJ7!^                           │  │  » Closed Issue #7 in hide-go...     │
+│   G@@@@@@@@@@@@@@@@@@@@@&:       7@@@@@@@@:  │  │  » Merged PR #8 in rainbow-cu...     │
+│    G@@@@@@@@@@@@@@@@@@@B:       !@@@@@@@@@:  │  │  » Pushed main in rainbow-cursor     │
+│     7#@@@@@@@@@@@@@@@&J        7@@@@@@@@@@^  │  │  » Opened PR #8 in rainbow-cu...     │
+│       ~P&@@@@@@@@@&G7         7&&&&&&&&&&&:  │  │  » Pushed fix/caret-animation...     │
+│          :~7?JJ7!^                           │  │  » Create branch in rainbow-c...     │
 ╰──────────────────────────────────────────────╯  ╰──────────────────────────────────────╯
 
 > █
