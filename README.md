@@ -6,7 +6,7 @@
 </h1>
 
 ```text
-╭─────── INFO v07.09.26 ───────────────────╮  ╭────── Profile Overview ──────────────────╮
+╭─────── INFO v07.10.26 ───────────────────╮  ╭────── Profile Overview ──────────────────╮
 │                                          │  │  ● School: Michigan State University     │
 │              Hello there!                │  │  ● Tech: HTML, CSS, JS, Swift            │
 │                                          │  │  ● Expertise: Mobile App, UI/UX Design   │
@@ -20,7 +20,7 @@
 
 > asahi college-progress
 
-INFO: stable v07.09.26 (optimized)
+INFO: stable v07.10.26 (optimized)
 ==> Fetching academic status from reg.msu.edu...
 
 ╭────────────────────────────────────────────────────────────────────────────────────────╮
@@ -33,8 +33,8 @@ INFO: stable v07.09.26 (optimized)
     
 ╭────── Icon ──────────────────────────────────╮  ╭────── Github Statistics ─────────────╮
 │     :GBB######BBBBGPPYJ?!~^:                 │  │                                      │
-│     :@@@@@@@@@@@@@@@@@@@@@@@&#G57^           │  │  ● Profile Views: 696                │
-│     :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~       │  │  ● Repository Views: 101             │
+│     :@@@@@@@@@@@@@@@@@@@@@@@&#G57^           │  │  ● Profile Views: 698                │
+│     :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~       │  │  ● Repository Views: 96              │
 │     :@@@@@@@@@@@@&&&#BBGGBBBB#&&@@@@@@#^     │  │  ● Stars Received: 6                 │
 │     :@@@@&BPY7~^:               :~J#@@@#     │  │  ● Total Commits: 667                │
 │      Y7^:                          ?@@&~     │  │  ● Commits (YTD): 510                │
