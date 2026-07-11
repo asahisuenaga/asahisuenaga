@@ -5,7 +5,7 @@ date: 2026-03-19T19:20
 permalink: /notes/rainbow-cursor
 pinned: false
 ---
-<p>If you want to skip the reading and give your cursor the <span style="background: linear-gradient(to right, #ffb6c1, #ff69b4, #da70d6, #9370db, #48c9b0, #f0e68c, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">colorful vibrance</span> it needs, <a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc" style="color:rgb(234, 179, 8);; text-decoration: underline;">install it on the Chrome Web Store.</a></p>
+<p>If you want to skip the reading and give your cursor the <span style="background: linear-gradient(to right, #ffb6c1, #ff69b4, #da70d6, #9370db, #48c9b0, #f0e68c, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">colorful vibrance</span> it needs, <a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc" style="color:#eab308; text-decoration: underline;">install it on the Chrome Web Store.</a></p>
 <h3>What it is</h3>
 <p>Rainbow Cursor is a browser extension that manipulates the cursor in Google Docs into creating a visible gradient. You can change the gradient colors, the cursor thickness, kill the cursor blink, turn on typewriter animation, or make the cursor translucent. That's the entire extension. No bloated features, no hidden trackers, and no unnecessary configuration screens.</p>
 
