@@ -25,6 +25,7 @@
         <link rel="preload" href="assets/css/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="assets/css/styles.css"></noscript>
         <script src="assets/js/script.js" defer></script>
+        <script src="assets/js/notes.js" defer></script>
     </head>
     <style>
         .notes-backdrop {
@@ -129,7 +130,7 @@
             clip-path: inset(0 0 0 0 round 0);
             overflow: hidden auto;
         }
-        .tooltip::after {
+        .github-stats::after {
             position: absolute;
             top: 0;
             left: 0;
@@ -138,8 +139,6 @@
         .container {
             display: flex;
             gap: var(--gap);
-        }
-        .container {
             max-width: 530px;
             width: 100%;
             flex-direction: column;
@@ -177,7 +176,7 @@
         #bio {
             line-height: 1.5rem;
         }
-        .tooltip {
+        .github-stats {
             display: none;
             opacity: 0;
         }
@@ -204,10 +203,10 @@
                 --glass-shadow: 0 -.5px 0 rgba(255, 255, 255, .2), 0 .5px 0 rgba(255, 255, 255, .2), inset 0 -.5px 6px -3px rgba(255, 255, 255, .1), inset -3px .5px 6px -3px rgba(255, 255, 255, .1);
                 --glass-after-bg: rgba(30, 30, 30, .2);
             }
-            .tooltip::after {
-                background: rgba(30, 30, 30, .2);
+            .github-stats::after {
+                background: rgba(0, 0, 0, .2);
             }
-            .tooltip {
+            .github-stats {
                 box-shadow: 0 -.5px 0 rgba(255, 255, 255, .2), 0 .5px 0 rgba(255, 255, 255, .2), inset 0 -.5px 6px -3px rgba(255, 255, 255, .1), inset -3px .5px 6px -3px rgba(255, 255, 255, .1);
             }
             .github-mini-grid {
@@ -298,7 +297,7 @@
             will-change: transform, backdrop-filter;
         }
         .notes-glass-btn {
-            background: rgba(255, 255, 255);
+            background: var(--bg);
             border-radius: 50%;
             padding: .75rem;
             align-items: center;
@@ -324,9 +323,6 @@
             display: none;
         }
         @media (prefers-color-scheme: dark) {
-            .notes-glass-btn {
-                background: rgba(0, 0, 0, .3);
-            }
             .notes-content {
                 color: #e5e5e5;
             }
@@ -422,7 +418,7 @@
         }
         div.notes-header-right {
             gap: .125rem;
-            background: rgba(255, 255, 255);
+            background: var(--bg);
             backdrop-filter: blur(2px);
             -webkit-backdrop-filter: blur(2px);
             border: 0;
@@ -443,9 +439,6 @@
             }
             .notes-title {
                 color: #fff;
-            }
-            #new-note-btn-header, div.notes-header-right {
-                background: rgba(0, 0, 0, .3);
             }
         }
         .notes-toolbar-btn {
@@ -768,7 +761,6 @@
             display: none;
             flex-direction: column;
             transform: translateX(-50%);
-            gap: .25rem;
             z-index: 1000;
             opacity: 0;
             will-change: opacity, backdrop-filter;
@@ -829,6 +821,7 @@
                     <button id="notes-btn" class="notes-glass-btn action-label-btn notes-link" aria-label="Notes" draggable="false"><span id="action-notes">About</span></button>
                     <a href="https://twitter.com/asahisuenaga" aria-label="Twitter" class="notes-glass-btn action-label-btn twitter-link" target="_blank" draggable="false"><span id="action-twitter">Twitter</span></a>
                     <a href="https://github.com/asahisuenaga" aria-label="Github" class="notes-glass-btn action-label-btn github-link" target="_blank" draggable="false"><span id="action-github">GitHub</span></a>
+                    <div class="github-stats" id="github-stats" style="display:none"><div id="github-mini-grid" class="github-mini-grid"></div></div>
                     <button id="ellipsis-btn" class="notes-glass-btn" aria-label="More options"><svg viewBox="0 0 18.584 3.7207" width="20" height="20" fill="var(--heading)"><path d="M16.3672 3.70117C17.3926 3.70117 18.2227 2.88086 18.2227 1.85547C18.2227 0.830078 17.3926 0 16.3672 0C15.3418 0 14.5117 0.830078 14.5117 1.85547C14.5117 2.88086 15.3418 3.70117 16.3672 3.70117Z"/><path d="M9.11133 3.70117C10.1367 3.70117 10.957 2.88086 10.957 1.85547C10.957 0.830078 10.1367 0 9.11133 0C8.08594 0 7.25586 0.830078 7.25586 1.85547C7.25586 2.88086 8.08594 3.70117 9.11133 3.70117Z"/><path d="M1.85547 3.70117C2.88086 3.70117 3.70117 2.88086 3.70117 1.85547C3.70117 0.830078 2.88086 0 1.85547 0C0.830078 0 0 0.830078 0 1.85547C0 2.88086 0.830078 3.70117 1.85547 3.70117Z"/></svg></button>
                     <div class="ellipsis-menu" id="ellipsis-menu" style="display:none"><button id="menu-translate"><img alt="Toggle language" src="assets/icons/translate.svg" style="width: 20px; height: 16px;"><span id="menu-translate-label">Language</span><span id="menu-translate-badge" class="menu-badge"></span></button><button id="menu-darkmode" aria-label="Toggle dark mode"><svg viewBox="0 0 400 400" width="16" height="16" class="color-mode"><circle r="200" cx="200" cy="200" fill="#1e1e1e"/><path d="M 200 375 A 175 175 0 0 1 200 25" fill="#ffffff"/><path d="M 200 300 A 100 100 0 0 1 200 100" fill="#1e1e1e"/><path d="M 200 100 A 100 100 180 0 1 200 300" fill="#ffffff"/></svg><span id="menu-darkmode-label">Dark Mode</span><span id="menu-darkmode-badge" class="menu-badge"></span></button></div>
                 </div>
@@ -901,9 +894,6 @@
                     <div id="active-note-content" contenteditable="true" spellcheck="false" style="outline: none; font-size:0.875rem; height:100%;"></div>
                 </div>
             </div>
-        </div>
-        <div class="tooltip" id="tooltip" style="display:none">
-            <div id="github-mini-grid" class="github-mini-grid"></div>
         </div>
     </body>
 </html>
