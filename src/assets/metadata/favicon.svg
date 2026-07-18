@@ -7,7 +7,7 @@
 
   <style>
     .logo-path {
-      fill: #202020;
+      fill: #1e1e1e;
     }
 
     @media (prefers-color-scheme: dark) {

@@ -80,11 +80,13 @@
         }
         :root {
             --bg: #fff;
-            --heading: #202020;
+            --heading: #1e1e1e;
             --subtitle: #595959;
-            --text: #202020;
+            --text: #1e1e1e;
             --gap: 1.25rem;
             --dark-mode: 0;
+            --glass-shadow: -.5px 0 0 rgba(0, 0, 0, .2), .5px 0 0 rgba(0, 0, 0, .2), inset 0 -.5px 6px -3px rgba(0, 0, 0, .1), inset 0 .5px 6px -3px rgba(0, 0, 0, .1);
+            --glass-after-bg: rgba(255, 255, 255, .1);
         }
         * {
             scrollbar-width: none;
@@ -122,7 +124,6 @@
             gap: var(--gap);
             width: 100%;
             padding: var(--gap);
-            padding-bottom: max(5.5rem, calc(var(--gap) + env(safe-area-inset-bottom, 0)));
             z-index: 2;
             box-sizing: border-box;
             clip-path: inset(0 0 0 0 round 0);
@@ -186,7 +187,6 @@
             grid-template-rows: repeat(4, .875rem);
             grid-auto-flow: column;
             gap: 3px;
-            padding: 2px;
         }
         @media (prefers-color-scheme: dark) {
             .notes-toolbar-btn img {
@@ -196,17 +196,19 @@
                 filter: invert(0);
             }
             :root {
-                --bg: #202020;
+                --bg: #1e1e1e;
                 --heading: #fff;
                 --subtitle: #969696;
                 --text: #fff;
                 --dark-mode: 1;
+                --glass-shadow: 0 -.5px 0 rgba(255, 255, 255, .2), 0 .5px 0 rgba(255, 255, 255, .2), inset 0 -.5px 6px -3px rgba(255, 255, 255, .1), inset -3px .5px 6px -3px rgba(255, 255, 255, .1);
+                --glass-after-bg: rgba(30, 30, 30, .2);
             }
             .tooltip::after {
-                background: rgba(32, 32, 32, .2);
+                background: rgba(30, 30, 30, .2);
             }
             .tooltip {
-                box-shadow: -.5px -.5px rgba(255, 255, 255, .2), .5px .5px rgba(255, 255, 255, .2), 0 8px 32px rgba(31, 38, 135, .1);
+                box-shadow: 0 -.5px 0 rgba(255, 255, 255, .2), 0 .5px 0 rgba(255, 255, 255, .2), inset 0 -.5px 6px -3px rgba(255, 255, 255, .1), inset -3px .5px 6px -3px rgba(255, 255, 255, .1);
             }
             .github-mini-grid {
                 filter: invert(.9) hue-rotate(180deg);
@@ -223,7 +225,7 @@
         }
         .notes-backdrop {
             inset: 0;
-            background: rgba(0, 0, 0, .4);
+            background: rgba(30, 30, 30, .4);
             backdrop-filter: blur(4px);
             z-index: 2000;
         }
@@ -232,9 +234,9 @@
             left: 50%;
             width: 340px;
             height: 480px;
-            background: #f5f5f5;
+            background: #EDEDED;
             border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, .15), 0 0 0 1px rgba(0, 0, 0, .05);
+            box-shadow: var(--glass-shadow);
             z-index: 2001;
             transform: translateX(-50%) scale(.95);
             overflow: hidden;
@@ -242,8 +244,8 @@
         }
         @media (prefers-color-scheme: dark) {
             .notes-modal {
-                background: #212121;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, .5), 0 0 0 1px rgba(255, 255, 255, .1);
+                background: #262626;
+                box-shadow: 0 20px 60px rgba(30, 30, 30, .5), 0 0 0 1px rgba(255, 255, 255, .1);
             }
         }
         .notes-panel {
@@ -254,12 +256,12 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            background: #f5f5f5;
+            background: #EDEDED;
             transform: translateY(100%);
         }
         @media (prefers-color-scheme: dark) {
             .notes-panel {
-                background: #212121;
+                background: #262626;
             }
         }
         .notes-header {
@@ -274,7 +276,7 @@
         }
         @media (prefers-color-scheme: dark) {
             .notes-header {
-                background: rgba(0, 0, 0, .85);
+                background: rgba(30, 30, 30, .85);
             }
         }
         .notes-header-left, .notes-header-right {
@@ -287,10 +289,10 @@
             justify-content: flex-end;
         }
         .notes-glass-btn {
-            backdrop-filter: blur(1px) saturate(180%);
-            -webkit-backdrop-filter: blur(1px) saturate(180%);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
             border: 0;
-            box-shadow: -.5px -.5px rgba(222, 222, 222, .5), .5px .5px rgba(222, 222, 222, .5), 0 8px 32px rgba(31, 38, 135, .1);
+            box-shadow: var(--glass-shadow);
             display: flex;
             transform: translateZ(0);
             will-change: transform, backdrop-filter;
@@ -312,7 +314,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, .1);
+            background: var(--glass-after-bg);
             border-radius: inherit;
             backdrop-filter: blur(1px);
             opacity: .6;
@@ -324,7 +326,6 @@
         @media (prefers-color-scheme: dark) {
             .notes-glass-btn {
                 background: rgba(0, 0, 0, .3);
-                box-shadow: -.5px -.5px rgba(255, 255, 255, .2), .5px .5px rgba(255, 255, 255, .2), 0 8px 32px rgba(31, 38, 135, .1);
             }
             .notes-content {
                 color: #e5e5e5;
@@ -422,13 +423,13 @@
         div.notes-header-right {
             gap: .125rem;
             background: rgba(255, 255, 255);
-            backdrop-filter: blur(1px) saturate(180%);
-            -webkit-backdrop-filter: blur(1px) saturate(180%);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
             border: 0;
             border-radius: 1.25rem;
             padding: 1rem;
             height: 2.5rem;
-            box-shadow: -.5px -.5px rgba(255, 255, 255, .2), .5px .5px rgba(255, 255, 255, .2), 0 8px 32px rgba(31, 38, 135, .1);
+            box-shadow: var(--glass-shadow);
             transform: translateZ(0);
             will-change: transform, backdrop-filter;
             max-width: 400px;
@@ -486,7 +487,6 @@
         }
         #panel-note-view {
             backdrop-filter: blur(40px);
-            border-left: 1px solid rgba(0, 0, 0, .1);
             display: flex;
             flex-direction: column;
         }
@@ -498,8 +498,7 @@
                 filter: invert(1);
             }
             #panel-note-view {
-                background: #1c1c1c;
-                border-left: 1px solid rgba(255, 255, 255, .1);
+                background: var(--bg);
             }
         }
         p {
@@ -522,7 +521,7 @@
             #panel-folders {
                 width: 200px;
                 flex-shrink: 0;
-                border-right: 1px solid rgba(0, 0, 0, .1);
+                border-right: 1px solid rgba(30, 30, 30, .1);
                 overflow: hidden;
             }
             #panel-folders, #panel-note-view, #panel-notes, .notes-panel {
@@ -532,8 +531,8 @@
             #panel-notes {
                 width: 260px;
                 flex-shrink: 0;
-                border-right: 1px solid rgba(0, 0, 0, .1);
-                background: #fff;
+                border-right: 1px solid rgba(30, 30, 30, .1);
+                background: var(--bg);
             }
             #panel-note-view {
                 flex: 1;
@@ -552,10 +551,7 @@
             }
             @media (prefers-color-scheme: dark) {
                 #panel-folders, #panel-notes {
-                    border-right: 1px solid rgba(255, 255, 255, .1);
-                }
-                #panel-notes {
-                    background: #1c1c1c;
+                    border-right: 1px solid var(--glass-after-bg);
                 }
             }
             .notes-large-title {
@@ -611,7 +607,7 @@
                 display: block !important;
                 width: 36px;
                 height: 5px;
-                background: rgba(32, 32, 32, .2);
+                background: rgba(30, 30, 30, .2);
                 border-radius: 10px;
                 margin: 8px auto;
                 position: absolute;
@@ -762,11 +758,11 @@
         .ellipsis-menu {
             position: fixed;
             background: 0 0;
-            backdrop-filter: blur(1px) saturate(180%);
-            -webkit-backdrop-filter: blur(1px) saturate(180%);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
             border: 0;
             border-radius: 1rem;
-            box-shadow: -.5px -.5px rgba(222, 222, 222, .5), .5px .5px rgba(222, 222, 222, .5), 0 8px 32px rgba(31, 38, 135, .1);
+            box-shadow: var(--glass-shadow);
             padding: .5rem;
             min-width: 200px;
             display: none;
@@ -784,7 +780,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, .1);
+            background: var(--glass-after-bg);
             border-radius: inherit;
             backdrop-filter: blur(1px);
             opacity: .6;
@@ -811,10 +807,10 @@
         @media (prefers-color-scheme: dark) {
             .ellipsis-menu {
                 background: 0 0;
-                box-shadow: -.5px -.5px rgba(255, 255, 255, .2), .5px .5px rgba(255, 255, 255, .2), 0 8px 32px rgba(31, 38, 135, .1);
+                box-shadow: var(--glass-shadow);
             }
             .ellipsis-menu::after {
-                background: rgba(32, 32, 32, .2);
+                background: rgba(30, 30, 30, .2);
             }
         }
     </style>
@@ -834,7 +830,7 @@
                     <a href="https://twitter.com/asahisuenaga" aria-label="Twitter" class="notes-glass-btn action-label-btn twitter-link" target="_blank" draggable="false"><span id="action-twitter">Twitter</span></a>
                     <a href="https://github.com/asahisuenaga" aria-label="Github" class="notes-glass-btn action-label-btn github-link" target="_blank" draggable="false"><span id="action-github">GitHub</span></a>
                     <button id="ellipsis-btn" class="notes-glass-btn" aria-label="More options"><svg viewBox="0 0 18.584 3.7207" width="20" height="20" fill="var(--heading)"><path d="M16.3672 3.70117C17.3926 3.70117 18.2227 2.88086 18.2227 1.85547C18.2227 0.830078 17.3926 0 16.3672 0C15.3418 0 14.5117 0.830078 14.5117 1.85547C14.5117 2.88086 15.3418 3.70117 16.3672 3.70117Z"/><path d="M9.11133 3.70117C10.1367 3.70117 10.957 2.88086 10.957 1.85547C10.957 0.830078 10.1367 0 9.11133 0C8.08594 0 7.25586 0.830078 7.25586 1.85547C7.25586 2.88086 8.08594 3.70117 9.11133 3.70117Z"/><path d="M1.85547 3.70117C2.88086 3.70117 3.70117 2.88086 3.70117 1.85547C3.70117 0.830078 2.88086 0 1.85547 0C0.830078 0 0 0.830078 0 1.85547C0 2.88086 0.830078 3.70117 1.85547 3.70117Z"/></svg></button>
-                    <div class="ellipsis-menu" id="ellipsis-menu" style="display:none"><button id="menu-translate"><img alt="Toggle language" src="assets/icons/translate.svg" style="width: 20px; height: 16px;"><span id="menu-translate-label">Language</span><span id="menu-translate-badge" class="menu-badge"></span></button><button id="menu-darkmode" aria-label="Toggle dark mode"><svg viewBox="0 0 400 400" width="16" height="16" class="color-mode"><circle r="200" cx="200" cy="200" fill="#202020"/><path d="M 200 375 A 175 175 0 0 1 200 25" fill="#ffffff"/><path d="M 200 300 A 100 100 0 0 1 200 100" fill="#202020"/><path d="M 200 100 A 100 100 180 0 1 200 300" fill="#ffffff"/></svg><span id="menu-darkmode-label">Dark Mode</span><span id="menu-darkmode-badge" class="menu-badge"></span></button></div>
+                    <div class="ellipsis-menu" id="ellipsis-menu" style="display:none"><button id="menu-translate"><img alt="Toggle language" src="assets/icons/translate.svg" style="width: 20px; height: 16px;"><span id="menu-translate-label">Language</span><span id="menu-translate-badge" class="menu-badge"></span></button><button id="menu-darkmode" aria-label="Toggle dark mode"><svg viewBox="0 0 400 400" width="16" height="16" class="color-mode"><circle r="200" cx="200" cy="200" fill="#1e1e1e"/><path d="M 200 375 A 175 175 0 0 1 200 25" fill="#ffffff"/><path d="M 200 300 A 100 100 0 0 1 200 100" fill="#1e1e1e"/><path d="M 200 100 A 100 100 180 0 1 200 300" fill="#ffffff"/></svg><span id="menu-darkmode-label">Dark Mode</span><span id="menu-darkmode-badge" class="menu-badge"></span></button></div>
                 </div>
             </div>
         </main>
