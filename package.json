@@ -1,10 +1,12 @@
 {
-"scripts": {
-  "build": "rm -rf dist && mkdir -p dist && cp -r src/assets src/locales src/notes dist/ && cp src/robots.txt src/sitemap.xml dist/ && npx html-minifier-terser src/index.html --collapse-whitespace --remove-comments --minify-css true --minify-js true -o dist/index.html && npx terser dist/assets/js/script.js -o dist/assets/js/script.js && npx terser dist/assets/js/notes.js -o dist/assets/js/notes.js && npx csso dist/assets/css/styles.css -o dist/assets/css/styles.css"
-},
+  "scripts": {
+    "build": "rm -rf dist && mkdir -p dist && cp -r src/assets src/locales src/notes dist/ && cp src/robots.txt src/sitemap.xml dist/ && npx html-minifier-terser src/index.html --collapse-whitespace --remove-comments --minify-css true --minify-js true -o dist/index.html && npx terser dist/assets/js/script.js -o dist/assets/js/script.js && npx terser dist/assets/js/notes.js -o dist/assets/js/notes.js && npx csso-cli dist/assets/css/styles.css -o dist/assets/css/styles.css && npx minify-json dist/locales/en.json && npx minify-json dist/locales/ja.json"
+  },
   "devDependencies": {
-    "terser": "latest",
     "csso-cli": "latest",
+    "html-minifier-terser": "latest",
+    "minify-json": "latest",
+    "terser": "latest",
     "wrangler": "latest"
   }
 }

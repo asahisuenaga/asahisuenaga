@@ -73,9 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
         Object.entries(folderMap).forEach(([target, label]) => {
             const el = document.querySelector(`#panel-folders [data-target="${target}"] .notes-folder-info`);
             if (!el) return;
-            const img = el.querySelector('img');
+            const icon = el.querySelector('svg.icon');
             el.innerHTML = '';
-            if (img) el.appendChild(img);
+            if (icon) el.appendChild(icon);
             el.append(label);
         });
 
@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const info = document.createElement('div');
             info.className = 'notes-folder-info';
-            info.innerHTML = `<img alt="Folder" src="assets/icons/folder.svg" class="folder-icon" draggable="false">${folderName}`;
+            info.innerHTML = `<svg class="icon folder-icon"><use href="#icon-folder"/></svg>${folderName}`;
 
             const count = document.createElement('div');
             count.innerHTML = `<span class="notes-count" id="count-${folderKey}">0</span>`;
@@ -672,7 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const x = (e.clientX || 0) - 10;
                 const y = (e.clientY || 0) - 10;
 
-                const multiHasBuiltIn = selectedIds.some((id) => isBuiltInNoteId(id));
+                const userSelectedIds = selectedIds.filter((id) => !isBuiltInNoteId(id));
                 const isInDeletedFolder = folderFilter === 'recently_deleted';
 
                 if (isInDeletedFolder) {
@@ -706,7 +706,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         playNotesSound();
                     };
                     menu.appendChild(permDelBtn);
-                } else if (!multiHasBuiltIn) {
+                } else if (selectedIds.length > 0) {
                     const selectedPinnedCount = selectedIds.filter(id => notesData[id]?.pinned).length;
                     const selectedUnpinnedCount = selectedIds.length - selectedPinnedCount;
 
@@ -743,7 +743,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                if (!multiHasBuiltIn && !isInDeletedFolder) {
+                if (userSelectedIds.length === selectedIds.length && !isInDeletedFolder) {
                     const separator1 = document.createElement('div');
                     separator1.style.height = '1px';
                     separator1.style.background = 'rgba(0,0,0,0.1)';
@@ -751,16 +751,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     separator1.className = 'context-separator';
                     menu.appendChild(separator1);
 
-                    const selectedFolders = Array.from(new Set(selectedIds.map(id => notesData[id].folder)));
+                    const selectedFolders = Array.from(new Set(userSelectedIds.map(id => notesData[id].folder)));
                     getMoveTargets().forEach(f => {
                         if (selectedFolders.length === 1 && selectedFolders[0] === f) return;
                         if (selectedFolders.every(sf => sf === f)) return;
 
                         const mbtn = document.createElement('div');
                         mbtn.className = 'note-context-item';
-                        mbtn.innerText = tcm('moveNTo', selectedIds.length, f);
+                        mbtn.innerText = tcm('moveNTo', userSelectedIds.length, f);
                         mbtn.onclick = () => {
-                            selectedIds.forEach(id => {
+                            userSelectedIds.forEach(id => {
                                 notesData[id].folder = f;
                             });
                             saveNotes();
@@ -779,13 +779,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     menu.appendChild(separator2);
                 }
 
-                if (!multiHasBuiltIn && !isInDeletedFolder) {
+                if (userSelectedIds.length === selectedIds.length && !isInDeletedFolder) {
                     const delBtn = document.createElement('div');
                     delBtn.className = 'note-context-item';
                     delBtn.style.color = '#FF453A';
-                    delBtn.innerText = tcm('deleteN', selectedIds.length);
+                    delBtn.innerText = tcm('deleteN', userSelectedIds.length);
                     delBtn.onclick = () => {
-                        selectedIds.forEach(id => {
+                        userSelectedIds.forEach(id => {
                             notesData[id].originalFolder = notesData[id].folder;
                             notesData[id].folder = 'recently_deleted';
                             notesData[id].deletedAt = Date.now();
@@ -1891,29 +1891,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 const winW = window.innerWidth;
                 const winH = window.innerHeight;
                 const bannerH = 20;
-                const footerH = revelationActive ? 100 : 40;
 
                 let snapX, snapY;
                 if (centerX < winW / 2) snapX = 40;
-                else snapX = winW - rect.width - 40;
+                else snapX = winW - rect.width - 20;
 
                 if (centerY < winH / 2) snapY = bannerH + 12;
-                else snapY = winH - rect.height - footerH;
+                else snapY = winH - rect.height - 20;
 
                 notesModal.style.setProperty('left', `${snapX}px`, 'important');
                 notesModal.style.setProperty('top', `${snapY}px`, 'important');
             }
         };
-
-        let revelationActive = false;
-        window.addEventListener('scroll', () => {
-            const wasActive = revelationActive;
-            revelationActive = window.scrollY > 0;
-
-            if (wasActive !== revelationActive && notesModal.classList.contains('minimized')) {
-                handleDragEnd(true);
-            }
-        });
 
         if (window.innerWidth >= 800) {
             notesModal.addEventListener('mousedown', handleDragStart);

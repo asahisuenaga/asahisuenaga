@@ -1,32 +1,19 @@
 :root {
-    --bg: #fff;
-    --heading: #1e1e1e;
-    --subtitle: #595959;
-    --text: #1e1e1e;
+    color-scheme: light dark;
+    --bg: light-dark(#fff, #1e1e1e);
+    --gray: light-dark(#595959, #969696);
+    --color: light-dark(#1e1e1e, #fff);
     --gap: 1.25rem;
     --dark-mode: 0;
-    --glass-shadow: -.5px 0 0 rgba(0, 0, 0, .2), .5px 0 0 rgba(0, 0, 0, .2), inset 0 -.5px 6px -3px rgba(0, 0, 0, .1), inset 0 .5px 6px -3px rgba(0, 0, 0, .1);
-    --glass-after-bg: rgba(255, 255, 255, .1);
+    --shadow-light: -.5px 0 0 rgba(0, 0, 0, .2), .5px 0 0 rgba(0, 0, 0, .2), inset 0 -.5px 6px -3px rgba(0, 0, 0, .1), inset 0 .5px 6px -3px rgba(0, 0, 0, .1);
+    --shadow-dark: 0 -.5px 0 rgba(255, 255, 255, .2), 0 .5px 0 rgba(255, 255, 255, .2), inset 0 -.5px 6px -3px rgba(255, 255, 255, .1), inset -3px .5px 6px -3px rgba(255, 255, 255, .1);
+    --shadow: var(--shadow-light);
 }
 @media (prefers-color-scheme: dark) {
     :root {
-        --bg: #1e1e1e;
-        --heading: #fff;
-        --subtitle: #969696;
-        --text: #fff;
         --dark-mode: 1;
-        --glass-shadow: 0 -.5px 0 rgba(255, 255, 255, .2), 0 .5px 0 rgba(255, 255, 255, .2), inset 0 -.5px 6px -3px rgba(255, 255, 255, .1), inset -3px .5px 6px -3px rgba(255, 255, 255, .1);
-        --glass-after-bg: rgba(30, 30, 30, .2);
+        --shadow: var(--shadow-dark);
     }
-}
-body.dark-mode {
-    --dark-mode: 1;
-    --bg: #1e1e1e;
-    --heading: #fff;
-    --subtitle: #969696;
-    --text: #fff;
-    --glass-shadow: 0 -.5px 0 rgba(255, 255, 255, .2), 0 .5px 0 rgba(255, 255, 255, .2), inset 0 -.5px 6px -3px rgba(255, 255, 255, .1), inset -3px .5px 6px -3px rgba(255, 255, 255, .1);
-    --glass-after-bg: rgba(30, 30, 30, .2);
 }
 * {
     scrollbar-width: none;
@@ -36,7 +23,7 @@ body.dark-mode {
 }
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Inter, Inter-Fallback, Geist, Geist-Fallback, Roboto, Roboto-Fallback, Arial, Arial-Fallback, sans-serif;
-    background-color: var(--heading);
+    background-color: var(--color);
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -55,7 +42,7 @@ body {
 }
 .main-content {
     background-color: var(--bg);
-    color: var(--subtitle);
+    color: var(--gray);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -84,7 +71,7 @@ body {
 }
 .banner {
     color: var(--bg);
-    background: var(--heading);
+    background: var(--color);
     justify-content: center;
     align-items: center;
     gap: var(--gap);
@@ -119,6 +106,7 @@ body {
     cursor: pointer;
 }
 .icon {
+    color: var(--color);
     -webkit-user-drag: none;
     user-select: none;
     -webkit-touch-callout: none;
@@ -209,17 +197,18 @@ body {
     display: inline;
     font-size: 1rem;
     font-weight: 500;
-    color: var(--heading);
+    color: var(--color);
     margin: 0;
     max-width: 7.5rem;
 }
 #location {
-    color: var(--subtitle);
+    color: var(--gray);
 }
 #bio {
     font-size: 1rem;
-    color: var(--heading);
+    color: var(--color);
     line-height: 1.5rem;
+    contain: content;
 }
 .github-stats {
     position: fixed;
@@ -227,17 +216,17 @@ body {
     z-index: 9999;
     opacity: 0;
     display: none;
-    background: 0 0;
+    background: var(--shadow);
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
     border: 0;
     border-radius: 1rem;
-    box-shadow: var(--glass-shadow);
+    box-shadow: var(--shadow);
     will-change: transform, backdrop-filter;
     padding: .75rem 1rem;
     align-items: center;
     gap: calc(var(--gap) * .5);
-    color: var(--subtitle);
+    color: var(--gray);
 }
 .github-stats.open {
     display: flex;
@@ -261,16 +250,12 @@ body {
     grid-template-rows: repeat(4, .875rem);
     grid-auto-flow: column;
     gap: 3px;
+    contain: layout style;
 }
 .github-tile {
     width: .875rem;
     height: .875rem;
     border-radius: 2px;
-}
-@media (prefers-color-scheme: dark) {
-    .github-mini-grid {
-        filter: invert(.9) hue-rotate(180deg);
-    }
 }
 *, :after, :before {
     box-sizing: border-box;
@@ -280,8 +265,8 @@ body {
 .notes-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(30, 30, 30, .4);
-    backdrop-filter: blur(4px);
+    background: light-dark(rgba(255, 255, 255, .1), rgba(0, 0, 0, .1));
+    backdrop-filter: blur(2px);
     z-index: 2000;
     opacity: 0;
     pointer-events: none;
@@ -297,9 +282,10 @@ body {
     left: 50%;
     width: 340px;
     height: 480px;
-    background: #EDEDED;
+    background: light-dark(#EDEDED, #262626);
     border-radius: 12px;
-    box-shadow: var(--glass-shadow);
+    box-shadow: 0 20px 60px light-dark(rgb(from rgba(0, 0, 0, .1) r g b / calc(alpha * 2)), rgba(255, 255, 255, .05)), 0 0 0 1px light-dark(rgba(255, 255, 255, .1), rgba(0, 0, 0, .1));
+    border: 1px solid light-dark(rgba(255, 255, 255, .1), rgba(255, 255, 255, .1));
     z-index: 2001;
     opacity: 0;
     pointer-events: none;
@@ -313,11 +299,6 @@ body {
     pointer-events: auto;
     transform: translate(-50%, -50%) scale(1);
 }
-@media (prefers-color-scheme: dark) {
-    .notes-modal {
-        background: #262626;
-    }
-}
 .notes-panel {
     position: absolute;
     top: 0;
@@ -326,14 +307,9 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    background: #EDEDED;
+    background: light-dark(#EDEDED, #262626);
     transition: transform .3s cubic-bezier(.25, 1, .5, 1);
     transform: translateY(100%);
-}
-@media (prefers-color-scheme: dark) {
-    .notes-panel {
-        background: #262626;
-    }
 }
 .notes-panel.active {
     transform: translateY(0);
@@ -347,20 +323,15 @@ body {
     display: none;
 }
 .active-folder {
-    background: rgba(30, 30, 30, .05) !important;
+    background: light-dark(rgba(0, 0, 0, .1), rgba(255, 255, 255, .1)) !important;
     border-radius: 10px !important;
     color: #eab308 !important;
 }
 .active-folder .notes-folder-info {
     color: #eab308 !important;
 }
-.active-folder img {
-    filter: brightness(0) invert(62%) sepia(82%) saturate(933%) hue-rotate(6deg) brightness(102%) contrast(94%) !important;
-}
-@media (prefers-color-scheme: dark) {
-    .active-folder {
-        background: rgba(255, 255, 255, .1) !important;
-    }
+.active-folder svg.icon {
+    color: #eab308 !important;
 }
 .notes-header {
     height: 44px;
@@ -368,14 +339,8 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0 16px;
-    background: rgba(242, 242, 247, .85);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(2px);
     z-index: 10;
-}
-@media (prefers-color-scheme: dark) {
-    .notes-header {
-        background: rgba(30, 30, 30, .85);
-    }
 }
 .notes-header-left, .notes-header-right {
     flex: 1;
@@ -391,7 +356,7 @@ body {
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
     border-radius: 50%;
-    box-shadow: var(--glass-shadow);
+    box-shadow: var(--shadow);
     cursor: pointer;
     padding: .75rem;
     transition: background-color .2s cubic-bezier(.25, 1, .5, 1), backdrop-filter .2s cubic-bezier(.25, 1, .5, 1), transform .2s cubic-bezier(.25, 1, .5, 1), box-shadow .2s cubic-bezier(.25, 1, .5, 1);
@@ -405,30 +370,15 @@ body {
     will-change: transform, backdrop-filter;
     border: 0;
 }
-.notes-glass-btn::after,
-div.notes-header-right::after,
-.ellipsis-menu::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--glass-after-bg);
-    border-radius: inherit;
-    backdrop-filter: blur(1px);
-    opacity: .6;
-    z-index: -1;
-}
 .notes-glass-btn:hover {
     background-color: rgba(109, 109, 109, .15);
 }
 .note-context-menu {
-    background: rgba(255, 255, 255, .8);
+    background: light-dark(rgba(255, 255, 255, .1), rgba(0, 0, 0, .1));
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
     border: 0;
-    box-shadow: var(--glass-shadow);
+    box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -440,11 +390,6 @@ div.notes-header-right::after,
     transform: translateZ(0);
     will-change: transform, backdrop-filter;
 }
-@media (prefers-color-scheme: dark) {
-    .note-context-menu {
-        background: rgba(30, 30, 30, .8);
-    }
-}
 .note-context-item {
     display: flex;
     flex-direction: row;
@@ -455,31 +400,19 @@ div.notes-header-right::after,
     cursor: pointer;
     width: 100%;
     user-select: none;
+    color: var(--color) !important;
 }
 .note-context-item:hover {
     background: rgba(234, 179, 8, .4);
 }
-@media (prefers-color-scheme: dark) {
-    .note-context-item {
-        color: #fff;
-    }
-    .context-separator {
-        background: rgba(255, 255, 255, .15) !important;
-    }
-    .notes-glass-btn {
-        background: var(--bg);
-    }
-    .notes-glass-btn:hover {
-        background: rgba(109, 109, 109, .15);
-    }
+.context-separator {
+    background: light-dark(rgba(0, 0, 0, .1), rgba(255, 255, 255, .1)) !important;
 }
 .mac-stoplights {
     display: none;
 }
-@media (prefers-color-scheme: dark) {
-    .notes-content {
-        color: #e5e5e5;
-    }
+.notes-content {
+    color: var(--color);
 }
 #panel-note-view .notes-content {
     flex: 1;
@@ -496,13 +429,8 @@ div.notes-header-right::after,
     font-weight: 600;
     margin: 0 0 16px 0;
     letter-spacing: -.5px;
-    color: #000;
+    color: var(--color);
     user-select: none;
-}
-@media (prefers-color-scheme: dark) {
-    .notes-large-title {
-        color: #fff;
-    }
 }
 .folder-icon { 
     width: 18px;
@@ -526,37 +454,25 @@ div.notes-header-right::after,
     transition: background-color .2s cubic-bezier(.25, 1, .5, 1), transform .2s cubic-bezier(.25, 1, .5, 1);
 }
 .folder-list-item:hover, .note-preview:hover {
-    background: rgba(30, 30, 30, .05);
+    background: light-dark(rgba(0, 0, 0, .1), rgba(255, 255, 255, .1));
     border-radius: 10px;
-}
-@media (prefers-color-scheme: dark) {
-    .folder-list-item:hover, .note-preview:hover {
-        background: rgba(255, 255, 255, .12);
-    }
 }
 .notes-list-item.selected {
     background: rgba(234, 179, 8, .4);
     color: inherit !important;
 }
 .notes-list-item.selected * {
-    color: var(--heading) !important;
+    color: var(--color) !important;
 }
 .notes-list-item.selected .note-preview-title {
-    color: var(--heading) !important;
+    color: var(--color) !important;
 }
-@media (prefers-color-scheme: dark) {
-    .notes-list-item.selected .note-preview-title {
-        color: #fff;
-    }
-}
-@media (prefers-color-scheme: dark) {
-    .notes-list-item:active {
-        background: rgba(255, 255, 255, .05);
-    }
+.notes-list-item:active {
+    background: light-dark(rgba(0, 0, 0, .1), rgba(255, 255, 255, .1));
 }
 .notes-list-item.dragging {
     opacity: .5;
-    background: rgba(30, 30, 30, .05);
+    background: rgba(0, 0, 0, .1);
 }
 .notes-list-item.drag-over {
     border-top: 2px solid #eab308;
@@ -581,17 +497,12 @@ div.notes-header-right::after,
 .note-preview-title {
     font-weight: 500;
     font-size: 16px;
-    color: #000;
+    color: var(--color);
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     width: 100%;
     user-select: none;
-}
-@media (prefers-color-scheme: dark) {
-    .note-preview-title {
-        color: #fff;
-    }
 }
 .note-preview-date-row {
     display: flex;
@@ -614,20 +525,7 @@ div.notes-header-right::after,
     flex: 1;
 }
 #panel-note-view {
-    background: #fff;
-}
-@media (prefers-color-scheme: dark) {
-    #panel-note-view {
-        background: #1e1e1e;
-    }
-}
-#panel-note-view .notes-header {
-    background: rgba(255, 255, 255, .85);
-}
-@media (prefers-color-scheme: dark) {
-    #panel-note-view .notes-header {
-        background: rgba(30, 30, 30, .85);
-    }
+    background: var(--bg);
 }
 #panel-note-view .notes-content {
     padding: 1.5rem 1.5rem;
@@ -646,14 +544,10 @@ div.notes-header-right::after,
     font-weight: 700;
     margin: 0 0 12px 0;
     line-height: 1.2;
-    color: #000;
+    color: var(--color);
     letter-spacing: -.4px;
 }
-@media (prefers-color-scheme: dark) {
-    .notes-title {
-        color: #fff;
-    }
-}
+
 .notes-list {
     margin: 0;
     padding: 0 0 0 24px;
@@ -671,16 +565,11 @@ div.notes-header-right::after,
     padding: 0;
 }
 .notes-view-content blockquote {
-    border-left: 4px solid rgba(30, 30, 30, .2) !important;
+    border-left: 4px solid light-dark(rgb(from rgba(0, 0, 0, .1) r g b / calc(alpha * 3)), rgb(from rgba(255, 255, 255, .1) r g b / calc(alpha * 3))) !important;
     padding-left: 1rem !important;
     font-style: italic;
     opacity: .8;
     display: block;
-}
-@media (prefers-color-scheme: dark) {
-    .notes-view-content blockquote {
-        border-left: 4px solid rgba(255, 255, 255, .2) !important;
-    }
 }
 .notes-view-content ol, .notes-view-content ul {
     padding-left: 20px !important;
@@ -688,26 +577,23 @@ div.notes-header-right::after,
 .notes-view-content code, .notes-view-content pre {
     font-family: "SF Mono", Menlo, monospace;
     font-size: 1rem;
-    background: rgba(30, 30, 30, .05);
+    background: rgba(0, 0, 0, .1);
     padding: 2px 4px;
     border-radius: 4px;
 }
-#new-note-btn-header {
+#new-note-btn-header, #new-note-btn-mobile {
     width: 40px;
     height: 40px;
-    margin-top: 2rem;
     padding: 0;
     border: 0;
+}
+#new-note-btn-header {
+    margin-top: 2rem;
 }
 #new-note-btn-header:hover {
     background-color: rgba(109, 109, 109, .15);
 }
-#new-note-btn-header img {
-    width: 20px;
-    height: 20px;
-    filter: brightness(.2);
-}
-div.notes-header-right {
+.notes-header-right {
     display: flex;
     gap: .125rem;
     align-items: center;
@@ -718,7 +604,7 @@ div.notes-header-right {
     border-radius: 1.25rem;
     padding: 1rem;
     height: 2.5rem;
-    box-shadow: var(--glass-shadow);
+    box-shadow: var(--shadow);
     transition: background-color .2s cubic-bezier(.25, 1, .5, 1), backdrop-filter .2s cubic-bezier(.25, 1, .5, 1), transform .2s cubic-bezier(.25, 1, .5, 1);
     transform: translateZ(0);
     will-change: transform, backdrop-filter;
@@ -745,31 +631,12 @@ div.notes-header-right {
     background: rgba(234, 179, 8, .4);
 }
 .notes-toolbar-btn.active:hover {
-    background: rgba(30, 30, 30, .05);
+    background: light-dark(rgb(from rgba(0, 0, 0, .1) r g b / calc(alpha * 3)), rgb(from rgba(255, 255, 255, .1) r g b / calc(alpha * 3)));
 }
-.notes-toolbar-btn img {
+.notes-toolbar-btn svg.icon {
     width: 1rem;
     height: 1rem;
-    filter: brightness(.2);
-    transition: filter .2s, transform .2s;
-}
-.notes-toolbar-btn[data-command="bold"] img, .notes-toolbar-btn[data-command="italic"] img {
-    width: .75rem;
-    height: .75rem;
-}
-.notes-toolbar-btn[data-command="underline"] img {
-    transform: translateY(-.5px);
-}
-.notes-toolbar-btn[data-command="strikeThrough"] img {
-    width: .875rem;
-    height: .875rem;
-}
-.notes-toolbar-btn #notes-mono-text {
-    font-family: monospace;
-    font-size: 1rem;
-    filter: brightness(.2);
-    transition: filter .2s, transform .2s;
-    transform: translateY(.5px);
+    transition: transform .2s;
 }
 .notes-delete-notice {
     text-align: center;
@@ -777,20 +644,6 @@ div.notes-header-right {
     color: #949495;
     padding-top: .5rem;
     padding-bottom: .5rem;
-}
-.notes-toolbar-btn.active #notes-mono-text, .notes-toolbar-btn.active img, .notes-toolbar-btn:hover #notes-mono-text, .notes-toolbar-btn:hover img {
-    filter: brightness(0);
-}
-@media (prefers-color-scheme: dark) {
-    .notes-toolbar-btn.active:hover {
-        background: rgba(255, 255, 255, .3);
-    }
-    .notes-toolbar-btn img, .notes-toolbar-btn.active img, .notes-toolbar-btn:hover img {
-        filter: invert(0);
-    }
-    .notes-toolbar-btn #notes-mono-text, .notes-toolbar-btn.active #notes-mono-text, .notes-toolbar-btn:hover #notes-mono-text {
-        filter: invert(1);
-    }
 }
 .notes-view-content {
     padding: 1rem;
@@ -803,14 +656,9 @@ div.notes-header-right {
     line-height: 1 !important;
 }
 #panel-note-view {
-    backdrop-filter: blur(40px);
+    backdrop-filter: blur(2px);
     display: flex;
     flex-direction: column;
-}
-@media (prefers-color-scheme: dark) {
-    #panel-note-view {
-        background: var(--bg);
-    }
 }
 .checklist-item {
     display: flex;
@@ -823,7 +671,7 @@ div.notes-header-right {
     border-radius: 50%;
     width: 1rem;
     height: 1rem;
-    box-shadow: inset 0 0 0 1px var(--subtitle);
+    box-shadow: inset 0 0 0 1px var(--gray);
     background: var(--bg);
     position: relative;
     transition: background-color .2s cubic-bezier(.2, 0, 0, 1), box-shadow .2s cubic-bezier(.2, 0, 0, 1);
@@ -866,7 +714,7 @@ p {
     #panel-folders {
         width: 200px;
         flex-shrink: 0;
-        border-right: 1px solid rgba(30, 30, 30, .1);
+        border-right: 1px solid rgba(0, 0, 0, .1);
         transition: width .3s cubic-bezier(.25, 1, .5, 1), opacity .3s cubic-bezier(.25, 1, .5, 1);
         overflow: hidden;
         display: flex !important;
@@ -880,8 +728,8 @@ p {
     #panel-notes {
         width: 260px;
         flex-shrink: 0;
-        border-right: 1px solid rgba(30, 30, 30, .1);
-        background: #fff;
+        border-right: 1px solid rgba(0, 0, 0, .1);
+        background: var(--bg);
         display: flex !important;
         transform: none !important;
     }
@@ -905,10 +753,8 @@ p {
     .notes-header-right {
         max-width: 80%;
     }
-    @media (prefers-color-scheme: dark) {
-        #panel-folders, #panel-notes {
-            border-right: 1px solid rgba(255, 255, 255, .1);
-        }
+    #panel-folders, #panel-notes {
+        border-right: 1px solid light-dark(rgba(0, 0, 0, .1), rgba(255, 255, 255, .1));
     }
     .notes-large-title {
         display: none;
@@ -954,18 +800,20 @@ p {
         width: 100vw !important;
         height: 95svh !important;
         max-width: none !important;
+        box-shadow: 0 20px 60px light-dark(rgb(from rgba(0, 0, 0, .1) r g b / calc(alpha * 2)), rgba(255, 255, 255, .05)), 0 0 0 1px light-dark(rgba(255, 255, 255, .1), rgba(0, 0, 0, .1));
         inset: auto 0 0 !important;
         border-radius: 1.5rem 1.5rem 0 0 !important;
         transform: translateY(100%) !important;
         opacity: 1 !important;
         position: fixed !important;
         transition: transform .4s cubic-bezier(.25, 1, .5, 1) !important;
+        border: 1px solid light-dark(rgba(255, 255, 255, .1), rgba(0, 0, 0, .1));
     }
     .notes-drawer-handle {
         display: block !important;
         width: 36px;
         height: 5px;
-        background: rgba(30, 30, 30, .2);
+        background: light-dark(rgb(from rgba(0, 0, 0, .1) r g b / calc(alpha * 2)), rgb(from rgba(255, 255, 255, .1) r g b / calc(alpha * 3)));
         border-radius: 10px;
         margin: 8px auto;
         position: absolute;
@@ -978,11 +826,6 @@ p {
         content: "";
         position: absolute;
         inset: -20px -200px;
-    }
-    @media (prefers-color-scheme: dark) {
-        .notes-drawer-handle {
-            background: rgba(255, 255, 255, .3);
-        }
     }
     .notes-modal.visible {
         transform: translateY(0) !important;
@@ -1013,7 +856,7 @@ p {
     }
     #panel-note-view .notes-header {
         height: 70px !important;
-        margin-top: 20px;
+        margin-top: 15px;
         display: flex !important;
         flex-direction: row !important;
         align-items: center !important;
@@ -1125,45 +968,37 @@ p {
 .notes-modal.minimized {
     width: 200px !important;
     height: 120px !important;
-    top: calc(100% - 160px) !important;
-    left: calc(100% - 240px) !important;
+    top: calc(100% - 140px) !important;
+    left: calc(100% - 220px) !important;
     transform: none !important;
     border-radius: 12px;
     cursor: pointer;
     z-index: 2005;
     transition: width .4s cubic-bezier(.25, 1, .5, 1), height .4s cubic-bezier(.25, 1, .5, 1), top .4s cubic-bezier(.25, 1, .5, 1), left .4s cubic-bezier(.25, 1, .5, 1), border-radius .4s cubic-bezier(.25, 1, .5, 1), box-shadow .4s cubic-bezier(.25, 1, .5, 1);
-    box-shadow: 0 10px 30px var(--bg);
 }
 .notes-modal.minimized .notes-panel {
     pointer-events: none;
     opacity: .2;
 }
 .notes-modal.minimized::after {
-    content: var(--notes-minimized-label, "Apple Notes");
+    content: var(--notes-minimized-label, "Notes");
     position: absolute;
     inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
-    color: #000;
+    color: var(--color);
     z-index: 100;
-    background: rgba(255, 255, 255, .4);
-    backdrop-filter: blur(4px);
-}
-@media (prefers-color-scheme: dark) {
-    .notes-modal.minimized::after {
-        color: #fff;
-        background: rgba(30, 30, 30, .4);
-    }
+    backdrop-filter: blur(2px);
 }
 .notes-drawer-handle {
     display: none;
 }
 .notes-modal ::selection {
     background-color: #eab308;
-    color: #fff;
+    color: var(--bg);
 }
 .mac-stoplights > button {
     position: relative;
@@ -1196,21 +1031,18 @@ p {
     content: "+";
     transform: translateY(-1px);
 }
-#ellipsis-btn img, #new-folder-btn-top img, #new-note-btn-header img, #new-note-btn-mobile img, #sidebar-toggle img, .back-hero-icon, .notes-folder-info img, #menu-translate img {
-    filter: invert(1);
+#ellipsis-btn svg.icon, .notes-folder-info svg.icon, #new-note-btn-header svg.icon, #new-note-btn-mobile svg.icon, #sidebar-toggle svg.icon, .back-hero-icon, #menu-translate svg.icon, .notes-header button svg.icon, .notes-header-right button svg.icon, .notes-mono-btn svg.icon {
     -webkit-user-drag: none;
     user-select: none;
     pointer-events: none;
 }
-@media (prefers-color-scheme: dark) {
-    #ellipsis-btn img, #new-folder-btn-top img, #new-note-btn-header img, #new-note-btn-mobile img, #sidebar-toggle img, .back-hero-icon, .notes-folder-info img, #menu-translate img {
-        filter: invert(0);
-    }
+.github-mini-grid {
+    filter: invert(calc(.9 * var(--dark-mode))) hue-rotate(calc(var(--dark-mode) * 180deg));
 }
 .bioLink {
-    color: var(--subtitle);
+    color: var(--gray);
     text-decoration: underline;
-    text-decoration-color: var(--subtitle);
+    text-decoration-color: var(--gray);
     text-underline-offset: 3px;
     transition: color .2s;
 }
@@ -1225,7 +1057,7 @@ p {
     outline: none;
 }
 .notes-glass-btn:focus-visible {
-    box-shadow: 0 0 0 2px #2891df, var(--glass-shadow);
+    box-shadow: 0 0 0 2px #2891df, var(--shadow);
 }
 .ellipsis-menu button:focus-visible {
     box-shadow: inset 0 0 0 2px #2891df;
@@ -1247,7 +1079,7 @@ p {
     padding: .5rem .875rem;
     gap: .375rem;
     font-size: .875rem;
-    color: var(--text);
+    color: var(--color);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -1266,7 +1098,7 @@ body {
 .color-mode {
     width: 16px;
     height: 16px;
-    filter: invert(var(--dark-mode)) brightness(calc(1 + var(--dark-mode) * .15));
+    filter: invert(var(--dark-mode));
     transform: rotate(calc(var(--dark-mode) * 180deg));
     transition: filter .6s ease, transform .6s ease;
     display: block;
@@ -1278,7 +1110,7 @@ body {
     -webkit-backdrop-filter: blur(2px);
     border: 0;
     border-radius: 1rem;
-    box-shadow: var(--glass-shadow);
+    box-shadow: var(--shadow);
     padding: .5rem;
     min-width: 200px;
     display: none;
@@ -1328,7 +1160,7 @@ body {
     cursor: pointer;
     font-size: .875rem;
     font-family: inherit;
-    color: var(--text);
+    color: var(--color);
     transition: background .15s ease;
     width: 100%;
     text-align: left;
@@ -1344,238 +1176,17 @@ body {
     font-size: .75rem;
     opacity: .6;
 }
-@media (prefers-color-scheme: dark) {
-    .ellipsis-menu button:hover {
-        background: rgba(255, 255, 255, .1);
-    }
-}
-body.dark-mode .ellipsis-menu button:hover {
-    background: rgba(255, 255, 255, .1);
-}
-body.dark-mode .github-mini-grid {
-    filter: invert(.9) hue-rotate(180deg);
-}
-body.dark-mode .notes-modal {
-    background: #262626;
-    box-shadow: 0 -.5px 0 rgba(255, 255, 255, 0.2), 0 .5px 0 rgba(255, 255, 255, 0.2), inset 0 -2.5px 6px -3px rgba(255, 255, 255, 0.1), inset 0 2.5px 6px -3px rgba(255, 255, 255, 0.1);
-}
-body.dark-mode .notes-panel {
-    background: #262626;
-}
-body.dark-mode .active-folder {
-    background: rgba(255, 255, 255, .1) !important;
-}
-body.dark-mode .notes-header {
-    background: rgba(30, 30, 30, .85);
-}
-body.dark-mode .note-context-menu {
-    background: rgba(30, 30, 30, .8);
-    border: 0;
-}
-body.dark-mode .note-context-item {
-    color: #fff;
-}
-body.dark-mode .note-context-item:hover {
-    background: rgba(234, 179, 8, .4);
-}
-body.dark-mode .context-separator {
-    background: rgba(255, 255, 255, .15) !important;
-}
-body.dark-mode .notes-glass-btn {
-    background: var(--bg);
-}
-body.dark-mode .notes-glass-btn:hover {
-    background: rgba(109, 109, 109, .15);
-}
-body.dark-mode .notes-glass-btn:focus-visible {
-    box-shadow: 0 0 0 2px #2891df, var(--glass-shadow);
-}
-body.dark-mode .notes-content {
-    color: #e5e5e5;
-}
-body.dark-mode .notes-large-title {
-    color: #fff;
-}
-body.dark-mode .folder-list-item:hover, body.dark-mode .note-preview:hover {
-    background: rgba(255, 255, 255, .12);
-}
-body.dark-mode .notes-list-item.selected {
-    background: rgba(234, 179, 8, .4);
-}
-body.dark-mode .notes-list-item.selected .note-preview-title {
-    color: #fff !important;
-}
-body.dark-mode .notes-list-item:active {
-    background: rgba(255, 255, 255, .05);
-}
-body.dark-mode .note-preview-title {
-    color: #fff;
-}
-body.dark-mode #panel-note-view {
-    background: #1e1e1e;
-}
-body.dark-mode #panel-note-view .notes-header {
-    background: rgba(30, 30, 30, .85);
-}
-body.dark-mode .notes-title {
-    color: #fff;
-}
-body.dark-mode .notes-view-content blockquote {
-    border-left: 4px solid rgba(255, 255, 255, .2) !important;
-}
-body.dark-mode #new-note-btn-header, body.dark-mode div.notes-header-right {
-    background: var(--bg);
-}
-body.dark-mode .notes-toolbar-btn.active:hover {
-    background: rgba(255, 255, 255, .3);
-}
-body.dark-mode .notes-toolbar-btn img, body.dark-mode .notes-toolbar-btn.active img, body.dark-mode .notes-toolbar-btn:hover img {
-    filter: invert(0);
-}
-body.dark-mode .notes-toolbar-btn #notes-mono-text, body.dark-mode .notes-toolbar-btn.active #notes-mono-text, body.dark-mode .notes-toolbar-btn:hover #notes-mono-text {
-    filter: invert(1);
-}
-body.dark-mode .notes-modal.minimized::after {
-    color: #fff;
-    background: rgba(30, 30, 30, .4);
-}
-body.dark-mode #new-folder-btn-top img, body.dark-mode #new-note-btn-header img, body.dark-mode #new-note-btn-mobile img, body.dark-mode #ellipsis-btn img, body.dark-mode #sidebar-toggle img, body.dark-mode .back-hero-icon, body.dark-mode .notes-folder-info img, body.dark-mode #menu-translate img {
-    filter: invert(0);
-}
-@media (min-width: 800px) {
-    body.dark-mode #panel-folders, body.dark-mode #panel-notes {
-        border-right: 1px solid rgba(255, 255, 255, .1);
-    }
-    body.dark-mode #panel-notes {
-        background: var(--bg);
-    }
-}
-@media (max-width: 800px) {
-    body.dark-mode .notes-drawer-handle {
-        background: rgba(255, 255, 255, .3);
-    }
-    body.dark-mode .notes-panel.active {
-        background: var(--bg);
-    }
+body.dark-mode {
+    --dark-mode: 1;
+    --shadow: var(--shadow-dark);
 }
 body.light-mode {
-    --dark-mode: 0 !important;
-    --bg: #fff !important;
-    --heading: #1e1e1e !important;
-    --subtitle: #595959 !important;
-    --text: #1e1e1e !important;
-    --glass-shadow: -.5px 0 0 rgba(0, 0, 0, .2), .5px 0 0 rgba(0, 0, 0, .2), inset 0 -.5px 6px -3px rgba(0, 0, 0, .1), inset 0 .5px 6px -3px rgba(0, 0, 0, .1) !important;
-    --glass-after-bg: rgba(255, 255, 255, .1) !important;
-}
-body.light-mode .notes-modal {
-    background: #EDEDED;
-}
-body.light-mode .notes-panel {
-    background: #EDEDED;
-}
-body.light-mode .notes-header {
-    background: rgba(242, 242, 247, .85);
-}
-body.light-mode #panel-note-view .notes-header {
-    background: rgba(255, 255, 255, .85);
-}
-body.light-mode .notes-glass-btn {
-    background: rgba(255, 255, 255);
-    box-shadow: var(--glass-shadow);
-}
-body.light-mode .notes-glass-btn:hover {
-    background: rgba(109, 109, 109, .15);
-}
-body.light-mode .notes-glass-btn:focus-visible {
-    box-shadow: 0 0 0 2px #2891df, var(--glass-shadow);
-}
-body.light-mode .notes-content {
-    color: var(--heading);
-}
-body.light-mode .notes-large-title {
-    color: #000;
-}
-body.light-mode .notes-title {
-    color: #000;
-}
-body.light-mode #panel-note-view {
-    background: #fff;
-}
-body.light-mode div.notes-header-right {
-    background: var(--bg);
-}
-body.light-mode .notes-toolbar-btn img {
-    filter: invert(1);
-}
-body.light-mode .note-context-menu {
-    background: rgba(255, 255, 255, .8);
-}
-body.light-mode .note-context-item {
-    color: initial;
-}
-body.light-mode .note-context-item:hover {
-    background: rgba(234, 179, 8, .4);
-}
-body.light-mode .context-separator {
-    background: rgba(30, 30, 30, .1) !important;
-}
-body.light-mode .active-folder {
-    background: rgba(30, 30, 30, .05) !important;
-    color: #eab308 !important;
-}
-body.light-mode .notes-list-item.selected {
-    background: rgba(234, 179, 8, .4);
-}
-body.light-mode .note-preview-title {
-    color: #000;
-}
-body.light-mode .notes-view-content blockquote {
-    border-left: 4px solid rgba(30, 30, 30, .2) !important;
-}
-body.light-mode #new-note-btn-header, body.light-mode div.notes-header-right {
-    background: var(--bg);
-    box-shadow: var(--glass-shadow);
-}
-body.light-mode .notes-modal.minimized::after {
-    color: #000;
-    background: rgba(255, 255, 255, .4);
-}
-body.light-mode .notes-folder-info img, body.light-mode #sidebar-toggle img, body.light-mode .back-hero-icon, body.light-mode #new-note-btn-header img, body.light-mode #new-note-btn-mobile img, body.light-mode #ellipsis-btn img, body.light-mode #new-folder-btn-top img, body.light-mode .notes-toolbar-btn.active img, body.light-mode .notes-toolbar-btn:hover img, body.light-mode #menu-translate img {
-    filter: invert(1);
-}
-body.light-mode .notes-toolbar-btn #notes-mono-text, body.light-mode .notes-toolbar-btn.active #notes-mono-text, body.light-mode .notes-toolbar-btn:hover #notes-mono-text {
-    filter: invert(0);
-}
-body.light-mode .github-mini-grid {
-    filter: none;
-}
-body.light-mode .github-stats::after {
-    background: rgba(255, 255, 255, .1);
-}
-body.light-mode .github-stats {
-    box-shadow: var(--glass-shadow);
-}
-body.light-mode .ellipsis-menu {
-    background: 0 0;
-    box-shadow: var(--glass-shadow);
-}
-body.light-mode .ellipsis-menu::after {
-    background: rgba(255, 255, 255, .15);
-}
-body.light-mode .ellipsis-menu button:hover {
-    background: rgba(109, 109, 109, .15);
-}
-@media (min-width: 800px) {
-    body.light-mode #panel-folders, body.light-mode #panel-notes {
-        border-right: 1px solid rgba(30, 30, 30, .1);
-    }
-    body.light-mode #panel-notes {
-        background: var(--bg);
-    }
+    --dark-mode: 0;
+    --shadow: var(--shadow-light);
 }
 @media (max-width: 800px) {
-    body.light-mode .notes-drawer-handle {
-        background: rgba(30, 30, 30, .2);
+    body.dark-mode .notes-panel.active {
+        background: var(--bg);
     }
     body.light-mode .notes-panel.active {
         background: var(--bg);

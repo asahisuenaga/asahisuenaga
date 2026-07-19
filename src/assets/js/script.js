@@ -202,6 +202,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const isDarkEffective = () => document.body.classList.contains('dark-mode') || (window.matchMedia('(prefers-color-scheme: dark)').matches && !document.body.classList.contains('light-mode'));
 
+    function syncColorScheme() {
+        if (document.body.classList.contains('dark-mode')) {
+            document.documentElement.style.colorScheme = 'dark';
+        } else if (document.body.classList.contains('light-mode')) {
+            document.documentElement.style.colorScheme = 'light';
+        } else {
+            document.documentElement.style.colorScheme = '';
+        }
+    }
+
     document.getElementById('menu-darkmode')?.addEventListener('click', () => {
         const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (document.body.classList.contains('dark-mode') || document.body.classList.contains('light-mode')) {
@@ -209,6 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             document.body.classList.add(systemDark ? 'light-mode' : 'dark-mode');
         }
+        syncColorScheme();
         document.getElementById('menu-darkmode-badge').innerText = isDarkEffective() ? '✓' : '';
         playBasicSound();
         setTimeout(closeMenu, 400);
@@ -409,7 +420,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const x2 = spark.x + (distance + lineLength) * Math.cos(spark.angle);
                 const y2 = spark.y + (distance + lineLength) * Math.sin(spark.angle);
                 const style = getComputedStyle(document.documentElement);
-                ctx.strokeStyle = style.getPropertyValue('--subtitle').trim() || '#000';
+                ctx.strokeStyle = style.getPropertyValue('--gray').trim() || 'var(--color)';
                 ctx.lineWidth = 1.5;
                 ctx.lineCap = 'round';
                 ctx.beginPath();
@@ -481,7 +492,7 @@ async function initGithubgithubStats() {
         for (let i = 0; i < 20; i++) {
             const tile = document.createElement('div');
             tile.className = 'github-tile';
-            tile.style.backgroundColor = 'var(--subtitle)';
+            tile.style.backgroundColor = 'var(--gray)';
             grid.appendChild(tile);
         }
     }
