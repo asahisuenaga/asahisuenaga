@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const CUSTOM_FOLDER_KEY = 'apple_notes_custom_folders';
     const NOTES_DATA_KEY = 'apple_notes_data';
+    const SEED_PINS_KEY = 'apple_notes_seed_pins';
     let customFolders = JSON.parse(localStorage.getItem(CUSTOM_FOLDER_KEY) || '[]');
 
     const folderMap = {
@@ -319,6 +320,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!seedNoteIds.has(id)) notesData[id] = note;
             }
         }
+        const savedSeedPins = localStorage.getItem(SEED_PINS_KEY);
+        if (savedSeedPins) {
+            const pins = JSON.parse(savedSeedPins);
+            for (const [id, pinned] of Object.entries(pins)) {
+                if (seedNoteIds.has(id) && notesData[id]) notesData[id].pinned = pinned;
+            }
+        }
         notesReady = true;
 
         updateCounts(); 
@@ -366,6 +374,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         localStorage.setItem('apple_notes_data', JSON.stringify(userNotes));
         updateCounts();
+    };
+
+    const saveSeedPins = () => {
+        const pins = {};
+        for (const id of seedNoteIds) {
+            if (notesData[id]) pins[id] = notesData[id].pinned;
+        }
+        localStorage.setItem(SEED_PINS_KEY, JSON.stringify(pins));
     };
 
     const formatNoteDate = (timestamp) => {
@@ -466,10 +482,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 hasNotesHeader = true;
             }
 
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = data.content;
-            const firstChild = tempDiv.querySelector('li, p, div, blockquote, h1, h2, h3, h4, h5, h6');
-            const previewText = (firstChild || tempDiv).textContent || (firstChild || tempDiv).innerText || '';
+            const previewText = extractPreviewText(data.content);
 
             const el = document.createElement('div');
             el.className = 'notes-list-item note-preview';
@@ -480,7 +493,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="note-preview-title">${data.title}</div>
                 <div class="note-preview-date-row">
                     <span class="notes-date-inline">${listDateDisplay}</span>
-                    <span class="note-preview-desc">${previewText.substring(0, 120)}</span>
+                    <span class="note-preview-desc">${previewText}</span>
                 </div>
             `;
 
@@ -577,6 +590,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     delBtn.onclick = () => {
                         delete notesData[noteId];
                         saveNotes();
+                        if (isBuiltInNoteId(noteId)) saveSeedPins();
                         renderNotesList(folderFilter);
                         menu.remove();
                         playNotesSound();
@@ -588,7 +602,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     pinBtn.innerText = data.pinned ? tcm('unpinNote') : tcm('pinNote');
                     pinBtn.onclick = () => {
                         data.pinned = !data.pinned;
-                        if (!isBuiltInNoteId(noteId)) {
+                        if (isBuiltInNoteId(noteId)) {
+                            saveSeedPins();
+                        } else {
                             saveNotes();
                         }
                         renderNotesList(folderFilter);
@@ -637,6 +653,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             data.deletedAt = Date.now();
                             data.pinned = false;
                             saveNotes();
+                            if (isBuiltInNoteId(noteId)) saveSeedPins();
                             renderNotesList(folderFilter);
                             menu.remove();
                             playNotesSound();
@@ -701,6 +718,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             delete notesData[id];
                         });
                         saveNotes();
+                        saveSeedPins();
                         renderNotesList(folderFilter);
                         menu.remove();
                         playNotesSound();
@@ -719,6 +737,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 if (!notesData[id]?.pinned) notesData[id].pinned = true;
                             });
                             saveNotes();
+                            saveSeedPins();
                             renderNotesList(folderFilter);
                             menu.remove();
                             playNotesSound();
@@ -735,6 +754,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 if (notesData[id]?.pinned) notesData[id].pinned = false;
                             });
                             saveNotes();
+                            saveSeedPins();
                             renderNotesList(folderFilter);
                             menu.remove();
                             playNotesSound();
@@ -858,6 +878,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    const extractPreviewText = (content) => {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = content || '';
+        const firstChild = tempDiv.querySelector('li, p, div, blockquote, h1, h2, h3, h4, h5, h6');
+        const rawText = (firstChild || tempDiv).textContent || (firstChild || tempDiv).innerText || '';
+        return rawText.replace(/\s+/g, ' ').trim().substring(0, 120);
+    };
+
     if (titleEditor && contentEditor) {
         const handleEdit = () => {
             const noteId = contentEditor.getAttribute('data-current-note');
@@ -871,11 +899,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 history.replaceState(null, '', notesData[noteId].permalink);
                 saveNotes();
                 document.getElementById('active-note-date').innerText = formatFullNoteDate(notesData[noteId].lastEdited);
-                const currentF = document.querySelector('.active-folder')?.getAttribute('data-target');
-                const filter = (currentF && Object.prototype.hasOwnProperty.call(folderMap, currentF))
-                    ? folderMap[currentF]
-                    : currentFolder;
-                renderNotesList(filter, false);
+                const el = document.querySelector(`.note-preview[data-note-id="${noteId}"]`);
+                if (el) {
+                    const titleEl = el.querySelector('.note-preview-title');
+                    if (titleEl) titleEl.textContent = notesData[noteId].title;
+                    const descEl = el.querySelector('.note-preview-desc');
+                    if (descEl) descEl.textContent = extractPreviewText(notesData[noteId].content);
+                }
             }
         };
 

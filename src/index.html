@@ -415,7 +415,7 @@
                 justify-content: center;
             }
             .notes-header-right {
-                max-width: 80%;
+                max-width: 25rem;
             }
             #panel-folders, #panel-notes {
                 border-right: 1px solid light-dark(rgba(0, 0, 0, .1), rgba(255, 255, 255, .1));
@@ -721,8 +721,8 @@
             </div>
             <div class="notes-panel" id="panel-notes">
                 <div class="notes-header">
-                    <div class="notes-header-left"><button class="notes-glass-btn notes-back" aria-label="Return" data-back="panel-folders" style="display: none;"><svg class="icon back-hero-icon" style="width:16px; height:16px; display:inline-block; vertical-align:-3px;"><use href="#icon-chevron-left"/></svg></button><button class="notes-glass-btn" aria-label="Sidebar" id="sidebar-toggle" title="Sidebar" style="margin-left: 0px; transition: margin-left 0.3s cubic-bezier(0.25, 1, 0.5, 1);"><svg class="icon folder-icon"><use href="#icon-sidebar-left"/></svg></button></div>
-                    <button id="new-note-btn-header" class="notes-glass-btn" aria-label="New Note" title="New Note"><svg class="icon" style="width:20px;height:20px;"><use href="#icon-square-and-pencil"/></svg></button>
+                    <div class="notes-header-left"><button class="notes-glass-btn notes-back" aria-label="Return" data-back="panel-folders" style="display: none;"><svg class="icon back-hero-icon" style="width:16px; height:16px; display:inline-block; vertical-align:-3px;"><use href="#icon-chevron-left"/></svg></button><button class="notes-glass-btn" aria-label="Sidebar" id="sidebar-toggle" title="Sidebar" style="margin-left: 0px; transition: margin-left 0.3s cubic-bezier(0.25, 1, 0.5, 1);"><svg class="icon" style="width:18px;height:18px;flex-shrink: 0;"><use href="#icon-sidebar-left"/></svg></button></div>
+                    <button id="new-note-btn-header" class="notes-glass-btn" aria-label="New Note" title="New Note"><svg class="icon" style="width:18px;height:18px;"><use href="#icon-square-and-pencil"/></svg></button>
                 </div>
                 <div class="notes-content notes-content-padded">
                     <h1 class="notes-large-title" id="notes-header-title">All Notes</h1>
@@ -731,7 +731,7 @@
             </div>
             <div class="notes-panel" id="panel-note-view">
                 <div class="notes-header">
-                    <div class="notes-header-left"><button class="notes-glass-btn notes-back" aria-label="Return" data-back="panel-notes"><svg class="icon back-hero-icon" style="width:16px; height:16px; display:inline-block; vertical-align:-3px;"><use href="#icon-chevron-left"/></svg></button><button id="new-note-btn-mobile" class="notes-glass-btn" aria-label="New Note" title="New Note" style="position: absolute; right: 12px; display: none;"><svg class="icon" style="width:20px;height:20px;"><use href="#icon-square-and-pencil"/></svg></button></div>
+                    <div class="notes-header-left"><button class="notes-glass-btn notes-back" aria-label="Return" data-back="panel-notes"><svg class="icon back-hero-icon" style="width:16px; height:16px; display:inline-block; vertical-align:-3px;"><use href="#icon-chevron-left"/></svg></button><button id="new-note-btn-mobile" class="notes-glass-btn" aria-label="New Note" title="New Note" style="position: absolute; right: 12px; display: none;"><svg class="icon" style="width:18px;height:18px;"><use href="#icon-square-and-pencil"/></svg></button></div>
                     <div class="notes-header-right">
                         <button class="notes-toolbar-btn" data-command="bold" title="Bold"><svg class="icon" style="width:.75rem;height:.75rem;"><use href="#icon-bold"/></svg></button>
                         <button class="notes-toolbar-btn" data-command="italic" title="Italic"><svg class="icon" style="width:.75rem;height:.75rem;"><use href="#icon-italic"/></svg></button>
@@ -739,13 +739,13 @@
                         <button class="notes-toolbar-btn" data-command="strikeThrough" title="Strikethrough"><svg class="icon" style="width:.875rem;height:.875rem;"><use href="#icon-strikethrough"/></svg></button>
                         <button class="notes-toolbar-btn" aria-label="Monostyle" id="notes-mono-btn" title="Monostyle"><span id="notes-mono-text" style="font-family:monospace;font-size:1rem;transform:translateY(.5px);">M</span></button>
                         <div class="toolbar-divider divider-indent" style="width: 1px; height: 16px; background: var(--gray); margin: 0 2px;"></div>
-                        <button class="notes-toolbar-btn" data-command="outdent" title="Decrease Indent"><svg class="icon" style="width:.875rem;height:.875rem;"><use href="#icon-decrease-indent"/></svg></button>
-                        <button class="notes-toolbar-btn" data-command="indent" title="Increase Indent"><svg class="icon" style="width:.875rem;height:.875rem;"><use href="#icon-increase-indent"/></svg></button>
+                        <button class="notes-toolbar-btn" data-command="outdent" title="Decrease Indent"><svg class="icon" style="width:1rem;height:1rem;"><use href="#icon-decrease-indent"/></svg></button>
+                        <button class="notes-toolbar-btn" data-command="indent" title="Increase Indent"><svg class="icon" style="width:1rem;height:1rem;"><use href="#icon-increase-indent"/></svg></button>
                         <div class="toolbar-divider divider-lists" style="width: 1px; height: 16px; background: var(--gray); margin: 0 2px;"></div>
-                        <button class="notes-toolbar-btn" data-command="insertUnorderedList" title="Bulleted List"><svg class="icon" style="width:.875rem;height:.875rem;"><use href="#icon-list-bullet"/></svg></button>
-                        <button class="notes-toolbar-btn" data-command="insertOrderedList" title="Numbered List"><svg class="icon" style="width:.875rem;height:.875rem;"><use href="#icon-list-number"/></svg></button>
-                        <button class="notes-toolbar-btn" id="notes-dash-btn" title="Dashed List" data-command="insertDashList"><svg class="icon" style="width:.875rem;height:.875rem;"><use href="#icon-list-dash"/></svg></button>
-                        <button class="notes-toolbar-btn" id="notes-checklist-btn" title="Checklist" data-command="insertChecklist"><svg class="icon" style="width:.875rem;height:.875rem;"><use href="#icon-checklist"/></svg></button>
+                        <button class="notes-toolbar-btn" data-command="insertUnorderedList" title="Bulleted List"><svg class="icon" style="width:1rem;height:1rem;"><use href="#icon-list-bullet"/></svg></button>
+                        <button class="notes-toolbar-btn" data-command="insertOrderedList" title="Numbered List"><svg class="icon" style="width:1rem;height:1rem;"><use href="#icon-list-number"/></svg></button>
+                        <button class="notes-toolbar-btn" id="notes-dash-btn" title="Dashed List" data-command="insertDashList"><svg class="icon" style="width:1rem;height:1rem;"><use href="#icon-list-dash"/></svg></button>
+                        <button class="notes-toolbar-btn" id="notes-checklist-btn" title="Checklist" data-command="insertChecklist"><svg class="icon" style="width:1rem;height:1rem;"><use href="#icon-checklist"/></svg></button>
                     </div>
                 </div>
                 <div class="notes-content">

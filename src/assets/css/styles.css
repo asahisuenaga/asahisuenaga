@@ -751,7 +751,7 @@ p {
         justify-content: center;
     }
     .notes-header-right {
-        max-width: 80%;
+        max-width: 25rem;
     }
     #panel-folders, #panel-notes {
         border-right: 1px solid light-dark(rgba(0, 0, 0, .1), rgba(255, 255, 255, .1));
