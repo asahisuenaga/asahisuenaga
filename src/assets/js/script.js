@@ -28,8 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.documentElement.lang = lang;
             document.title = d.site.pageTitle;
             if (nameEl) nameEl.innerText = d.site.title;
-            const banner = document.getElementById('banner');
-            if (banner) banner.innerText = d.site.banner;
             const locNode = document.getElementById('location');
             if (locNode) locNode.innerHTML = d.location;
             const b = document.getElementById('bio');
@@ -477,10 +475,10 @@ async function initGithubgithubStats() {
         let todayIndex = allContributions.findIndex(day => day.date === localToday);
 
         const end = todayIndex !== -1 ? todayIndex + 1 : allContributions.length;
-        const last20 = allContributions.slice(Math.max(0, end - 20), end);
+        const last30 = allContributions.slice(Math.max(0, end - 30), end);
 
         grid.innerHTML = '';
-        last20.forEach(day => {
+        last30.forEach(day => {
             const tile = document.createElement('div');
             tile.className = 'github-tile';
             tile.style.backgroundColor = day.color;
@@ -489,7 +487,7 @@ async function initGithubgithubStats() {
     } catch (e) {
         console.error('GitHub chart error:', e);
         grid.innerHTML = '';
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 30; i++) {
             const tile = document.createElement('div');
             tile.className = 'github-tile';
             tile.style.backgroundColor = 'var(--gray)';

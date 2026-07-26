@@ -87,19 +87,30 @@
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Inter, Inter-Fallback, Geist, Geist-Fallback, Roboto, Roboto-Fallback, Arial, Arial-Fallback, sans-serif;
-            background-color: var(--color);
+            background: var(--bg);
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             height: 101dvh;
             overflow-x: hidden;
             scrollbar-width: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        #click-spark-canvas, .main-content {
+        #click-spark-canvas {
             height: 100dvh;
             position: fixed;
             top: 0;
             left: 0;
+        }
+        .main-content {
+            height: 100dvh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
         }
         #click-spark-canvas {
             width: 100vw;
@@ -111,7 +122,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             gap: var(--gap);
             width: 100%;
             padding: var(--gap);
@@ -119,13 +130,8 @@
             box-sizing: border-box;
             clip-path: inset(0 0 0 0 round 0);
             overflow: hidden auto;
-        }
-        .container {
-            display: flex;
-            gap: var(--gap);
-            max-width: 530px;
             width: 100%;
-            flex-direction: column;
+            max-width: 550px;
         }
         .shrine-container {
             position: relative;
@@ -168,10 +174,10 @@
         }
         .github-mini-grid {
             display: grid;
-            grid-template-columns: repeat(5, .875rem);
-            grid-template-rows: repeat(4, .875rem);
+            grid-template-columns: repeat(10, 1rem);
+            grid-template-rows: repeat(3, 1rem);
             grid-auto-flow: column;
-            gap: 3px;
+            gap: 4px;
             contain: layout style;
         }
         *, :after, :before {
@@ -190,16 +196,14 @@
             z-index: 2000;
         }
         .notes-modal {
-            top: 50%;
-            left: 50%;
             width: 340px;
             height: 480px;
             background: light-dark(#EDEDED, #262626);
-            border-radius: 12px;
-            box-shadow: 0 20px 60px light-dark(rgb(from rgba(0, 0, 0, .1) r g b / calc(alpha * 2)), rgba(255, 255, 255, .05)), 0 0 0 1px light-dark(rgba(255, 255, 255, .1), rgba(0, 0, 0, .1));
-            border: 1px solid light-dark(rgba(0, 0, 0, .1), rgba(255, 255, 255, .1));
+            border-radius: .75rem;
+            box-shadow: 0 20px 60px light-dark(rgb(from rgba(0, 0, 0, .1) r g b / calc(alpha * 2)), rgba(255, 255, 255, .05)), 0 0 0 .0625rem light-dark(rgba(255, 255, 255, .1), rgba(0, 0, 0, .1));
+            border: .0625rem solid light-dark(rgba(0, 0, 0, .1), rgba(255, 255, 255, .1));
             z-index: 2001;
-            transform: translateX(-50%) scale(.95);
+            transform: scale(.95);
             overflow: hidden;
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
         }
@@ -215,13 +219,18 @@
             transform: translateY(100%);
         }
         .notes-header {
-            height: 44px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 16px;
-            backdrop-filter: blur(10px);
+            padding: 0 1rem;
+            backdrop-filter: blur(2px) brightness(120%);
+            -webkit-backdrop-filter: blur(2px) brightness(120%);
             z-index: 10;
+            position: absolute;
+            top: 0; 
+            left: 0; 
+            bottom: 0; 
+            right: 0;
         }
         .notes-header-left, .notes-header-right {
             flex: 1;
@@ -233,16 +242,14 @@
             justify-content: flex-end;
         }
         .notes-glass-btn {
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
+            backdrop-filter: blur(2px) brightness(120%);
+            -webkit-backdrop-filter: blur(2px) brightness(120%);
             border: 0;
             box-shadow: var(--shadow);
             display: flex;
             transform: translateZ(0);
             will-change: transform, backdrop-filter;
-        }
-        .notes-glass-btn {
-            background: var(--bg);
+            background: none;
             border-radius: 50%;
             padding: .75rem;
             align-items: center;
@@ -257,7 +264,7 @@
         .notes-content {
             color: var(--color);
         }
-        #panel-note-view .notes-content {
+        .notes-content {
             flex: 1;
             overflow: hidden auto;
             font-size: 1rem;
@@ -265,17 +272,17 @@
         }
         .notes-content-padded {
             padding: 1rem;
+            padding-top: 5rem;
         }
         .notes-large-title {
             font-size: 1.75rem;
             font-weight: 600;
-            margin: 0 0 16px;
             letter-spacing: -.5px;
             color: var(--color);
         }
         .folder-icon { 
-            width: 18px;
-            height: 18px;
+            width: 1rem;
+            height: 1rem;
             display: inline-block;
             vertical-align: -3px;
         }
@@ -283,14 +290,13 @@
             background: 0 0;
             overflow: visible;
             margin-bottom: 24px;
-            margin-top: 24px;
         }
         .notes-list-item, .notes-header-right {
             display: flex;
             align-items: center;
         }
         .notes-list-item {
-            padding: 12px 16px;
+            padding: .75rem 1rem;
             justify-content: space-between;
             border-radius: .625rem;
         }
@@ -309,26 +315,25 @@
         }
         #panel-note-view .notes-content {
             padding: 1.5rem;
-            padding-top: 0;
-            margin-top: 2rem;
+            padding-top: 4rem;
         }
         .notes-date {
             text-align: center;
-            font-size: 11px;
+            font-size: .75rem;
             color: #8e8e93;
-            margin-bottom: 16px;
+            margin-bottom: 1rem;
         }
         .notes-title {
             font-size: 1.375rem;
             font-weight: 700;
-            margin: 0 0 12px;
+            margin: 0 0 .75rem;
             line-height: 1.2;
             color: var(--color);
             letter-spacing: -.4px;
         }
         #new-note-btn-header, #new-note-btn-mobile {
-            width: 40px;
-            height: 40px;
+            width: 2.5rem;
+            height: 2.5rem;
             padding: 0;
             border: 0;
         }
@@ -337,9 +342,8 @@
         }
         .notes-header-right {
             gap: .125rem;
-            background: var(--bg);
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
+            backdrop-filter: blur(2px) brightness(120%);
+            -webkit-backdrop-filter: blur(2px) brightness(120%);
             border: 0;
             border-radius: 1.25rem;
             padding: 1rem;
@@ -365,12 +369,29 @@
             overflow: hidden;
         }
         #panel-note-view {
-            backdrop-filter: blur(40px);
             display: flex;
             flex-direction: column;
         }
         p {
             margin: 0;
+        }
+        .notes-drawer-handle {
+            display: block !important;
+            width: 36px;
+            height: 5px;
+            background: light-dark(#c6c6c6, #616161);
+            border-radius: .625rem;
+            margin: 8px auto;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+        .notes-drawer-handle::after {
+            content: "";
+            position: absolute;
+            inset: -20px -200px;
         }
         @media (min-width: 800px) {
             .notes-modal {
@@ -379,8 +400,11 @@
                 flex-direction: row;
                 display: flex !important;
             }
+            .notes-drawer-handle {
+                display: none !important;
+            }
             #new-folder-btn-top {
-                top: 16px;
+                top: 1rem;
             }
             .notes-panel {
                 position: relative;
@@ -389,7 +413,7 @@
             #panel-folders {
                 width: 200px;
                 flex-shrink: 0;
-                border-right: 1px solid rgba(0, 0, 0, .1);
+                border-right: .0625rem solid rgba(0, 0, 0, .1);
                 overflow: hidden;
             }
             #panel-folders, #panel-note-view, #panel-notes, .notes-panel {
@@ -399,7 +423,7 @@
             #panel-notes {
                 width: 260px;
                 flex-shrink: 0;
-                border-right: 1px solid rgba(0, 0, 0, .1);
+                border-right: .0625rem solid rgba(0, 0, 0, .1);
                 background: var(--bg);
             }
             #panel-note-view {
@@ -415,10 +439,10 @@
                 justify-content: center;
             }
             .notes-header-right {
-                max-width: 25rem;
+                max-width: 400px;
             }
             #panel-folders, #panel-notes {
-                border-right: 1px solid light-dark(rgba(0, 0, 0, .1), rgba(255, 255, 255, .1));
+                border-right: .0625rem solid light-dark(rgba(0, 0, 0, .1), rgba(255, 255, 255, .1));
             }
             .notes-large-title {
                 display: none;
@@ -427,26 +451,26 @@
                 display: flex;
                 gap: 8px;
                 margin-left: 8px;
-                margin-right: 16px;
+                margin-right: 1rem;
             }
             .mac-stoplights button {
-                width: 12px;
-                height: 12px;
+                width: .75rem;
+                height: .75rem;
                 border-radius: 50%;
                 border: 0;
                 padding: 0;
             }
             .mac-close {
                 background: #ff5f56;
-                border: 1px solid #e0443e;
+                border: .0625rem solid #e0443e;
             }
             .mac-min {
                 background: #ffbd2e;
-                border: 1px solid #dea123;
+                border: .0625rem solid #dea123;
             }
             .mac-max {
                 background: #27c93f;
-                border: 1px solid #1aab29;
+                border: .0625rem solid #1aab29;
             }
             #sidebar-toggle {
                 display: flex !important;
@@ -469,24 +493,6 @@
                 opacity: 1 !important;
                 position: fixed !important;
             }
-            .notes-drawer-handle {
-                display: block !important;
-                width: 36px;
-                height: 5px;
-                background: light-dark(rgb(from rgba(0, 0, 0, .1) r g b / calc(alpha * 2)), rgb(from rgba(255, 255, 255, .1) r g b / calc(alpha * 3)));
-                border-radius: 10px;
-                margin: 8px auto;
-                position: absolute;
-                top: 0;
-                left: 50%;
-                transform: translateX(-50%);
-                z-index: 1000;
-            }
-            .notes-drawer-handle::after {
-                content: "";
-                position: absolute;
-                inset: -20px -200px;
-            }
             .notes-header {
                 padding-top: 3rem !important;
                 background: 0 0 !important;
@@ -497,21 +503,20 @@
                 border-radius: 1.5rem 1.5rem 0 0 !important;
                 overflow: hidden;
             }
-            .notes-content-padded {
-                padding-top: 3rem !important;
+            #panel-note-view .notes-content {
+                padding-top: 5rem;
             }
             #new-note-btn-header, .notes-header-left {
                 margin-top: 0;
             }
             #panel-note-view .notes-header {
-                height: 70px !important;
-                margin-top: 15px;
                 display: flex !important;
                 flex-direction: row !important;
                 align-items: center !important;
-                padding: 0 16px !important;
-                position: relative !important;
+                padding: 0 1rem !important;
+                position: absolute !important;
                 justify-content: flex-start !important;
+                padding-top: 3rem !important;
             }
             .notes-header-right {
                 position: absolute !important;
@@ -548,11 +553,6 @@
                     display: none !important;
                 }
             }
-            #panel-note-view .notes-content {
-                padding: 1.5rem !important;
-                margin-top: 0 !important;
-                padding-top: 0 !important;
-            }
             .notes-back {
                 transform: translateX(-50px);
                 opacity: 0;
@@ -567,16 +567,13 @@
                 transform: translateX(100%);
             }
         }
-        .notes-drawer-handle {
-            display: none;
-        }
         .mac-stoplights > button {
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             color: transparent;
-            font-size: 10px;
+            font-size: .625rem;
             font-weight: 600;
             line-height: 1;
         }
@@ -604,8 +601,6 @@
             display: inline-flex;
         }
         .color-mode {
-            width: 16px;
-            height: 16px;
             filter: invert(var(--dark-mode));
             transform: rotate(calc(var(--dark-mode) * 180deg));
             display: block;
@@ -613,8 +608,8 @@
         .ellipsis-menu {
             position: fixed;
             background: 0 0;
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
+            backdrop-filter: blur(2px) brightness(120%);
+            -webkit-backdrop-filter: blur(2px) brightness(120%);
             border: 0;
             border-radius: 1rem;
             box-shadow: var(--shadow);
@@ -669,32 +664,29 @@
         </svg>
         <canvas id="click-spark-canvas"></canvas>
         <main class="main-content">
-            <!-- <a href="https://chromewebstore.google.com/detail/rainbow-cursor-in-google/nnmghknojpihdnofejbocdcnmhibkfdc" target="_blank" class="banner"><span class="banner-text" id="banner">Try Rainbow Cursor — A Browser Extension to Change Your Cursor in Google Docs →</span></a> -->
-            <div class="container">
-                <div id="shrine" class="shrine-container" role="button"><img src="data:image/webp;base64,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" class="icon" width="80" height="80" alt="Shrine Icon" draggable="false" loading="eager" fetchpriority="high"></div>
-                <div class="header">
-                    <h1 class="name" id="name">Asahi Suenaga</h1>
-                    <p id="location">East Lansing, MI</p>
-                </div>
-                <p id="bio">I’m a computer science major at <a href="https://engineering.msu.edu/academics/majors-degrees/computer-science-bs" target="_blank" class="bioLink" style="color: var(--gray); text-underline-offset: 3px;">MSU</a> with a curiosity for how things work. I dabble in user interface design and learn Swift in my free time.</p>
-                <div class="actions-row">
-                    <button id="notes-btn" class="notes-glass-btn action-label-btn notes-link" aria-label="Notes" draggable="false"><span id="action-notes">About</span></button>
-                    <a href="https://twitter.com/asahisuenaga" aria-label="Twitter" class="notes-glass-btn action-label-btn twitter-link" target="_blank" draggable="false"><span id="action-twitter">Twitter</span></a>
-                    <a href="https://github.com/asahisuenaga" aria-label="Github" class="notes-glass-btn action-label-btn github-link" target="_blank" draggable="false"><span id="action-github">GitHub</span></a>
-                    <div class="github-stats" id="github-stats" style="display:none"><div id="github-mini-grid" class="github-mini-grid"></div></div>
-                    <button id="ellipsis-btn" class="notes-glass-btn" aria-label="More options"><svg class="icon" width="20" height="20"><use href="#icon-ellipsis"/></svg></button>
-                    <div class="ellipsis-menu" id="ellipsis-menu" style="display:none"><button id="menu-translate"><svg class="icon" style="width: 20px; height: 16px;"><use href="#icon-translate"/></svg><span id="menu-translate-label">Language</span><span id="menu-translate-badge" class="menu-badge"></span></button><button id="menu-darkmode" aria-label="Toggle dark mode"><svg viewBox="0 0 400 400" width="16" height="16" class="color-mode"><circle r="200" cx="200" cy="200" fill="#1e1e1e"/><path d="M 200 375 A 175 175 0 0 1 200 25" fill="#fff"/><path d="M 200 300 A 100 100 0 0 1 200 100" fill="#1e1e1e"/><path d="M 200 100 A 100 100 180 0 1 200 300" fill="#fff"/></svg><span id="menu-darkmode-label">Dark Mode</span><span id="menu-darkmode-badge" class="menu-badge"></span></button></div>
-                </div>
+            <div id="shrine" class="shrine-container" role="button"><img src="data:image/webp;base64,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" class="icon" width="80rem" height="80rem" alt="Shrine Icon" draggable="false" loading="eager" fetchpriority="high"></div>
+            <div class="header">
+                <h1 class="name" id="name">Asahi Suenaga</h1>
+                <p id="location">East Lansing, MI</p>
+            </div>
+            <p id="bio">I’m a computer science major at <a href="https://engineering.msu.edu/academics/majors-degrees/computer-science-bs" target="_blank" class="bioLink" style="color: var(--gray); text-underline-offset: 3px;">MSU</a> with a curiosity for how things work. I dabble in user interface design and learn Swift in my free time.</p>
+            <div class="actions-row">
+                <button id="notes-btn" class="notes-glass-btn action-label-btn notes-link" aria-label="Notes" draggable="false"><span id="action-notes">About</span></button>
+                <a href="https://twitter.com/asahisuenaga" aria-label="Twitter" class="notes-glass-btn action-label-btn twitter-link" target="_blank" draggable="false"><span id="action-twitter">Twitter</span></a>
+                <a href="https://github.com/asahisuenaga" aria-label="Github" class="notes-glass-btn action-label-btn github-link" target="_blank" draggable="false"><span id="action-github">GitHub</span></a>
+                <div class="github-stats" id="github-stats" style="display:none"><div id="github-mini-grid" class="github-mini-grid"></div></div>
+                <button id="ellipsis-btn" class="notes-glass-btn" aria-label="More options"><svg class="icon" width="1.25rem" height="1.25rem"><use href="#icon-ellipsis"/></svg></button>
+                <div class="ellipsis-menu" id="ellipsis-menu" style="display:none"><button id="menu-translate"><svg class="icon" style="width:1.25rem; height:1rem;"><use href="#icon-translate"/></svg><span id="menu-translate-label">Language</span><span id="menu-translate-badge" class="menu-badge"></span></button><button id="menu-darkmode" aria-label="Toggle dark mode"><svg viewBox="0 0 400 400" width="1rem" height="1rem" class="color-mode" style="margin: 0 .125rem;"><circle r="200" cx="200" cy="200" fill="#000"/><path d="M 200 375 A 175 175 0 0 1 200 25" fill="#fff"/><path d="M 200 300 A 100 100 0 0 1 200 100" fill="#000"/><path d="M 200 100 A 100 100 180 0 1 200 300" fill="#fff"/></svg><span id="menu-darkmode-label">Dark Mode</span><span id="menu-darkmode-badge" class="menu-badge"></span></button></div>
             </div>
         </main>
         <div class="notes-backdrop" id="notes-backdrop"></div>
         <div class="notes-modal" id="notes-modal">
             <div class="notes-drawer-handle" id="notes-drawer-handle"></div>
-            <div class="mac-stoplights" id="shared-stoplights" style="position: absolute; top: 20px; left: 16px; z-index: 100; transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1); margin-top: 6px; display: flex; gap: 6px; align-items: center;"><button class="mac-close" aria-label="Close"></button><button class="mac-min" aria-label="Minimize"></button><button class="mac-max" aria-label="Maximize"></button></div>
+            <div class="mac-stoplights" id="shared-stoplights" style="position: absolute; top: 20px; left: 1rem; z-index: 100; transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1); margin-top: 6px; display: flex; gap: 6px; align-items: center;"><button class="mac-close" aria-label="Close"></button><button class="mac-min" aria-label="Minimize"></button><button class="mac-max" aria-label="Maximize"></button></div>
             <div class="notes-panel" id="panel-folders">
                 <div class="notes-header">
                     <div class="notes-header-left"></div>
-                    <button id="new-folder-btn-top" class="notes-glass-btn" aria-label="New Folder" title="New Folder" style="margin-left: auto; width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;"><svg class="icon" style="width:28px;height:28px"><use href="#icon-folder-badge-plus"/></svg></button>
+                    <button id="new-folder-btn-top" class="notes-glass-btn" aria-label="New Folder" title="New Folder" style="margin-left:auto;padding:0;display:flex;align-items:center;justify-content:center;"><svg class="icon" style="width:1.75rem;height:1.75rem;"><use href="#icon-folder-badge-plus"/></svg></button>
                 </div>
                 <div class="notes-content notes-content-padded" style="display:flex; flex-direction:column;">
                     <h1 class="notes-large-title">Folders</h1>
@@ -711,7 +703,7 @@
                             <div class="notes-folder-info"><svg class="icon folder-icon"><use href="#icon-folder"/></svg>Projects</div>
                             <div><span class="notes-count" id="count-projects">0</span></div>
                         </div>
-                        <div class="notes-folder-divider" style="height: 1px; background: var(--color); opacity: 0.15; margin: 8px 0;"></div>
+                        <div class="notes-folder-divider" style="height: .0625rem; background: var(--color); opacity: 0.15; margin: 8px 0;"></div>
                         <div class="notes-list-item folder-list-item" data-target="panel-notes-deleted" style="user-select: none;">
                             <div class="notes-folder-info"><svg class="icon folder-icon"><use href="#icon-trash"/></svg>Deleted</div>
                             <div><span class="notes-count" id="count-deleted">0</span></div>
@@ -721,8 +713,8 @@
             </div>
             <div class="notes-panel" id="panel-notes">
                 <div class="notes-header">
-                    <div class="notes-header-left"><button class="notes-glass-btn notes-back" aria-label="Return" data-back="panel-folders" style="display: none;"><svg class="icon back-hero-icon" style="width:16px; height:16px; display:inline-block; vertical-align:-3px;"><use href="#icon-chevron-left"/></svg></button><button class="notes-glass-btn" aria-label="Sidebar" id="sidebar-toggle" title="Sidebar" style="margin-left: 0px; transition: margin-left 0.3s cubic-bezier(0.25, 1, 0.5, 1);"><svg class="icon" style="width:20px;height:20px;flex-shrink: 0;"><use href="#icon-sidebar-left"/></svg></button></div>
-                    <button id="new-note-btn-header" class="notes-glass-btn" aria-label="New Note" title="New Note"><svg class="icon" style="width:20px;height:20px;"><use href="#icon-square-and-pencil"/></svg></button>
+                    <div class="notes-header-left"><button class="notes-glass-btn notes-back" aria-label="Return" data-back="panel-folders" style="display: none;"><svg class="icon back-hero-icon" style="width:1rem; height:1rem; display:inline-block; vertical-align:-3px;"><use href="#icon-chevron-left"/></svg></button><button class="notes-glass-btn" aria-label="Sidebar" id="sidebar-toggle" title="Sidebar" style="margin-left:0px;transition: margin-left 0.3s cubic-bezier(0.25,1,0.5,1);"><svg class="icon" style="width:1.25rem;height:1.25rem;flex-shrink: 0;"><use href="#icon-sidebar-left"/></svg></button></div>
+                    <button id="new-note-btn-header" class="notes-glass-btn" aria-label="New Note" title="New Note"><svg class="icon" style="width:1.25rem;height:1.25rem;"><use href="#icon-square-and-pencil"/></svg></button>
                 </div>
                 <div class="notes-content notes-content-padded">
                     <h1 class="notes-large-title" id="notes-header-title">All Notes</h1>
@@ -731,17 +723,17 @@
             </div>
             <div class="notes-panel" id="panel-note-view">
                 <div class="notes-header">
-                    <div class="notes-header-left"><button class="notes-glass-btn notes-back" aria-label="Return" data-back="panel-notes"><svg class="icon back-hero-icon" style="width:16px; height:16px; display:inline-block; vertical-align:-3px;"><use href="#icon-chevron-left"/></svg></button><button id="new-note-btn-mobile" class="notes-glass-btn" aria-label="New Note" title="New Note" style="position: absolute; right: 12px; display: none;"><svg class="icon" style="width:20px;height:20px;"><use href="#icon-square-and-pencil"/></svg></button></div>
+                    <div class="notes-header-left"><button class="notes-glass-btn notes-back" aria-label="Return" data-back="panel-notes"><svg class="icon back-hero-icon" style="width:1rem; height:1rem; display:inline-block; vertical-align:-3px;"><use href="#icon-chevron-left"/></svg></button><button id="new-note-btn-mobile" class="notes-glass-btn" aria-label="New Note" title="New Note" style="position: absolute; right: .75rem; display: none;"><svg class="icon" style="width:1.25rem;height:1.25rem;"><use href="#icon-square-and-pencil"/></svg></button></div>
                     <div class="notes-header-right">
                         <button class="notes-toolbar-btn" data-command="bold" title="Bold"><svg class="icon" style="width:.75rem;height:.75rem;"><use href="#icon-bold"/></svg></button>
                         <button class="notes-toolbar-btn" data-command="italic" title="Italic"><svg class="icon" style="width:.75rem;height:.75rem;"><use href="#icon-italic"/></svg></button>
                         <button class="notes-toolbar-btn" data-command="underline" title="Underline"><svg class="icon" style="width:1rem;height:1rem;transform:translateY(-.5px);"><use href="#icon-underline"/></svg></button>
                         <button class="notes-toolbar-btn" data-command="strikeThrough" title="Strikethrough"><svg class="icon" style="width:.875rem;height:.875rem;"><use href="#icon-strikethrough"/></svg></button>
                         <button class="notes-toolbar-btn" aria-label="Monostyle" id="notes-mono-btn" title="Monostyle"><span id="notes-mono-text" style="font-family:monospace;font-size:1rem;transform:translateY(.5px);">M</span></button>
-                        <div class="toolbar-divider divider-indent" style="width: 1px; height: 16px; background: var(--gray); margin: 0 2px;"></div>
+                        <div class="toolbar-divider divider-indent" style="width:.0625rem;height:1rem;background:var(--gray);margin: 0 2px;"></div>
                         <button class="notes-toolbar-btn" data-command="outdent" title="Decrease Indent"><svg class="icon" style="width:1rem;height:1rem;"><use href="#icon-decrease-indent"/></svg></button>
                         <button class="notes-toolbar-btn" data-command="indent" title="Increase Indent"><svg class="icon" style="width:1rem;height:1rem;"><use href="#icon-increase-indent"/></svg></button>
-                        <div class="toolbar-divider divider-lists" style="width: 1px; height: 16px; background: var(--gray); margin: 0 2px;"></div>
+                        <div class="toolbar-divider divider-lists" style="width:.0625rem;height:1rem;background:var(--gray);margin: 0 2px;"></div>
                         <button class="notes-toolbar-btn" data-command="insertUnorderedList" title="Bulleted List"><svg class="icon" style="width:1rem;height:1rem;"><use href="#icon-list-bullet"/></svg></button>
                         <button class="notes-toolbar-btn" data-command="insertOrderedList" title="Numbered List"><svg class="icon" style="width:1rem;height:1rem;"><use href="#icon-list-number"/></svg></button>
                         <button class="notes-toolbar-btn" id="notes-dash-btn" title="Dashed List" data-command="insertDashList"><svg class="icon" style="width:1rem;height:1rem;"><use href="#icon-list-dash"/></svg></button>
@@ -751,7 +743,7 @@
                 <div class="notes-content">
                     <div class="notes-date" id="active-note-date"></div>
                     <h2 class="notes-title" id="active-note-title" contenteditable="true" spellcheck="false" style="outline: none;"></h2>
-                    <div id="active-note-content" contenteditable="true" spellcheck="false" style="outline: none; font-size:0.875rem; height:100%;"></div>
+                    <div id="active-note-content" contenteditable="true" spellcheck="false" style="outline: none; font-size:0.875rem;"></div>
                 </div>
             </div>
         </div>

@@ -91,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (newNoteBtnMobile) newNoteBtnMobile.title = n.buttons.newNote;
 
         const notesModal = document.querySelector('.notes-modal');
-        if (notesModal) notesModal.style.setProperty('--notes-minimized-label', n.modal.minimizedLabel);
 
         document.querySelectorAll('.mac-close').forEach(el => el.setAttribute('aria-label', n.modal.close));
         document.querySelectorAll('.mac-min').forEach(el => el.setAttribute('aria-label', n.modal.minimize));
@@ -138,16 +137,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const setNoteViewReadOnly = (readonly) => {
         const titleEd = document.getElementById('active-note-title');
         const contentEd = document.getElementById('active-note-content');
-        const toolbar = document.querySelector('#panel-note-view .notes-header-right');
+        const toolbar = document.querySelectorAll('.notes-toolbar-btn, .toolbar-divider');
         const panel = document.getElementById('panel-note-view');
         if (!titleEd || !contentEd) return;
         titleEd.contentEditable = readonly ? 'false' : 'true';
         contentEd.contentEditable = readonly ? 'false' : 'true';
         panel?.classList.toggle('note-view-readonly', readonly);
-        if (toolbar) {
-            toolbar.style.opacity = readonly ? '0.35' : '';
-            toolbar.style.pointerEvents = readonly ? 'none' : '';
-        }
+        toolbar.forEach(element => {
+            element.style.opacity = readonly ? '0.35' : '';
+            element.style.pointerEvents = readonly ? 'none' : '';
+        })
     };
 
     const displayNote = (noteId, data) => {
@@ -198,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         folderGroup.querySelectorAll('.folder-list-item.custom').forEach(el => el.remove());
 
-        const divider = folderGroup.querySelector('div[style*="height: 1px"]');
+        const divider = folderGroup.querySelector('div[style*="height: .0625rem"]');
 
         customFolders.forEach(folderName => {
             const folderKey = `panel-notes-${slugify(folderName)}`;
@@ -615,7 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (!isBuiltInNoteId(noteId)) {
                         const separator1 = document.createElement('div');
-                        separator1.style.height = '1px';
+                        separator1.style.height = '.0625rem';
                         separator1.style.background = 'rgba(0,0,0,0.1)';
                         separator1.style.margin = '4px 0';
                         separator1.className = 'context-separator';
@@ -637,7 +636,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
 
                         const separator = document.createElement('div');
-                        separator.style.height = '1px';
+                        separator.style.height = '.0625rem';
                         separator.style.background = 'rgba(0,0,0,0.1)';
                         separator.style.margin = '4px 0';
                         separator.className = 'context-separator';
@@ -765,7 +764,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (userSelectedIds.length === selectedIds.length && !isInDeletedFolder) {
                     const separator1 = document.createElement('div');
-                    separator1.style.height = '1px';
+                    separator1.style.height = '.0625rem';
                     separator1.style.background = 'rgba(0,0,0,0.1)';
                     separator1.style.margin = '4px 0';
                     separator1.className = 'context-separator';
@@ -792,7 +791,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
 
                     const separator2 = document.createElement('div');
-                    separator2.style.height = '1px';
+                    separator2.style.height = '.0625rem';
                     separator2.style.background = 'rgba(0,0,0,0.1)';
                     separator2.style.margin = '4px 0';
                     separator2.className = 'context-separator';
@@ -1370,17 +1369,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const isReadOnly = document.getElementById('panel-note-view')?.classList.contains('note-view-readonly');
             const activeElement = document.activeElement;
             const isTitleFocused = activeElement && (activeElement.id === 'active-note-title' || activeElement.closest('#active-note-title'));
-            const toolbar = document.querySelector('.notes-header-right');
+            const toolbar = document.querySelectorAll('.notes-toolbar-btn, .toolbar-divider');
 
             if (isTitleFocused) {
                 if (toolbar) {
-                    toolbar.style.opacity = '0.3';
+                    toolbar.style.opacity = '0.35';
                     toolbar.style.pointerEvents = 'none';
                 }
                 return;
-            } else if (toolbar) {
-                toolbar.style.opacity = isReadOnly ? '0.35' : '1';
-                toolbar.style.pointerEvents = isReadOnly ? 'none' : 'auto';
+            } else {
+                toolbar.forEach(el => {
+                    el.style.opacity = isReadOnly ? '0.35' : '1';
+                    el.style.pointerEvents = isReadOnly ? 'none' : 'auto';
+                });
             }
 
             const selection = window.getSelection();
@@ -1535,7 +1536,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
 
                 const separator = document.createElement('div');
-                separator.style.height = '1px';
+                separator.style.height = '.0625rem';
                 separator.style.background = 'rgba(0,0,0,0.1)';
                 separator.style.margin = '4px 0';
                 separator.className = 'context-separator';
@@ -1654,22 +1655,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (bookmark && notesModal && notesBackdrop) {
         let isMinimized = false;
-        let wasFullscreenBeforeMinimize = false;
 
         const openNotes = () => {
             document.body.style.overflow = 'hidden';
 
-            notesModal.style.removeProperty('left');
-            notesModal.style.removeProperty('top');
-            notesModal.style.removeProperty('transform');
+            const wasMinimized = isMinimized;
 
             notesBackdrop.classList.add('visible');
-            notesModal.classList.remove('minimized');
-            notesModal.classList.add('visible');
 
-            if (wasFullscreenBeforeMinimize) {
-                notesModal.classList.add('fullscreen');
+            if (wasMinimized) {
+                const vw = window.innerWidth;
+                const vh = window.innerHeight;
+                const centerLeft = (vw - 950) / 2;
+                const centerTop = (vh - 600) / 2;
+
+                notesModal.classList.remove('minimized');
+                notesModal.classList.add('visible');
+
+                notesModal.style.left = `${centerLeft}px`;
+                notesModal.style.top = `${centerTop}px`;
+                notesModal.style.transform = 'scale(0.3)';
+
+                setTimeout(() => {
+                    notesModal.style.removeProperty('left');
+                    notesModal.style.removeProperty('top');
+                    notesModal.style.removeProperty('transform');
+                }, 400);
+            } else {
+                notesModal.classList.remove('minimized');
+                notesModal.classList.add('visible');
             }
+
             bookmark.classList.add('active');
             isMinimized = false;
 
@@ -1692,7 +1708,6 @@ document.addEventListener('DOMContentLoaded', () => {
             notesModal.classList.remove('visible');
             notesModal.classList.remove('minimized');
             notesModal.classList.remove('fullscreen');
-            wasFullscreenBeforeMinimize = false;
             bookmark.classList.remove('active');
 
             setTimeout(() => {
@@ -1745,17 +1760,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             document.body.style.overflow = 'hidden';
             if (e && e.stopPropagation) e.stopPropagation();
-            wasFullscreenBeforeMinimize = notesModal.classList.contains('fullscreen');
 
-            notesModal.style.removeProperty('left');
-            notesModal.style.removeProperty('top');
-            notesModal.style.removeProperty('transform');
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const centerLeft = (vw - 950) / 2;
+            const centerTop = (vh - 600) / 2;
+
+            notesModal.style.setProperty('left', `${centerLeft}px`, 'important');
+            notesModal.style.setProperty('top', `${centerTop}px`, 'important');
+            notesModal.style.setProperty('transform', 'scale(0.3)', 'important');
 
             notesBackdrop.classList.remove('visible');
             notesModal.classList.add('minimized');
             notesModal.classList.remove('fullscreen');
             bookmark.classList.remove('active');
             isMinimized = true;
+
+            setTimeout(() => {
+                notesModal.style.removeProperty('left');
+                notesModal.style.removeProperty('top');
+                notesModal.style.removeProperty('transform');
+            }, 400);
             playNotesSound();
         };
 
@@ -1854,6 +1879,10 @@ document.addEventListener('DOMContentLoaded', () => {
         let modalOffsetX, modalOffsetY;
         let startDragX, startDragY;
 
+        const minimizedScale = 0.3;
+        const minimizedOffsetX = 950 * (1 - minimizedScale) / 2;
+        const minimizedOffsetY = 600 * (1 - minimizedScale) / 2;
+
         const handleDragStart = (e) => {
             if (notesModal.classList.contains('fullscreen')) return;
 
@@ -1895,9 +1924,14 @@ document.addEventListener('DOMContentLoaded', () => {
             x = Math.max(0, Math.min(x, winW - rect.width));
             y = Math.max(0, Math.min(y, winH - rect.height));
 
-            notesModal.style.setProperty('left', `${x}px`, 'important');
-            notesModal.style.setProperty('top', `${y}px`, 'important');
-            notesModal.style.setProperty('transform', 'none', 'important');
+            if (minDragging) {
+                notesModal.style.setProperty('left', `${x - minimizedOffsetX}px`, 'important');
+                notesModal.style.setProperty('top', `${y - minimizedOffsetY}px`, 'important');
+            } else {
+                notesModal.style.setProperty('left', `${x}px`, 'important');
+                notesModal.style.setProperty('top', `${y}px`, 'important');
+                notesModal.style.setProperty('transform', 'none', 'important');
+            }
         };
 
         const handleDragEnd = (forceSnap = false) => {
@@ -1912,7 +1946,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            notesModal.style.transition = 'all 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+            notesModal.style.transition = '';
 
             if (wasMin) {
                 const rect = notesModal.getBoundingClientRect();
@@ -1920,17 +1954,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 const centerY = rect.top + rect.height / 2;
                 const winW = window.innerWidth;
                 const winH = window.innerHeight;
-                const bannerH = 20;
 
                 let snapX, snapY;
-                if (centerX < winW / 2) snapX = 40;
+                if (centerX < winW / 2) snapX = 20;
                 else snapX = winW - rect.width - 20;
 
-                if (centerY < winH / 2) snapY = bannerH + 12;
+                if (centerY < winH / 2) snapY = 20;
                 else snapY = winH - rect.height - 20;
 
-                notesModal.style.setProperty('left', `${snapX}px`, 'important');
-                notesModal.style.setProperty('top', `${snapY}px`, 'important');
+                notesModal.style.setProperty('left', `${snapX - minimizedOffsetX}px`, 'important');
+                notesModal.style.setProperty('top', `${snapY - minimizedOffsetY}px`, 'important');
             }
         };
 
