@@ -24,9 +24,9 @@ INFO: stable v{{DATE}} (optimized)
 ==> Fetching academic status from reg.msu.edu...
 
 ╭────────────────────────────────────────────────────────────────────────────────────────╮
-│  Bachelor's Degree: [████████████████████░░░░░░░░░░░░░░░░░░░░] 61/120 Credits (50%)    │
+│  Bachelor's Degree: [█████████████████████████░░░░░░░░░░░░░░░] 76/120 Credits (63%)    │
 │                                                                                        │
-│  ● GPA: 3.64   ● Classes Done: 11   ● Honors College: Yes  ● Expected Grad: Fall '27   │
+│  ● GPA: 3.64   ● Classes Done: 15   ● Honors College: Yes  ● Expected Grad: Fall '27   │
 ╰────────────────────────────────────────────────────────────────────────────────────────╯
 
 > asahi github-stats

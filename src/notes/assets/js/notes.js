@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const bookmark = document.getElementById('notes-btn');
     const notesModal = document.getElementById('notes-modal');
     const notesBackdrop = document.getElementById('notes-backdrop');
 
@@ -10,14 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const CUSTOM_FOLDER_KEY = 'apple_notes_custom_folders';
-    const NOTES_DATA_KEY = 'apple_notes_data';
     const SEED_PINS_KEY = 'apple_notes_seed_pins';
     let customFolders = JSON.parse(localStorage.getItem(CUSTOM_FOLDER_KEY) || '[]');
 
     const folderMap = {
         'panel-notes-all': 'all',
-        'panel-notes-personal': 'Personal',
-        'panel-notes-projects': 'Projects',
+        'panel-notes-documentation': 'Documentation',
         'panel-notes-deleted': 'recently_deleted'
     };
 
@@ -29,13 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let seedNoteIds = new Set();
     const isBuiltInNoteId = (id) => seedNoteIds.has(id);
 
-    const getNotesLocale = () => document.documentElement.lang === 'ja' ? 'ja' : 'en';
-    const folderDisplayName = (name) => {
-        const lang = getNotesLocale();
-        const map = (window.translations || {})[lang]?.notes?.folderDisplayNames;
-        if (map && map[name]) return map[name];
-        return name;
-    };
+    const folderDisplayName = (name) => name;
 
     const resolveTemplate = (template, ...args) => {
         let result = template;
@@ -48,18 +39,31 @@ document.addEventListener('DOMContentLoaded', () => {
         return result;
     };
 
+    const defaultContextMenuStrings = {
+        promptNewFolderName: 'Enter new folder name:',
+        reservedFolder: 'That folder name is reserved.',
+        folderExists: 'A folder with that name already exists.',
+        recoverNote: 'Recover Note',
+        deletePermanently: 'Delete Permanently',
+        pinNote: 'Pin Note',
+        unpinNote: 'Unpin Note',
+        moveTo: 'Move to {folder}',
+        deleteNote: 'Delete Note',
+        recoverN: 'Recover {n} Notes',
+        deletePermanentlyN: 'Delete {n} Notes Permanently'
+    };
+
     const tcm = (key, ...args) => {
-        const lang = getNotesLocale();
         const wt = window.translations || {};
-        const template = wt[lang]?.notes?.contextMenu?.[key]
-            ?? wt.en?.notes?.contextMenu?.[key];
+        const template = wt.en?.notes?.contextMenu?.[key]
+            ?? defaultContextMenuStrings[key];
         if (!template) return key;
         if (template.includes('{')) return resolveTemplate(template, ...args);
         return template;
     };
 
-    window.applyNotesLang = (lang) => {
-        const n = (window.translations || {})[lang]?.notes;
+    window.applyNotesLang = () => {
+        const n = (window.translations || {})['en']?.notes;
         if (!n) return;
 
         const foldersTitle = document.querySelector('#panel-folders .notes-large-title');
@@ -67,8 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const folderMap = {
             'panel-notes-all': n.folders.all,
-            'panel-notes-personal': n.folders.personal,
-            'panel-notes-projects': n.folders.projects,
+            'panel-notes-documentation': n.folders.documentation,
             'panel-notes-deleted': n.folders.deleted
         };
         Object.entries(folderMap).forEach(([target, label]) => {
@@ -89,8 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (newNoteBtn) newNoteBtn.title = n.buttons.newNote;
         const newNoteBtnMobile = document.getElementById('new-note-btn-mobile');
         if (newNoteBtnMobile) newNoteBtnMobile.title = n.buttons.newNote;
-
-        const notesModal = document.querySelector('.notes-modal');
 
         document.querySelectorAll('.mac-close').forEach(el => el.setAttribute('aria-label', n.modal.close));
         document.querySelectorAll('.mac-min').forEach(el => el.setAttribute('aria-label', n.modal.minimize));
@@ -146,15 +147,18 @@ document.addEventListener('DOMContentLoaded', () => {
         toolbar.forEach(element => {
             element.style.opacity = readonly ? '0.35' : '';
             element.style.pointerEvents = readonly ? 'none' : '';
-        })
+        });
     };
 
     const displayNote = (noteId, data) => {
-        document.getElementById('active-note-content').setAttribute('data-current-note', noteId);
-        document.getElementById('active-note-content').innerHTML = data.content;
+        const el = document.getElementById('active-note-content');
+        const changed = el.getAttribute('data-current-note') !== String(noteId);
+        el.setAttribute('data-current-note', noteId);
+        el.innerHTML = data.content;
         document.getElementById('active-note-title').innerText = data.title;
         document.getElementById('active-note-date').innerText = formatFullNoteDate(data.lastEdited);
         setNoteViewReadOnly(isBuiltInNoteId(noteId) || data.folder === 'recently_deleted');
+        if (changed) el.closest('.notes-content').scrollTop = 0;
     };
 
     const slugify = (name) => name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
@@ -230,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const createFolder = () => {
         const folderName = prompt(tcm('promptNewFolderName'));
         if (!folderName) return;
-        if (['All Notes', 'Personal', 'Projects', 'Recently Deleted'].includes(folderName)) {
+        if (['All Notes', 'Documentation', 'Recently Deleted'].includes(folderName)) {
             alert(tcm('reservedFolder'));
             return;
         }
@@ -285,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const hydrateNotes = async () => {
-        const noteFiles = ['about-me', "rainbow-cursor"];
+        const noteFiles = ['overview', "editor"];
         const out = {};
         await Promise.all(noteFiles.map(async (id) => {
             const res = await fetch(`/notes/${id}.md`);
@@ -333,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })();
 
     const updateCounts = () => {
-        const counts = { all: 0, Personal: 0, Projects: 0, recently_deleted: 0 };
+        const counts = { all: 0, Documentation: 0, recently_deleted: 0 };
         Object.values(notesData).forEach(note => {
             if (note.folder === 'recently_deleted') {
                 counts.recently_deleted++;
@@ -346,8 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         if (document.getElementById('count-all')) document.getElementById('count-all').innerText = counts.all;
-        if (document.getElementById('count-personal')) document.getElementById('count-personal').innerText = counts.Personal;
-        if (document.getElementById('count-projects')) document.getElementById('count-projects').innerText = counts.Projects;
+        if (document.getElementById('count-documentation')) document.getElementById('count-documentation').innerText = counts.Documentation;
         if (document.getElementById('count-deleted')) document.getElementById('count-deleted').innerText = counts.recently_deleted;
 
         customFolders.forEach(folderName => {
@@ -384,32 +387,27 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const formatNoteDate = (timestamp) => {
-        const lang = getNotesLocale();
-        const locale = lang === 'ja' ? 'ja' : 'en-US';
-        const dt = (window.translations || {})[lang]?.notes?.dateTime || {};
+        const dt = (window.translations || {})['en']?.notes?.dateTime || {};
         const now = new Date();
         const d = new Date(timestamp);
         const isToday = now.toDateString() === d.toDateString();
-        if (isToday) return d.toLocaleTimeString(locale, { hour: 'numeric', minute: '2-digit', hourCycle: lang === 'ja' ? 'h23' : 'h12' });
+        if (isToday) return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hourCycle: 'h12' });
 
         const yesterday = new Date(now);
         yesterday.setDate(now.getDate() - 1);
         if (yesterday.toDateString() === d.toDateString()) return dt.yesterday || 'Yesterday';
 
         const diffDays = Math.floor((now - d) / (1000 * 60 * 60 * 24));
-        if (diffDays < 7) return d.toLocaleDateString(locale, { weekday: 'long' });
+        if (diffDays < 7) return d.toLocaleDateString('en-US', { weekday: 'long' });
 
-        return d.toLocaleDateString(locale, { month: 'numeric', day: 'numeric', year: 'numeric' });
+        return d.toLocaleDateString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric' });
     };
 
     const formatFullNoteDate = (timestamp) => {
-        const lang = getNotesLocale();
-        const locale = lang === 'ja' ? 'ja' : 'en-US';
-        const dt = (window.translations || {})[lang]?.notes?.dateTime || {};
         const d = new Date(timestamp);
-        const dateStr = d.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' });
-        const timeStr = d.toLocaleTimeString(locale, { hour: 'numeric', minute: '2-digit', hourCycle: lang === 'ja' ? 'h23' : 'h12' });
-        const at = dt.at || 'at';
+        const dateStr = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        const timeStr = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hourCycle: 'h12' });
+        const at = 'at';
         return at ? `${dateStr} ${at} ${timeStr}` : `${dateStr} ${timeStr}`;
     };
 
@@ -425,7 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (folderFilter === 'recently_deleted') {
             const notice = document.createElement('div');
             notice.className = 'notes-delete-notice';
-            notice.innerText = getNotesLocale() === 'ja' ? '削除されたノートは30日後に完全に削除されます。' : 'Deleted notes are permanently removed after 30 days.';
+            notice.innerText = 'Deleted notes are permanently removed after 30 days.';
             listContainer.appendChild(notice);
         }
         let filteredNotes = Object.keys(notesData).filter(key => {
@@ -452,13 +450,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const titleNode = document.getElementById('notes-header-title');
         if (titleNode) {
             if (folderFilter === 'recently_deleted') {
-                titleNode.innerText = getNotesLocale() === 'ja' ? '削除済み' : 'Recently Deleted';
+                titleNode.innerText = 'Recently Deleted';
             } else if (folderFilter === 'all') {
-                titleNode.innerText = getNotesLocale() === 'ja' ? 'すべてのノート' : 'All Notes';
-            } else if (folderFilter === 'Personal') {
-                titleNode.innerText = getNotesLocale() === 'ja' ? '個人' : 'Personal';
-            } else if (folderFilter === 'Projects') {
-                titleNode.innerText = getNotesLocale() === 'ja' ? 'コーディング' : 'Projects';
+                titleNode.innerText = 'All Notes';
+            } else if (folderFilter === 'Documentation') {
+                titleNode.innerText = 'Documentation';
             } else {
                 titleNode.innerText = folderFilter;
             }
@@ -469,13 +465,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (data.pinned && !hasPinnedHeader) {
                 const h = document.createElement('div');
-                h.innerText = getNotesLocale() === 'ja' ? 'ピン留め済み' : 'Pinned';
+                h.innerText = 'Pinned';
                 h.style.cssText = 'font-size: 0.875rem; user-select: none; font-weight: 500; color: #8e8e93; padding: 12px 16px 4px;';
                 listContainer.appendChild(h);
                 hasPinnedHeader = true;
             } else if (!data.pinned && hasPinnedHeader && !hasNotesHeader && folderFilter !== 'recently_deleted') {
                 const h = document.createElement('div');
-                h.innerText = getNotesLocale() === 'ja' ? 'ノート' : 'Notes';
+                h.innerText = 'Notes';
                 h.style.cssText = 'font-size: 0.875rem; user-select: none; font-weight: 500; color: #8e8e93; padding: 12px 16px 4px;';
                 listContainer.appendChild(h);
                 hasNotesHeader = true;
@@ -1439,7 +1435,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const createNewNote = () => {
             const id = 'note-' + Date.now();
             const now = new Date();
-            const title = getNotesLocale() === 'ja' ? '新規ノート' : 'New Note';
+            const title = 'New Note';
             notesData[id] = {
                 title: title,
                 folder: (currentFolder === 'all' || currentFolder === 'recently_deleted') ? 'all' : currentFolder,
@@ -1653,7 +1649,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bindFolderClicks();
     }
 
-    if (bookmark && notesModal && notesBackdrop) {
+    if (notesModal && notesBackdrop) {
         let isMinimized = false;
 
         const openNotes = () => {
@@ -1664,29 +1660,74 @@ document.addEventListener('DOMContentLoaded', () => {
             notesBackdrop.classList.add('visible');
 
             if (wasMinimized) {
-                const vw = window.innerWidth;
-                const vh = window.innerHeight;
-                const centerLeft = (vw - 950) / 2;
-                const centerTop = (vh - 600) / 2;
+                let restoreLeft, restoreTop;
+                if (savedPositionLeft && savedPositionTop) {
+                    restoreLeft = parseFloat(savedPositionLeft);
+                    restoreTop = parseFloat(savedPositionTop);
+                } else {
+                    const vw = window.innerWidth;
+                    const vh = window.innerHeight;
+                    restoreLeft = (vw - 950) / 2;
+                    restoreTop = (vh - 600) / 2;
+                }
+
+                const miniRect = notesModal.getBoundingClientRect();
+                const miniCX = miniRect.left + miniRect.width / 2;
+                const miniCY = miniRect.top + miniRect.height / 2;
+                const restoreCX = restoreLeft + 950 / 2;
+                const restoreCY = restoreTop + 600 / 2;
+
+                let originX, originY;
+                if (miniCX < restoreCX) {
+                    originX = 'left';
+                } else {
+                    originX = 'right';
+                }
+                if (miniCY < restoreCY) {
+                    originY = 'top';
+                } else {
+                    originY = 'bottom';
+                }
 
                 notesModal.classList.remove('minimized');
                 notesModal.classList.add('visible');
 
-                notesModal.style.left = `${centerLeft}px`;
-                notesModal.style.top = `${centerTop}px`;
+                notesModal.style.transition = 'none';
+                notesModal.style.left = `${miniRect.left}px`;
+                notesModal.style.top = `${miniRect.top}px`;
+                notesModal.style.transformOrigin = `${originY} ${originX}`;
                 notesModal.style.transform = 'scale(0.3)';
+                if (savedResizeWidth && savedResizeHeight) {
+                    notesModal.style.width = savedResizeWidth;
+                    notesModal.style.height = savedResizeHeight;
+                } else {
+                    notesModal.style.removeProperty('width');
+                    notesModal.style.removeProperty('height');
+                }
+
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        notesModal.style.transition = 'transform .4s cubic-bezier(.25, 1, .5, 1), left .4s cubic-bezier(.25, 1, .5, 1), top .4s cubic-bezier(.25, 1, .5, 1), width .4s cubic-bezier(.25, 1, .5, 1), height .4s cubic-bezier(.25, 1, .5, 1)';
+                        notesModal.style.left = `${restoreLeft}px`;
+                        notesModal.style.top = `${restoreTop}px`;
+                        notesModal.style.transform = 'scale(1)';
+                    });
+                });
 
                 setTimeout(() => {
-                    notesModal.style.removeProperty('left');
-                    notesModal.style.removeProperty('top');
+                    notesModal.style.removeProperty('transition');
                     notesModal.style.removeProperty('transform');
-                }, 400);
+                    notesModal.style.removeProperty('transform-origin');
+                    savedPositionLeft = null;
+                    savedPositionTop = null;
+                    savedResizeWidth = null;
+                    savedResizeHeight = null;
+                }, 450);
             } else {
                 notesModal.classList.remove('minimized');
                 notesModal.classList.add('visible');
             }
 
-            bookmark.classList.add('active');
             isMinimized = false;
 
             currentFolder = 'all';
@@ -1708,16 +1749,22 @@ document.addEventListener('DOMContentLoaded', () => {
             notesModal.classList.remove('visible');
             notesModal.classList.remove('minimized');
             notesModal.classList.remove('fullscreen');
-            bookmark.classList.remove('active');
+            savedResizeWidth = null;
+            savedResizeHeight = null;
+            savedPositionLeft = null;
+            savedPositionTop = null;
 
             setTimeout(() => {
                 notesModal.style.removeProperty('transform');
                 notesModal.style.removeProperty('transition');
+                notesModal.style.removeProperty('transform-origin');
                 notesModal.style.removeProperty('left');
                 notesModal.style.removeProperty('top');
+                notesModal.style.removeProperty('width');
+                notesModal.style.removeProperty('height');
             }, 400);
 
-            history.replaceState(null, null, '/');
+            history.replaceState(null, null, '/notes/');
             playNotesSound();
         };
 
@@ -1746,7 +1793,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (openNoteByPermalink(path)) {
                     notesBackdrop.classList.add('visible');
                     notesModal.classList.add('visible');
-                    bookmark.classList.add('active');
                 }
             } else {
                 closeNotes();
@@ -1761,26 +1807,53 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = 'hidden';
             if (e && e.stopPropagation) e.stopPropagation();
 
-            const vw = window.innerWidth;
-            const vh = window.innerHeight;
-            const centerLeft = (vw - 950) / 2;
-            const centerTop = (vh - 600) / 2;
+            const rect = notesModal.getBoundingClientRect();
+            const scale = 0.3;
+            const miniW = rect.width * scale;
+            const miniH = rect.height * scale;
+            const miniLeft = rect.left + rect.width / 2 - miniW / 2;
+            const miniTop = rect.top + rect.height / 2 - miniH / 2;
 
-            notesModal.style.setProperty('left', `${centerLeft}px`, 'important');
-            notesModal.style.setProperty('top', `${centerTop}px`, 'important');
-            notesModal.style.setProperty('transform', 'scale(0.3)', 'important');
+            savedPositionLeft = `${rect.left}px`;
+            savedPositionTop = `${rect.top}px`;
+
+            const curW = notesModal.style.getPropertyValue('width');
+            const curH = notesModal.style.getPropertyValue('height');
+            if (curW && curH) {
+                savedResizeWidth = curW;
+                savedResizeHeight = curH;
+            } else {
+                savedResizeWidth = null;
+                savedResizeHeight = null;
+            }
+
+            notesModal.style.removeProperty('width');
+            notesModal.style.removeProperty('height');
+            notesModal.style.transition = 'transform .4s cubic-bezier(.25, 1, .5, 1), left .4s cubic-bezier(.25, 1, .5, 1), top .4s cubic-bezier(.25, 1, .5, 1)';
+            notesModal.style.left = `${rect.left}px`;
+            notesModal.style.top = `${rect.top}px`;
+            notesModal.style.transform = 'scale(1)';
+
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    notesModal.style.left = `${miniLeft}px`;
+                    notesModal.style.top = `${miniTop}px`;
+                    notesModal.style.transform = `scale(${scale})`;
+                });
+            });
 
             notesBackdrop.classList.remove('visible');
             notesModal.classList.add('minimized');
             notesModal.classList.remove('fullscreen');
-            bookmark.classList.remove('active');
             isMinimized = true;
 
             setTimeout(() => {
+                notesModal.style.removeProperty('transition');
                 notesModal.style.removeProperty('left');
                 notesModal.style.removeProperty('top');
                 notesModal.style.removeProperty('transform');
-            }, 400);
+                notesModal.style.removeProperty('transform-origin');
+            }, 450);
             playNotesSound();
         };
 
@@ -1793,11 +1866,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 notesModal.style.transition = 'none';
                 notesModal.classList.remove('fullscreen');
-                notesModal.style.removeProperty('left');
-                notesModal.style.removeProperty('top');
-                notesModal.style.removeProperty('transform');
+                if (savedPositionLeft) notesModal.style.setProperty('left', savedPositionLeft, 'important');
+                if (savedPositionTop) notesModal.style.setProperty('top', savedPositionTop, 'important');
+                if (savedResizeWidth) notesModal.style.setProperty('width', savedResizeWidth, 'important');
+                if (savedResizeHeight) notesModal.style.setProperty('height', savedResizeHeight, 'important');
+                savedPositionLeft = null;
+                savedPositionTop = null;
+                savedResizeWidth = null;
+                savedResizeHeight = null;
                 setTimeout(() => notesModal.style.removeProperty('transition'), 50);
             } else {
+                const rect = notesModal.getBoundingClientRect();
+                savedPositionLeft = `${rect.left}px`;
+                savedPositionTop = `${rect.top}px`;
+                const curW = notesModal.style.getPropertyValue('width');
+                const curH = notesModal.style.getPropertyValue('height');
+                savedResizeWidth = curW || null;
+                savedResizeHeight = curH || null;
+
+                notesModal.style.removeProperty('left');
+                notesModal.style.removeProperty('top');
+                notesModal.style.removeProperty('width');
+                notesModal.style.removeProperty('height');
                 notesModal.classList.add('fullscreen');
             }
         };
@@ -1808,7 +1898,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        bookmark.addEventListener('click', openNotes);
+        const titleText = document.getElementById('title-text');
+        if (titleText) {
+            titleText.addEventListener('click', (e) => {
+                if (e.target.closest('a')) return;
+                if (!notesModal.classList.contains('visible')) {
+                    openNotes();
+                }
+            });
+            titleText.addEventListener('keydown', (e) => {
+                if ((e.key === 'Enter' || e.key === ' ') && !notesModal.classList.contains('visible')) {
+                    e.preventDefault();
+                    openNotes();
+                }
+            });
+        }
+
         notesBackdrop.addEventListener('click', closeNotes);
 
         document.querySelectorAll('.mac-close').forEach(btn => {
@@ -1836,6 +1941,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const isDesktop = window.innerWidth >= 800;
 
             if (isDesktop && e.target.closest('.notes-header')) return;
+            if (e.target.closest('.resize-handle')) return;
 
             const scrollable = findScrollableAncestor(e.target, notesModal);
             if (scrollable && scrollable.scrollTop > 0) return;
@@ -1864,8 +1970,13 @@ document.addEventListener('DOMContentLoaded', () => {
             notesModal.style.removeProperty('transition');
             const diff = currentY - startY;
             if (diff > 100) {
-                notesModal.style.removeProperty('transform');
-                closeNotes();
+                const closeAfterSlide = () => {
+                    notesModal.removeEventListener('transitionend', closeAfterSlide);
+                    closeNotes();
+                };
+                notesModal.addEventListener('transitionend', closeAfterSlide);
+                notesModal.style.setProperty('transition', 'transform .35s cubic-bezier(.25, 1, .5, 1)', 'important');
+                notesModal.style.setProperty('transform', `translateY(${window.innerHeight}px)`, 'important');
             } else if (diff > 5 && window.innerWidth < 800) {
                 notesModal.style.setProperty('transform', 'translateY(0)', 'important');
                 clearTimeout(window._mobileDragReset);
@@ -1967,6 +2078,94 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
+        let isResizing = false;
+        let resizeDir = '';
+        let resizeStartX, resizeStartY;
+        let resizeStartRect;
+        const RESIZE_MIN_W = 700;
+        const RESIZE_MIN_H = 400;
+        let savedResizeWidth = null;
+        let savedResizeHeight = null;
+        let savedPositionLeft = null;
+        let savedPositionTop = null;
+
+        const handleResizeStart = (e) => {
+            if (notesModal.classList.contains('minimized') || notesModal.classList.contains('fullscreen')) return;
+            const handle = e.target.closest('.resize-handle');
+            if (!handle) return;
+
+            isResizing = true;
+            resizeDir = handle.dataset.dir;
+            const event = e.type.includes('touch') ? e.touches[0] : e;
+            resizeStartX = event.clientX;
+            resizeStartY = event.clientY;
+            resizeStartRect = notesModal.getBoundingClientRect();
+
+            notesModal.style.transition = 'none';
+            e.preventDefault();
+            e.stopPropagation();
+        };
+
+        const handleResizeMove = (e) => {
+            if (!isResizing) return;
+            const event = e.type.includes('touch') ? e.touches[0] : e;
+            const dx = event.clientX - resizeStartX;
+            const dy = event.clientY - resizeStartY;
+
+            let newW = resizeStartRect.width;
+            let newH = resizeStartRect.height;
+            let newL = resizeStartRect.left;
+            let newT = resizeStartRect.top;
+
+            if (resizeDir.includes('e')) {
+                newW = Math.max(RESIZE_MIN_W, Math.min(resizeStartRect.width + dx, window.innerWidth));
+            }
+            if (resizeDir.includes('w')) {
+                const candidateW = resizeStartRect.width - dx;
+                if (candidateW >= RESIZE_MIN_W) {
+                    newW = candidateW;
+                    newL = resizeStartRect.left + dx;
+                } else {
+                    newW = RESIZE_MIN_W;
+                    newL = resizeStartRect.left + resizeStartRect.width - RESIZE_MIN_W;
+                }
+            }
+            if (resizeDir.includes('s')) {
+                newH = Math.max(RESIZE_MIN_H, Math.min(resizeStartRect.height + dy, window.innerHeight));
+            }
+            if (resizeDir.includes('n')) {
+                const candidateH = resizeStartRect.height - dy;
+                if (candidateH >= RESIZE_MIN_H) {
+                    newH = candidateH;
+                    newT = resizeStartRect.top + dy;
+                } else {
+                    newH = RESIZE_MIN_H;
+                    newT = resizeStartRect.top + resizeStartRect.height - RESIZE_MIN_H;
+                }
+            }
+
+            notesModal.style.setProperty('width', `${newW}px`, 'important');
+            notesModal.style.setProperty('height', `${newH}px`, 'important');
+            notesModal.style.setProperty('left', `${newL}px`, 'important');
+            notesModal.style.setProperty('top', `${newT}px`, 'important');
+            notesModal.style.setProperty('transform', 'none', 'important');
+
+            const sidebarBtn = document.getElementById('sidebar-toggle');
+            if (newW < 900) {
+                panels.folders.classList.add('collapsed');
+                if (sidebarBtn) sidebarBtn.style.marginLeft = "70px";
+            } else {
+                panels.folders.classList.remove('collapsed');
+                if (sidebarBtn) sidebarBtn.style.marginLeft = "0px";
+            }
+        };
+
+        const handleResizeEnd = () => {
+            if (!isResizing) return;
+            isResizing = false;
+            notesModal.style.transition = '';
+        };
+
         if (window.innerWidth >= 800) {
             notesModal.addEventListener('mousedown', handleDragStart);
             notesModal.addEventListener('touchstart', handleDragStart, { passive: true });
@@ -1974,6 +2173,13 @@ document.addEventListener('DOMContentLoaded', () => {
             window.addEventListener('touchmove', handleDragMove, { passive: false });
             window.addEventListener('mouseup', handleDragEnd);
             window.addEventListener('touchend', handleDragEnd);
+
+            notesModal.addEventListener('mousedown', handleResizeStart);
+            notesModal.addEventListener('touchstart', handleResizeStart, { passive: false });
+            window.addEventListener('mousemove', handleResizeMove);
+            window.addEventListener('touchmove', handleResizeMove, { passive: false });
+            window.addEventListener('mouseup', handleResizeEnd);
+            window.addEventListener('touchend', handleResizeEnd);
         }
 
         notesModal.addEventListener('mousedown', handleMobileDragStart);
@@ -2039,13 +2245,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.body.style.overflow = 'hidden';
                     notesBackdrop.classList.add('visible');
                     notesModal.classList.add('visible');
-                    bookmark.classList.add('active');
                 }
             }
         });
     }
 
-    if (bookmark && notesModal && notesBackdrop) {
+    if (notesModal && notesBackdrop) {
 
         document.querySelectorAll('[data-back]').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -2060,7 +2265,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const sidebarToggle = document.getElementById('sidebar-toggle');
-        const sharedStoplights = document.getElementById('shared-stoplights');
 
         if (sidebarToggle) {
             sidebarToggle.addEventListener('click', () => {

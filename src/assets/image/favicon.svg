@@ -4,18 +4,7 @@
 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
  width="500.000000pt" height="500.000000pt" viewBox="0 0 500.000000 500.000000"
  preserveAspectRatio="xMidYMid meet">
-
-  <style>
-    .logo-path {
-      fill: #1e1e1e;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .logo-path {
-        fill: #FFFFFF;
-      }
-    }
-  </style>
+  <style>@media (prefers-color-scheme: light) { .logo-path { fill: #1e1e1e; } } @media (prefers-color-scheme: dark) { .logo-path { fill: #FFFFFF; } } </style>
 
   <g transform="translate(0.000000,500.000000) scale(0.100000,-0.100000)" stroke="none">
     <path class="logo-path" d="M1210 4461 l-115 -6 -3 -454 c-1 -255 2 -459 7 -464 5 -5 44 6 92 26

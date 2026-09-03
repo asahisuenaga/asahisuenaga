@@ -1,84 +1,77 @@
 {
   "site": {
     "title": "Asahi Suenaga",
-    "pageTitle": "Asahi Suenaga",
-    "shrineAlt": "Shrine Icon"
+    "description": "Asahi Suenaga explores the intersection of software and humans. The personal website and portfolio of a Computer Science student at Michigan State University who is passionate about Swift, iOS development, and open source.",
+    "keywords": "Asahi Suenaga, Asahi, Suenaga, 末永, 末永朝飛, 朝飛, MSU, Michigan State University, Computer Science, Swift, iOS Development"
+  },
+  "nav": {
+    "about": "About",
+    "projects": "Projects",
+    "experience": "Experience",
+    "source": "Source"
   },
   "location": "East Lansing, MI",
-  "bio": "I’m a computer science major at <a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"bioLink\">MSU</a> with a curiosity for how things work. I dabble in user interface design and learn Swift in my free time.",
-  "actions": {
-    "notes": "About",
-    "twitter": "Twitter",
-    "github": "GitHub"
+  "about": {
+    "bio": "I'm a computer science major at <a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"about-link\">Michigan State</a> with a curiosity for how things work. I dabble in user interface design and learn Swift in my free time.",
+    "bioExtra": "I build intuitive software that integrates into one's life. I believe in algorithms over opinions and testing multiple approaches to find the best fit. As a fast learner with a sharp eye for detail, I look for perfection in executing my ideas."
   },
-  "menu": {
-    "translate": "Language",
-    "darkmode": "Dark Mode"
-  },
-  "notes": {
-    "folders": {
-      "title": "Folders",
-      "all": "All Notes",
-      "personal": "Personal",
-      "projects": "Projects",
-      "deleted": "Deleted"
-    },
-    "buttons": {
-      "newFolder": "New Folder",
-      "sidebar": "Sidebar",
-      "newNote": "New Note"
-    },
-    "modal": {
-      "close": "Close",
-      "minimize": "Minimize",
-      "maximize": "Maximize",
-      "back": "Back"
-    },
-    "toolbar": {
-      "bold": "Bold",
-      "italic": "Italic",
-      "underline": "Underline",
-      "strikeThrough": "Strikethrough",
-      "outdent": "Decrease Indent",
-      "indent": "Increase Indent",
-      "insertUnorderedList": "Bulleted List",
-      "insertOrderedList": "Numbered List",
-      "mono": "Monostyle",
-      "dash": "Dashed List",
-      "checklist": "Checklist"
-    },
-    "folderDisplayNames": {
-      "Personal": "Personal",
-      "Projects": "Projects",
-      "all": "All Notes",
-      "recently_deleted": "Recently Deleted"
-    },
-    "contextMenu": {
-      "recoverNote": "Recover Note",
-      "deletePermanently": "Delete Permanently",
-      "pinNote": "Pin Note",
-      "unpinNote": "Unpin Note",
-      "moveTo": "Move to {folder}",
-      "deleteNote": "Delete Note",
-      "renameFolder": "Rename Folder",
-      "deleteFolder": "Delete Folder",
-      "folderReadonly": "This folder cannot be modified",
-      "deleteN": "Delete {n} Notes",
-      "pinN": "Pin {n} Notes",
-      "unpinN": "Unpin {n} Notes",
-      "recoverN": "Recover {n} Notes",
-      "deletePermanentlyN": "Delete {n} Notes Permanently",
-      "moveNTo": "Move {n} Notes to {folder}",
-      "promptRenameFolder": "Rename folder",
-      "promptNewFolderName": "New folder name",
-      "confirmDeleteFolder": "Delete folder \"{name}\"? Notes will be moved to All Notes.",
-      "reservedFolder": "Folder name reserved. Use another name.",
-      "folderExists": "Folder already exists.",
-      "folderExistsRename": "Folder already exists"
-    },
-    "dateTime": {
-      "yesterday": "Yesterday",
-      "at": "at"
+  "languages": {
+    "proficient": "Proficient Programming Languages",
+    "familiar": "Familiar Programming Languages",
+    "list": {
+      "html": "HTML",
+      "css": "CSS",
+      "javascript": "Javascript",
+      "python": "Python",
+      "typescript": "Typescript"
     }
+  },
+  "projects": {
+    "title": "Projects",
+    "items": [
+      {
+        "name": "Apple Notes Clone",
+        "type": "Web Application"
+      },
+      {
+        "name": "Baroque Jigsaw Puzzles",
+        "type": "React Application"
+      },
+      {
+        "name": "Hide Google AI",
+        "type": "Browser Extension"
+      },
+      {
+        "name": "Rainbow Cursor",
+        "type": "Browser Extension"
+      }
+    ]
+  },
+  "opensource": {
+    "title": "Open-Source Philosophy",
+    "paragraph1": "Releasing old proprietary code into the open-source ecosystem creates new life into retired projects. Instead of letting software sit idle on a private hard drive, sharing it to the public gives a chance for others to learn, fix bugs, and even develop new tools. As a developer, I am constantly making tools for myself, and open-sourcing them is the absolute best way for others facing the same problems to actually find them.",
+    "paragraph2": "Equally important is the practice of open-sourcing the small, non-commercial tools I build every day. These highly specific utilities are created strictly for my own needs to scratch my own operational itches. They aren't meant for production or profit. Still, for businesses, adopting this model of open-sourcing some of their work promotes transparency and encourages workflows where minor internal utilities can be rapidly created and shared. Sharing these scripts creates unexpected collaboration, showcases practical engineering, and builds trust through total transparency."
+  },
+  "experience": {
+    "title": "Experience",
+    "items": [
+      {
+        "organization": "SpartaHack",
+        "role": "Finance Team"
+      },
+      {
+        "organization": "Japanese Student Association",
+        "role": "Secretary"
+      }
+    ]
+  },
+  "askAI": {
+    "title": "Ask AI",
+    "placeholders": [
+      "Summarize Asahi's portfolio.",
+      "What programming languages does Asahi know?",
+      "Draft an interview outreach email to Asahi",
+      "List Asahi's most popular Github repos"
+    ]
   }
 }

@@ -1,84 +1,77 @@
 {
   "site": {
     "title": "末永朝飛",
-    "pageTitle": "末永朝飛",
-    "shrineAlt": "神社のアイコン"
+    "description": "末永朝飛は、ソフトウェアと人間の交差点を探求しています。Swift、iOS開発、オープンソースに情熱を持つミシガン州立大学のコンピュータサイエンス専攻学生の個人ウェブサイト＆ポートフォリオ。",
+    "keywords": "Asahi Suenaga, Asahi, Suenaga, 末永, 末永朝飛, 朝飛, MSU, Michigan State University, Computer Science, Swift, iOS Development"
+  },
+  "nav": {
+    "about": "概要",
+    "projects": "プロジェクト",
+    "experience": "経歴",
+    "source": "ソースコード"
   },
   "location": "イーストランシング",
-  "bio": "<a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"bioLink\">ミシガン州立大学</a>でコンピュータサイエンスを専攻しており、物事がどのように機能するのかに好奇心を持っています。ユーザーインターフェースデザインにも少し手を広げており、空き時間にはSwiftを学んでいます。",
-  "actions": {
-    "notes": "僕について",
-    "twitter": "ツイッター",
-    "github": "ギットハブ"
+  "about": {
+    "bio": "<a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"about-link\">ミシガン州立大学</a>でコンピュータサイエンスを専攻しており、物事がどのように機能するのかに好奇心を持っています。ユーザーインターフェースデザインにも少し手を広げており、空き時間にはSwiftを学んでいます。",
+    "bioExtra": "僕は、人々の生活に自然に溶け込む、直感的に使えるソフトウェアを開発しています。主観よりもアルゴリズムを重視し、最適な解を見つけるために複数のアプローチを検証することを大切にしています。細部への鋭い観察眼と高い学習能力を活かし、自身のアイデアを完璧な形で実現することを目指しています。"
   },
-  "menu": {
-    "translate": "言語",
-    "darkmode": "ダークモード"
-  },
-  "notes": {
-    "folders": {
-      "title": "フォルダ",
-      "all": "すべて",
-      "personal": "個人",
-      "projects": "プロジェクト",
-      "deleted": "削除済み"
-    },
-    "buttons": {
-      "newFolder": "新規フォルダ",
-      "sidebar": "サイドバー",
-      "newNote": "新規ノート"
-    },
-    "modal": {
-      "close": "閉じる",
-      "minimize": "最小化",
-      "maximize": "最大化",
-      "back": "戻る"
-    },
-    "toolbar": {
-      "bold": "太字",
-      "italic": "斜体",
-      "underline": "下線",
-      "strikeThrough": "取り消し線",
-      "outdent": "インデントを減らす",
-      "indent": "インデントを増やす",
-      "insertUnorderedList": "箇条書き",
-      "insertOrderedList": "番号付きリスト",
-      "mono": "等幅",
-      "dash": "ダッシュリスト",
-      "checklist": "チェックリスト"
-    },
-    "folderDisplayNames": {
-      "Personal": "個人",
-      "Projects": "プロジェクト",
-      "all": "すべてのノート",
-      "recently_deleted": "削除済み"
-    },
-    "contextMenu": {
-      "recoverNote": "ノートを復元",
-      "deletePermanently": "完全に削除",
-      "pinNote": "ピン留め",
-      "unpinNote": "ピンを外す",
-      "moveTo": "{folder}に移動",
-      "deleteNote": "ノートを削除",
-      "renameFolder": "フォルダ名を変更",
-      "deleteFolder": "フォルダを削除",
-      "folderReadonly": "このフォルダは変更できません",
-      "deleteN": "{n}件のノートを削除",
-      "pinN": "{n}件をピン留め",
-      "unpinN": "{n}件のピンを外す",
-      "recoverN": "{n}件のノートを復元",
-      "deletePermanentlyN": "{n}件のノートを完全に削除",
-      "moveNTo": "{n}件を{folder}に移動",
-      "promptRenameFolder": "フォルダ名を変更",
-      "promptNewFolderName": "新しいフォルダ名",
-      "confirmDeleteFolder": "フォルダ「{name}」を削除しますか？ノートは「すべてのノート」に移動します。",
-      "reservedFolder": "この名前は使えません。別の名前にしてください。",
-      "folderExists": "同じ名前のフォルダがあります。",
-      "folderExistsRename": "同じ名前のフォルダがあります。"
-    },
-    "dateTime": {
-      "yesterday": "昨日",
-      "at": ""
+  "languages": {
+    "proficient": "習得しているプログラミング言語",
+    "familiar": "馴染みのあるプログラミング言語",
+    "list": {
+      "html": "HTML",
+      "css": "CSS",
+      "javascript": "Javascript",
+      "python": "Python",
+      "typescript": "Typescript"
     }
+  },
+  "projects": {
+    "title": "プロジェクト",
+    "items": [
+      {
+        "name": "Apple Notes クローン",
+        "type": "ウェブアプリケーション"
+      },
+      {
+        "name": "バロックジグソーパズル",
+        "type": "Reactアプリケーション"
+      },
+      {
+        "name": "Google AIを非表示",
+        "type": "ブラウザ拡張機能"
+      },
+      {
+        "name": "GoogleDocsのレインボーカーソル",
+        "type": "ブラウザ拡張機能"
+      }
+    ]
+  },
+  "opensource": {
+    "title": "オープンソース哲学",
+    "paragraph1": "古いプロプライエタリコードをオープンソースエコシステムに公開することで、引退したプロジェクトに新しい命を吹き込みます。プライベートハードドライブにソフトウェアを放置する代わりに、公開することで他の人が学んだり、バグを修正したり、甚至新しいツールを開発する機会が生まれます。開発者として、私は常に自分用のツールを作成しており、それらをオープンソースすることは、同じ問題に直面している他の人間がそれらを見つける絶対に最良の方法です。",
+    "paragraph2": "同様に重要なのは、毎日構築する小さな非商用ツールをオープンソースにする実践です。これらの非常に特化されたユーティリティは、strictly自分のニーズを満たすために作成されたものであり、本番環境や利益を意図したものではありません。それでも、企業にとって、このモデルを採用してオープンソースの一部を公開することは、透明性を促進し、小さな社内ユーティリティが迅速に作成・共有されるワークフローを奨励します。これらのスクリプトを共有することは、予期しない協力を生み出し、実践的なエンジニアリングを紹介し、完全な透明性を通じて信頼を構築します。"
+  },
+  "experience": {
+    "title": "経歴",
+    "items": [
+      {
+        "organization": "SpartaHack",
+        "role": "財務チーム"
+      },
+      {
+        "organization": "日本人学生会",
+        "role": "書記"
+      }
+    ]
+  },
+  "askAI": {
+    "title": "AIに質問",
+    "placeholders": [
+      "朝飛のポートフォリオを要約してください",
+      "朝飛が知っているプログラミング言語は何ですか？",
+      "朝飛へのインタビュー依頼メールを下書きしてください",
+      "朝飛の最も人気のあるGithubリポジトリをリストしてください"
+    ]
   }
 }

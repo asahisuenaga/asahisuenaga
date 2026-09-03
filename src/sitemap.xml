@@ -11,12 +11,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://asahisuenaga.com/notes/about-me</loc>
+    <loc>https://asahisuenaga.com/notes/overview</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://asahisuenaga.com/notes/rainbow-cursor</loc>
+    <loc>https://asahisuenaga.com/notes/editor</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -29,5 +29,4 @@
     <loc>https://asahisuenaga.com/notes/?lang=ja</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  </url>
 </urlset>
