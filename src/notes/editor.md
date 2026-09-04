@@ -1,8 +1,7 @@
 ---
-title: ✍🏻 Text Editor
+title: Text Editor
 folder: Documentation
 date: 2026-08-31T21:25
-permalink: /notes/editor
 pinned: false
 ---
 <p>This document covers the note creation capabilities and text formatting tools available in the rich text editor.</p>

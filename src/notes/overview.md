@@ -1,8 +1,7 @@
 ---
-title: ℹ️ Overview
+title: Overview
 folder: Documentation
 date: 2026-08-31T21:25
-permalink: /notes/overview
 pinned: true
 ---
 <p>This document outlines the core architecture and user interface features of the Apple Notes clone built using vanilla JavaScript, HTML, and CSS.</p>

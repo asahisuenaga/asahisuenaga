@@ -26,110 +26,30 @@ document.addEventListener('DOMContentLoaded', () => {
     let seedNoteIds = new Set();
     const isBuiltInNoteId = (id) => seedNoteIds.has(id);
 
-    const folderDisplayName = (name) => name;
-
-    const resolveTemplate = (template, ...args) => {
-        let result = template;
-        if (template.includes('{n}')) result = result.replace('{n}', args[0]);
-        if (template.includes('{folder}')) {
-            const folderArg = template.includes('{n}') ? args[1] : args[0];
-            result = result.replace('{folder}', folderDisplayName(folderArg));
-        }
-        if (template.includes('{name}')) result = result.replace('{name}', args[0]);
-        return result;
+    const separator = () => {
+        const el = document.createElement('div');
+        el.className = 'context-separator';
+        el.style.cssText = 'height:.0625rem;background:rgba(0,0,0,0.1);margin:4px 0';
+        return el;
     };
 
-    const defaultContextMenuStrings = {
-        promptNewFolderName: 'Enter new folder name:',
-        reservedFolder: 'That folder name is reserved.',
-        folderExists: 'A folder with that name already exists.',
-        recoverNote: 'Recover Note',
-        deletePermanently: 'Delete Permanently',
-        pinNote: 'Pin Note',
-        unpinNote: 'Unpin Note',
-        moveTo: 'Move to {folder}',
-        deleteNote: 'Delete Note',
-        recoverN: 'Recover {n} Notes',
-        deletePermanentlyN: 'Delete {n} Notes Permanently'
+    const contextMenu = (e, id) => {
+        document.getElementById(id)?.remove();
+        const menu = document.createElement('div');
+        menu.id = id;
+        menu.className = 'note-context-menu';
+        document.body.appendChild(menu);
+        constrainMenuToViewport(menu, (e.clientX || 0) - 10, (e.clientY || 0) - 10);
+        return menu;
     };
 
-    const tcm = (key, ...args) => {
-        const wt = window.translations || {};
-        const template = wt.en?.notes?.contextMenu?.[key]
-            ?? defaultContextMenuStrings[key];
-        if (!template) return key;
-        if (template.includes('{')) return resolveTemplate(template, ...args);
-        return template;
-    };
-
-    window.applyNotesLang = () => {
-        const n = (window.translations || {})['en']?.notes;
-        if (!n) return;
-
-        const foldersTitle = document.querySelector('#panel-folders .notes-large-title');
-        if (foldersTitle) foldersTitle.innerText = n.folders.title;
-
-        const folderMap = {
-            'panel-notes-all': n.folders.all,
-            'panel-notes-documentation': n.folders.documentation,
-            'panel-notes-deleted': n.folders.deleted
+    const closeOnOutside = (menu) => {
+        const close = (ev) => {
+            if (ev.button === 2 || menu.contains(ev.target)) return;
+            menu.remove();
+            document.removeEventListener('click', close);
         };
-        Object.entries(folderMap).forEach(([target, label]) => {
-            const el = document.querySelector(`#panel-folders [data-target="${target}"] .notes-folder-info`);
-            if (!el) return;
-            const icon = el.querySelector('svg.icon');
-            el.innerHTML = '';
-            if (icon) el.appendChild(icon);
-            el.append(label);
-        });
-
-        const newFolderBtn = document.getElementById('new-folder-btn-top');
-        if (newFolderBtn) newFolderBtn.title = n.buttons.newFolder;
-        const sidebarBtn = document.getElementById('sidebar-toggle');
-        if (sidebarBtn) sidebarBtn.title = n.buttons.sidebar;
-
-        const newNoteBtn = document.getElementById('new-note-btn-header');
-        if (newNoteBtn) newNoteBtn.title = n.buttons.newNote;
-        const newNoteBtnMobile = document.getElementById('new-note-btn-mobile');
-        if (newNoteBtnMobile) newNoteBtnMobile.title = n.buttons.newNote;
-
-        document.querySelectorAll('.mac-close').forEach(el => el.setAttribute('aria-label', n.modal.close));
-        document.querySelectorAll('.mac-min').forEach(el => el.setAttribute('aria-label', n.modal.minimize));
-        document.querySelectorAll('.mac-max').forEach(el => el.setAttribute('aria-label', n.modal.maximize));
-
-        document.querySelectorAll('.notes-back').forEach(el => el.setAttribute('aria-label', n.modal.back));
-
-        const newFolderTop = document.getElementById('new-folder-btn-top');
-        if (newFolderTop) newFolderTop.setAttribute('aria-label', n.buttons.newFolder);
-        if (sidebarBtn) sidebarBtn.setAttribute('aria-label', n.buttons.sidebar);
-
-        if (newNoteBtn) newNoteBtn.setAttribute('aria-label', n.buttons.newNote);
-        if (newNoteBtnMobile) newNoteBtnMobile.setAttribute('aria-label', n.buttons.newNote);
-
-        const toolbarTitles = {
-            bold: n.toolbar.bold, italic: n.toolbar.italic, underline: n.toolbar.underline,
-            strikeThrough: n.toolbar.strikeThrough, outdent: n.toolbar.outdent, indent: n.toolbar.indent,
-            insertUnorderedList: n.toolbar.insertUnorderedList, insertOrderedList: n.toolbar.insertOrderedList
-        };
-        document.querySelectorAll('.notes-toolbar-btn[data-command]').forEach(btn => {
-            const cmd = btn.getAttribute('data-command');
-            if (toolbarTitles[cmd]) btn.title = toolbarTitles[cmd];
-            const img = btn.querySelector('img');
-            if (img && toolbarTitles[cmd]) img.alt = toolbarTitles[cmd];
-        });
-        const monoBtn = document.getElementById('notes-mono-btn');
-        if (monoBtn) monoBtn.title = n.toolbar.mono;
-        if (monoBtn) monoBtn.setAttribute('aria-label', n.toolbar.mono);
-        const dashBtn = document.getElementById('notes-dash-btn');
-        if (dashBtn) dashBtn.title = n.toolbar.dash;
-        const dashImg = dashBtn?.querySelector('img');
-        if (dashImg) dashImg.alt = n.toolbar.dash;
-        const checklistBtn = document.getElementById('notes-checklist-btn');
-        if (checklistBtn) checklistBtn.title = n.toolbar.checklist;
-        const checklistImg = checklistBtn?.querySelector('img');
-        if (checklistImg) checklistImg.alt = n.toolbar.checklist;
-
-        renderNotesList(currentFolder, false);
+        setTimeout(() => document.addEventListener('click', close), 10);
     };
 
     let openFolderContextMenu = () => { };
@@ -168,33 +88,19 @@ document.addEventListener('DOMContentLoaded', () => {
         menu.style.top = y + 'px';
 
         setTimeout(() => {
-            const rect = menu.getBoundingClientRect();
-            const padding = 10;
-            let newX = x;
-            let newY = y;
-
-            if (rect.right > window.innerWidth - padding) {
-                newX = window.innerWidth - rect.width - padding;
+            const { width, height } = menu.getBoundingClientRect();
+            const pad = 10;
+            const clamp = (val, max) => Math.max(pad, Math.min(val, max - width - pad));
+            if (x + width > window.innerWidth - pad || x < pad) {
+                menu.style.left = clamp(x, window.innerWidth) + 'px';
             }
-            if (rect.left < padding) {
-                newX = padding;
+            if (y + height > window.innerHeight - pad || y < pad) {
+                menu.style.top = clamp(y, window.innerHeight) + 'px';
             }
-
-            if (rect.bottom > window.innerHeight - padding) {
-                newY = window.innerHeight - rect.height - padding;
-            }
-            if (rect.top < padding) {
-                newY = padding;
-            }
-
-            menu.style.left = Math.max(padding, newX) + 'px';
-            menu.style.top = Math.max(padding, newY) + 'px';
         }, 0);
     };
 
-    const getMoveTargets = () => {
-        return Array.from(new Set(Object.values(folderMap))).filter(f => f && f !== 'recently_deleted' && f !== 'all');
-    };
+    const getMoveTargets = () => [...new Set(Object.values(folderMap))].filter(f => f && f !== 'recently_deleted' && f !== 'all');
 
     const renderFolderList = () => {
         if (!folderGroup) return;
@@ -212,16 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
             item.setAttribute('data-target', folderKey);
             item.dataset.customFolder = 'true';
             item.style.userSelect = 'none';
-
-            const info = document.createElement('div');
-            info.className = 'notes-folder-info';
-            info.innerHTML = `<svg class="icon folder-icon"><use href="#icon-folder"/></svg>${folderName}`;
-
-            const count = document.createElement('div');
-            count.innerHTML = `<span class="notes-count" id="count-${folderKey}">0</span>`;
-
-            item.appendChild(info);
-            item.appendChild(count);
+            item.innerHTML = `
+                <div class="notes-folder-info"><svg class="icon folder-icon"><use href="#icon-folder"/></svg>${folderName}</div>
+                <div><span class="notes-count" id="count-${folderKey}">0</span></div>
+            `;
 
             if (divider) folderGroup.insertBefore(item, divider);
             else folderGroup.appendChild(item);
@@ -232,20 +132,19 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const createFolder = () => {
-        const folderName = prompt(tcm('promptNewFolderName'));
+        const folderName = prompt('Enter new folder name:');
         if (!folderName) return;
         if (['All Notes', 'Documentation', 'Recently Deleted'].includes(folderName)) {
-            alert(tcm('reservedFolder'));
+            alert('That folder name is reserved.');
             return;
         }
         if (customFolders.includes(folderName)) {
-            alert(tcm('folderExists'));
+            alert('A folder with that name already exists.');
             return;
         }
         customFolders.push(folderName);
         localStorage.setItem(CUSTOM_FOLDER_KEY, JSON.stringify(customFolders));
         renderFolderList();
-        playNotesSound();
     };
 
     const navigateTo = (targetId, opts = {}) => {
@@ -302,7 +201,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 folder: m.folder || 'all',
                 lastEdited: m.date ? new Date(m.date).getTime() : Date.now(),
                 content: parsed.content || '',
-                permalink: m.permalink || '',
                 pinned: m.pinned === true || m.pinned === 'true' || m.pinned === '1'
             };
         }));
@@ -339,40 +237,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateCounts = () => {
         const counts = { all: 0, Documentation: 0, recently_deleted: 0 };
         Object.values(notesData).forEach(note => {
-            if (note.folder === 'recently_deleted') {
-                counts.recently_deleted++;
-            } else {
-                counts.all++;
-                if (note.folder && note.folder !== 'all' && note.folder !== 'recently_deleted') {
-                    if (counts[note.folder] !== undefined) counts[note.folder]++;
-                    else counts[note.folder] = (counts[note.folder] || 0) + 1;
-                }
+            if (note.folder === 'recently_deleted') { counts.recently_deleted++; return; }
+            counts.all++;
+            if (note.folder && note.folder !== 'all' && note.folder !== 'recently_deleted') {
+                counts[note.folder] = (counts[note.folder] || 0) + 1;
             }
         });
-        if (document.getElementById('count-all')) document.getElementById('count-all').innerText = counts.all;
-        if (document.getElementById('count-documentation')) document.getElementById('count-documentation').innerText = counts.Documentation;
-        if (document.getElementById('count-deleted')) document.getElementById('count-deleted').innerText = counts.recently_deleted;
-
-        customFolders.forEach(folderName => {
-            const folderKey = `panel-notes-${slugify(folderName)}`;
-            const countEl = document.getElementById(`count-${folderKey}`);
-            if (countEl) countEl.innerText = counts[folderName] || 0;
+        const countIds = { 'count-all': counts.all, 'count-documentation': counts.Documentation, 'count-deleted': counts.recently_deleted };
+        Object.entries(countIds).forEach(([id, val]) => { const el = document.getElementById(id); if (el) el.innerText = val; });
+        customFolders.forEach(name => {
+            const el = document.getElementById(`count-panel-notes-${slugify(name)}`);
+            if (el) el.innerText = counts[name] || 0;
         });
     };
 
     const saveNotes = () => {
         const userNotes = {};
-        for (const [id, note] of Object.entries(notesData)) {
-            if (!seedNoteIds.has(id)) {
-                userNotes[id] = {
-                    title: note.title,
-                    folder: note.folder,
-                    lastEdited: note.lastEdited,
-                    content: note.content,
-                    permalink: note.permalink,
-                    pinned: note.pinned
-                };
-            }
+        for (const [id, { title, folder, lastEdited, content, pinned }] of Object.entries(notesData)) {
+            if (!seedNoteIds.has(id)) userNotes[id] = { title, folder, lastEdited, content, pinned };
         }
         localStorage.setItem('apple_notes_data', JSON.stringify(userNotes));
         updateCounts();
@@ -387,15 +269,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const formatNoteDate = (timestamp) => {
-        const dt = (window.translations || {})['en']?.notes?.dateTime || {};
         const now = new Date();
         const d = new Date(timestamp);
-        const isToday = now.toDateString() === d.toDateString();
-        if (isToday) return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hourCycle: 'h12' });
+        if (now.toDateString() === d.toDateString()) return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hourCycle: 'h12' });
 
         const yesterday = new Date(now);
         yesterday.setDate(now.getDate() - 1);
-        if (yesterday.toDateString() === d.toDateString()) return dt.yesterday || 'Yesterday';
+        if (yesterday.toDateString() === d.toDateString()) return 'Yesterday';
 
         const diffDays = Math.floor((now - d) / (1000 * 60 * 60 * 24));
         if (diffDays < 7) return d.toLocaleDateString('en-US', { weekday: 'long' });
@@ -407,8 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const d = new Date(timestamp);
         const dateStr = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
         const timeStr = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hourCycle: 'h12' });
-        const at = 'at';
-        return at ? `${dateStr} ${at} ${timeStr}` : `${dateStr} ${timeStr}`;
+        return `${dateStr} at ${timeStr}`;
     };
 
     function renderNotesList(folderFilter, autoSelect = true) {
@@ -447,33 +326,27 @@ document.addEventListener('DOMContentLoaded', () => {
         let hasPinnedHeader = false;
         let hasNotesHeader = false;
 
+        const listHeader = (text) => {
+            const h = document.createElement('div');
+            h.innerText = text;
+            h.style.cssText = 'font-size:0.875rem;user-select:none;font-weight:500;color:#8e8e93;padding:12px 16px 4px';
+            return h;
+        };
+
         const titleNode = document.getElementById('notes-header-title');
         if (titleNode) {
-            if (folderFilter === 'recently_deleted') {
-                titleNode.innerText = 'Recently Deleted';
-            } else if (folderFilter === 'all') {
-                titleNode.innerText = 'All Notes';
-            } else if (folderFilter === 'Documentation') {
-                titleNode.innerText = 'Documentation';
-            } else {
-                titleNode.innerText = folderFilter;
-            }
+            const titles = { recently_deleted: 'Recently Deleted', all: 'All Notes', Documentation: 'Documentation' };
+            titleNode.innerText = titles[folderFilter] || folderFilter;
         }
 
         filteredNotes.forEach(noteId => {
             const data = notesData[noteId];
 
             if (data.pinned && !hasPinnedHeader) {
-                const h = document.createElement('div');
-                h.innerText = 'Pinned';
-                h.style.cssText = 'font-size: 0.875rem; user-select: none; font-weight: 500; color: #8e8e93; padding: 12px 16px 4px;';
-                listContainer.appendChild(h);
+                listContainer.appendChild(listHeader('Pinned'));
                 hasPinnedHeader = true;
             } else if (!data.pinned && hasPinnedHeader && !hasNotesHeader && folderFilter !== 'recently_deleted') {
-                const h = document.createElement('div');
-                h.innerText = 'Notes';
-                h.style.cssText = 'font-size: 0.875rem; user-select: none; font-weight: 500; color: #8e8e93; padding: 12px 16px 4px;';
-                listContainer.appendChild(h);
+                listContainer.appendChild(listHeader('Notes'));
                 hasNotesHeader = true;
             }
 
@@ -528,11 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 el.classList.add('selected');
 
                 displayNote(noteId, data);
-                if (data.permalink) {
-                    history.pushState(null, '', data.permalink);
-                }
                 navigateTo('view');
-                playNotesSound();
 
                 lastSelectedIndex = currentIndex;
             });
@@ -548,25 +417,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 e.stopPropagation();
 
-                const existingMenu = document.getElementById('note-context-menu');
-                if (existingMenu) existingMenu.remove();
-
-                const menu = document.createElement('div');
-                menu.id = 'note-context-menu';
-                menu.className = 'note-context-menu';
-
-                const x = (e.clientX || (e.touches ? e.touches[0].clientX : 0)) - 10;
-                const y = (e.clientY || (e.touches ? e.touches[0].clientY : 0)) - 10;
-
-                document.body.appendChild(menu);
-                constrainMenuToViewport(menu, x, y);
+                const menu = contextMenu(e, 'note-context-menu');
 
                 const isDeleted = data.folder === 'recently_deleted';
 
                 if (isDeleted) {
                     const restoreBtn = document.createElement('div');
                     restoreBtn.className = 'note-context-item';
-                    restoreBtn.innerText = tcm('recoverNote');
+                    restoreBtn.innerText = 'Recover Note';
                     restoreBtn.onclick = () => {
                         data.folder = data.originalFolder || 'Notes';
                         delete data.deletedAt;
@@ -574,27 +432,25 @@ document.addEventListener('DOMContentLoaded', () => {
                         saveNotes();
                         renderNotesList(folderFilter);
                         menu.remove();
-                        playNotesSound();
                     };
                     menu.appendChild(restoreBtn);
 
                     const delBtn = document.createElement('div');
                     delBtn.className = 'note-context-item';
                     delBtn.style.color = '#FF453A';
-                    delBtn.innerText = tcm('deletePermanently');
+                    delBtn.innerText = 'Delete Permanently';
                     delBtn.onclick = () => {
                         delete notesData[noteId];
                         saveNotes();
                         if (isBuiltInNoteId(noteId)) saveSeedPins();
                         renderNotesList(folderFilter);
                         menu.remove();
-                        playNotesSound();
                     };
                     menu.appendChild(delBtn);
                 } else {
                     const pinBtn = document.createElement('div');
                     pinBtn.className = 'note-context-item';
-                    pinBtn.innerText = data.pinned ? tcm('unpinNote') : tcm('pinNote');
+                    pinBtn.innerText = data.pinned ? 'Unpin Note' : 'Pin Note';
                     pinBtn.onclick = () => {
                         data.pinned = !data.pinned;
                         if (isBuiltInNoteId(noteId)) {
@@ -604,44 +460,32 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                         renderNotesList(folderFilter);
                         menu.remove();
-                        playNotesSound();
                     };
                     menu.appendChild(pinBtn);
 
                     if (!isBuiltInNoteId(noteId)) {
-                        const separator1 = document.createElement('div');
-                        separator1.style.height = '.0625rem';
-                        separator1.style.background = 'rgba(0,0,0,0.1)';
-                        separator1.style.margin = '4px 0';
-                        separator1.className = 'context-separator';
-                        menu.appendChild(separator1);
+                        menu.appendChild(separator());
 
                         getMoveTargets().forEach(f => {
                             if (data.folder === f) return;
                             const moveBtn = document.createElement('div');
                             moveBtn.className = 'note-context-item';
-                            moveBtn.innerText = tcm('moveTo', f);
+                            moveBtn.innerText = `Move to ${f}`;
                             moveBtn.onclick = () => {
                                 data.folder = f === 'all' ? 'all' : f;
                                 saveNotes();
                                 renderNotesList(folderFilter);
                                 menu.remove();
-                                playNotesSound();
                             };
                             menu.appendChild(moveBtn);
                         });
 
-                        const separator = document.createElement('div');
-                        separator.style.height = '.0625rem';
-                        separator.style.background = 'rgba(0,0,0,0.1)';
-                        separator.style.margin = '4px 0';
-                        separator.className = 'context-separator';
-                        menu.appendChild(separator);
+                        menu.appendChild(separator());
 
                         const actionBtn = document.createElement('div');
                         actionBtn.className = 'note-context-item';
                         actionBtn.style.color = '#FF453A';
-                        actionBtn.innerText = tcm('deleteNote');
+                        actionBtn.innerText = 'Delete Note';
                         actionBtn.onclick = () => {
                             data.originalFolder = data.folder;
                             data.folder = 'recently_deleted';
@@ -651,19 +495,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (isBuiltInNoteId(noteId)) saveSeedPins();
                             renderNotesList(folderFilter);
                             menu.remove();
-                            playNotesSound();
                         };
                         menu.appendChild(actionBtn);
                     }
                 }
 
-                const closeMenu = (ev) => {
-                    if (!menu.contains(ev.target)) {
-                        menu.remove();
-                        document.removeEventListener('click', closeMenu);
-                    }
-                };
-                setTimeout(() => document.addEventListener('click', closeMenu), 10);
+                closeOnOutside(menu);
             };
 
             const handleMultiNoteAction = (e) => {
@@ -675,22 +512,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 e.stopPropagation();
 
-                const existingMenu = document.getElementById('note-context-menu');
-                if (existingMenu) existingMenu.remove();
+                const menu = contextMenu(e, 'note-context-menu');
+                const userSelectedIds = selectedIds.filter(id => !isBuiltInNoteId(id));
+                const isInDeleted = folderFilter === 'recently_deleted';
+                const isAllUser = userSelectedIds.length === selectedIds.length && !isInDeleted;
 
-                const menu = document.createElement('div');
-                menu.id = 'note-context-menu';
-                menu.className = 'note-context-menu';
-                const x = (e.clientX || 0) - 10;
-                const y = (e.clientY || 0) - 10;
-
-                const userSelectedIds = selectedIds.filter((id) => !isBuiltInNoteId(id));
-                const isInDeletedFolder = folderFilter === 'recently_deleted';
-
-                if (isInDeletedFolder) {
+                if (isInDeleted) {
                     const recoverBtn = document.createElement('div');
                     recoverBtn.className = 'note-context-item';
-                    recoverBtn.innerText = tcm('recoverN', selectedIds.length);
+                    recoverBtn.innerText = `Recover ${selectedIds.length} Notes`;
                     recoverBtn.onclick = () => {
                         selectedIds.forEach(id => {
                             notesData[id].folder = notesData[id].originalFolder || 'Notes';
@@ -700,105 +530,78 @@ document.addEventListener('DOMContentLoaded', () => {
                         saveNotes();
                         renderNotesList(folderFilter);
                         menu.remove();
-                        playNotesSound();
                     };
                     menu.appendChild(recoverBtn);
 
                     const permDelBtn = document.createElement('div');
                     permDelBtn.className = 'note-context-item';
                     permDelBtn.style.color = '#FF453A';
-                    permDelBtn.innerText = tcm('deletePermanentlyN', selectedIds.length);
+                    permDelBtn.innerText = `Delete ${selectedIds.length} Notes Permanently`;
                     permDelBtn.onclick = () => {
-                        selectedIds.forEach(id => {
-                            delete notesData[id];
-                        });
+                        selectedIds.forEach(id => { delete notesData[id]; });
                         saveNotes();
                         saveSeedPins();
                         renderNotesList(folderFilter);
                         menu.remove();
-                        playNotesSound();
                     };
                     menu.appendChild(permDelBtn);
                 } else if (selectedIds.length > 0) {
-                    const selectedPinnedCount = selectedIds.filter(id => notesData[id]?.pinned).length;
-                    const selectedUnpinnedCount = selectedIds.length - selectedPinnedCount;
+                    const pinnedCount = selectedIds.filter(id => notesData[id]?.pinned).length;
+                    const unpinnedCount = selectedIds.length - pinnedCount;
 
-                    if (selectedUnpinnedCount > 0) {
+                    if (unpinnedCount > 0) {
                         const pinBtn = document.createElement('div');
                         pinBtn.className = 'note-context-item';
-                        pinBtn.innerText = tcm('pinN', selectedUnpinnedCount);
+                        pinBtn.innerText = `Pin ${unpinnedCount} Notes`;
                         pinBtn.onclick = () => {
-                            selectedIds.forEach(id => {
-                                if (!notesData[id]?.pinned) notesData[id].pinned = true;
-                            });
+                            selectedIds.forEach(id => { if (!notesData[id]?.pinned) notesData[id].pinned = true; });
                             saveNotes();
                             saveSeedPins();
                             renderNotesList(folderFilter);
                             menu.remove();
-                            playNotesSound();
                         };
                         menu.appendChild(pinBtn);
                     }
 
-                    if (selectedPinnedCount > 0) {
+                    if (pinnedCount > 0) {
                         const unpinBtn = document.createElement('div');
                         unpinBtn.className = 'note-context-item';
-                        unpinBtn.innerText = tcm('unpinN', selectedPinnedCount);
+                        unpinBtn.innerText = `Unpin ${pinnedCount} Notes`;
                         unpinBtn.onclick = () => {
-                            selectedIds.forEach(id => {
-                                if (notesData[id]?.pinned) notesData[id].pinned = false;
-                            });
+                            selectedIds.forEach(id => { if (notesData[id]?.pinned) notesData[id].pinned = false; });
                             saveNotes();
                             saveSeedPins();
                             renderNotesList(folderFilter);
                             menu.remove();
-                            playNotesSound();
                         };
                         menu.appendChild(unpinBtn);
                     }
                 }
 
-                if (userSelectedIds.length === selectedIds.length && !isInDeletedFolder) {
-                    const separator1 = document.createElement('div');
-                    separator1.style.height = '.0625rem';
-                    separator1.style.background = 'rgba(0,0,0,0.1)';
-                    separator1.style.margin = '4px 0';
-                    separator1.className = 'context-separator';
-                    menu.appendChild(separator1);
+                if (isAllUser) {
+                    menu.appendChild(separator());
 
-                    const selectedFolders = Array.from(new Set(userSelectedIds.map(id => notesData[id].folder)));
+                    const selectedFolders = [...new Set(userSelectedIds.map(id => notesData[id].folder))];
                     getMoveTargets().forEach(f => {
-                        if (selectedFolders.length === 1 && selectedFolders[0] === f) return;
                         if (selectedFolders.every(sf => sf === f)) return;
-
                         const mbtn = document.createElement('div');
                         mbtn.className = 'note-context-item';
-                        mbtn.innerText = tcm('moveNTo', userSelectedIds.length, f);
+                        mbtn.innerText = `Move ${userSelectedIds.length} Notes to ${f}`;
                         mbtn.onclick = () => {
-                            userSelectedIds.forEach(id => {
-                                notesData[id].folder = f;
-                            });
+                            userSelectedIds.forEach(id => { notesData[id].folder = f; });
                             saveNotes();
                             renderNotesList(folderFilter);
                             menu.remove();
-                            playNotesSound();
                         };
                         menu.appendChild(mbtn);
                     });
 
-                    const separator2 = document.createElement('div');
-                    separator2.style.height = '.0625rem';
-                    separator2.style.background = 'rgba(0,0,0,0.1)';
-                    separator2.style.margin = '4px 0';
-                    separator2.className = 'context-separator';
-                    menu.appendChild(separator2);
-                }
+                    menu.appendChild(separator());
 
-                if (userSelectedIds.length === selectedIds.length && !isInDeletedFolder) {
                     const delBtn = document.createElement('div');
                     delBtn.className = 'note-context-item';
                     delBtn.style.color = '#FF453A';
-                    delBtn.innerText = tcm('deleteN', userSelectedIds.length);
+                    delBtn.innerText = `Delete ${userSelectedIds.length} Notes`;
                     delBtn.onclick = () => {
                         userSelectedIds.forEach(id => {
                             notesData[id].originalFolder = notesData[id].folder;
@@ -809,22 +612,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         saveNotes();
                         renderNotesList(folderFilter);
                         menu.remove();
-                        playNotesSound();
                     };
                     menu.appendChild(delBtn);
                 }
 
-                document.body.appendChild(menu);
-                constrainMenuToViewport(menu, x, y);
-
-                const closeMultiMenu = (ev) => {
-                    if (ev.button === 2) return;
-                    if (!menu.contains(ev.target)) {
-                        menu.remove();
-                        document.removeEventListener('click', closeMultiMenu);
-                    }
-                };
-                setTimeout(() => document.addEventListener('click', closeMultiMenu), 10);
+                closeOnOutside(menu);
             };
 
             el.addEventListener('contextmenu', (e) => {
@@ -863,13 +655,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const contentEditor = document.getElementById('active-note-content');
 
     const syncCheckboxState = () => {
-        const checkboxes = contentEditor.querySelectorAll('.checklist-checkbox');
-        checkboxes.forEach(cb => {
-            if (cb.checked) {
-                cb.setAttribute('checked', '');
-            } else {
-                cb.removeAttribute('checked');
-            }
+        contentEditor.querySelectorAll('.checklist-checkbox').forEach(cb => {
+            cb[cb.checked ? 'setAttribute' : 'removeAttribute']('checked', '');
         });
     };
 
@@ -890,8 +677,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 notesData[noteId].title = titleEditor.innerText;
                 notesData[noteId].content = contentEditor.innerHTML;
                 notesData[noteId].lastEdited = Date.now();
-                notesData[noteId].permalink = '/notes/' + slugify(titleEditor.innerText);
-                history.replaceState(null, '', notesData[noteId].permalink);
                 saveNotes();
                 document.getElementById('active-note-date').innerText = formatFullNoteDate(notesData[noteId].lastEdited);
                 const el = document.querySelector(`.note-preview[data-note-id="${noteId}"]`);
@@ -945,7 +730,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (contentDiv?.contains(startNode) || startNode === contentDiv) return;
             if (e.inputType && e.inputType.startsWith('insert')) {
                 e.preventDefault();
-                setCaretStart(contentDiv);
+                placeCaret(contentDiv);
             }
         });
 
@@ -962,17 +747,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const contentDiv = item.querySelector('div');
             if (!contentDiv) return;
             if (contentDiv.contains(e.target) || e.target.classList.contains('checklist-checkbox')) return;
-            setCaretStart(contentDiv);
+            placeCaret(contentDiv);
         });
 
         // Checklist interaction — handle change immediately
         contentEditor.addEventListener('change', (e) => {
             if (e.target.classList.contains('checklist-checkbox')) {
-                if (e.target.checked) {
-                    e.target.setAttribute('checked', '');
-                } else {
-                    e.target.removeAttribute('checked');
-                }
+                e.target[e.target.checked ? 'setAttribute' : 'removeAttribute']('checked', '');
                 handleEdit();
             }
         });
@@ -1028,7 +809,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (item) {
                         const contentDiv = item.querySelector('div');
                         if (contentDiv && !contentDiv.contains(startNode)) {
-                            setCaretStart(contentDiv);
+                            placeCaret(contentDiv);
                         }
                     }
                 }
@@ -1094,14 +875,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         const p = document.createElement('p');
                         p.innerHTML = '\u00A0';
                         checklist.replaceWith(p);
-                        setCaretEnd(p);
+                        placeCaret(p, true);
                         return;
                     }
                     const newItem = document.createElement('div');
                     newItem.className = 'checklist-item';
                     newItem.innerHTML = '<input type="checkbox" class="checklist-checkbox"><div>\u200B</div>';
                     checklist.parentNode.insertBefore(newItem, checklist.nextSibling);
-                    setCaretEnd(newItem.querySelector('div'));
+                    placeCaret(newItem.querySelector('div'), true);
                     handleEdit();
                     return;
                 }
@@ -1130,7 +911,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const p = document.createElement('p');
                         p.innerText = checklist.innerText || '\u00A0';
                         checklist.replaceWith(p);
-                        setCaretEnd(p);
+                        placeCaret(p, true);
                         handleEdit();
                         return;
                     }
@@ -1165,20 +946,11 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         };
 
-        const setCaretStart = (el) => {
+        const placeCaret = (el, atEnd) => {
             const sel = window.getSelection();
             const r = document.createRange();
             r.selectNodeContents(el);
-            r.collapse(true);
-            sel.removeAllRanges();
-            sel.addRange(r);
-        };
-
-        const setCaretEnd = (el) => {
-            const sel = window.getSelection();
-            const r = document.createRange();
-            r.selectNodeContents(el);
-            r.collapse(false);
+            r.collapse(!atEnd);
             sel.removeAllRanges();
             sel.addRange(r);
         };
@@ -1220,7 +992,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const p = document.createElement('p');
                     p.innerHTML = checklist.querySelector('div')?.innerHTML || '\u00A0';
                     checklist.replaceWith(p);
-                    setCaretEnd(p);
+                    placeCaret(p, true);
                     return;
                 }
                 const text = checklist.querySelector('div')?.innerHTML || '';
@@ -1233,12 +1005,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         const ul = node.closest('ul') || getListContext().list;
                         if (ul) ul.style.listStyleType = '"- "';
                     }
-                    if (ctx.li) setCaretEnd(ctx.li);
+                    if (ctx.li) placeCaret(ctx.li, true);
                 } else {
                     const p = document.createElement('p');
                     p.innerHTML = text || '\u00A0';
                     contentEditor.appendChild(p);
-                    setCaretEnd(p);
+                    placeCaret(p, true);
                 }
                 return;
             }
@@ -1257,7 +1029,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         li.remove();
                         contentEditor.insertBefore(p, list.nextSibling || null);
                     }
-                    setCaretEnd(p);
+                    placeCaret(p, true);
                     return;
                 }
 
@@ -1273,7 +1045,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     checkItem.className = 'checklist-item';
                     checkItem.innerHTML = `<input type="checkbox" class="checklist-checkbox"><div>${text || '\u200B'}</div>`;
                     contentEditor.appendChild(checkItem);
-                    setCaretEnd(checkItem.querySelector('div'));
+                    placeCaret(checkItem.querySelector('div'), true);
                 } else {
                     document.execCommand(type === 'number' ? 'insertOrderedList' : 'insertUnorderedList', false, null);
                     const ctx = getListContext();
@@ -1282,7 +1054,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (type === 'dash') {
                             ctx.list.style.listStyleType = '"- "';
                         }
-                        setCaretEnd(ctx.li);
+                        placeCaret(ctx.li, true);
                     }
                 }
                 return;
@@ -1296,7 +1068,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 checkItem.innerHTML = `<input type="checkbox" class="checklist-checkbox"><div>${text || '\u200B'}</div>`;
                 if (existingP) existingP.replaceWith(checkItem);
                 else contentEditor.appendChild(checkItem);
-                setCaretEnd(checkItem.querySelector('div'));
+                placeCaret(checkItem.querySelector('div'), true);
             } else {
                 document.execCommand(type === 'number' ? 'insertOrderedList' : 'insertUnorderedList', false, null);
                 if (type === 'dash') {
@@ -1333,7 +1105,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     setTimeout(updateToolbar, 10);
                 }
                 updateToolbar();
-                playNotesSound();
             });
         });
 
@@ -1341,24 +1112,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (monoBtn) {
             monoBtn.addEventListener('click', () => {
                 const isMono = document.queryCommandValue('fontName').includes('monospace');
-                if (isMono) {
-                    document.execCommand('fontName', false, '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif');
-                } else {
-                    document.execCommand('fontName', false, 'monospace');
-                }
+                document.execCommand('fontName', false, isMono ? '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif' : 'monospace');
                 contentEditor.focus();
-                playNotesSound();
             });
         }
 
         const dashBtn = document.getElementById('notes-dash-btn');
         if (dashBtn) {
-            dashBtn.addEventListener('click', () => {
-                applyListType('dash');
-                contentEditor.focus();
-                updateToolbar();
-                playNotesSound();
-            });
+            dashBtn.addEventListener('click', () => { applyListType('dash'); contentEditor.focus(); updateToolbar(); });
         }
 
         const updateToolbar = () => {
@@ -1391,27 +1152,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 const cmd = btn.getAttribute('data-command');
                 if (cmd) {
                     const state = document.queryCommandState(cmd);
-                    if (state) {
-                        if (cmd === 'insertUnorderedList' && isDashed) {
-                            btn.classList.remove('active');
-                        } else {
-                            btn.classList.add('active');
-                        }
-                    } else {
-                        btn.classList.remove('active');
-                    }
+                    const isDashedUl = cmd === 'insertUnorderedList' && isDashed;
+                    btn.classList.toggle('active', state && !isDashedUl);
                 }
             });
 
             const isMono = document.queryCommandValue('fontName').includes('monospace');
-            if (isMono) document.getElementById('notes-mono-btn')?.classList.add('active');
-            else document.getElementById('notes-mono-btn')?.classList.remove('active');
-
-            if (isDashed) {
-                document.getElementById('notes-dash-btn')?.classList.add('active');
-            } else {
-                document.getElementById('notes-dash-btn')?.classList.remove('active');
-            }
+            document.getElementById('notes-mono-btn')?.classList.toggle('active', isMono);
+            document.getElementById('notes-dash-btn')?.classList.toggle('active', isDashed);
         };
 
         document.addEventListener('selectionchange', updateToolbar);
@@ -1419,29 +1167,13 @@ document.addEventListener('DOMContentLoaded', () => {
         titleEditor.addEventListener('blur', updateToolbar);
         contentEditor.addEventListener('focus', updateToolbar);
 
-        const generateNewNotePermalink = () => {
-            const pattern = /^\/notes\/new-note(?:-(\d+))?$/;
-            let maxIndex = 0;
-            Object.values(notesData).forEach(note => {
-                const match = typeof note.permalink === 'string' ? note.permalink.match(pattern) : null;
-                if (match) {
-                    const index = match[1] ? parseInt(match[1], 10) : 1;
-                    if (!Number.isNaN(index) && index > maxIndex) maxIndex = index;
-                }
-            });
-            return `/notes/new-note-${maxIndex + 1}`;
-        };
-
         const createNewNote = () => {
             const id = 'note-' + Date.now();
-            const now = new Date();
-            const title = 'New Note';
             notesData[id] = {
-                title: title,
+                title: 'New Note',
                 folder: (currentFolder === 'all' || currentFolder === 'recently_deleted') ? 'all' : currentFolder,
-                lastEdited: now.getTime(),
+                lastEdited: Date.now(),
                 content: '<p></p>',
-                permalink: generateNewNotePermalink(),
                 pinned: false
             };
             saveNotes();
@@ -1451,52 +1183,38 @@ document.addEventListener('DOMContentLoaded', () => {
             setNoteViewReadOnly(false);
             setTimeout(() => {
                 const tEd = document.getElementById('active-note-title');
-                if (tEd) {
-                    tEd.focus();
-                    document.execCommand('selectAll', false, null);
-                }
+                if (tEd) { tEd.focus(); document.execCommand('selectAll', false, null); }
             }, 500);
-            playNotesSound();
         };
 
-        document.getElementById('new-note-btn-header')?.addEventListener('click', createNewNote);
-        document.getElementById('new-note-btn-mobile')?.addEventListener('click', createNewNote);
+        ['new-note-btn-header', 'new-note-btn-mobile'].forEach(id =>
+            document.getElementById(id)?.addEventListener('click', createNewNote)
+        );
         document.getElementById('new-folder-btn-top')?.addEventListener('click', createFolder);
         openFolderContextMenu = (e, folderName, targetKey) => {
-            const existing = document.getElementById('folder-context-menu');
-            if (existing) existing.remove();
-
-            const menu = document.createElement('div');
-            menu.id = 'folder-context-menu';
-            menu.className = 'note-context-menu';
+            const menu = contextMenu(e, 'folder-context-menu');
             const folderRow = targetKey ? document.querySelector(`[data-target="${targetKey}"]`) : null;
-            const isCustomRow = !!(folderRow && folderRow.classList.contains('custom'));
-            const isCustom = isCustomRow || customFolders.includes(folderName);
-            const isEditable = isCustom;
+            const isCustom = !!(folderRow?.classList.contains('custom')) || customFolders.includes(folderName);
 
-            if (isEditable) {
+            if (isCustom) {
                 const renameBtn = document.createElement('div');
                 renameBtn.className = 'note-context-item';
-                renameBtn.innerText = tcm('renameFolder');
+                renameBtn.innerText = 'Rename Folder';
                 renameBtn.onclick = () => {
-                    const newName = prompt(tcm('promptRenameFolder'), folderName);
+                    const newName = prompt('Enter new folder name:', folderName);
                     const trimmedNewName = newName ? newName.trim() : '';
                     if (!trimmedNewName || trimmedNewName === folderName) return;
                     const allFolderNames = Object.values(folderMap);
                     if (allFolderNames.includes(trimmedNewName)) {
-                        alert(tcm('folderExistsRename'));
+                        alert('A folder with that name already exists.');
                         return;
                     }
 
                     const oldKey = `panel-notes-${slugify(folderName)}`;
                     const newKey = `panel-notes-${slugify(trimmedNewName)}`;
 
-                    let updatedCount = 0;
                     Object.values(notesData).forEach(note => {
-                        if (note.folder === folderName) {
-                            note.folder = trimmedNewName;
-                            updatedCount++;
-                        }
+                        if (note.folder === folderName) note.folder = trimmedNewName;
                     });
 
                     if (isCustom) {
@@ -1528,21 +1246,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     renderFolderList();
                     renderNotesList(trimmedNewName);
                     menu.remove();
-                    playNotesSound();
                 };
 
-                const separator = document.createElement('div');
-                separator.style.height = '.0625rem';
-                separator.style.background = 'rgba(0,0,0,0.1)';
-                separator.style.margin = '4px 0';
-                separator.className = 'context-separator';
+                menu.appendChild(separator());
 
                 const deleteBtn = document.createElement('div');
                 deleteBtn.className = 'note-context-item';
                 deleteBtn.style.color = '#FF453A';
-                deleteBtn.innerText = tcm('deleteFolder');
+                deleteBtn.innerText = 'Delete Folder';
                 deleteBtn.onclick = () => {
-                    if (!confirm(tcm('confirmDeleteFolder', folderName))) return;
+                    if (!confirm(`Are you sure you want to delete the folder "${folderName}"?`)) return;
                     const folderKey = targetKey || `panel-notes-${slugify(folderName)}`;
 
                     if (isCustom) {
@@ -1560,76 +1273,55 @@ document.addEventListener('DOMContentLoaded', () => {
                     saveNotes();
                     renderFolderList();
                     renderNotesList('all');
-                    playNotesSound();
                     menu.remove();
                 };
 
                 menu.appendChild(renameBtn);
-                menu.appendChild(separator);
+                menu.appendChild(separator());
                 menu.appendChild(deleteBtn);
             } else {
                 const info = document.createElement('div');
                 info.className = 'note-context-item';
                 info.style.color = '#999';
-                info.innerText = tcm('folderReadonly');
+                info.innerText = 'Read-only folder';
                 menu.appendChild(info);
             }
 
-            const x = (e.clientX || 0) - 10;
-            const y = (e.clientY || 0) - 10;
-
             document.body.appendChild(menu);
-            constrainMenuToViewport(menu, x, y);
-
-            const closeFolderMenu = (ev) => {
-                if (ev.button === 2) return;
-                if (!menu.contains(ev.target)) {
-                    menu.remove();
-                    document.removeEventListener('click', closeFolderMenu);
-                }
-            };
-            setTimeout(() => document.addEventListener('click', closeFolderMenu), 10);
+            closeOnOutside(menu);
         };
 
         bindFolderClicks = () => {
             document.querySelectorAll('.folder-list-item').forEach(item => {
-                item.onclick = (e) => {
-                    e.stopPropagation();
+                const getTargetAndName = () => {
                     const target = item.getAttribute('data-target');
-                    const folderName = (target && Object.prototype.hasOwnProperty.call(folderMap, target))
+                    const name = (target && Object.prototype.hasOwnProperty.call(folderMap, target))
                         ? folderMap[target]
                         : item.querySelector('.notes-folder-info')?.lastChild?.textContent?.trim() || item.textContent.trim();
-                    currentFolder = folderName;
+                    return { target, name };
+                };
+
+                item.onclick = (e) => {
+                    e.stopPropagation();
+                    currentFolder = getTargetAndName().name;
                     document.querySelectorAll('.notes-list-item').forEach(n => n.classList.remove('active-folder'));
                     item.classList.add('active-folder');
                     navigateTo('notes');
                     setTimeout(() => {
                         const firstNote = document.querySelector('.note-preview');
-                        if (firstNote && window.innerWidth >= 800) {
-                            firstNote.click();
-                        }
+                        if (firstNote && window.innerWidth >= 800) firstNote.click();
                     }, 50);
-                    playNotesSound();
                 };
 
                 let folderPressTimer;
-                const clearFolderPressTimer = () => {
-                    if (folderPressTimer) {
-                        clearTimeout(folderPressTimer);
-                        folderPressTimer = null;
-                    }
-                };
+                const clearFolderPressTimer = () => { clearTimeout(folderPressTimer); folderPressTimer = null; };
 
                 item.onpointerdown = (e) => {
                     folderPressTimer = setTimeout(() => {
-                        const target = item.getAttribute('data-target');
-                        const folderName = (target && Object.prototype.hasOwnProperty.call(folderMap, target))
-                            ? folderMap[target]
-                            : item.querySelector('.notes-folder-info')?.lastChild?.textContent?.trim() || item.textContent.trim();
-                        openFolderContextMenu(e, folderName, target);
+                        const { target, name } = getTargetAndName();
+                        openFolderContextMenu(e, name, target);
                     }, 500);
                 };
-
                 item.onpointerup = clearFolderPressTimer;
                 item.onpointerleave = clearFolderPressTimer;
                 item.onpointercancel = clearFolderPressTimer;
@@ -1637,11 +1329,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 item.oncontextmenu = (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    const target = item.getAttribute('data-target');
-                    const folderName = (target && Object.prototype.hasOwnProperty.call(folderMap, target))
-                        ? folderMap[target]
-                        : item.querySelector('.notes-folder-info')?.lastChild?.textContent?.trim() || item.textContent.trim();
-                    openFolderContextMenu(e, folderName, target);
+                    const { target, name } = getTargetAndName();
+                    openFolderContextMenu(e, name, target);
                 };
             });
         };
@@ -1660,16 +1349,8 @@ document.addEventListener('DOMContentLoaded', () => {
             notesBackdrop.classList.add('visible');
 
             if (wasMinimized) {
-                let restoreLeft, restoreTop;
-                if (savedPositionLeft && savedPositionTop) {
-                    restoreLeft = parseFloat(savedPositionLeft);
-                    restoreTop = parseFloat(savedPositionTop);
-                } else {
-                    const vw = window.innerWidth;
-                    const vh = window.innerHeight;
-                    restoreLeft = (vw - 950) / 2;
-                    restoreTop = (vh - 600) / 2;
-                }
+                let restoreLeft = savedPositionLeft ? parseFloat(savedPositionLeft) : (window.innerWidth - 950) / 2;
+                let restoreTop = savedPositionTop ? parseFloat(savedPositionTop) : (window.innerHeight - 600) / 2;
 
                 const miniRect = notesModal.getBoundingClientRect();
                 const miniCX = miniRect.left + miniRect.width / 2;
@@ -1677,17 +1358,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const restoreCX = restoreLeft + 950 / 2;
                 const restoreCY = restoreTop + 600 / 2;
 
-                let originX, originY;
-                if (miniCX < restoreCX) {
-                    originX = 'left';
-                } else {
-                    originX = 'right';
-                }
-                if (miniCY < restoreCY) {
-                    originY = 'top';
-                } else {
-                    originY = 'bottom';
-                }
+                const originX = miniCX < restoreCX ? 'left' : 'right';
+                const originY = miniCY < restoreCY ? 'top' : 'bottom';
 
                 notesModal.classList.remove('minimized');
                 notesModal.classList.add('visible');
@@ -1715,13 +1387,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 setTimeout(() => {
-                    notesModal.style.removeProperty('transition');
-                    notesModal.style.removeProperty('transform');
-                    notesModal.style.removeProperty('transform-origin');
-                    savedPositionLeft = null;
-                    savedPositionTop = null;
-                    savedResizeWidth = null;
-                    savedResizeHeight = null;
+                    ['transition', 'transform', 'transform-origin'].forEach(p => notesModal.style.removeProperty(p));
+                    savedPositionLeft = savedPositionTop = savedResizeWidth = savedResizeHeight = null;
                 }, 450);
             } else {
                 notesModal.classList.remove('minimized');
@@ -1734,8 +1401,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderFolderList();
 
             document.querySelectorAll('[data-target]').forEach(f => f.classList.remove('active-folder'));
-            const allNotesFolder = document.querySelector('[data-target="panel-notes-all"]');
-            if (allNotesFolder) allNotesFolder.classList.add('active-folder');
+            document.querySelector('[data-target="panel-notes-all"]')?.classList.add('active-folder');
 
             renderNotesList('all');
             navigateTo('notes', { skipListRender: true });
@@ -1755,49 +1421,10 @@ document.addEventListener('DOMContentLoaded', () => {
             savedPositionTop = null;
 
             setTimeout(() => {
-                notesModal.style.removeProperty('transform');
-                notesModal.style.removeProperty('transition');
-                notesModal.style.removeProperty('transform-origin');
-                notesModal.style.removeProperty('left');
-                notesModal.style.removeProperty('top');
-                notesModal.style.removeProperty('width');
-                notesModal.style.removeProperty('height');
+                ['transform', 'transition', 'transform-origin', 'left', 'top', 'width', 'height']
+                    .forEach(p => notesModal.style.removeProperty(p));
             }, 400);
-
-            history.replaceState(null, null, '/notes/');
-            playNotesSound();
         };
-
-        const openNoteByPermalink = (permalink) => {
-            const noteId = Object.keys(notesData).find(id => notesData[id].permalink === permalink);
-            if (!noteId) return false;
-            const data = notesData[noteId];
-            displayNote(noteId, data);
-            currentFolder = 'all';
-            renderNotesList('all', false);
-            document.querySelectorAll('[data-target]').forEach(f => f.classList.remove('active-folder'));
-            const allNotesFolder = document.querySelector('[data-target="panel-notes-all"]');
-            if (allNotesFolder) allNotesFolder.classList.add('active-folder');
-            const noteEl = document.querySelector(`[data-note-id="${noteId}"]`);
-            if (noteEl) {
-                document.querySelectorAll('.note-preview').forEach(n => n.classList.remove('selected'));
-                noteEl.classList.add('selected');
-            }
-            navigateTo('view');
-            return true;
-        };
-
-        window.addEventListener('popstate', (e) => {
-            const path = window.location.pathname;
-            if (path !== '/' && path !== '/index.html') {
-                if (openNoteByPermalink(path)) {
-                    notesBackdrop.classList.add('visible');
-                    notesModal.classList.add('visible');
-                }
-            } else {
-                closeNotes();
-            }
-        });
 
         const minimizeNotes = (e) => {
             if (window.innerWidth < 800) {
@@ -1809,23 +1436,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const rect = notesModal.getBoundingClientRect();
             const scale = 0.3;
-            const miniW = rect.width * scale;
-            const miniH = rect.height * scale;
-            const miniLeft = rect.left + rect.width / 2 - miniW / 2;
-            const miniTop = rect.top + rect.height / 2 - miniH / 2;
+            const miniLeft = rect.left + rect.width * (1 - scale) / 2;
+            const miniTop = rect.top + rect.height * (1 - scale) / 2;
 
             savedPositionLeft = `${rect.left}px`;
             savedPositionTop = `${rect.top}px`;
 
             const curW = notesModal.style.getPropertyValue('width');
             const curH = notesModal.style.getPropertyValue('height');
-            if (curW && curH) {
-                savedResizeWidth = curW;
-                savedResizeHeight = curH;
-            } else {
-                savedResizeWidth = null;
-                savedResizeHeight = null;
-            }
+            savedResizeWidth = curW || null;
+            savedResizeHeight = curH || null;
 
             notesModal.style.removeProperty('width');
             notesModal.style.removeProperty('height');
@@ -1848,42 +1468,27 @@ document.addEventListener('DOMContentLoaded', () => {
             isMinimized = true;
 
             setTimeout(() => {
-                notesModal.style.removeProperty('transition');
-                notesModal.style.removeProperty('left');
-                notesModal.style.removeProperty('top');
-                notesModal.style.removeProperty('transform');
-                notesModal.style.removeProperty('transform-origin');
+                ['transition', 'left', 'top', 'transform', 'transform-origin'].forEach(p => notesModal.style.removeProperty(p));
             }, 450);
-            playNotesSound();
         };
 
         const maximizeNotes = (e) => {
             if (e && e.stopPropagation) e.stopPropagation();
             if (notesModal.classList.contains('fullscreen')) {
-                if (window.innerWidth < 800) {
-                    notesModal.classList.remove('fullscreen');
-                    return;
-                }
+                if (window.innerWidth < 800) { notesModal.classList.remove('fullscreen'); return; }
                 notesModal.style.transition = 'none';
                 notesModal.classList.remove('fullscreen');
-                if (savedPositionLeft) notesModal.style.setProperty('left', savedPositionLeft, 'important');
-                if (savedPositionTop) notesModal.style.setProperty('top', savedPositionTop, 'important');
-                if (savedResizeWidth) notesModal.style.setProperty('width', savedResizeWidth, 'important');
-                if (savedResizeHeight) notesModal.style.setProperty('height', savedResizeHeight, 'important');
-                savedPositionLeft = null;
-                savedPositionTop = null;
-                savedResizeWidth = null;
-                savedResizeHeight = null;
+                [['left', savedPositionLeft], ['top', savedPositionTop], ['width', savedResizeWidth], ['height', savedResizeHeight]].forEach(([prop, val]) => {
+                    if (val) notesModal.style.setProperty(prop, val, 'important');
+                });
+                savedPositionLeft = savedPositionTop = savedResizeWidth = savedResizeHeight = null;
                 setTimeout(() => notesModal.style.removeProperty('transition'), 50);
             } else {
                 const rect = notesModal.getBoundingClientRect();
                 savedPositionLeft = `${rect.left}px`;
                 savedPositionTop = `${rect.top}px`;
-                const curW = notesModal.style.getPropertyValue('width');
-                const curH = notesModal.style.getPropertyValue('height');
-                savedResizeWidth = curW || null;
-                savedResizeHeight = curH || null;
-
+                savedResizeWidth = notesModal.style.getPropertyValue('width') || null;
+                savedResizeHeight = notesModal.style.getPropertyValue('height') || null;
                 notesModal.style.removeProperty('left');
                 notesModal.style.removeProperty('top');
                 notesModal.style.removeProperty('width');
@@ -1916,9 +1521,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         notesBackdrop.addEventListener('click', closeNotes);
 
-        document.querySelectorAll('.mac-close').forEach(btn => {
-            btn.addEventListener('click', closeNotes);
-        });
+        document.querySelectorAll('.mac-close').forEach(btn => btn.addEventListener('click', closeNotes));
 
         let startY = 0;
         let currentY = 0;
@@ -2122,26 +1725,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (resizeDir.includes('w')) {
                 const candidateW = resizeStartRect.width - dx;
-                if (candidateW >= RESIZE_MIN_W) {
-                    newW = candidateW;
-                    newL = resizeStartRect.left + dx;
-                } else {
-                    newW = RESIZE_MIN_W;
-                    newL = resizeStartRect.left + resizeStartRect.width - RESIZE_MIN_W;
-                }
+                newW = Math.max(RESIZE_MIN_W, candidateW);
+                newL = resizeStartRect.left + (candidateW >= RESIZE_MIN_W ? dx : resizeStartRect.width - RESIZE_MIN_W);
             }
             if (resizeDir.includes('s')) {
                 newH = Math.max(RESIZE_MIN_H, Math.min(resizeStartRect.height + dy, window.innerHeight));
             }
             if (resizeDir.includes('n')) {
                 const candidateH = resizeStartRect.height - dy;
-                if (candidateH >= RESIZE_MIN_H) {
-                    newH = candidateH;
-                    newT = resizeStartRect.top + dy;
-                } else {
-                    newH = RESIZE_MIN_H;
-                    newT = resizeStartRect.top + resizeStartRect.height - RESIZE_MIN_H;
-                }
+                newH = Math.max(RESIZE_MIN_H, candidateH);
+                newT = resizeStartRect.top + (candidateH >= RESIZE_MIN_H ? dy : resizeStartRect.height - RESIZE_MIN_H);
             }
 
             notesModal.style.setProperty('width', `${newW}px`, 'important');
@@ -2151,13 +1744,8 @@ document.addEventListener('DOMContentLoaded', () => {
             notesModal.style.setProperty('transform', 'none', 'important');
 
             const sidebarBtn = document.getElementById('sidebar-toggle');
-            if (newW < 900) {
-                panels.folders.classList.add('collapsed');
-                if (sidebarBtn) sidebarBtn.style.marginLeft = "70px";
-            } else {
-                panels.folders.classList.remove('collapsed');
-                if (sidebarBtn) sidebarBtn.style.marginLeft = "0px";
-            }
+            if (sidebarBtn) sidebarBtn.style.marginLeft = newW < 900 ? '70px' : '0px';
+            panels.folders.classList.toggle('collapsed', newW < 900);
         };
 
         const handleResizeEnd = () => {
@@ -2166,36 +1754,26 @@ document.addEventListener('DOMContentLoaded', () => {
             notesModal.style.transition = '';
         };
 
-        if (window.innerWidth >= 800) {
-            notesModal.addEventListener('mousedown', handleDragStart);
-            notesModal.addEventListener('touchstart', handleDragStart, { passive: true });
-            window.addEventListener('mousemove', handleDragMove);
-            window.addEventListener('touchmove', handleDragMove, { passive: false });
-            window.addEventListener('mouseup', handleDragEnd);
-            window.addEventListener('touchend', handleDragEnd);
+        const on = (el, ev, fn, opts) => el.addEventListener(ev, fn, opts);
+        const onPair = (el, win, ev, fn, opts) => { on(el, ev, fn, opts); on(win, ev.replace('mouse', 'touch'), fn, opts); };
 
-            notesModal.addEventListener('mousedown', handleResizeStart);
-            notesModal.addEventListener('touchstart', handleResizeStart, { passive: false });
-            window.addEventListener('mousemove', handleResizeMove);
-            window.addEventListener('touchmove', handleResizeMove, { passive: false });
-            window.addEventListener('mouseup', handleResizeEnd);
-            window.addEventListener('touchend', handleResizeEnd);
+        if (window.innerWidth >= 800) {
+            onPair(notesModal, window, 'mousedown', handleDragStart, { passive: true });
+            onPair(window, window, 'mousemove', handleDragMove, { passive: false });
+            onPair(window, window, 'mouseup', handleDragEnd);
+
+            on(notesModal, 'mousedown', handleResizeStart);
+            on(notesModal, 'touchstart', handleResizeStart, { passive: false });
+            onPair(window, window, 'mousemove', handleResizeMove, { passive: false });
+            onPair(window, window, 'mouseup', handleResizeEnd);
         }
 
-        notesModal.addEventListener('mousedown', handleMobileDragStart);
-        notesModal.addEventListener('touchstart', handleMobileDragStart, { passive: true });
-        window.addEventListener('mousemove', handleMobileDragMove);
-        window.addEventListener('touchmove', handleMobileDragMove, { passive: false });
-        window.addEventListener('mouseup', handleMobileDragEnd);
-        window.addEventListener('touchend', handleMobileDragEnd);
+        onPair(notesModal, window, 'mousedown', handleMobileDragStart, { passive: true });
+        onPair(window, window, 'mousemove', handleMobileDragMove, { passive: false });
+        onPair(window, window, 'mouseup', handleMobileDragEnd);
 
-        document.querySelectorAll('.mac-min').forEach(btn => {
-            btn.addEventListener('click', minimizeNotes);
-        });
-
-        document.querySelectorAll('.mac-max').forEach(btn => {
-            btn.addEventListener('click', maximizeNotes);
-        });
+        document.querySelectorAll('.mac-min').forEach(btn => btn.addEventListener('click', minimizeNotes));
+        document.querySelectorAll('.mac-max').forEach(btn => btn.addEventListener('click', maximizeNotes));
 
         document.querySelectorAll('[data-target]').forEach(item => {
             item.addEventListener('click', (e) => {
@@ -2206,77 +1784,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentFolder = folderMap[target] || 'all';
 
                 renderNotesList(currentFolder);
-                let autoSelected = false;
                 if (window.innerWidth >= 800) {
                     const firstNote = document.querySelector('.note-preview');
-                    if (firstNote) {
-                        firstNote.click();
-                        autoSelected = true;
-                    }
+                    if (firstNote) firstNote.click();
                 }
-                if (!autoSelected) playNotesSound();
                 navigateTo('notes', { skipListRender: true });
             });
         });
 
         const purgeDeleted = () => {
-            const now = Date.now();
-            const thirtyDays = 30 * 24 * 3600 * 1000;
-            let changed = false;
-            Object.keys(notesData).forEach(id => {
-                if (notesData[id].folder === 'recently_deleted' && (now - notesData[id].deletedAt > thirtyDays)) {
-                    delete notesData[id];
-                    changed = true;
-                }
-            });
-            if (changed) {
-                saveNotes();
-                renderNotesList(currentFolder);
-            }
+            const cutoff = Date.now() - 30 * 24 * 3600 * 1000;
+            const before = Object.keys(notesData).length;
+            for (const id of Object.keys(notesData))
+                if (notesData[id].folder === 'recently_deleted' && notesData[id].deletedAt < cutoff) delete notesData[id];
+            if (Object.keys(notesData).length !== before) { saveNotes(); renderNotesList(currentFolder); }
         };
         setInterval(purgeDeleted, 60000);
         purgeDeleted();
 
-        hydratePromise.then(() => {
-            const initialPath = window.location.pathname.replace(/\/$/, '') || '/';
-            if (initialPath !== '/' && initialPath !== '/index.html') {
-                if (openNoteByPermalink(initialPath)) {
-                    renderFolderList();
-                    document.body.style.overflow = 'hidden';
-                    notesBackdrop.classList.add('visible');
-                    notesModal.classList.add('visible');
-                }
-            }
-        });
-    }
-
-    if (notesModal && notesBackdrop) {
-
-        document.querySelectorAll('[data-back]').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const backTarget = e.currentTarget.getAttribute('data-back');
-                if (backTarget === 'panel-folders') {
-                    navigateTo('folders');
-                } else {
-                    navigateTo('notes');
-                }
-                playNotesSound();
-            });
-        });
+        document.querySelectorAll('[data-back]').forEach(btn =>
+            btn.addEventListener('click', (e) => navigateTo(e.currentTarget.getAttribute('data-back') === 'panel-folders' ? 'folders' : 'notes'))
+        );
 
         const sidebarToggle = document.getElementById('sidebar-toggle');
-
         if (sidebarToggle) {
             sidebarToggle.addEventListener('click', () => {
                 const isCollapsed = panels.folders.classList.toggle('collapsed');
-                if (window.innerWidth >= 800) {
-                    if (isCollapsed) {
-                        sidebarToggle.style.marginLeft = "70px";
-                    } else {
-                        sidebarToggle.style.marginLeft = "0px";
-                    }
-                }
-                playNotesSound();
+                if (window.innerWidth >= 800) sidebarToggle.style.marginLeft = isCollapsed ? '70px' : '0px';
             });
         }
     }

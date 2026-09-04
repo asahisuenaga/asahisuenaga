@@ -9,20 +9,19 @@
         <link rel="canonical" href="https://asahisuenaga.com/notes">
         <meta property="og:title" content="Apple Notes Clone — Web Application">
         <meta property="og:description" content="Apple Notes Clone is a vanilla HTML, CSS, and JavaScript web application that recreates the Apple Notes experience. Create, edit, format, and organize notes and folders right in your browser.">
-        <meta property="og:image" content="assets/metadata/OGImage.webp">
+        <meta property="og:image" content="assets/image/OGImage.webp">
         <meta property="og:url" content="https://asahisuenaga.com/notes">
         <meta property="og:type" content="website">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Apple Notes Clone — Web Application">
         <meta name="twitter:description" content="Apple Notes Clone is a vanilla HTML, CSS, and JavaScript web application that recreates the Apple Notes experience. Create, edit, format, and organize notes and folders right in your browser.">
-        <meta name="twitter:image" content="assets/metadata/TwitterCard.webp">
+        <meta name="twitter:image" content="assets/image/TwitterCard.webp">
         <title>Apple Notes Clone</title>
-        <link rel="icon" type="image/svg+xml" href="assets/metadata/favicon.svg" sizes="any">
-        <link rel="apple-touch-icon" sizes="180x180" href="assets/metadata/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="assets/metadata/favicon-32x32.png" media="(prefers-color-scheme: light)">
-        <link rel="icon" type="image/png" sizes="16x16" href="assets/metadata/favicon-16x16.png" media="(prefers-color-scheme: light)">
-        <link rel="preload" href="assets/css/styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="assets/css/styles.css"></noscript>
+        <link rel="icon" type="image/svg+xml" href="../assets/image/favicon.svg" sizes="any">
+        <link rel="apple-touch-icon" sizes="180x180" href="../assets/image/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="../assets/image/favicon-32x32.png" media="(prefers-color-scheme: light)">
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/image/favicon-16x16.png" media="(prefers-color-scheme: light)">
+        <link rel="stylesheet" href="styles.css">
         <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -36,86 +35,11 @@
                 "@type": "Person",
                 "name": "Asahi Suenaga",
                 "url": "https://asahisuenaga.com/"
-            },
-            "publisher": {
-                "@type": "Person",
-                "name": "Asahi Suenaga",
-                "url": "https://asahisuenaga.com/"
-            },
-            "offers": {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "USD"
             }
         }
         </script>
-        <script src="assets/js/script.js" defer></script>
-        <script src="assets/js/notes.js" defer></script>
+        <script src="notes.js" defer></script>
     </head>
-    <style>
-        :root {
-            color-scheme: light dark;
-            --bg: light-dark(#fff, #1e1e1e);
-            --gray: light-dark(#595959, #969696);
-            --color: light-dark(#1e1e1e, #fff);
-        }
-        body {
-            margin: 0;
-            background-color: var(--bg);
-            color: var(--color);
-            transition: background-color .2s ease, color .2s ease;
-        }
-        .notes-modal {
-            position: fixed;
-            visibility: hidden;
-        }
-        .title-text {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: var(--color);
-            cursor: pointer;
-            user-select: none;
-            z-index: 1999;
-            gap: 1.5rem;
-        }
-        .title-text p {
-            font-size: 1.5rem;
-            margin: 0;
-        }
-        .title-text p:last-child {
-            font-size: .75rem;
-            bottom: 2rem;
-            position: fixed;
-        }
-        .title-text.hidden {
-            display: none;
-        }
-        .title-text a {
-            font-size: .875rem;
-            font-weight: 600;
-            color: var(--color);
-            text-decoration: none;
-            background: none;
-            backdrop-filter: blur(2px) brightness(120%);
-            -webkit-backdrop-filter: blur(2px) brightness(120%);
-            box-shadow: var(--shadow);
-            border-radius: 999px;
-            padding: .75rem 2.5rem;
-            border: 0;
-            display: inline-flex;
-            align-items: center;
-            gap: .5rem;
-            transition: backdrop-filter .2s cubic-bezier(.25, 1, .5, 1), transform .2s cubic-bezier(.25, 1, .5, 1), box-shadow .2s cubic-bezier(.25, 1, .5, 1);
-        }
-        .title-text a:hover {
-            background: rgba(109, 109, 109, .15);
-        }
-    </style>
     <body>
         <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
             <symbol id="icon-bold" viewBox="0 0 11.9727 13.9746"><path d="M1.65039 13.9648L6.73828 13.9648C9.72656 13.9648 11.6113 12.3926 11.6113 9.98047C11.6113 8.07617 10.2344 6.69922 8.25195 6.5918L8.25195 6.51367C9.87305 6.28906 10.9766 5.06836 10.9766 3.51562C10.9766 1.33789 9.30664 0 6.60156 0L1.65039 0C0.605469 0 0 0.615234 0 1.68945L0 12.2852C0 13.3496 0.605469 13.9648 1.65039 13.9648ZM3.22266 11.709L3.22266 7.83203L5.67383 7.83203C7.38281 7.83203 8.33984 8.49609 8.33984 9.74609C8.33984 11.0254 7.42188 11.709 5.74219 11.709ZM3.22266 5.80078L3.22266 2.29492L5.625 2.29492C6.99219 2.29492 7.80273 2.91992 7.80273 3.99414C7.80273 5.12695 6.9043 5.80078 5.38086 5.80078Z" fill="currentColor"/></symbol>
@@ -139,7 +63,7 @@
         <div id="title-text" class="title-text" role="button" aria-label="Open notes app">
             <p>Tap anywhere to open the notes app</p>
             <a href="/">← Return to home</a>
-            <p>Everything runs in your browser. No data stored or sent.</p>
+            <p>Everything is run and stored in your browser. No data is sent.</p>
         </div>
         <div class="notes-backdrop" id="notes-backdrop"></div>
         <div class="notes-modal" id="notes-modal">
@@ -201,7 +125,7 @@
                 <div class="notes-content">
                     <div class="notes-date" id="active-note-date"></div>
                     <h2 class="notes-title" id="active-note-title" contenteditable="true" spellcheck="false" style="outline: none;"></h2>
-                    <div id="active-note-content" contenteditable="true" spellcheck="false" style="outline: none; font-size:0.875rem;"></div>
+                    <div id="active-note-content" contenteditable="true" spellcheck="false" style="outline: none; font-size:0.875rem;height:100%;"></div>
                 </div>
             </div>
             <div class="resize-handle resize-n" data-dir="n"></div>
