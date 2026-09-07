@@ -20,9 +20,10 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: 24
+          cache: 'npm'
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       - name: Minify Files
         run: npm run build
@@ -32,3 +33,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy
