@@ -65,6 +65,10 @@ body {
     opacity: 1;
     transition: top .25s ease;
 }
+html:not(.i18n-ready) [data-i18n],
+html:not(.i18n-ready) [data-i18n-html] {
+    visibility: hidden;
+}
 .dropdown-menu a {
     white-space: nowrap;
     padding: .2rem 1rem .2rem 1.25rem;

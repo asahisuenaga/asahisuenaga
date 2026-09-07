@@ -27,7 +27,6 @@
     }
   },
   "projects": {
-    "title": "Projects",
     "items": [
       {
         "name": "Apple Notes Clone",
@@ -53,7 +52,6 @@
     "paragraph2": "Equally important is the practice of open-sourcing the small, non-commercial tools I build every day. These highly specific utilities are created strictly for my own needs to scratch my own operational itches. They aren't meant for production or profit. Still, for businesses, adopting this model of open-sourcing some of their work promotes transparency and encourages workflows where minor internal utilities can be rapidly created and shared. Sharing these scripts creates unexpected collaboration, showcases practical engineering, and builds trust through total transparency."
   },
   "experience": {
-    "title": "Experience",
     "items": [
       {
         "organization": "SpartaHack",
