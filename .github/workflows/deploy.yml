@@ -2,6 +2,10 @@ name: Build and Deploy to Workers
 on:
   push:
     branches: [main]
+    paths:
+      - 'src/**'
+      - 'wrangler.jsonc'
+      - 'package.json'
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: True
