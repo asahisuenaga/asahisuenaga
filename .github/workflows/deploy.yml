@@ -2,9 +2,6 @@ name: Build and Deploy to Workers
 on:
   push:
     branches: [main]
-    paths-ignore: 
-      - 'README.md'
-      - 'TEMPLATE.md'
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: True

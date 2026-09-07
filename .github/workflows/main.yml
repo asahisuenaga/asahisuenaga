@@ -288,6 +288,6 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action Bot"
           git add README.md
-          git commit -m "docs: auto-update terminal profile metrics ($(date +'%m.%d.%y'))" || echo "No data modifications detected. Skipping push."
+          git commit -m "docs: auto-update terminal profile metrics ($(date +'%m.%d.%y')) [skip ci]" || echo "No data modifications detected. Skipping push."
           git pull --rebase origin main
           git push origin main
