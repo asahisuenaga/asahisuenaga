@@ -1,8 +1,7 @@
 {
   "site": {
     "title": "Asahi Suenaga",
-    "description": "Asahi Suenaga explores the intersection of software and humans. The personal website and portfolio of a Computer Science student at Michigan State University who is passionate about Swift, iOS development, and open source.",
-    "keywords": "Asahi Suenaga, Asahi, Suenaga, 末永, 末永朝飛, 朝飛, MSU, Michigan State University, Computer Science, Swift, iOS Development"
+    "description": "I build intuitive open-source software at Michigan State University while studying computer science. I have a sharp eye for detail and I look for perfection in executing my ideas."
   },
   "nav": {
     "about": "About",
@@ -13,7 +12,7 @@
   "location": "East Lansing, MI",
   "about": {
     "bio": "I'm a computer science major at <a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"about-link\">Michigan State</a> with a curiosity for how things work. I dabble in user interface design and learn Swift in my free time.",
-    "bioExtra": "I build intuitive software that integrates into one's life. I believe in algorithms over opinions and testing multiple approaches to find the best fit. As a fast learner with a sharp eye for detail, I look for perfection in executing my ideas."
+    "bioExtra": "I build intuitive software to scale big ideas. I believe in algorithms over opinions and testing multiple approaches to find the best fit. As a fast learner with a sharp eye for detail, I look for perfection in executing my ideas."
   },
   "languages": {
     "proficient": "Proficient Programming Languages",
@@ -48,8 +47,8 @@
   },
   "opensource": {
     "title": "Open-Source Philosophy",
-    "paragraph1": "Releasing old proprietary code into the open-source ecosystem creates new life into retired projects. Instead of letting software sit idle on a private hard drive, sharing it to the public gives a chance for others to learn, fix bugs, and even develop new tools. As a developer, I am constantly making tools for myself, and open-sourcing them is the absolute best way for others facing the same problems to actually find them.",
-    "paragraph2": "Equally important is the practice of open-sourcing the small, non-commercial tools I build every day. These highly specific utilities are created strictly for my own needs to scratch my own operational itches. They aren't meant for production or profit. Still, for businesses, adopting this model of open-sourcing some of their work promotes transparency and encourages workflows where minor internal utilities can be rapidly created and shared. Sharing these scripts creates unexpected collaboration, showcases practical engineering, and builds trust through total transparency."
+    "paragraph1": "As a developer, I am constantly making tools for myself, and open-sourcing them is the best way for others facing the same problems to find them.  Instead of letting software sit idle on a private hard drive, sharing it to the public gives a chance for others to learn, fix bugs, and even develop new tools. Whether you’re an individual or an organization, adopting a model of open-sourcing proprietary code showcases practical engineering and builds trust through transparency.",
+    "paragraph2": "Developers often adopt open-source programs into their own code from internal utilities to snippets from a retired program. All parties in use of these open resources are responsible for making contributions to the original repository. Contributions range from small donations to creating a fork of the original repository. Everyone on the internet is a recipient of open-source software and a little appreciation gives back to the developers behind the modern internet."
   },
   "experience": {
     "items": [
