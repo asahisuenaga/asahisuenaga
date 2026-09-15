@@ -11,7 +11,7 @@
   },
   "location": "East Lansing, MI",
   "about": {
-    "bio": "I'm a computer science major at <a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"about-link\">Michigan State</a> with a curiosity for how things work. I dabble in user interface design and learn Swift in my free time.",
+    "bio": "I'm a computer science major at <a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"about-link\">Michigan State University</a> with a curiosity for how things work. I dabble in user interface design and learn Swift in my free time.",
     "bioExtra": "I build intuitive software to scale big ideas. I believe in algorithms over opinions and testing multiple approaches to find the best fit. As a fast learner with a sharp eye for detail, I look for perfection in executing my ideas."
   },
   "languages": {
