@@ -1,14 +1,21 @@
 window.i18n?.init();
 
-const menu = document.querySelector('.dropdown-menu');
-const links = [...document.querySelectorAll('.dropdown-menu a[href^="#"]')];
+const menu = document.querySelector('.nav-menu');
+const links = [...document.querySelectorAll('.nav-menu a[href^="#"]')];
 const sections = links.map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
 
 const updateNavIndicator = () => {
   const active = menu?.querySelector('a.active');
-  if (active) {
-    const { offsetTop: t, offsetHeight: h } = active;
-    requestAnimationFrame(() => menu.style.setProperty('--indicator-top', `${t + h / 2 - 10}px`));
+  if (active && menu) {
+    const activeRect = active.getBoundingClientRect();
+    const menuRect = menu.getBoundingClientRect();
+
+    const t = activeRect.top - menuRect.top;
+    const h = activeRect.height;
+
+    requestAnimationFrame(() => {
+      menu.style.setProperty('--indicator-top', `${t + h / 2 - 10}px`);
+    });
   }
 };
 
@@ -52,20 +59,33 @@ updateNavIndicator();
 ['scroll', 'resize'].forEach(e => window.addEventListener(e, updateActiveNavLink, { passive: true }));
 ['load', 'pageshow'].forEach(e => window.addEventListener(e, reconcile));
 
-const accentColors = ['#b0313f', '#b45309', '#c55126', '#a16a40', '#238378', '#1e864a', '#257ea6', '#6264ee', '#9c4fe5', '#cd3e85'];
+const lightThemeAccentColors = ['#991b1b', '#b45309', '#c2410c', '#78350f', '#0f766e', '#166534', '#1d4ed8', '#4338ca', '#6b21a8', '#9d174d'];
+const darkThemeAccentColors  = ['#f06271', '#f59e0b', '#f97316', '#d97706', '#2dd4bf', '#4ade80', '#38bdf8', '#818cf8', '#c084fc', '#f472b6'];
+const accentColors = window.matchMedia('(prefers-color-scheme: dark)').matches ? darkThemeAccentColors : lightThemeAccentColors;
 const root = document.documentElement;
+
+const savedColor = localStorage.getItem('savedAccentColor');
+if (savedColor) {
+  root.style.setProperty('--accent', savedColor);
+}
 
 document.querySelector('.color-link')?.addEventListener('click', e => {
   e.preventDefault();
   const cur = getComputedStyle(root).getPropertyValue('--accent').trim().toLowerCase();
   const pool = accentColors.filter(c => c.toLowerCase() !== cur);
-  root.style.setProperty('--accent', (pool.length ? pool : accentColors)[Math.floor(Math.random() * (pool.length || accentColors.length))]);
+  const nextColor = (pool.length ? pool : accentColors)[Math.floor(Math.random() * (pool.length || accentColors.length))];
+  root.style.setProperty('--accent', nextColor);
+  localStorage.setItem('savedAccentColor', nextColor);
+
   const inner = e.currentTarget.querySelector('.color-dot-inner');
   if (inner) {
     inner.classList.remove('pop');
-    requestAnimationFrame(() => inner.classList.add('pop'));
+    setTimeout(() => {
+      inner.classList.add('pop');
+    }, 0);
   }
 });
+
 
 const lottie = document.getElementById('lottie');
 const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -74,7 +94,8 @@ updateTheme(darkQuery.matches);
 darkQuery.addEventListener('change', e => updateTheme(e.matches));
 
 const tabs = document.querySelectorAll('.ask-ai-tab');
-tabs.forEach(t => t.addEventListener('click', () => {
+tabs.forEach(t => t.addEventListener('click', e => {
+  e.stopPropagation();
   tabs.forEach(tab => tab.classList.remove('active'));
   t.classList.add('active');
 }));
@@ -92,7 +113,8 @@ const askAiSendHandler = e => {
   e.preventDefault();
   const matrix = getComputedStyle(askAiTrack).transform.match(/matrix\((.+)\)/);
   const translateY = matrix ? -matrix[1].split(',')[5] : 0;
-  const idx = Math.min(slotItems.length - 1, Math.round(translateY / (slotItems[0]?.offsetHeight || 22.4)));
+  const firstItemHeight = slotItems[0]?.getBoundingClientRect().height || 22.4;
+  const idx = Math.min(slotItems.length - 1, Math.round(translateY / firstItemHeight));
   const provider = document.querySelector('.ask-ai-tab.active')?.dataset.provider;
   const url = providerChains[provider] || providerChains.chatgpt;
   const text = slotItems[idx].textContent.trim();
@@ -101,16 +123,5 @@ const askAiSendHandler = e => {
   window.open(`${url}${encodeURIComponent(`${text}\n\n${context}`).replace(/%20/g, '+')}`, '_blank', 'noopener,noreferrer');
 };
 
-const askAiSend = document.querySelector('.ask-ai-input');
+const askAiSend = document.querySelector('.ask-ai-send');
 askAiSend?.addEventListener('click', askAiSendHandler);
-askAiSend?.addEventListener('keydown', e => ['Enter', ' '].includes(e.key) && askAiSendHandler(e));
-
-document.querySelectorAll('.table-row-link').forEach(row => {
-  const handler = e => {
-    if (e.target.closest('a')) return;
-    const { href } = row.dataset;
-    if (href) href.startsWith('/') ? (window.location.href = href) : window.open(href, '_blank', 'noopener,noreferrer');
-  };
-  row.addEventListener('click', handler);
-  row.addEventListener('keydown', e => ['Enter', ' '].includes(e.key) && (e.preventDefault(), handler(e)));
-});

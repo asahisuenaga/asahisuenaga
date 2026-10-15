@@ -48,15 +48,13 @@
     <body>
         <div class="page-wrapper">
             <div class="nav" role="navigation">
-                <div>
-                    <a href="."><dotlottie-player id="lottie" src="assets/image/icon.lottie" background="transparent" mode="system" speed="3" style="width: 2rem; height: 2rem;" autoplay></dotlottie-player></a>
-                    <nav class="dropdown-menu">
-                        <a href="#about" class="active" data-i18n="nav.about">About</a>
-                        <a href="#projects" data-i18n="nav.projects">Projects</a>
-                        <a href="#experience" data-i18n="nav.experience">Experience</a>
-                        <a href="https://github.com/asahisuenaga/asahisuenaga" target="_blank" rel="noopener noreferrer" class="dropdown-btn" data-i18n="nav.source">Source</a>
-                    </nav>
-                </div>
+                <dotlottie-player id="lottie" src="assets/image/icon.lottie" background="transparent" mode="system" speed="3" style="width: 2rem; height: 2rem;" autoplay></dotlottie-player>
+                <nav class="nav-menu">
+                    <a href="#about" class="active" data-i18n="nav.about">About</a>
+                    <a href="#projects" data-i18n="nav.projects">Projects</a>
+                    <a href="#experience" data-i18n="nav.experience">Experience</a>
+                    <a href="https://github.com/asahisuenaga/asahisuenaga" target="_blank" rel="noopener noreferrer" class="dropdown-btn" data-i18n="nav.source">Source</a>
+                </nav>
                 <div class="links">
                     <a href="https://x.com/asahisuenaga" target="_blank" aria-label="X" rel="noopener noreferrer"><svg width="1200" height="1227" viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="var(--color)" transform="scale(.75)" transform-origin="center" /></svg></a>
                     <a href="https://github.com/asahisuenaga" target="_blank" aria-label="Github" rel="noopener noreferrer"><svg width="98" height="98" viewBox="0 0 98 98" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_730_27126)"><path d="M41.4395 69.3848C28.8066 67.8535 19.9062 58.7617 19.9062 46.9902C19.9062 42.2051 21.6289 37.0371 24.5 33.5918C23.2559 30.4336 23.4473 23.7344 24.8828 20.959C28.7109 20.4805 33.8789 22.4902 36.9414 25.2656C40.5781 24.1172 44.4062 23.543 49.0957 23.543C53.7852 23.543 57.6133 24.1172 61.0586 25.1699C64.0254 22.4902 69.2891 20.4805 73.1172 20.959C74.457 23.543 74.6484 30.2422 73.4043 33.4961C76.4668 37.1328 78.0937 42.0137 78.0937 46.9902C78.0937 58.7617 69.1934 67.6621 56.3691 69.2891C59.623 71.3945 61.8242 75.9883 61.8242 81.252L61.8242 91.2051C61.8242 94.0762 64.2168 95.7031 67.0879 94.5547C84.4102 87.9512 98 70.6289 98 49.1914C98 22.1074 75.9883 6.69539e-07 48.9043 4.309e-07C21.8203 1.92261e-07 -1.9479e-07 22.1074 -4.3343e-07 49.1914C-6.20631e-07 70.4375 13.4941 88.0469 31.6777 94.6504C34.2617 95.6074 36.75 93.8848 36.75 91.3008L36.75 83.6445C35.4102 84.2188 33.6875 84.6016 32.1562 84.6016C25.8398 84.6016 22.1074 81.1563 19.4277 74.7441C18.375 72.1602 17.2266 70.6289 15.0254 70.3418C13.877 70.2461 13.4941 69.7676 13.4941 69.1934C13.4941 68.0449 15.4082 67.1836 17.3223 67.1836C20.0977 67.1836 22.4902 68.9063 24.9785 72.4473C26.8926 75.2227 28.9023 76.4668 31.2949 76.4668C33.6875 76.4668 35.2187 75.6055 37.4199 73.4043C39.0469 71.7773 40.291 70.3418 41.4395 69.3848Z" fill="var(--color)"/></g><defs><clipPath id="clip0_730_27126"><rect width="98" height="98" fill="white"/></clipPath></defs></svg></a>
@@ -67,11 +65,10 @@
                 <section class="about-section" id="about">
                     <h1 data-i18n="site.title"></h1>
                     <div class="location" data-i18n="location"></div>
-                    <p data-i18n-html="about.bio"></p>
-                    <p data-i18n="about.bioExtra" style="margin-top:1rem;"></p>
+                    <p data-i18n-html="bio"></p>
                 </section>
                 <section class="lang-section" id="lang">
-                <div class="section-title" data-i18n="languages.proficient"></div>
+                    <div class="section-title" data-i18n="languages.proficient"></div>
                     <div class="lang-list">
                         <p data-i18n="languages.list.html"></p>
                         <p data-i18n="languages.list.css"></p>
@@ -83,85 +80,108 @@
                         <p data-i18n="languages.list.typescript"></p>
                     </div>
                 </section>
-                <div class="table-container" id="projects">
+                <section class="entry-list" id="projects">
                     <div class="section-title" data-i18n="nav.projects"></div>
-                    <table class="styled-table data-table">
-                        <colgroup>
-                            <col />
-                            <col />
-                            <col />
-                        </colgroup>
-                        <tbody>
-                            <tr class="table-row-link" tabindex="0" data-href="/notes">
-                                <td data-i18n="projects.items.0.name"></td>
-                                <td data-i18n="projects.items.0.type"></td>
-                                <td>2026</td>
-                            </tr>
-                            <tr class="table-row-link" tabindex="0" data-href="https://x.com/asahisuenaga/status/1994927115956097185">
-                                <td data-i18n="projects.items.1.name"></td>
-                                <td data-i18n="projects.items.1.type"></td>
-                                <td>2026</td>
-                            </tr>
-                            <tr class="table-row-link" tabindex="0" data-href="https://chromewebstore.google.com/detail/pkbhdojajlnigelihhbclnikhidgnbeo?utm_source=item-share-cb">
-                                <td data-i18n="projects.items.2.name"></td>
-                                <td data-i18n="projects.items.2.type"></td>
-                                <td>2025</td>
-                            </tr>
-                            <tr class="table-row-link" tabindex="0" data-href="https://chromewebstore.google.com/detail/nnmghknojpihdnofejbocdcnmhibkfdc?utm_source=item-share-cb">
-                                <td data-i18n="projects.items.3.name"></td>
-                                <td data-i18n="projects.items.3.type"></td>
-                                <td>2024</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <section class="open-section" id="open">
-                    <div class="section-title" data-i18n="opensource.title"></div>
-                    <p data-i18n="opensource.paragraph1"></p>
-                    <p data-i18n="opensource.paragraph2" style="margin-top:1rem;"></p>
+                    <a class="entry" href="/notes">
+                        <span class="entry-head">
+                            <span class="entry-title" data-i18n="projects.items.0.name"></span>
+                            <span class="entry-type" data-i18n="projects.items.0.type"></span>
+                            <span class="entry-leader" aria-hidden="true"></span>
+                            <span class="entry-year">2026</span>
+                        </span>
+                        <span class="entry-desc">
+                            <span data-i18n="projects.items.0.desc"></span>
+                            <span class="entry-arrow" aria-hidden="true"></span>
+                        </span>
+                    </a>
+                    <a class="entry" href="https://x.com/asahisuenaga/status/1994927115956097185" target="_blank" rel="noopener noreferrer">
+                        <span class="entry-head">
+                            <span class="entry-title" data-i18n="projects.items.1.name"></span>
+                            <span class="entry-type" data-i18n="projects.items.1.type"></span>
+                            <span class="entry-leader" aria-hidden="true"></span>
+                            <span class="entry-year">2026</span>
+                        </span>
+                        <span class="entry-desc">
+                            <span data-i18n="projects.items.1.desc"></span>
+                            <span class="entry-arrow" aria-hidden="true"></span>
+                        </span>
+                    </a>
+                    <a class="entry" href="https://chromewebstore.google.com/detail/pkbhdojajlnigelihhbclnikhidgnbeo?utm_source=item-share-cb" target="_blank" rel="noopener noreferrer">
+                        <span class="entry-head">
+                            <span class="entry-title" data-i18n="projects.items.2.name"></span>
+                            <span class="entry-type" data-i18n="projects.items.2.type"></span>
+                            <span class="entry-leader" aria-hidden="true"></span>
+                            <span class="entry-year">2025</span>
+                        </span>
+                        <span class="entry-desc">
+                            <span data-i18n="projects.items.2.desc"></span>
+                            <span class="entry-arrow" aria-hidden="true"></span>
+                        </span>
+                    </a>
+                    <a class="entry" href="https://chromewebstore.google.com/detail/nnmghknojpihdnofejbocdcnmhibkfdc?utm_source=item-share-cb" target="_blank" rel="noopener noreferrer">
+                        <span class="entry-head">
+                            <span class="entry-title" data-i18n="projects.items.3.name"></span>
+                            <span class="entry-type" data-i18n="projects.items.3.type"></span>
+                            <span class="entry-leader" aria-hidden="true"></span>
+                            <span class="entry-year">2024</span>
+                        </span>
+                        <span class="entry-desc">
+                            <span data-i18n="projects.items.3.desc"></span>
+                            <span class="entry-arrow" aria-hidden="true"></span>
+                        </span>
+                    </a>
                 </section>
-                <div class="table-container" id="experience">
+                <section class="entry-list" id="experience">
                     <div class="section-title" data-i18n="nav.experience"></div>
-                    <table class="styled-table data-table">
-                        <colgroup>
-                            <col />
-                            <col />
-                            <col />
-                        </colgroup>
-                        <tbody>
-                            <tr class="table-row-link" tabindex="0" data-href="https://spartahack.com">
-                                <td data-i18n="experience.items.0.organization"></td>
-                                <td data-i18n="experience.items.0.role"></td>
-                                <td>--</td>
-                            </tr>
-                            <tr class="table-row-link" tabindex="0" data-href="https://instagram.com/msu.jsa/">
-                                <td data-i18n="experience.items.1.organization"></td>
-                                <td data-i18n="experience.items.1.role"></td>
-                                <td>--</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <a class="entry" href="https://spartahack.com" target="_blank" rel="noopener noreferrer">
+                        <span class="entry-head">
+                            <span class="entry-title" data-i18n="experience.items.0.role"></span>
+                            <span class="entry-type" data-i18n="experience.items.0.organization"></span>
+                            <span class="entry-leader" aria-hidden="true"></span>
+                            <span class="entry-year">2026</span>
+                        </span>
+                        <span class="entry-desc">
+                            <span data-i18n="experience.items.0.desc"></span>
+                            <span class="entry-arrow" aria-hidden="true"></span>
+                        </span>
+                    </a>
+                    <a class="entry" href="https://instagram.com/msu.jsa/" target="_blank" rel="noopener noreferrer">
+                        <span class="entry-head">
+                            <span class="entry-title" data-i18n="experience.items.1.role"></span>
+                            <span class="entry-type" data-i18n="experience.items.1.organization"></span>
+                            <span class="entry-leader" aria-hidden="true"></span>
+                            <span class="entry-year">2026</span>
+                        </span>
+                        <span class="entry-desc">
+                            <span data-i18n="experience.items.1.desc"></span>
+                            <span class="entry-arrow" aria-hidden="true"></span>
+                        </span>
+                    </a>
+                </section>
                 <section class="ask-ai-section" id="ai">
                     <div class="section-title" data-i18n="askAI.title"></div>
-                    <div class="ask-ai-tabs">
-                        <button class="ask-ai-tab active" data-provider="chatgpt">ChatGPT</button>
-                        <button class="ask-ai-tab" data-provider="claude">Claude</button>
-                        <button class="ask-ai-tab" data-provider="gemini">Gemini</button>
-                    </div>
-                    <div class="ask-ai-input">
-                        <button class="ask-ai-trigger-box">
-                            <div class="slot-placeholder-wrapper">
-                                <div class="slot-placeholder-track">
-                                    <div class="slot-item" data-i18n="askAI.placeholders.0"></div>
-                                    <div class="slot-item" data-i18n="askAI.placeholders.1"></div>
-                                    <div class="slot-item" data-i18n="askAI.placeholders.2"></div>
-                                    <div class="slot-item" data-i18n="askAI.placeholders.3"></div>
-                                    <div class="slot-item" data-i18n="askAI.placeholders.0"></div>
-                                </div>
+                    <div class="ask-ai-container">
+                        <div class="ask-ai-provider">
+                            <button type="button" class="ask-ai-tab active" data-provider="chatgpt" title="ChatGPT">
+                                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.1061 0.573875C11.3104 0.0784082 12.6214 -0.100601 13.9144 0.0538871C15.581 0.245549 17.066 0.953867 18.3693 2.17884C18.3859 2.19551 18.4093 2.20717 18.4309 2.21384C18.4545 2.21963 18.4791 2.21963 18.5026 2.21384C20.197 1.77628 21.9906 1.93821 23.5792 2.67216L23.6575 2.70883L23.8508 2.80383C25.5137 3.64665 26.8108 5.0688 27.4974 6.80207C27.8457 7.65205 28.0191 8.53703 28.0224 9.46034C28.0474 10.147 27.9722 10.8337 27.7991 11.4986C27.7905 11.5322 27.7906 11.5674 27.7994 11.6009C27.8081 11.6344 27.8252 11.6652 27.8491 11.6903C28.839 12.7019 29.4957 13.9069 29.8207 15.3069C30.3023 17.6818 29.809 19.8234 28.3424 21.7301L28.1157 22.0067C27.1444 23.1186 25.8694 23.9226 24.4475 24.32C24.4166 24.3291 24.3883 24.3452 24.3649 24.3672C24.3414 24.3892 24.3235 24.4164 24.3125 24.4467C23.9942 25.365 23.6742 26.1516 23.0792 26.9366C21.5792 28.9149 19.3759 30.0132 16.8943 29.9999C14.916 29.9899 13.1627 29.2666 11.6328 27.8299C11.6097 27.8084 11.5814 27.7933 11.5507 27.7863C11.5199 27.7793 11.4879 27.7805 11.4578 27.7899C10.8111 27.9983 10.1578 28.0283 9.45115 28.0199C8.32562 28.0109 7.21697 27.7453 6.20955 27.2433C5.15429 26.7204 4.23553 25.9585 3.52628 25.0183C3.27295 24.6817 3.02129 24.365 2.8363 23.99C2.58374 23.4754 2.37738 22.9395 2.21964 22.3884C1.88665 21.1345 1.87862 19.8164 2.19631 18.5585C2.20676 18.5285 2.21018 18.4966 2.20631 18.4651C2.2006 18.4342 2.18477 18.4061 2.16131 18.3851C1.39144 17.6059 0.80302 16.6663 0.438016 15.6335C0.195273 14.9974 0.0541062 14.327 0.0196922 13.6469C-0.040855 12.7512 0.0384263 11.8516 0.254687 10.9803C0.816341 9.12702 1.89132 7.67205 3.47628 6.61707C3.82961 6.38208 4.1646 6.19875 4.47792 6.06708C4.83625 5.91875 5.19458 5.79376 5.55457 5.68876C5.5803 5.68078 5.60365 5.66656 5.62255 5.64737C5.64145 5.62818 5.65531 5.60461 5.6629 5.57876C5.93625 4.59719 6.40631 3.68144 7.04453 2.88716C7.84907 1.86553 8.90359 1.06875 10.1061 0.573875ZM15.9093 18.1818C15.6385 18.197 15.3837 18.3153 15.1974 18.5124C15.011 18.7095 14.9072 18.9705 14.9072 19.2418C14.9072 19.5131 15.011 19.774 15.1974 19.9712C15.3837 20.1683 15.6385 20.2866 15.9093 20.3018H21.9692C22.1134 20.3099 22.2577 20.2884 22.3934 20.2388C22.529 20.1892 22.6531 20.1124 22.758 20.0132C22.863 19.914 22.9466 19.7944 23.0037 19.6618C23.0608 19.5291 23.0903 19.3862 23.0903 19.2418C23.0903 19.0974 23.0608 18.9545 23.0037 18.8218C22.9466 18.6892 22.863 18.5696 22.758 18.4704C22.6531 18.3711 22.529 18.2944 22.3934 18.2448C22.2577 18.1951 22.1134 18.1737 21.9692 18.1818H15.9093ZM9.10282 10.3837C8.95859 10.1487 8.72865 9.97914 8.46162 9.91072C8.1946 9.84229 7.91143 9.88041 7.672 10.017C7.43258 10.1536 7.25567 10.378 7.17869 10.6427C7.10171 10.9074 7.1307 11.1916 7.25953 11.4353L9.37948 15.1419L7.26953 18.7018C7.19851 18.8216 7.15178 18.9543 7.13202 19.0922C7.11227 19.23 7.11986 19.3705 7.15437 19.5054C7.18888 19.6404 7.24964 19.7672 7.33316 19.8787C7.41669 19.9902 7.52136 20.0841 7.64119 20.1551C7.76102 20.2261 7.89366 20.2728 8.03155 20.2926C8.16943 20.3124 8.30986 20.3048 8.44481 20.2703C8.57976 20.2357 8.70659 20.175 8.81807 20.0915C8.92954 20.0079 9.02347 19.9033 9.09449 19.7834L11.5178 15.6919C11.6133 15.5307 11.6644 15.347 11.6659 15.1597C11.6673 14.9723 11.6191 14.7879 11.5261 14.6252L9.10282 10.3837Z" fill="url(#paint0_linear_2_12)"/><defs><linearGradient id="paint0_linear_2_12" x1="14.9994" y1="0.000554975" x2="14.9994" y2="29.9999" gradientUnits="userSpaceOnUse"><stop stop-color="#B1A7FF"/><stop offset="0.5" stop-color="#7A9DFF"/><stop offset="1" stop-color="#3941FF"/></linearGradient></defs></svg>
+                            </button>
+                            <button type="button" class="ask-ai-tab" data-provider="claude" title="Claude">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.49261 20.6201L13.0022 17.5306L13.0949 17.2622L13.0022 17.113H12.7337L11.813 17.0563L8.66487 16.9713L5.93463 16.8579L3.28949 16.7162L2.62395 16.5744L2 15.7525L2.06429 15.3424L2.62395 14.9664L3.42562 15.0363L5.19725 15.1572L7.85563 15.3405L9.78419 15.4539L12.6411 15.7506H13.0949L13.1592 15.5673L13.0041 15.4539L12.8831 15.3405L10.1321 13.4774L7.15416 11.5084L5.5943 10.3747L4.75103 9.80024L4.32561 9.26171L4.14221 8.08638L4.90796 7.24362L5.93653 7.31354L6.19934 7.38345L7.24114 8.18464L9.46654 9.90606L12.3726 12.0451L12.798 12.3984L12.9682 12.2775L12.989 12.1925L12.798 11.8731L11.2174 9.01795L9.53083 6.11365L8.7802 4.90997L8.58167 4.18815C8.51172 3.89148 8.46067 3.64206 8.46067 3.33783L9.3323 2.15495L9.81444 2L10.9772 2.15495L11.4669 2.58011L12.1892 4.23161L13.3596 6.83169L15.1747 10.3671L15.706 11.4158L15.9896 12.3871L16.0955 12.6838H16.2789V12.5137L16.4283 10.5221L16.7043 8.07693L16.9728 4.93076L17.0654 4.04454L17.5041 2.98259L18.3757 2.40815L19.0564 2.73316L19.616 3.53435L19.5385 4.0521L19.2058 6.2138L18.5534 9.59995L18.128 11.8675H18.3757L18.6593 11.584L19.807 10.061L21.7356 7.65178L22.5864 6.69564L23.579 5.63936L24.2162 5.13673H25.4206L26.3074 6.45377L25.9103 7.81428L24.67 9.38642L23.6414 10.7186L22.1667 12.7027L21.2459 14.2899L21.3309 14.4165L21.5503 14.3957L24.8818 13.6871L26.6817 13.3621L28.8296 12.9937L29.8015 13.4472L29.9074 13.9082L29.5254 14.8511L27.2282 15.418L24.5339 15.9565L20.5217 16.9051L20.4726 16.941L20.5293 17.0109L22.3368 17.181L23.1101 17.2226H25.0028L28.5271 17.4852L29.4479 18.0937L30 18.8382L29.9074 19.4051L28.4893 20.1269L26.5759 19.6734L22.1099 18.6114L20.5784 18.2297H20.3667V18.3563L21.6429 19.6035L23.9818 21.7141L26.9105 24.4352L27.0599 25.1078L26.6836 25.6388L26.2866 25.5821L23.7133 23.6472L22.7206 22.7761L20.4726 20.8846H20.3232V21.083L20.8412 21.8407L23.5772 25.9506L23.719 27.211L23.5204 27.621L22.8114 27.8685L22.0324 27.7268L20.431 25.4801L18.7784 22.9499L17.4455 20.6824L17.2829 20.775L16.4963 29.2423L16.1276 29.675L15.2768 30L14.5678 29.4615L14.1915 28.5904L14.5678 26.8689L15.0215 24.6222L15.3902 22.8365L15.723 20.6182L15.9215 19.8812L15.9083 19.8321L15.7457 19.8529L14.0724 22.1487L11.5274 25.5859L9.51381 27.74L9.03167 27.9309L8.19596 27.4982L8.27348 26.7253L8.7405 26.0375L11.5274 22.4945L13.2083 20.2988L14.2936 19.0309L14.286 18.8476H14.2218L6.8195 23.651L5.50166 23.821L4.93443 23.2901L5.00439 22.419L5.27287 22.1355L7.49828 20.6049L7.49072 20.6125L7.49261 20.6201Z" fill="#D97757"/></svg>
+                            </button>
+                            <button type="button" class="ask-ai-tab" data-provider="gemini" title="Gemini">
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 16.028C26.3673 16.2509 22.9416 17.7945 20.3681 20.3681C17.7945 22.9416 16.2509 26.3673 16.028 30H15.972C15.7494 26.3672 14.2059 22.9412 11.6324 20.3676C9.05877 17.7941 5.63279 16.2506 2 16.028L2 15.972C5.63279 15.7494 9.05877 14.2059 11.6324 11.6324C14.2059 9.05877 15.7494 5.63279 15.972 2L16.028 2C16.2509 5.63266 17.7945 9.05843 20.3681 11.6319C22.9416 14.2055 26.3673 15.7491 30 15.972V16.028Z" fill="url(#paint0_radial_1_976)"/><defs><radialGradient id="paint0_radial_1_976" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(4.779 13.3802) rotate(18.6832) scale(29.8025 238.737)"><stop offset="0.067" stop-color="#9168C0"/><stop offset="0.343" stop-color="#5684D1"/><stop offset="0.672" stop-color="#1BA1E3"/></radialGradient></defs></svg>
+                            </button>
+                        </div>
+                        <div class="slot-placeholder-wrapper">
+                            <div class="slot-placeholder-track">
+                                <div class="slot-item" data-i18n="askAI.placeholders.0"></div>
+                                <div class="slot-item" data-i18n="askAI.placeholders.1"></div>
+                                <div class="slot-item" data-i18n="askAI.placeholders.2"></div>
+                                <div class="slot-item" data-i18n="askAI.placeholders.3"></div>
+                                <div class="slot-item" data-i18n="askAI.placeholders.0"></div>
                             </div>
-                        </button>
-                        <button class="ask-ai-send" type="button">→</button>
+                        </div>
+                        <button class="ask-ai-send" type="button" aria-label="Ask AI"><span aria-hidden="true">↑</span></button>
                     </div>
                 </section>
             </div>

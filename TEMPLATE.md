@@ -26,7 +26,7 @@ INFO: stable v{{DATE}} (optimized)
 ╭────────────────────────────────────────────────────────────────────────────────────────╮
 │  Bachelor's Degree: [█████████████████████████░░░░░░░░░░░░░░░] 76/120 Credits (63%)    │
 │                                                                                        │
-│  ● GPA: 3.64   ● Classes Done: 15   ● Honors College: Yes  ● Expected Grad: Fall '27   │
+│  ● GPA: 3.67   ● Classes Done: 15   ● Honors College: Yes  ● Expected Grad: Fall '27   │
 ╰────────────────────────────────────────────────────────────────────────────────────────╯
 
 > asahi github-stats

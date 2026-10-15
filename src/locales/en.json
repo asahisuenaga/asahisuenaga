@@ -10,10 +10,7 @@
     "source": "Source"
   },
   "location": "East Lansing, MI",
-  "about": {
-    "bio": "I'm a computer science major at <a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"about-link\">Michigan State University</a> with a curiosity for how things work. I dabble in user interface design and learn Swift in my free time.",
-    "bioExtra": "I build intuitive software to scale big ideas. I believe in algorithms over opinions and testing multiple approaches to find the best fit. As a fast learner with a sharp eye for detail, I look for perfection in executing my ideas."
-  },
+  "bio": "I'm a computer science major at <a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"about-link\">Michigan State University</a> with a curiosity for how things work. I dabble in interface design and like to program in my free time. \n\nI believe there’s something irresistible in programming—that instant when code compiles and abstract logic becomes something real. But building isn't enough on its own; it has to be designed to actually work for people.\n\nThat is why great software starts long before writing code. Every user flow, pixel, and interface choice must feel intentional and frictionless. Weaving my sharp eye for design with practical engineering, I translate user needs into clean systems.\n\nThat intersection is where I operate. From initial concept to polished build, I craft software where design and code reinforce each other.",
   "languages": {
     "proficient": "Proficient Programming Languages",
     "familiar": "Familiar Programming Languages",
@@ -29,43 +26,44 @@
     "items": [
       {
         "name": "Apple Notes Clone",
-        "type": "Web Application"
+        "type": "HTML · CSS · JS",
+        "desc": "Remade Apple Notes complete with local storage data persistence, custom rich-text editing, dynamic folder nesting, and a secure data-recovery system for deleted items."
       },
       {
         "name": "Baroque Jigsaw Puzzles",
-        "type": "React Application"
+        "type": "React · Typescript",
+        "desc": "Crafted a mobile application in less than a week for the Anything X Contra hackathon where you play jigsaw puzzles with art from the Baroque period."
       },
       {
         "name": "Hide Google AI",
-        "type": "Browser Extension"
+        "type": "HTML · CSS · JS",
+        "desc": "Engineered a lightweight mutation observer script to dynamically scrub unwanted generative search elements from the DOM."
       },
       {
         "name": "Rainbow Cursor",
-        "type": "Browser Extension"
+        "type": "HTML · CSS · JS",
+        "desc": "Developed a lightweight Chrome extension that intercepts DOM to dynamically replace the default cursor caret with an animated gradient across Google Docs."
       }
     ]
-  },
-  "opensource": {
-    "title": "Open-Source Philosophy",
-    "paragraph1": "As a developer, I am constantly making tools for myself, and open-sourcing them is the best way for others facing the same problems to find them.  Instead of letting software sit idle on a private hard drive, sharing it to the public gives a chance for others to learn, fix bugs, and even develop new tools. Whether you’re an individual or an organization, adopting a model of open-sourcing proprietary code showcases practical engineering and builds trust through transparency.",
-    "paragraph2": "Developers often adopt open-source programs into their own code from internal utilities to snippets from a retired program. All parties in use of these open resources are responsible for making contributions to the original repository. Contributions range from small donations to creating a fork of the original repository. Everyone on the internet is a recipient of open-source software and a little appreciation gives back to the developers behind the modern internet."
   },
   "experience": {
     "items": [
       {
         "organization": "SpartaHack",
-        "role": "Finance Team"
+        "role": "Finance Team",
+        "desc": "Automated finance outreach and coordinated branded tracks and engagement boosting activities with technical mentors for MSU's 300+ student-run hackathon."
       },
       {
         "organization": "Japanese Student Association",
-        "role": "Secretary"
+        "role": "Secretary",
+        "desc": "Streamlined administrative operations by centralizing meeting minutes, registration forms, and attendance logs into a single, comprehensive master database."
       }
     ]
   },
   "askAI": {
     "title": "Ask AI",
     "placeholders": [
-      "Summarize Asahi's portfolio.",
+      "Summarize Asahi's portfolio",
       "What programming languages does Asahi know?",
       "Draft an interview outreach email to Asahi",
       "List Asahi's most popular Github repos"
