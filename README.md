@@ -6,7 +6,7 @@
 </h1>
 
 ```text
-╭─────── INFO v10.14.26 ───────────────────╮  ╭────── Profile Overview ──────────────────╮
+╭─────── INFO v10.15.26 ───────────────────╮  ╭────── Profile Overview ──────────────────╮
 │                                          │  │  ● School: Michigan State University     │
 │              Hello there!                │  │  ● Tech: HTML, CSS, JS, Swift            │
 │                                          │  │  ● Expertise: Mobile App, UI/UX Design   │
@@ -20,41 +20,41 @@
 
 > asahi college-progress
 
-INFO: stable v10.14.26 (optimized)
+INFO: stable v10.15.26 (optimized)
 ==> Fetching academic status from reg.msu.edu...
 
 ╭────────────────────────────────────────────────────────────────────────────────────────╮
 │  Bachelor's Degree: [█████████████████████████░░░░░░░░░░░░░░░] 76/120 Credits (63%)    │
 │                                                                                        │
-│  ● GPA: 3.64   ● Classes Done: 15   ● Honors College: Yes  ● Expected Grad: Fall '27   │
+│  ● GPA: 3.67   ● Classes Done: 15   ● Honors College: Yes  ● Expected Grad: Fall '27   │
 ╰────────────────────────────────────────────────────────────────────────────────────────╯
 
 > asahi github-stats
     
 ╭────── Icon ──────────────────────────────────╮  ╭────── Github Statistics ─────────────╮
 │     :GBB######BBBBGPPYJ?!~^:                 │  │                                      │
-│     :@@@@@@@@@@@@@@@@@@@@@@@&#G57^           │  │  ● Profile Views: 979                │
-│     :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~       │  │  ● Repository Views: 500             │
+│     :@@@@@@@@@@@@@@@@@@@@@@@&#G57^           │  │  ● Profile Views: 989                │
+│     :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~       │  │  ● Repository Views: 492             │
 │     :@@@@@@@@@@@@&&&#BBGGBBBB#&&@@@@@@#^     │  │  ● Stars Received: 6                 │
-│     :@@@@&BPY7~^:               :~J#@@@#     │  │  ● Total Commits: 690                │
-│      Y7^:                          ?@@&~     │  │  ● Commits (YTD): 533                │
-│                          ::^~7J5GB&&B7       │  │  ● Issues/PRs/Releases: 2/14/9       │
+│     :@@@@&BPY7~^:               :~J#@@@#     │  │  ● Total Commits: 691                │
+│      Y7^:                          ?@@&~     │  │  ● Commits (YTD): 534                │
+│                          ::^~7J5GB&&B7       │  │  ● Issues/PRs/Releases: 2/15/9       │
 │                  :~7YG#&&@@@@&#GY7^          │  ╰──────────────────────────────────────╯
 │             ^75B&@@@@@&#PJ!^:                │  ╭────── Top Languages ─────────────────╮
 │          !G&@@@@@@#Y!:         ^!7~:         │  │                                      │
-│       :5&@@@@@@&Y:           J&@@@@@B!       │  │  █ JS      ████████░░░░░░░ 56%       │
-│      5@@@@@@@@P            ^&@@@@@@@@@#^     │  │  █ HTML    ████░░░░░░░░░░░ 30%       │
+│       :5&@@@@@@&Y:           J&@@@@@B!       │  │  █ JS      ████████░░░░░░░ 53%       │
+│      5@@@@@@@@P            ^&@@@@@@@@@#^     │  │  █ HTML    █████░░░░░░░░░░ 33%       │
 │    :#@@@@@@@@Y            ^&@B7^~P@@@@@@^    │  │  █ CSS     ██░░░░░░░░░░░░░ 14%       │
 │   :&@@@@@@@@&            :&@J     J@@@@@&    │  │  █         ░░░░░░░░░░░░░░░ 0%        │
 │   G@@@@@@@@@#           :#@5       &@@@@@?   │  │  █         ░░░░░░░░░░░░░░░ 0%        │
 │  ^@@@@@@@@@@@7         !&@&        &@@@@@B   │  ╰──────────────────────────────────────╯
 │  !@@@@@@@@@@@@G~:  :^J#@@@?       ^@@@@@@&   │  ╭────── Recent Activity ───────────────╮
 │  ^@@@@@@@@@@@@@@@&&@@@@@@B        P@@@@@@@:  │  │                                      │
-│   G@@@@@@@@@@@@@@@@@@@@@&:       7@@@@@@@@:  │  │  » Starred skills                    │
-│    G@@@@@@@@@@@@@@@@@@@B:       !@@@@@@@@@:  │  │  » Starred agent-skills              │
-│     7#@@@@@@@@@@@@@@@&J        7@@@@@@@@@@^  │  │  » Starred taste-skill               │
-│       ~P&@@@@@@@@@&G7         7&&&&&&&&&&&:  │  │  » Starred caveman                   │
-│          :~7?JJ7!^                           │  │  » Commented on Issue in hide...     │
+│   G@@@@@@@@@@@@@@@@@@@@@&:       7@@@@@@@@:  │  │  » Merged PR #5 in asahisuenaga      │
+│    G@@@@@@@@@@@@@@@@@@@B:       !@@@@@@@@@:  │  │  » Opened PR #5 in asahisuenaga      │
+│     7#@@@@@@@@@@@@@@@&J        7@@@@@@@@@@^  │  │  » Starred skills                    │
+│       ~P&@@@@@@@@@&G7         7&&&&&&&&&&&:  │  │  » Starred agent-skills              │
+│          :~7?JJ7!^                           │  │  » Starred taste-skill               │
 ╰──────────────────────────────────────────────╯  ╰──────────────────────────────────────╯
 
 > █
