@@ -8,13 +8,13 @@
 ```text
 ╭─────── INFO v{{DATE}} ───────────────────╮  ╭────── Profile Overview ──────────────────╮
 │                                          │  │  ● School: Michigan State University     │
-│              Hello there!                │  │  ● Tech: HTML, CSS, JS, Swift            │
-│                                          │  │  ● Expertise: Mobile App, UI/UX Design   │
+│              Hello there!                │  │  ● Tech: HTML, CSS, JS, Python, TS       │
+│                                          │  │  ● Expertise: Business, Interface Design │
 │                  ▄▄▄                     │  │  ... /resume for more                    │
 │                 █▄▄▄█                    │  ╰──────────────────────────────────────────╯
 │                  █ █                     │  ╭────── Active Workflow ───────────────────╮
-│                                          │  │  while learning_swift:                   │
-│         Asahi Suenaga · Junior           │  │    build_apps() && innovate()            │
+│                                          │  │  while learning_to_code:                 │
+│         Asahi Suenaga · Junior           │  │    test() && build()                     │
 │     /users/asahi/Documents/Profile       │  │  done                                    │
 ╰──────────────────────────────────────────╯  ╰──────────────────────────────────────────╯
 

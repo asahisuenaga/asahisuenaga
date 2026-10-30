@@ -6,8 +6,7 @@
   "nav": {
     "about": "About",
     "projects": "Projects",
-    "experience": "Experience",
-    "source": "Source"
+    "experience": "Experience"
   },
   "location": "East Lansing, MI",
   "bio": "I'm a computer science major at <a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"about-link\">Michigan State University</a> with a curiosity for how things work. I dabble in interface design and like to program in my free time. \n\nI believe there’s something irresistible in programming—that instant when code compiles and abstract logic becomes something real. But building isn't enough on its own; it has to be designed to actually work for people.\n\nThat is why great software starts long before writing code. Every user flow, pixel, and interface choice must feel intentional and frictionless. Weaving my sharp eye for design with practical engineering, I translate user needs into clean systems.\n\nThat intersection is where I operate. From initial concept to polished build, I craft software where design and code reinforce each other.",
@@ -50,7 +49,7 @@
     "items": [
       {
         "organization": "SpartaHack",
-        "role": "Finance Team",
+        "role": "Finance Lead",
         "desc": "Automated finance outreach and coordinated branded tracks and engagement boosting activities with technical mentors for MSU's 300+ student-run hackathon."
       },
       {
