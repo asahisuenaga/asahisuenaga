@@ -6,21 +6,21 @@
 </h1>
 
 ```text
-╭─────── INFO v10.30.26 ───────────────────╮  ╭────── Profile Overview ──────────────────╮
+╭─────── INFO v10.31.26 ───────────────────╮  ╭────── Profile Overview ──────────────────╮
 │                                          │  │  ● School: Michigan State University     │
-│              Hello there!                │  │  ● Tech: HTML, CSS, JS, Swift            │
-│                                          │  │  ● Expertise: Mobile App, UI/UX Design   │
+│              Hello there!                │  │  ● Tech: HTML, CSS, JS, Python, TS       │
+│                                          │  │  ● Expertise: Business, Interface Design │
 │                  ▄▄▄                     │  │  ... /resume for more                    │
 │                 █▄▄▄█                    │  ╰──────────────────────────────────────────╯
 │                  █ █                     │  ╭────── Active Workflow ───────────────────╮
-│                                          │  │  while learning_swift:                   │
-│         Asahi Suenaga · Junior           │  │    build_apps() && innovate()            │
+│                                          │  │  while learning_to_code:                 │
+│         Asahi Suenaga · Junior           │  │    test() && build()                     │
 │     /users/asahi/Documents/Profile       │  │  done                                    │
 ╰──────────────────────────────────────────╯  ╰──────────────────────────────────────────╯
 
 > asahi college-progress
 
-INFO: stable v10.30.26 (optimized)
+INFO: stable v10.31.26 (optimized)
 ==> Fetching academic status from reg.msu.edu...
 
 ╭────────────────────────────────────────────────────────────────────────────────────────╮
@@ -33,11 +33,11 @@ INFO: stable v10.30.26 (optimized)
     
 ╭────── Icon ──────────────────────────────────╮  ╭────── Github Statistics ─────────────╮
 │     :GBB######BBBBGPPYJ?!~^:                 │  │                                      │
-│     :@@@@@@@@@@@@@@@@@@@@@@@&#G57^           │  │  ● Profile Views: 1,025              │
+│     :@@@@@@@@@@@@@@@@@@@@@@@&#G57^           │  │  ● Profile Views: 1,028              │
 │     :@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&#Y~       │  │  ● Repository Views: 15              │
 │     :@@@@@@@@@@@@&&&#BBGGBBBB#&&@@@@@@#^     │  │  ● Stars Received: 6                 │
-│     :@@@@&BPY7~^:               :~J#@@@#     │  │  ● Total Commits: 674                │
-│      Y7^:                          ?@@&~     │  │  ● Commits (YTD): 517                │
+│     :@@@@&BPY7~^:               :~J#@@@#     │  │  ● Total Commits: 676                │
+│      Y7^:                          ?@@&~     │  │  ● Commits (YTD): 519                │
 │                          ::^~7J5GB&&B7       │  │  ● Issues/PRs/Releases: 2/15/9       │
 │                  :~7YG#&&@@@@&#GY7^          │  ╰──────────────────────────────────────╯
 │             ^75B&@@@@@&#PJ!^:                │  ╭────── Top Languages ─────────────────╮
