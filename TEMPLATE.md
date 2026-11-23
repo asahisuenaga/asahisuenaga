@@ -2,15 +2,15 @@
 {DIM}╭────────────────────────────────────────────────────────────────────────────────────────────────────╮{RESET}
 {DIM}│{RESET}  {RED}●{RESET}  {YEL}●{RESET}  {GREEN}●{RESET}                    {DIM}asahi@msu: ~/Documents/Profile — zsh — 102×42{RESET}                          {DIM}│{RESET}
 {DIM}├────────────────────────────────────────────────────────────────────────────────────────────────────┤{RESET}
-{DIM}│{RESET} {BLUE} █████╗ ███████╗ █████╗ ██╗  ██╗██╗{RESET} {BLUE}███████╗██╗   ██╗███████╗███╗   ██╗ █████╗  ██████╗  █████╗ {RESET}{DIM}│{RESET}
-{DIM}│{RESET} {BLUE}██╔══██╗██╔════╝██╔══██╗██║  ██║██║{RESET} {BLUE}██╔════╝██║   ██║██╔════╝████╗  ██║██╔══██╗██╔════╝ ██╔══██╗{RESET}{DIM}│{RESET}
-{DIM}│{RESET} {BLUE}███████║███████╗███████║███████║██║{RESET} {BLUE}███████╗██║   ██║█████╗  ██╔██╗ ██║███████║██║  ███╗███████║{RESET}{DIM}│{RESET}
-{DIM}│{RESET} {BLUE}██╔══██║╚════██║██╔══██║██╔══██║██║{RESET} {BLUE}╚════██║██║   ██║██╔══╝  ██║╚██╗██║██╔══██║██║   ██║██╔══██║{RESET}{DIM}│{RESET}
-{DIM}│{RESET} {BLUE}██║  ██║███████║██║  ██║██║  ██║██║{RESET} {BLUE}███████║╚██████╔╝███████╗██║ ╚████║██║  ██║╚██████╔╝██║  ██║{RESET}{DIM}│{RESET}
-{DIM}│{RESET} {BLUE}╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝{RESET} {BLUE}╚══════╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝{RESET}{DIM}│{RESET}
+{DIM}│{RESET} {BLUE} █████╗ ███████╗ █████╗ ██╗  ██╗██╗{RESET} {BLUE}███████╗██╗   ██╗███████╗███╗   ██╗ █████╗  ██████╗  █████╗    {RESET}{DIM}│{RESET}
+{DIM}│{RESET} {BLUE}██╔══██╗██╔════╝██╔══██╗██║  ██║██║{RESET} {BLUE}██╔════╝██║   ██║██╔════╝████╗  ██║██╔══██╗██╔════╝ ██╔══██╗   {RESET}{DIM}│{RESET}
+{DIM}│{RESET} {BLUE}███████║███████╗███████║███████║██║{RESET} {BLUE}███████╗██║   ██║█████╗  ██╔██╗ ██║███████║██║  ███╗███████║   {RESET}{DIM}│{RESET}
+{DIM}│{RESET} {BLUE}██╔══██║╚════██║██╔══██║██╔══██║██║{RESET} {BLUE}╚════██║██║   ██║██╔══╝  ██║╚██╗██║██╔══██║██║   ██║██╔══██║   {RESET}{DIM}│{RESET}
+{DIM}│{RESET} {BLUE}██║  ██║███████║██║  ██║██║  ██║██║{RESET} {BLUE}███████║╚██████╔╝███████╗██║ ╚████║██║  ██║╚██████╔╝██║  ██║   {RESET}{DIM}│{RESET}
+{DIM}│{RESET} {BLUE}╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝{RESET} {BLUE}╚══════╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝   {RESET}{DIM}│{RESET}
 {DIM}├────────────────────────────────────────────────────────────────────────────────────────────────────┤{RESET}
 {DIM}│{RESET}  {BLUE}❯{RESET} {BOLD}asahi college-progress{RESET} {SUB_BLUE}--msu --honors{RESET}                                                           {DIM}│{RESET}
-{DIM}│{RESET}  {BLUE}INFO:{RESET} stable v{{DATE}} {SUB_BLUE}(optimized){RESET}                                                                 {DIM}│{RESET}
+{DIM}│{RESET}  {BLUE}INFO:{RESET} stable v{{DATE}} {SUB_BLUE}(optimized){RESET}                                                                {DIM}│{RESET}
 {DIM}│{RESET}  {DIM}==> Fetching academic status from reg.msu.edu...{RESET}                                                  {DIM}│{RESET}
 {DIM}│{RESET}                                                                                                    {DIM}│{RESET}
 {DIM}│{RESET}  Bachelor's Degree: [{BLUE}█████████████████████████{DIM}░░░░░░░░░░░░░░░{RESET}] {BOLD}76/120 Credits (63%){RESET}                {DIM}│{RESET}
@@ -41,8 +41,8 @@
 {DIM}│{RESET}            {BLUE}   7#@@@@@@@@@@@@@@@&J        7@@@@@@@@@@^{RESET}       {DIM}│{RESET}{{REC_ACT_5}}{DIM}│{RESET}
 {DIM}│{RESET}            {BLUE}     ~P&@@@@@@@@@&G7         7&&&&&&&&&&&:{RESET}       {DIM}│{RESET}                                      {DIM}│{RESET}
 {DIM}│{RESET}            {BLUE}        :~7?JJ7!^{RESET}                                {DIM}│{RESET}  {BLUE}❯{RESET} {BOLD}█{RESET}                                 {DIM}│{RESET}
-{DIM}├──────────────────────────────────────────────────────────────┴──────────────────────────────────────┤{RESET}
-{DIM}│{RESET} {BLUE_PILL} NORMAL {RESET} {BLUE}0:zsh*{RESET} {SUB_BLUE}│ ~/Documents/Profile{RESET}                   {DIM}"msu-reg" {{DATE}} │ CPU 100% │ ? shortcuts{RESET} {DIM}│{RESET}
-{DIM}╰─────────────────────────────────────────────────────────────────────────────────────────────────────╯{RESET}
+{DIM}├──────────────────────────────────────────────────────────────┴─────────────────────────────────────┤{RESET}
+{DIM}│{RESET} {BLUE_PILL} NORMAL {RESET} {BLUE}0:zsh*{RESET} {SUB_BLUE}│ ~/Documents/Profile{RESET}                  {DIM}"msu-reg" {{DATE}} │ CPU 100% │ ? shortcuts{RESET} {DIM}│{RESET}
+{DIM}╰────────────────────────────────────────────────────────────────────────────────────────────────────╯{RESET}
 ```
 ![](https://komarev.com/ghpvc/?username=asahisuenaga&style=pixel)

@@ -285,7 +285,7 @@ jobs:
           ansi_colors = {
               "{BLUE}":      "\x1b[38;5;74m",     # Bold Blue (primary accent)
               "{SUB_BLUE}":  "\x1b[38;5;75m",     # Subtle Blue (secondary accent)
-              "{BLUE_PILL}": "\x1b[1;37;44m",  # Bold White on Blue background
+              "{BLUE_PILL}": "\x1b[1;97;44m",  # Bold White on Blue background
               "{BOLD}":      "\x1b[1m",        # Bold default text (adapts to Light/Dark mode)
               "{GREEN}":     "\x1b[1;32m",     # Window dot
               "{RED}":       "\x1b[1;31m",     # Window dot
