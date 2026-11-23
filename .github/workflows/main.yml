@@ -200,28 +200,27 @@ jobs:
           with open("TEMPLATE.md", "r", encoding="utf-8") as f:
               template = f.read().replace("\xa0", " ")
 
-          # Strict regex bounding to keep titles safe from string collision replacements
           updated_readme = template.replace("{{DATE}}", current_date)
           updated_readme = re.sub(r'\bv([0-9]{2}\.[0-9]{2}\.[0-9]{2})\b', f"v{current_date}", updated_readme)
           updated_readme = re.sub(r'\bINFO v([0-9]{2}\.[0-9]{2}\.[0-9]{2})\b', f"INFO v{current_date}", updated_readme)
 
-          # Updated rows mappings to fit your structured specifications
           stats_payload = [
               ("STAT_ROW_VIEWS", "Profile Views", profile_views),
               ("STAT_ROW_REPO_VIEWS", "Repository Views (2W)", repo_views),
-              ("STAT_ROW_STARS", "Stars Received", total_stars),
+              ("STAT_ROW_STARS", "Stars Received", f"{total_stars:,}"),
               ("STAT_ROW_COMMITS", "Total Commits", f"{commits_lifetime:,}"),
               ("STAT_ROW_COMMITS_YTD", "Commits (YTD)", f"{commits_ytd:,}"),
-              ("STAT_ROW_CONTRIBUTIONS", "Issues/PRs/Releases", f"{all_time_issues:,}/{total_prs:,}/{total_releases:,}"),
+              ("STAT_ROW_ISSUES", "Total Issues", f"{all_time_issues:,}"),
+              ("STAT_ROW_PRS", "Pull Requests", f"{total_prs:,}"),
+              ("STAT_ROW_RELEASES", "Releases", f"{total_releases:,}"),
           ]
 
           for placeholder, label, value in stats_payload:
               left_side = f"  ● {label}: {value}"
-              needed_spaces = 38 - len(left_side)
+              needed_spaces = max(0, 38 - len(left_side))
               line_built = f"{left_side}{' ' * needed_spaces}"
               updated_readme = updated_readme.replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
 
-          # Language Abbreviations (Corrected to Python Dictionary Syntax)
           nameMap = {
               "JavaScript": "JS",
               "TypeScript": "TS",
@@ -261,9 +260,9 @@ jobs:
                   pct_str = f"{int(round(pct))}%"
                   name_fixed = short_name.ljust(6)[:6]
                   bar_built = make_progress_bar(pct)
-                  
+
                   left_side = f"  █ {name_fixed}  {bar_built} {pct_str}"
-                  needed_spaces = 38 - len(left_side)
+                  needed_spaces = max(0, 38 - len(left_side))
                   line_built = f"{left_side}{' ' * needed_spaces}"
 
               updated_readme = updated_readme.replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
@@ -274,25 +273,25 @@ jobs:
               left_side = f"  » {act_text}"
               if len(left_side) > 33:
                   left_side = left_side[:30] + "..."
-              needed_spaces = 38 - len(left_side)
+              needed_spaces = max(0, 38 - len(left_side))
               line_built = f"{left_side}{' ' * needed_spaces}"
               updated_readme = updated_readme.replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
 
-                          # Colorize bullets & progress bars inside the already-padded 38-char rows
-          updated_readme = updated_readme.replace("  ● ", "  {GREEN}●{RESET} ")
-          updated_readme = updated_readme.replace("  █ ", "  {GREEN}█{RESET} ")
-          updated_readme = updated_readme.replace("  » ", "  {GREEN}»{RESET} ")
+          updated_readme = updated_readme.replace("  ● ", "  {BLUE}●{RESET} ")
+          updated_readme = updated_readme.replace("  █ ", "  {BLUE}█{RESET} ")
+          updated_readme = updated_readme.replace("  » ", "  {SUB_BLUE}»{RESET} ")
 
-          # Convert color tags to real ANSI escape sequences (\x1b)
+          # Convert color tags to real ANSI escape sequences
           ansi_colors = {
-              "{GREEN}": "\x1b[1;32m",
-              "{CYAN}":  "\x1b[1;36m",
-              "{WHITE}": "\x1b[1;37m",
-              "{BLUE}":  "\x1b[1;34m",
-              "{RED}":   "\x1b[1;31m",
-              "{YEL}":   "\x1b[1;33m",
-              "{DIM}":   "\x1b[2;37m",
-              "{RESET}": "\x1b[0m",
+              "{BLUE}":      "\x1b[1;34m",     # Bold Blue (primary accent)
+              "{SUB_BLUE}":  "\x1b[0;36m",     # Subtle Cyan-Blue (secondary accent)
+              "{BLUE_PILL}": "\x1b[1;37;44m",  # Bold White on Blue background
+              "{BOLD}":      "\x1b[1m",        # Bold default text (adapts to Light/Dark mode)
+              "{GREEN}":     "\x1b[1;32m",     # Window dot
+              "{RED}":       "\x1b[1;31m",     # Window dot
+              "{YEL}":       "\x1b[1;33m",     # Window dot
+              "{DIM}":       "\x1b[2;37m",     # Dim border gray
+              "{RESET}":     "\x1b[0m",
           }
           for tag, code in ansi_colors.items():
               updated_readme = updated_readme.replace(tag, code)
