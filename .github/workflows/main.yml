@@ -208,7 +208,7 @@ jobs:
           # Updated rows mappings to fit your structured specifications
           stats_payload = [
               ("STAT_ROW_VIEWS", "Profile Views", profile_views),
-              ("STAT_ROW_REPO_VIEWS", "Repository Views", repo_views),
+              ("STAT_ROW_REPO_VIEWS", "Repository Views (2W)", repo_views),
               ("STAT_ROW_STARS", "Stars Received", total_stars),
               ("STAT_ROW_COMMITS", "Total Commits", f"{commits_lifetime:,}"),
               ("STAT_ROW_COMMITS_YTD", "Commits (YTD)", f"{commits_ytd:,}"),
@@ -278,6 +278,25 @@ jobs:
               line_built = f"{left_side}{' ' * needed_spaces}"
               updated_readme = updated_readme.replace(f"{{{{ {placeholder} }}}}" if f"{{{{ {placeholder} }}}}" in updated_readme else f"{{{{{placeholder}}}}}", line_built)
 
+                          # Colorize bullets & progress bars inside the already-padded 38-char rows
+          updated_readme = updated_readme.replace("  ● ", "  {GREEN}●{RESET} ")
+          updated_readme = updated_readme.replace("  █ ", "  {GREEN}█{RESET} ")
+          updated_readme = updated_readme.replace("  » ", "  {GREEN}»{RESET} ")
+
+          # Convert color tags to real ANSI escape sequences (\x1b)
+          ansi_colors = {
+              "{GREEN}": "\x1b[1;32m",
+              "{CYAN}":  "\x1b[1;36m",
+              "{WHITE}": "\x1b[1;37m",
+              "{BLUE}":  "\x1b[1;34m",
+              "{RED}":   "\x1b[1;31m",
+              "{YEL}":   "\x1b[1;33m",
+              "{DIM}":   "\x1b[2;37m",
+              "{RESET}": "\x1b[0m",
+          }
+          for tag, code in ansi_colors.items():
+              updated_readme = updated_readme.replace(tag, code)
+
           with open("README.md", "w", encoding="utf-8") as f:
               f.write(updated_readme)
           print("Successfully populated system statistics updates safely.")
@@ -290,4 +309,4 @@ jobs:
           git add README.md
           git commit -m "docs: auto-update terminal profile metrics ($(date +'%m.%d.%y')) [skip ci]" || echo "No data modifications detected. Skipping push."
           git pull --rebase origin main
-          git push origin main
+          git push origin test/readme
