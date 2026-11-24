@@ -14,8 +14,8 @@
 {DIM}│{RESET}  {DIM}==> Fetching academic status from reg.msu.edu...{RESET}                                                {DIM}│{RESET}
 {DIM}│{RESET}                                                                                                  {DIM}│{RESET}
 {DIM}│{RESET}  Bachelor's Degree: [{BLUE}█████████████████████████{DIM}░░░░░░░░░░░░░░░{RESET}] {BOLD}76/120 Credits (63%){RESET}              {DIM}│{RESET}
-{DIM}│{RESET}  {BLUE}●{RESET} {BOLD}GPA:{RESET} 3.67     {BLUE}●{RESET} {BOLD}Classes Done:{RESET} 15     {BLUE}●{RESET} {BOLD}Honors College:{RESET} Yes     {BLUE}●{RESET} {BOLD}Expected Grad:{RESET} Fall '27     {DIM}│{RESET}
-{DIM}├─────────────────────────────────────────────────────────────┬───────────────────────────────────┤{RESET}
+{DIM}│{RESET}  {BLUE}●{RESET} {BOLD}GPA:{RESET} 3.67     {BLUE}●{RESET} {BOLD}Classes Done:{RESET} 15     {BLUE}●{RESET} {BOLD}Honors College:{RESET} Yes     {BLUE}●{RESET} {BOLD}Expected Grad:{RESET} Fall '27      {DIM}│{RESET}
+{DIM}├─────────────────────────────────────────────────────────────┬────────────────────────────────────┤{RESET}
 {DIM}│{RESET}  {BLUE}❯{RESET} {BOLD}asahi github-stats{RESET}                                       {DIM}│{RESET} {BLUE}Github Statistics{RESET}                  {DIM}│{RESET}
 {DIM}│{RESET}                                                             {DIM}│{RESET}{{STAT_ROW_VIEWS}}{DIM}│{RESET}
 {DIM}│{RESET}            {BLUE}:GBB######BBBBGPPYJ?!~^:{RESET}                         {DIM}│{RESET}{{STAT_ROW_REPO_VIEWS}}{DIM}│{RESET}

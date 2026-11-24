@@ -3,39 +3,19 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Apple Notes Clone is a vanilla HTML, CSS, and JavaScript web application that recreates the Apple Notes experience. Create, edit, format, and organize notes and folders right in your browser.">
-        <meta name="robots" content="index, follow">
+        <meta name="description" content="Apple Notes Clone is a vanilla HTML, CSS, and TypeScript web application that recreates the Apple Notes experience. Create, edit, format, and organize notes and folders right in your browser.">
         <link rel="canonical" href="https://asahisuenaga.com/notes">
-        <meta property="og:title" content="Apple Notes Clone — Web Application">
-        <meta property="og:description" content="Apple Notes Clone is a vanilla HTML, CSS, and JavaScript web application that recreates the Apple Notes experience. Create, edit, format, and organize notes and folders right in your browser.">
-        <meta property="og:image" content="assets/image/OGImage.webp">
+        <meta property="og:title" content="Apple Notes for the Web — Asahi Suenaga">
+        <meta property="og:description" content="Apple Notes Clone is a vanilla HTML, CSS, and TypeScript web application that recreates the Apple Notes experience. Create, edit, format, and organize notes and folders right in your browser.">
+        <meta property="og:image" content="assets/images/OGImage.webp">
         <meta property="og:url" content="https://asahisuenaga.com/notes">
-        <meta property="og:type" content="website">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Apple Notes Clone — Web Application">
-        <meta name="twitter:description" content="Apple Notes Clone is a vanilla HTML, CSS, and JavaScript web application that recreates the Apple Notes experience. Create, edit, format, and organize notes and folders right in your browser.">
-        <meta name="twitter:image" content="assets/image/TwitterCard.webp">
+        <meta name="twitter:image" content="/assets/images/TwitterCard.webp">
         <title>Apple Notes Clone</title>
-        <link rel="icon" type="image/svg+xml" href="../assets/image/favicon.svg" sizes="any">
-        <link rel="apple-touch-icon" sizes="180x180" href="../assets/image/apple-touch-icon.png">
-        <link rel="stylesheet" href="styles.css">
-        <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebApplication",
-            "name": "Apple Notes Clone",
-            "url": "https://asahisuenaga.com/notes",
-            "applicationCategory": "ProductivityApplication",
-            "operatingSystem": "Any",
-            "description": "A vanilla HTML, CSS, and JavaScript web application that recreates the Apple Notes experience. Create, edit, format, and organize notes and folders right in your browser.",
-            "author": {
-                "@type": "Person",
-                "name": "Asahi Suenaga",
-                "url": "https://asahisuenaga.com/"
-            }
-        }
-        </script>
-        <script src="notes.js" defer></script>
+        <link rel="icon" type="image/svg+xml" href="/../assets/images/favicon.svg" sizes="any">
+        <link rel="apple-touch-icon" sizes="180x180" href="/../assets/images/apple-touch-icon.png">
+        <link rel="stylesheet" href="/notes/styles.css">
+        <script type="module" src="/notes/notes.ts" defer></script>
     </head>
     <body>
         <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
@@ -57,15 +37,12 @@
             <symbol id="icon-trash" viewBox="0 0 19.2676 23.4863"><path d="M6.5625 18.6035C6.93359 18.6035 7.17773 18.3691 7.16797 18.0273L6.86523 7.57812C6.85547 7.23633 6.61133 7.01172 6.25977 7.01172C5.88867 7.01172 5.64453 7.24609 5.6543 7.58789L5.94727 18.0273C5.95703 18.3789 6.20117 18.6035 6.5625 18.6035ZM9.45312 18.6035C9.82422 18.6035 10.0879 18.3691 10.0879 18.0273L10.0879 7.58789C10.0879 7.24609 9.82422 7.01172 9.45312 7.01172C9.08203 7.01172 8.82812 7.24609 8.82812 7.58789L8.82812 18.0273C8.82812 18.3691 9.08203 18.6035 9.45312 18.6035ZM12.3535 18.6035C12.7051 18.6035 12.9492 18.3789 12.959 18.0273L13.252 7.58789C13.2617 7.24609 13.0176 7.01172 12.6465 7.01172C12.2949 7.01172 12.0508 7.23633 12.041 7.58789L11.748 18.0273C11.7383 18.3691 11.9824 18.6035 12.3535 18.6035ZM5.16602 4.46289L6.71875 4.46289L6.71875 2.37305C6.71875 1.81641 7.10938 1.45508 7.69531 1.45508L11.1914 1.45508C11.7773 1.45508 12.168 1.81641 12.168 2.37305L12.168 4.46289L13.7207 4.46289L13.7207 2.27539C13.7207 0.859375 12.8027 0 11.2988 0L7.58789 0C6.08398 0 5.16602 0.859375 5.16602 2.27539ZM0.732422 5.24414L18.1836 5.24414C18.584 5.24414 18.9062 4.90234 18.9062 4.50195C18.9062 4.10156 18.584 3.76953 18.1836 3.76953L0.732422 3.76953C0.341797 3.76953 0 4.10156 0 4.50195C0 4.91211 0.341797 5.24414 0.732422 5.24414ZM4.98047 21.748L13.9355 21.748C15.332 21.748 16.2695 20.8398 16.3379 19.4434L17.0215 5.05859L15.4492 5.05859L14.7949 19.2773C14.7754 19.8633 14.3555 20.2734 13.7793 20.2734L5.11719 20.2734C4.56055 20.2734 4.14062 19.8535 4.11133 19.2773L3.41797 5.05859L1.88477 5.05859L2.57812 19.4531C2.64648 20.8496 3.56445 21.748 4.98047 21.748Z" fill="currentColor"/></symbol>
             <symbol id="icon-underline" viewBox="0 0 11.7383 20.459"><path d="M0.576172 20.459L10.791 20.459C11.1133 20.459 11.377 20.2148 11.377 19.8828C11.377 19.5508 11.1133 19.2969 10.791 19.2969L0.576172 19.2969C0.263672 19.2969 0 19.5508 0 19.8828C0 20.2148 0.263672 20.459 0.576172 20.459Z" fill="currentColor"/><path d="M5.68359 17.4609C9.19922 17.4609 11.377 15.3516 11.377 12.2852L11.377 3.89648C11.377 3.34961 11.0156 2.98828 10.459 2.98828C9.91211 2.98828 9.57031 3.34961 9.57031 3.89648L9.57031 12.1387C9.57031 14.3164 8.13477 15.8008 5.68359 15.8008C3.24219 15.8008 1.80664 14.3164 1.80664 12.1387L1.80664 3.89648C1.80664 3.34961 1.44531 2.98828 0.888672 2.98828C0.341797 2.98828 0 3.34961 0 3.89648L0 12.2852C0 15.3516 2.16797 17.4609 5.68359 17.4609Z" fill="currentColor"/></symbol>
         </svg>
-        <div id="title-text" class="title-text" role="button" aria-label="Open notes app">
-            <p>Tap anywhere to open the notes app</p>
-            <a href="/">← Return to home</a>
-            <p>Everything is run and stored in your browser. No data is sent.</p>
-        </div>
+        <button id="open-btn" class="open-btn" role="button" aria-label="Open notes app">Open Notes</button>
+        <a href="/" class="home-btn" role="button" aria-label="Go back to home">Return to Home</a>
         <div class="notes-backdrop" id="notes-backdrop"></div>
         <div class="notes-modal" id="notes-modal">
             <div class="notes-drawer-handle" id="notes-drawer-handle"></div>
-            <div class="mac-stoplights" id="shared-stoplights" style="position: absolute; top: 20px; left: 1rem; z-index: 100; transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1); margin-top: 6px; display: flex; gap: 6px; align-items: center;"><button class="mac-close" aria-label="Close"></button><button class="mac-min" aria-label="Minimize"></button><button class="mac-max" aria-label="Maximize"></button></div>
+            <div class="mac-stoplights" id="shared-stoplights" style="position: absolute; top: 20px; left: 1rem; z-index: 100; transition: left .3s cubic-bezier(.25, 1, .5, 1); margin-top: 6px; display: flex; gap: 6px; align-items: center;"><button class="mac-close" aria-label="Close"></button><button class="mac-min" aria-label="Minimize"></button><button class="mac-max" aria-label="Maximize"></button></div>
             <div class="notes-panel" id="panel-folders">
                 <div class="notes-header">
                     <div class="notes-header-left"></div>
@@ -78,11 +55,7 @@
                             <div class="notes-folder-info"><svg class="icon folder-icon"><use href="#icon-folder"/></svg>All Notes</div>
                             <div><span class="notes-count" id="count-all"></span></div>
                         </div>
-                        <div class="notes-list-item folder-list-item" data-target="panel-notes-personal" style="user-select: none;">
-                            <div class="notes-folder-info"><svg class="icon folder-icon"><use href="#icon-folder"/></svg>Docs</div>
-                            <div><span class="notes-count" id="count-documentation">0</span></div>
-                        </div>
-                        <div class="notes-folder-divider" style="height: .0625rem; background: var(--color); opacity: 0.15; margin: 8px 0;"></div>
+                        <div class="notes-folder-divider" style="height: .0625rem; background: var(--color); opacity: .15; margin: 8px 0;"></div>
                         <div class="notes-list-item folder-list-item" data-target="panel-notes-deleted" style="user-select: none;">
                             <div class="notes-folder-info"><svg class="icon folder-icon"><use href="#icon-trash"/></svg>Deleted</div>
                             <div><span class="notes-count" id="count-deleted">0</span></div>
@@ -92,7 +65,7 @@
             </div>
             <div class="notes-panel" id="panel-notes">
                 <div class="notes-header">
-                    <div class="notes-header-left"><button class="notes-glass-btn notes-back" aria-label="Return" data-back="panel-folders" style="display: none;"><svg class="icon back-hero-icon" style="width:1rem; height:1rem; display:inline-block; vertical-align:-3px;"><use href="#icon-chevron-left"/></svg></button><button class="notes-glass-btn" aria-label="Sidebar" id="sidebar-toggle" title="Sidebar" style="margin-left:0px;transition: margin-left 0.3s cubic-bezier(0.25,1,0.5,1);"><svg class="icon" style="width:1.25rem;height:1.25rem;flex-shrink: 0;"><use href="#icon-sidebar-left"/></svg></button></div>
+                    <div class="notes-header-left"><button class="notes-glass-btn notes-back" aria-label="Return" data-back="panel-folders" style="display: none;"><svg class="icon back-hero-icon" style="width:1rem; height:1rem; display:inline-block; vertical-align:-3px;"><use href="#icon-chevron-left"/></svg></button><button class="notes-glass-btn" aria-label="Sidebar" id="sidebar-toggle" title="Sidebar" style="margin-left:0px;transition: margin-left .3s cubic-bezier(.25,1,.5,1);"><svg class="icon" style="width:1.25rem;height:1.25rem;flex-shrink: 0;"><use href="#icon-sidebar-left"/></svg></button></div>
                     <button id="new-note-btn-header" class="notes-glass-btn" aria-label="New Note" title="New Note"><svg class="icon" style="width:1.25rem;height:1.25rem;"><use href="#icon-square-and-pencil"/></svg></button>
                 </div>
                 <div class="notes-content notes-content-padded">
@@ -122,7 +95,7 @@
                 <div class="notes-content">
                     <div class="notes-date" id="active-note-date"></div>
                     <h2 class="notes-title" id="active-note-title" contenteditable="true" spellcheck="false" style="outline: none;"></h2>
-                    <div id="active-note-content" contenteditable="true" spellcheck="false" style="outline: none; font-size:0.875rem;height:100%;"></div>
+                    <div id="active-note-content" style="font-size:.875rem;height:100%;"></div>
                 </div>
             </div>
             <div class="resize-handle resize-n" data-dir="n"></div>
