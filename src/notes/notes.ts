@@ -277,21 +277,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!isBuiltInNoteId(noteId)) {
                         menu.appendChild(separator());
 
-                        folderController.getMoveTargets().forEach(f => {
-                            if (data.folder === f) return;
-                            const moveBtn = document.createElement('div');
-                            moveBtn.className = 'note-context-item';
-                            moveBtn.innerText = `Move to ${f}`;
-                            moveBtn.onclick = () => {
-                                data.folder = f === 'all' ? 'all' : f;
-                                saveNotes();
-                                renderNotesList(folderFilter);
-                                menu.remove();
-                            };
-                            menu.appendChild(moveBtn);
-                        });
-
-                        menu.appendChild(separator());
+                        const validTargets = folderController.getMoveTargets().filter(f => data.folder !== f);
+                        if (validTargets.length > 0) {
+                            validTargets.forEach(f => {
+                                const moveBtn = document.createElement('div');
+                                moveBtn.className = 'note-context-item';
+                                moveBtn.innerText = `Move to ${f}`;
+                                moveBtn.onclick = () => {
+                                    data.folder = f === 'all' ? 'all' : f;
+                                    saveNotes();
+                                    renderNotesList(folderFilter);
+                                    menu.remove();
+                                };
+                                menu.appendChild(moveBtn);
+                            });
+                            menu.appendChild(separator());
+                        }
 
                         const actionBtn = document.createElement('div');
                         actionBtn.className = 'note-context-item';
@@ -392,24 +393,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 if (isAllUser) {
-                    menu.appendChild(separator());
-
                     const selectedFolders = [...new Set(userSelectedIds.map(id => notesData[id].folder))];
-                    folderController.getMoveTargets().forEach(f => {
-                        if (selectedFolders.every(sf => sf === f)) return;
-                        const mbtn = document.createElement('div');
-                        mbtn.className = 'note-context-item';
-                        mbtn.innerText = `Move ${userSelectedIds.length} Notes to ${f}`;
-                        mbtn.onclick = () => {
-                            userSelectedIds.forEach(id => { notesData[id].folder = f; });
+                    const validTargets = folderController.getMoveTargets().filter(f => !selectedFolders.every(sf => sf === f));
+
+                    if (validTargets.length > 0) {
+                        menu.appendChild(separator());
+
+                        validTargets.forEach(f => {
+                            const mbtn = document.createElement('div');
+                            mbtn.className = 'note-context-item';
+                            mbtn.innerText = `Move ${userSelectedIds.length} Notes to ${f}`;
+                            mbtn.onclick = () => {
+                            userSelectedIds.forEach(id => {
+                                notesData[id].folder = f;
+                            });
                             saveNotes();
                             renderNotesList(folderFilter);
                             menu.remove();
-                        };
-                        menu.appendChild(mbtn);
-                    });
+                            };
+                            menu.appendChild(mbtn);
+                        });
 
-                    menu.appendChild(separator());
+                        menu.appendChild(separator());
+                    }
 
                     const delBtn = document.createElement('div');
                     delBtn.className = 'note-context-item';

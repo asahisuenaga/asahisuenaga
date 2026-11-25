@@ -105,7 +105,7 @@ export const setupNotesWindow = ({
         }, 400);
     };
 
-    const minimizeNotes = (e: MouseEvent): void => {
+    const minimizeNotes = (e: MouseEvent | TouchEvent): void => {
         if (window.innerWidth < 800) {
             closeNotes(e);
             return;
@@ -239,6 +239,7 @@ export const setupNotesWindow = ({
         } else {
             startY = e.clientY;
         }
+        currentY = startY;
         isDragging = true;
         notesModal.style.setProperty('transition', 'none', 'important');
         if (mobileDragReset !== null) clearTimeout(mobileDragReset);
@@ -256,7 +257,7 @@ export const setupNotesWindow = ({
         }
         const diff = currentY - startY;
         if (diff > 0) {
-            e.preventDefault();
+            if (e.cancelable) e.preventDefault();
             notesModal.style.setProperty('transform', `translateY(${diff}px)`, 'important');
         }
     };
@@ -278,8 +279,15 @@ export const setupNotesWindow = ({
             notesModal.style.setProperty('transform', 'translateY(0)', 'important');
             if (mobileDragReset !== null) clearTimeout(mobileDragReset);
             mobileDragReset = setTimeout(() => notesModal.style.removeProperty('transform'), 400);
+        } else {
+            notesModal.style.removeProperty('transform');
         }
     };
+
+    notesModal.addEventListener('touchstart', handleMobileDragStart, { passive: true });
+    notesModal.addEventListener('touchmove', handleMobileDragMove, { passive: false });
+    notesModal.addEventListener('touchend', handleMobileDragEnd);
+    notesModal.addEventListener('touchcancel', handleMobileDragEnd);
 
     let minDragging = false;
     let mainDragging = false;
