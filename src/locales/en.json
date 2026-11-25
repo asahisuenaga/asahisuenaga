@@ -9,63 +9,47 @@
     "experience": "Experience"
   },
   "location": "East Lansing, MI",
-  "bio": "I'm a computer science major at <a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"about-link\">Michigan State University</a> with a curiosity for how things work. I dabble in interface design and like to program in my free time. \n\nI believe there’s something irresistible in programming—that instant when code compiles and abstract logic becomes something real. But building isn't enough on its own; it has to be designed to actually work for people.\n\nThat is why great software starts long before writing code. Every user flow, pixel, and interface choice must feel intentional and frictionless. Weaving my sharp eye for design with practical engineering, I translate user needs into clean systems.\n\nThat intersection is where I operate. From initial concept to polished build, I craft software where design and code reinforce each other.",
-  "languages": {
-    "proficient": "Proficient Programming Languages",
-    "familiar": "Familiar Programming Languages",
+  "bio-first": "I study computer science and write good, clean code.",
+  "bio": "\nI believe there’s something irresistible about that instant when code compiles and abstract logic becomes real. But building isn't enough on its own; it has to be designed to actually work for people. \n\nThat is why great software starts long before writing code. Every choice must feel intentional and frictionless. By combining thoughtful design with practical engineering, I turn user needs into clean, reliable systems. \n\nThat intersection is where I operate. From initial concept to polished build, I craft software where design and code reinforce each other.",
+  "now": {
+    "title": "Now",
+    "text": "Most of my time goes into earning a bachelor's degree in computer science at <a href=\"https://engineering.msu.edu/academics/majors-degrees/computer-science-bs\" target=\"_blank\" class=\"about-link\">Michigan State University</a>. \n\nI also co-lead finance and corporate relations at <a href=\"https://spartahack.com\" target=\"_blank\" class=\"about-link\">SpartaHack</a>, MSU's official hackathon, and serve as secretary for the <a href=\"https://instagram.com/msu.jsa\" target=\"_blank\" class=\"about-link\">Japanese Student Association</a>."
+  },
+  "tech": {
+    "title": "Technical Skills",
     "list": {
+      "git": "Git",
+      "sqlite": "SQLite",
       "html": "HTML",
       "css": "CSS",
-      "javascript": "Javascript",
+      "javascript": "JavaScript",
+      "typescript": "TypeScript",
       "python": "Python",
-      "typescript": "Typescript"
+      "c++": "C++"
     }
   },
   "projects": {
     "items": [
       {
         "name": "Apple Notes Clone",
-        "type": "HTML · CSS · JS",
-        "desc": "Remade Apple Notes complete with local storage data persistence, custom rich-text editing, dynamic folder nesting, and a secure data-recovery system for deleted items."
-      },
-      {
-        "name": "Baroque Jigsaw Puzzles",
-        "type": "React · Typescript",
-        "desc": "Crafted a mobile application in less than a week for the Anything X Contra hackathon where you play jigsaw puzzles with art from the Baroque period."
+        "type": "HTML · CSS · TS",
+        "desc": "Draft notes in the browser with local storage data persistence, rich-text editing, mobile navigation, window management, and folder nesting."
       },
       {
         "name": "Hide Google AI",
         "type": "HTML · CSS · JS",
-        "desc": "Engineered a lightweight mutation observer script to dynamically scrub unwanted generative search elements from the DOM."
+        "desc": "Mutation observer script to scrub unwanted generative search elements."
       },
       {
         "name": "Rainbow Cursor",
         "type": "HTML · CSS · JS",
-        "desc": "Developed a lightweight Chrome extension that intercepts DOM to dynamically replace the default cursor caret with an animated gradient across Google Docs."
+        "desc": "Browser extension that intercepts the DOM to dynamically to replace the default cursor caret with a customizable animated gradient in Google Docs."
       }
     ]
   },
-  "experience": {
-    "items": [
-      {
-        "organization": "SpartaHack",
-        "role": "Finance Lead",
-        "desc": "Automated finance outreach and coordinated branded tracks and engagement boosting activities with technical mentors for MSU's 300+ student-run hackathon."
-      },
-      {
-        "organization": "Japanese Student Association",
-        "role": "Secretary",
-        "desc": "Streamlined administrative operations by centralizing meeting minutes, registration forms, and attendance logs into a single, comprehensive master database."
-      }
-    ]
-  },
-  "askAI": {
-    "title": "Ask AI",
-    "placeholders": [
-      "Summarize Asahi's portfolio",
-      "What programming languages does Asahi know?",
-      "Draft an interview outreach email to Asahi",
-      "List Asahi's most popular Github repos"
-    ]
+  "footer": {
+    "copyright": "Copyright 2026 \nAll Rights Reserved.",
+    "origin": "Designed in \nEast Lansing, MI",
+    "privacy": "This site doesn't log or store personal data."
   }
 }
