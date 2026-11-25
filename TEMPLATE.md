@@ -1,6 +1,6 @@
 ```ansi
 {DIM}╭──────────────────────────────────────────────────────────────────────────────────────────────────╮{RESET}
-{DIM}│{RESET}  {RED}●{RESET}  {YEL}●{RESET}  {GREEN}●{RESET}                    {DIM}asahi@msu: ~/Documents/Profile — zsh — 102×42{RESET}                        {DIM}│{RESET}
+{DIM}│{RESET}  {RED}●{RESET}  {YEL}●{RESET}  {GREEN}●{RESET}                    {DIM}asahi@msu: ~/Documents/Profile — zsh — 100×45{RESET}                        {DIM}│{RESET}
 {DIM}├──────────────────────────────────────────────────────────────────────────────────────────────────┤{RESET}
 {DIM}│{RESET} {BLUE} █████╗ ███████╗ █████╗ ██╗  ██╗██╗{RESET} {BLUE}███████╗██╗   ██╗███████╗███╗   ██╗ █████╗  ██████╗  █████╗  {RESET}{DIM}│{RESET}
 {DIM}│{RESET} {BLUE}██╔══██╗██╔════╝██╔══██╗██║  ██║██║{RESET} {BLUE}██╔════╝██║   ██║██╔════╝████╗  ██║██╔══██╗██╔════╝ ██╔══██╗{RESET} {DIM}│{RESET}
