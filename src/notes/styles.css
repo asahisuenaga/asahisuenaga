@@ -560,16 +560,9 @@ p {
   background: light-dark(#c6c6c6, #616161);
   border-radius: .625rem;
   margin: 8px auto;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
   z-index: 1000;
-}
-.notes-drawer-handle::after {
-  content: "";
-  position: absolute;
-  inset: -20px -200px;
+  flex-shrink: 0;
 }
 #panel-folders {
   background: light-dark(#EDEDED, #262626);
@@ -770,6 +763,7 @@ p {
     backdrop-filter: none !important;
     border: none !important;
     height: 44px !important;
+    touch-action: none;
   }
   .notes-panel {
     border-radius: 1.5rem 1.5rem 0 0 !important;
