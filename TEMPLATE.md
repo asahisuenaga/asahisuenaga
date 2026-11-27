@@ -41,7 +41,7 @@
 {DIM}│{RESET}            {BLUE}   7#@@@@@@@@@@@@@@@&J        7@@@@@@@@@@^{RESET}       {DIM}│{RESET}{{REC_ACT_5}}{DIM}│{RESET}
 {DIM}│{RESET}            {BLUE}     ~P&@@@@@@@@@&G7         7&&&&&&&&&&&:{RESET}       {DIM}│{RESET}                                    {DIM}│{RESET}
 {DIM}│{RESET}            {BLUE}        :~7?JJ7!^{RESET}                                {DIM}│{RESET}  {BLUE}❯{RESET} {BOLD}█{RESET}                               {DIM}│{RESET}
-{DIM}├──────────────────────────────────────────────────────────────┴───────────────────────────────────┤{RESET}
+{DIM}├─────────────────────────────────────────────────────────────┴────────────────────────────────────┤{RESET}
 {DIM}│{RESET} {BLUE_PILL} NORMAL {RESET} {BLUE}0:zsh*{RESET} {SUB_BLUE}│ ~/Documents/Profile{RESET}               {DIM}"msu-reg" {{DATE}} │ CPU 100% │ ? shortcuts{RESET}  {DIM}│{RESET}
 {DIM}╰──────────────────────────────────────────────────────────────────────────────────────────────────╯{RESET}
 ```
